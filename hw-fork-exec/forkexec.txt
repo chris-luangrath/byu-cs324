@@ -1,0 +1,127 @@
+1.
+The program displays the pid, then waits 30 sec. If there is a program to execute in the argument, 
+it will run that next.
+
+2. 
+It will run the final printf if there are no more arguments to execute.
+
+3. 
+./ exec /bin/cat
+Program "./exec" has pid 785830. Sleeping.
+
+Running exec of "/bin/cat"
+4. 
+./exec /bin/cat
+RUSER        PID    PPID S CMD
+cl442     785830  770367 S cat 
+
+5. The user, pid, ppid, and state are all the same. the command field changed from exec to cat
+
+6. 
+Program "./exec" has pid 788090. Sleeping.
+Running exec of "/ebrbrbrbrbr"
+End of program "./exec".
+
+./exec runs the exec program, waits 30 sec, then attempts to run the program in the argument.
+After it fails, it ends the program.
+
+7. 
+Prints starting pid, forks the process, both processes print section a, child prints section b,
+parent prints section c, section d doesn't run because both processes exit
+
+8. 
+Parent: A, C 
+Child: A, B
+
+9. 
+ps -p 793614,793615 -o ruser,pid,ppid,state,ucmd --forest
+RUSER        PID    PPID S CMD
+cl442     793614  770367 S fork
+cl442     793615  793614 S  \_ fork
+ps -p 793614,793615 -o ruser,pid,ppid,state,ucmd --forest
+RUSER        PID    PPID S CMD
+cl442     793614  770367 S fork
+cl442     793615  793614 Z  \_ fork <defunct>
+
+10.
+At the first ps command, both processes are still alive. 
+At the second ps command, the child is a zombie.
+
+11. 
+Add a wait() to Section C
+
+12.
+ps -p 797825,797826 -o ruser,pid,ppid,state,ucmd --forest
+RUSER        PID    PPID S CMD
+cl442     797825  770367 S fork
+cl442     797826  797825 S  \_ fork
+ps -p 797825,797826 -o ruser,pid,ppid,state,ucmd --forest
+RUSER        PID    PPID S CMD
+cl442     797825  770367 S fork
+
+13.
+At the first ps command, both processes are still alive. 
+At the second ps command, the child has been terminated.
+
+14.
+ps -p 799687,799688 -o ruser,pid,ppid,state,ucmd --forest
+RUSER        PID    PPID S CMD
+cl442     799687  770367 S fork
+cl442     799688  799687 S  \_ fork
+ps -p 799687,799688 -o ruser,pid,ppid,state,ucmd --forest
+RUSER        PID    PPID S CMD
+cl442     799688       1 S fork
+
+15. 
+At the first ps command, both processes are still alive.
+At the second ps command, the parent has already closed and has been adopted by the init process.
+(Check with a TA if this is the correct)
+
+16.
+BEFORE FORK
+SECTION A
+SECTION C
+SECTION A
+SECTION B
+
+17. 
+Processes A,B, and C write to the file. (D does not)
+Both the parent and the child wrote to the file.
+Both printed A, the child printed B, the parent printed C
+
+18.
+Section A;  pid 1640469
+Section C
+Section A;  pid 1640471
+Section B
+hello from Section B
+
+19.
+Section A;  pid 1814903
+Section C
+Section A;  pid 1814905
+Section B
+Program "./fork" has pid 1814905. Sleeping.
+Running exec of "/bin/cat"
+hello from Section B
+
+foobar
+
+20.
+Section A;  pid 1860904
+Section C
+Section A;  pid 1860905
+Section B
+Program "./fork" has pid 1860905. Sleeping.
+Running exec of "/bin/cat"
+hello from Section BOutput:
+
+
+fork-output.txt:
+BEFORE FORK
+SECTION A
+SECTION C
+SECTION A
+SECTION B
+foobar
+
