@@ -138,7 +138,6 @@ void eval(char *cmdline)
         argv has text and redirictions are null
         argv[cmds[0]] is pathname, &argv[cmds[0]] is argv arguments, so on
         stdin/out have different indexes if there's a redirection
-
     */
 
     // for(int i = 0; i < sizeof(num_args);i++){
@@ -148,62 +147,15 @@ void eval(char *cmdline)
     // int p[2];
     // pipe(p);
     // FILE * fp;
-    int pid1, pid2, p[2];
+    int pid;
     char *newenviron[] = { NULL };
 
-    if(sizeof(cmds) == 1) {
-        if ((pid1 = fork()) < 0) {
-                fprintf(stderr, "Could not fork()");
-                exit(1);
-        }
-        // child
-        if(pid1==0){
-            // Check the command for any input or output redirection, and perform that redirection.
-            FILE * fp;
-            if(stdin_redir[0] > 0){
-                // redirect stdin to stdin_redir[i]
-
-                fp = fopen(argv[stdin_redir[0]],"r");
-                dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
-                // dup2(stdin_redir[0],1); // TODO: i ------------------------------------------
-            }
-            if (stdout_redir[0] > 0){
-                // redirect stdout to stddout_redir[i]
-                
-                fp = fopen(argv[stdout_redir[0]],"w");
-                dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1 (?)
-            }
-            execve(argv[cmds[0]],&argv[cmds[0]],newenviron); // TODO: i ------------------------------------------
-
-            // Close any open file descriptors that will not be used by the child process. 
-            // This includes file descriptors that were created as part of input/output redirection.
-            // Run the executable in the context of the child process using execve()
-
-        } else {
-            // parent
-
-            // Put the child process in its own process group,
-            setpgid(pid1,pid1); 
-            // wait for the child process to complete.
-            int *status;
-            waitpid(pid1, status,WUNTRACED); // right one??????????????????????????????
-        }
-            
-
-        return;
-        
-    }
-
-    // Create a pipe.
-    pipe(p);
-
-    (pid1 = fork()) && (pid2 = fork())
-    // if ((pid1 = fork() < 0)) {
-	// 	fprintf(stderr, "Could not fork()");
-	// 	exit(1);
-	// }
-    // child1
-    if(pid1==0){
+    if ((pid = fork()) < 0) {
+		fprintf(stderr, "Could not fork()");
+		exit(1);
+	}
+    // child
+    if(pid==0){
         // Check the command for any input or output redirection, and perform that redirection.
         FILE * fp;
         if(stdin_redir[0] > 0){
@@ -211,75 +163,28 @@ void eval(char *cmdline)
 
             fp = fopen(argv[stdin_redir[0]],"r");
             dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
-            // dup2(stdin_redir[0],1); // TODO: i 
-            // Duplicate the appropriate pipe file descriptors to enable the standard output 
-            // of one process to be piped to the standard input of the other process.
-            
+            // dup2(stdin_redir[0],1); // TODO: i ------------------------------------------
         }
-        dup2(fileno(p[1]),STDOUT_FILENO);
-        close(p[0]);
-        // if (stdout_redir[0] > 0){
-        //     // redirect stdout to stddout_redir[i]
-
-        //     fp = fopen(argv[stdout_redir[0]],"w");
-        //     dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1 (?)
-        //     // Duplicate the appropriate pipe file descriptors to enable the standard output 
-        //     // of one process to be piped to the standard input of the other process.
-        //     dup2(fileno(p[0]),STDIN_FILENO);
-        // }
-
-        // Duplicate the appropriate pipe file descriptors to enable the standard output 
-        // of one process to be piped to the standard input of the other process.
-        // dup2(fileno(p[1]),STDOUT_FILENO);
-
-        // Close any open file descriptors that will not be used by the child process. 
-        // This includes file descriptors that were created as part of input/output redirection. ???? TODODODO
-        
-        // Run the executable in the context of the child process using execve()
-        execve(argv[cmds[0]],&argv[cmds[0]],newenviron); // TODO: i 
-
-    } else if(pid2 == 0){
-        // child2
-        // Check the command for any input or output redirection, and perform that redirection.
-        FILE * fp;
-        // if(stdin_redir[1] > 0){
-        //     // redirect stdin to stdin_redir[i]
-
-        //     fp = fopen(argv[stdin_redir[1]],"r");
-        //     dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
-        //     // dup2(stdin_redir[0],1); // TODO: i 
-        // }
-        if (stdout_redir[1] > 0){
+        if (stdout_redir[0] > 0){
             // redirect stdout to stddout_redir[i]
-
-            fp = fopen(argv[stdout_redir[1]],"w");
+            
+            fp = fopen(argv[stdout_redir[0]],"w");
             dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1 (?)
         }
-        dup2(fileno(p[0]),STDIN_FILENO);
-        close(p[1]);
-        // Duplicate the appropriate pipe file descriptors to enable the standard output 
-        // of one process to be piped to the standard input of the other process.
+        execve(argv[cmds[0]],&argv[cmds[0]],newenviron); // TODO: i ------------------------------------------
 
         // Close any open file descriptors that will not be used by the child process. 
-        // This includes file descriptors that were created as part of input/output redirection. ???? TODODODO
-        
-
+        // This includes file descriptors that were created as part of input/output redirection.
         // Run the executable in the context of the child process using execve()
-        execve(argv[cmds[1]],&argv[cmds[1]],newenviron); // TODO: i 
+
     } else {
         // parent
 
         // Put the child process in its own process group,
-        setpgid(pid1,pid1);
-        setpgid(pid2,pid1); 
-
-        close(p[0]);
-        close(p[1]);
-
+        setpgid(pid,pid); 
         // wait for the child process to complete.
         int *status;
-        waitpid(pid1, status,WUNTRACED);
-        waitpid(pid2, status,WUNTRACED);
+        waitpid(pid, status,WUNTRACED); // right one??????????????????????????????
     }
     
 
@@ -461,4 +366,3 @@ void app_error(char *msg)
     fprintf(stdout, "%s\n", msg);
     exit(1);
 }
-
