@@ -152,8 +152,8 @@ void eval(char *cmdline)
     char *newenviron[] = { NULL };
 
     // printf("num commands:%d\n",num_commands);
-    printf("hey\n");
-    printf("num args:%d\n",num_args);
+    // printf("hey\n");
+    // printf("num args:%d\n",num_args);
     // only 1 thing
     if(num_args == 0) {
         if ((pid1 = fork()) < 0) {
@@ -162,6 +162,7 @@ void eval(char *cmdline)
         }
         // child
         if(pid1==0){
+            printf("hey1\n");
             // Check the command for any input or output redirection, and perform that redirection.
             FILE * fp;
             if(stdin_redir[0] > 0){
@@ -177,6 +178,7 @@ void eval(char *cmdline)
                 fp = fopen(argv[stdout_redir[0]],"w");
                 dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1 (?)
             }
+            printf("hey2\n");
             execve(argv[cmds[0]],&argv[cmds[0]],newenviron); // TODO: i ------------------------------------------
 
             // Close any open file descriptors that will not be used by the child process. 
@@ -185,7 +187,7 @@ void eval(char *cmdline)
 
         } else {
             // parent
-
+            printf("hey3\n");
             // Put the child process in its own process group,
             setpgid(pid1,pid1); 
             // wait for the child process to complete.
