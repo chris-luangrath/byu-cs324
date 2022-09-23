@@ -197,7 +197,7 @@ void eval(char *cmdline)
     // Create a pipe.
     pipe(p);
 
-    ((pid1 = fork() < 0) && (pid2 = fork() < 0))
+    (pid1 = fork()) && (pid2 = fork())
     // if ((pid1 = fork() < 0)) {
 	// 	fprintf(stderr, "Could not fork()");
 	// 	exit(1);
