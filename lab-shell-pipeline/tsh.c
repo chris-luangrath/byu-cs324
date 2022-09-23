@@ -151,8 +151,8 @@ void eval(char *cmdline)
     int pid1, pid2, p[2];
     char *newenviron[] = { NULL };
 
-    printf("num commands:%d",num_commands);
-    printf("num args:%d",num_args);
+    // printf("num commands:%d",num_commands);
+    // printf("num args:%d",num_args);
     // only 1 thing
     if(num_args == 0) {
         if ((pid1 = fork()) < 0) {
@@ -196,7 +196,7 @@ void eval(char *cmdline)
         return;
     }   
     // multiple things
-    printf("multiple things");
+    // printf("multiple things");
     // Create a pipe.
     pipe(p);
 
@@ -210,6 +210,7 @@ void eval(char *cmdline)
     // child1
     if(pid1==0){
         // Check the command for any input or output redirection, and perform that redirection.
+        printf("child 1");
         FILE * fp;
         if(stdin_redir[0] > 0){
             // redirect stdin to stdin_redir[i]
@@ -245,6 +246,7 @@ void eval(char *cmdline)
 
     } else if(pid2 == 0){
         // child2
+        printf("child 2");
         // Check the command for any input or output redirection, and perform that redirection.
         FILE * fp;
         // if(stdin_redir[1] > 0){
@@ -273,6 +275,7 @@ void eval(char *cmdline)
         execve(argv[cmds[1]],&argv[cmds[1]],newenviron); // TODO: i 
     } else {
         // parent
+        printf("parent");
 
         // Put the child process in its own process group,
         setpgid(pid1,pid1);
