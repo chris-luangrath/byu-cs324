@@ -161,8 +161,11 @@ void eval(char *cmdline)
         if(stdin_redir[0] > 0){
             // redirect stdin to stdin_redir[i]
 
-            fp = fopen("fork-output.txt","w");
-            dup2(stdin_redir[0],1); // TODO: i ------------------------------------------
+            fp = fopen(argv[stdin_redir[0]],"r");
+            int new;
+            new = fileno(fp);
+            dup2(new,1);
+            // dup2(stdin_redir[0],1); // TODO: i ------------------------------------------
         }
         // if (stdout_redir[i] > 0){
         //     // redirect stdout to stddout_redir[i]
