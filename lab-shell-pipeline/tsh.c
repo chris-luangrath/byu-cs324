@@ -117,29 +117,6 @@ void eval(char *cmdline)
     int num_args = parseargs(argv,cmds,stdin_redir,stdout_redir);
 
     builtin_cmd(argv);
-    
-    // /bin/cat < test1.txt | /bin/cat......
-    // argv is populated with the strings in the cmndline
-    // in parseargs, take in argv and other arrays, 
-    // turns commands in argv null to seperate differnt commands <
-
-    // char **argv1 = malloc(sizeof(char *)*MAXARGS);
-    // int result1 = parseline(cmdline, argv1);
-    // free (argv1);
-    // printf("You entered: %s\n", cmdline);
-
-    /*
-        - eval takes in command line, does stuff with it
-        - parseline fills array with words from command line
-        - parseargs returns the number of commands in 
-            - 
-        - should builtin_cmd 
-        cmds has start of each command
-        argv has text and redirictions are null
-        argv[cmds[0]] is pathname, &argv[cmds[0]] is argv arguments, so on
-        stdin/out have different indexes if there's a redirection
-
-    */
 
     // for(int i = 0; i < sizeof(num_args);i++){
     builtin_cmd(&argv[cmds[0]]);
@@ -151,9 +128,6 @@ void eval(char *cmdline)
     int pid1, pid2, p[2];
     char *newenviron[] = { NULL };
 
-    // printf("num commands:%d\n",num_commands);
-    // printf("hey\n");
-    // printf("num args:%d\n",num_args);
     // only 1 thing
     if(num_args == 0) {
         if ((pid1 = fork()) < 0) {
@@ -162,7 +136,6 @@ void eval(char *cmdline)
         }
         // child
         if(pid1==0){
-            printf("hey1\n");
             // Check the command for any input or output redirection, and perform that redirection.
             FILE * fp;
             if(stdin_redir[0] > 0){
@@ -178,7 +151,7 @@ void eval(char *cmdline)
                 fp = fopen(argv[stdout_redir[0]],"w");
                 dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1 (?)
             }
-            printf("hey2\n");
+            // printf("hey2\n");
             execve(argv[cmds[0]],&argv[cmds[0]],newenviron); // TODO: i ------------------------------------------
 
             // Close any open file descriptors that will not be used by the child process. 
@@ -187,7 +160,7 @@ void eval(char *cmdline)
 
         } else {
             // parent
-            printf("hey3\n");
+            // printf("hey3\n");
             // Put the child process in its own process group,
             setpgid(pid1,pid1); 
             // wait for the child process to complete.
@@ -197,7 +170,8 @@ void eval(char *cmdline)
             
 
         return;
-    }   
+    }
+    printf("hey!");   
     // multiple thingshey
     // printf("multiple things");
     // Create a pipe.
