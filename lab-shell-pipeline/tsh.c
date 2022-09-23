@@ -1,7 +1,7 @@
 /* 
  * tsh - A tiny shell program with job control
  * 
- * <Put your name and login ID here>
+ * Chris Luangrath, cl442
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,6 +16,7 @@
 /* Misc manifest constants */
 #define MAXLINE    1024   /* max line size */
 #define MAXARGS     128   /* max args on a command line */
+#define MAXCMDS 20
 
 /* Global variables */
 extern char **environ;      /* defined in libc */
@@ -105,7 +106,46 @@ int main(int argc, char **argv)
  * when we type ctrl-c (ctrl-z) at the keyboard.  
 */
 void eval(char *cmdline) 
-{
+{   
+    char *argv[MAXARGS];
+    int cmds[MAXCMDS];
+    int stdin_redir[MAXCMDS];
+    int stdout_redir[MAXCMDS];
+
+    // **char argc[MAXARGS];
+    int num_commands = parseline(cmdline, argv);
+    int num_args = parseargs(argv,cmds,stdin_redir,stdout_redir);
+
+    builtin_cmd(argv);
+    
+    // /bin/cat < test1.txt | /bin/cat......
+    // argv is populated with the strings in the cmndline
+    // in parseargs, take in argv and other arrays, 
+    // turns commands in argv null to seperate differnt commands <
+
+    // char **argv1 = malloc(sizeof(char *)*MAXARGS);
+    // int result1 = parseline(cmdline, argv1);
+    // free (argv1);
+    printf("You entered: %s\n", cmdline);
+
+    /*
+        - eval takes in command line, does stuff with it
+        - parseline fills array with words from command line
+        - parseargs returns the number of commands in 
+            - 
+        - should builtin_cmd 
+    */
+    
+
+    
+
+//     int num_commands = parseargs(argv,cmds,stdin_redir,stdout_redir);
+
+    for(int i = 0; i < sizeof(num_args);i++){
+        builtin_cmd(&argv[cmds[i]]);
+    }
+    
+
     return;
 }
 
@@ -233,7 +273,22 @@ int parseline(const char *cmdline, char **argv)
  */
 int builtin_cmd(char **argv) 
 {
-    return 0;     /* not a builtin command */
+
+    if (strcmp(argv[0],"qut") == 0){
+        // printf("quitting now\n");
+        exit(0);
+    }
+    else{
+            // printf("hey2\n");
+        //     printf("%ld\n",sizeof(argv));
+        // for (int i = 0; i < sizeof(argv); i++){
+        //     printf("it is: %s\n",argv[i]);
+        //     // printf("hey3\n");
+        // }
+        // printf("%s\n",argv[0]);
+
+        return 0;
+    }     /* not a builtin command */
 }
 
 /***********************
