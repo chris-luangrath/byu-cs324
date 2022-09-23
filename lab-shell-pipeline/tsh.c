@@ -195,14 +195,13 @@ void eval(char *cmdline)
 
         return;
     }   
-    // multiple things
+    // multiple thingshey
     // printf("multiple things");
     // Create a pipe.
     pipe(p);
 
     // saw this online, does this work? --------------------------------------------
     (pid1 = fork()) && (pid2 = fork());
-    printf("hey yourself");
     // if ((pid1 = fork() < 0)) {
 	// 	fprintf(stderr, "Could not fork()");
 	// 	exit(1);
