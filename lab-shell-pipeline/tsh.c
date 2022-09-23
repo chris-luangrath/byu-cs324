@@ -153,7 +153,7 @@ void eval(char *cmdline)
 
     printf("%d",num_commands);
 
-    if(num_commands == 1) {
+    if(num_commands == 0) {
         if ((pid1 = fork()) < 0) {
                 fprintf(stderr, "Could not fork()");
                 exit(1);
