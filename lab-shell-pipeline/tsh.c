@@ -152,7 +152,7 @@ void eval(char *cmdline)
     char *newenviron[] = { NULL };
 
     // printf("%d",num_commands);
-
+    // only 1 thing
     if(num_commands == 0) {
         if ((pid1 = fork()) < 0) {
                 fprintf(stderr, "Could not fork()");
@@ -193,17 +193,19 @@ void eval(char *cmdline)
             
 
         return;
-        
-    }
-
+    }   
+    // multiple things
+    printf("multiple things");
     // Create a pipe.
     pipe(p);
 
+    // saw this online, does this work? --------------------------------------------
     (pid1 = fork()) && (pid2 = fork());
     // if ((pid1 = fork() < 0)) {
 	// 	fprintf(stderr, "Could not fork()");
 	// 	exit(1);
 	// }
+
     // child1
     if(pid1==0){
         // Check the command for any input or output redirection, and perform that redirection.
