@@ -152,12 +152,13 @@ void eval(char *cmdline)
     char *newenviron[] = { NULL };
 
     // printf("num commands:%d\n",num_commands);
+    printf("hey\n");
     printf("num args:%d\n",num_args);
     // only 1 thing
     if(num_args == 0) {
         if ((pid1 = fork()) < 0) {
-                fprintf(stderr, "Could not fork()");
-                exit(1);
+            fprintf(stderr, "Could not fork()");
+            exit(1);
         }
         // child
         if(pid1==0){
@@ -208,6 +209,7 @@ void eval(char *cmdline)
 	// }
     
     pid1 = fork();
+
     if(pid1 == 0){
         pid2 = fork();
     }
