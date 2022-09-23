@@ -162,13 +162,13 @@ void eval(char *cmdline)
             // redirect stdin to stdin_redir[i]
 
             fp = fopen("fork-output.txt","w");
-            dup2(stdin_redir[i],1);
+            dup2(stdin_redir[0],1); // TODO: i ------------------------------------------
         }
         // if (stdout_redir[i] > 0){
         //     // redirect stdout to stddout_redir[i]
         //     dup2(stdout_redir[i],1); // ????
         // }
-        execve(argv[cmds[i]],&argv[cmds[i]],newenviron);
+        execve(argv[cmds[0]],&argv[cmds[0]],newenviron); // TODO: i ------------------------------------------
 
         // Close any open file descriptors that will not be used by the child process. 
         // This includes file descriptors that were created as part of input/output redirection.
