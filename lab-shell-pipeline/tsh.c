@@ -150,6 +150,7 @@ void eval(char *cmdline)
             execve(argv[cmds[0]],&argv[cmds[0]],newenviron); // TODO: i ------------------------------------------
 
             // Close any open file descriptors that will not be used by the child process. 
+            // ?????
             // This includes file descriptors that were created as part of input/output redirection.
             // Run the executable in the context of the child process using execve()
 
@@ -163,7 +164,6 @@ void eval(char *cmdline)
             waitpid(pid1, status,WUNTRACED); // right one??????????????????????????????
         }
             
-
         return;
     }
     // multiple thingshey
