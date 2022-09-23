@@ -201,17 +201,20 @@ void eval(char *cmdline)
     pipe(p);
 
     // saw this online, does this work? --------------------------------------------
-    (pid1 = fork()) && (pid2 = fork());
+    // (pid1 = fork()) && (pid2 = fork());
     // if ((pid1 = fork() < 0)) {
 	// 	fprintf(stderr, "Could not fork()");
 	// 	exit(1);
 	// }
     
-
+    pid1 = fork();
+    if(pid1 == 0){
+        pid2 = fork();
+    }
     // child1
     if(pid1==0){
         // Check the command for any input or output redirection, and perform that redirection.
-        printf("child 1");
+        // printf("child 1");
         FILE * fp;
         if(stdin_redir[0] > 0){
             // redirect stdin to stdin_redir[i]
@@ -225,6 +228,10 @@ void eval(char *cmdline)
         }
         dup2(fileno(p[1]),STDOUT_FILENO);
         close(p[0]);
+
+        // printf("child 1");
+
+
         // if (stdout_redir[0] > 0){
         //     // redirect stdout to stddout_redir[i]
 
@@ -247,7 +254,7 @@ void eval(char *cmdline)
 
     } else if(pid2 == 0){
         // child2
-        printf("child 2");
+        // printf("child 2");
         // Check the command for any input or output redirection, and perform that redirection.
         FILE * fp;
         // if(stdin_redir[1] > 0){
@@ -264,6 +271,7 @@ void eval(char *cmdline)
             dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1 (?)
         }
         dup2(fileno(p[0]),STDIN_FILENO);
+
         close(p[1]);
         // Duplicate the appropriate pipe file descriptors to enable the standard output 
         // of one process to be piped to the standard input of the other process.
@@ -276,7 +284,7 @@ void eval(char *cmdline)
         execve(argv[cmds[1]],&argv[cmds[1]],newenviron); // TODO: i 
     } else {
         // parent
-        printf("parent");
+        // printf("parent");
 
         // Put the child process in its own process group,
         setpgid(pid1,pid1);
