@@ -151,6 +151,8 @@ void eval(char *cmdline)
     int pid1, pid2, p[2];
     char *newenviron[] = { NULL };
 
+    printf("%d",num_commands);
+
     if(num_commands == 1) {
         if ((pid1 = fork()) < 0) {
                 fprintf(stderr, "Could not fork()");
