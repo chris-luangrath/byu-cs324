@@ -141,10 +141,10 @@ void eval(char *cmdline)
 
     */
 
-    for(int i = 0; i < sizeof(num_args);i++){
-        builtin_cmd(&argv[cmds[i]]);
+    // for(int i = 0; i < sizeof(num_args);i++){
+    builtin_cmd(&argv[cmds[0]]);
         // check later
-    }
+    // }
     // int p[2];
     // pipe(p);
     // FILE * fp;
@@ -168,6 +168,7 @@ void eval(char *cmdline)
         }
         if (stdout_redir[0] > 0){
             // redirect stdout to stddout_redir[i]
+            
             fp = fopen(argv[stdout_redir[0]],"w");
             dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1 (?)
         }
