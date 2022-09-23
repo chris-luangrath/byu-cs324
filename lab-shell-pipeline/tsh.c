@@ -168,7 +168,7 @@ void eval(char *cmdline)
         //     // redirect stdout to stddout_redir[i]
         //     dup2(stdout_redir[i],1); // ????
         // }
-        execve(arvv[cmds[i]],&argv[cmds[i]],newenviron);
+        execve(argv[cmds[i]],&argv[cmds[i]],newenviron);
 
         // Close any open file descriptors that will not be used by the child process. 
         // This includes file descriptors that were created as part of input/output redirection.
