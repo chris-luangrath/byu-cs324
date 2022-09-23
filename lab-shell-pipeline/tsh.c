@@ -152,12 +152,12 @@ void eval(char *cmdline)
     char *newenviron[] = { NULL };
 
     if(sizeof(cmds) == 1) {
-        if ((pid = fork()) < 0) {
+        if ((pid1 = fork()) < 0) {
                 fprintf(stderr, "Could not fork()");
                 exit(1);
             }
             // child
-            if(pid==0){
+            if(pid1==0){
                 // Check the command for any input or output redirection, and perform that redirection.
                 FILE * fp;
                 if(stdin_redir[0] > 0){
@@ -183,10 +183,10 @@ void eval(char *cmdline)
                 // parent
 
                 // Put the child process in its own process group,
-                setpgid(pid,pid); 
+                setpgid(pid1,pid1); 
                 // wait for the child process to complete.
                 int *status;
-                waitpid(pid, status,WUNTRACED); // right one??????????????????????????????
+                waitpid(pid1, status,WUNTRACED); // right one??????????????????????????????
             }
             
 
