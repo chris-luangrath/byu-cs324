@@ -118,13 +118,8 @@ void eval(char *cmdline)
 
     builtin_cmd(argv);
 
-    // for(int i = 0; i < sizeof(num_args);i++){
     builtin_cmd(&argv[cmds[0]]);
-        // check later
-    // }
-    // int p[2];
-    // pipe(p);
-    // FILE * fp;
+    
     int pid1, pid2, p[2];
     char *newenviron[] = { NULL };
 
@@ -171,7 +166,6 @@ void eval(char *cmdline)
 
         return;
     }
-    printf("hey!");   
     // multiple thingshey
     // printf("multiple things");
     // Create a pipe.
