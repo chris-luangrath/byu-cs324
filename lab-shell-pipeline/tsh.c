@@ -155,43 +155,43 @@ void eval(char *cmdline)
         if ((pid1 = fork()) < 0) {
                 fprintf(stderr, "Could not fork()");
                 exit(1);
+        }
+        // child
+        if(pid1==0){
+            // Check the command for any input or output redirection, and perform that redirection.
+            FILE * fp;
+            if(stdin_redir[0] > 0){
+                // redirect stdin to stdin_redir[i]
+
+                fp = fopen(argv[stdin_redir[0]],"r");
+                dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
+                // dup2(stdin_redir[0],1); // TODO: i ------------------------------------------
             }
-            // child
-            if(pid1==0){
-                // Check the command for any input or output redirection, and perform that redirection.
-                FILE * fp;
-                if(stdin_redir[0] > 0){
-                    // redirect stdin to stdin_redir[i]
-
-                    fp = fopen(argv[stdin_redir[0]],"r");
-                    dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
-                    // dup2(stdin_redir[0],1); // TODO: i ------------------------------------------
-                }
-                if (stdout_redir[0] > 0){
-                    // redirect stdout to stddout_redir[i]
-                    
-                    fp = fopen(argv[stdout_redir[0]],"w");
-                    dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1 (?)
-                }
-                execve(argv[cmds[0]],&argv[cmds[0]],newenviron); // TODO: i ------------------------------------------
-
-                // Close any open file descriptors that will not be used by the child process. 
-                // This includes file descriptors that were created as part of input/output redirection.
-                // Run the executable in the context of the child process using execve()
-
-            } else {
-                // parent
-
-                // Put the child process in its own process group,
-                setpgid(pid1,pid1); 
-                // wait for the child process to complete.
-                int *status;
-                waitpid(pid1, status,WUNTRACED); // right one??????????????????????????????
+            if (stdout_redir[0] > 0){
+                // redirect stdout to stddout_redir[i]
+                
+                fp = fopen(argv[stdout_redir[0]],"w");
+                dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1 (?)
             }
+            execve(argv[cmds[0]],&argv[cmds[0]],newenviron); // TODO: i ------------------------------------------
+
+            // Close any open file descriptors that will not be used by the child process. 
+            // This includes file descriptors that were created as part of input/output redirection.
+            // Run the executable in the context of the child process using execve()
+
+        } else {
+            // parent
+
+            // Put the child process in its own process group,
+            setpgid(pid1,pid1); 
+            // wait for the child process to complete.
+            int *status;
+            waitpid(pid1, status,WUNTRACED); // right one??????????????????????????????
+        }
             
 
-            return;
-        }
+        return;
+        
     }
 
     // Create a pipe.
