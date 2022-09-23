@@ -158,7 +158,7 @@ void eval(char *cmdline)
     // child
     if(pid==0){
         // Check the command for any input or output redirection, and perform that redirection.
-        if(stdin_redir[i] > 0){
+        if(stdin_redir[0] > 0){
             // redirect stdin to stdin_redir[i]
 
             fp = fopen("fork-output.txt","w");
