@@ -126,7 +126,7 @@ void eval(char *cmdline)
     // char **argv1 = malloc(sizeof(char *)*MAXARGS);
     // int result1 = parseline(cmdline, argv1);
     // free (argv1);
-    printf("You entered: %s\n", cmdline);
+    // printf("You entered: %s\n", cmdline);
 
     /*
         - eval takes in command line, does stuff with it
@@ -179,7 +179,7 @@ void eval(char *cmdline)
         // parent
 
         // Put the child process in its own process group,
-        setpgid(pid,pid);
+        setpgid(pid,pid); 
         // wait for the child process to complete.
         int *status;
         waitpid(pid, status,WUNTRACED); // right one??????????????????????????????
