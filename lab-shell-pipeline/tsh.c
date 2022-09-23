@@ -162,9 +162,8 @@ void eval(char *cmdline)
             // redirect stdin to stdin_redir[i]
 
             fp = fopen(argv[stdin_redir[0]],"r");
-            int new;
-            new = fileno(fp);
-            dup2(new,1);
+            close(fp[1]);
+            dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
             // dup2(stdin_redir[0],1); // TODO: i ------------------------------------------
         }
         // if (stdout_redir[i] > 0){
@@ -184,7 +183,7 @@ void eval(char *cmdline)
         setpgid(pid,pid);
         // wait for the child process to complete.
         int *status;
-        waitpid(pid, status,WUNTRACED);
+        waitpid(pid, status,WUNTRACED); // right one??????????????????????????????
     }
     
 
