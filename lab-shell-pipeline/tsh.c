@@ -147,7 +147,7 @@ void eval(char *cmdline)
     }
     // int p[2];
     // pipe(p);
-    FILE * fp;
+    // FILE * fp;
     int pid;
     char *newenviron[] = { NULL };
 
@@ -158,6 +158,7 @@ void eval(char *cmdline)
     // child
     if(pid==0){
         // Check the command for any input or output redirection, and perform that redirection.
+        FILE * fp;
         if(stdin_redir[0] > 0){
             // redirect stdin to stdin_redir[i]
 
