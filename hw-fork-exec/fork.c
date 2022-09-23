@@ -8,9 +8,9 @@ int main(int argc, char *argv[]) {
 	int pid, p[2];
 	char inbuf[MSGSIZE];
 	FILE * fp;
-	fp = fopen("fork-output.txt","w");
-	fprintf(fp,"BEFORE FORK\n");
-	fflush(fp);
+	fp = fopen("fork-output.txt","r");
+	// fprintf(fp,"BEFORE FORK\n");
+	// fflush(fp);
 
 	pipe(p);
 	if ((pid = fork()) < 0) {

@@ -134,15 +134,53 @@ void eval(char *cmdline)
         - parseargs returns the number of commands in 
             - 
         - should builtin_cmd 
+        cmds has start of each command
+        argv has text and redirictions are null
+        argv[cmds[0]] is pathname, &argv[cmds[0]] is argv arguments, so on
+        stdin/out have different indexes if there's a redirection
+
     */
-    
-
-    
-
-//     int num_commands = parseargs(argv,cmds,stdin_redir,stdout_redir);
 
     for(int i = 0; i < sizeof(num_args);i++){
         builtin_cmd(&argv[cmds[i]]);
+        // check later
+    }
+    // int p[2];
+    // pipe(p);
+    FILE * fp;
+    int pid;
+    char *newenviron[] = { NULL };
+
+    if ((pid = fork()) < 0) {
+		fprintf(stderr, "Could not fork()");
+		exit(1);
+	}
+    // child
+    if(pid==0){
+        // Check the command for any input or output redirection, and perform that redirection.
+        if(stdin_redir[i] > 0){
+            // redirect stdin to stdin_redir[i]
+
+            fp = fopen("fork-output.txt","w");
+            dup2(stdin_redir[i],1);
+        }
+        // if (stdout_redir[i] > 0){
+        //     // redirect stdout to stddout_redir[i]
+        //     dup2(stdout_redir[i],1); // ????
+        // }
+        execve(arvv[cmds[i]],&argv[cmds[i]],newenviron);
+
+        // Close any open file descriptors that will not be used by the child process. 
+        // This includes file descriptors that were created as part of input/output redirection.
+        // Run the executable in the context of the child process using execve()
+
+    } else {
+        // parent
+
+        // Put the child process in its own process group,
+        setpgid(pid,pid);
+        // wait for the child process to complete.
+        wait(NULL);
     }
     
 
@@ -184,26 +222,26 @@ int parseargs(char **argv, int *cmds, int *stdin_redir, int *stdout_redir)
             argindex++;
             if (!argv[argindex]) { /* if we have reached the end, then break */
                 break;
-	    }
+	        }
             stdin_redir[cmdindex] = argindex;
-	} else if (strcmp(argv[argindex], ">") == 0) {
+        } else if (strcmp(argv[argindex], ">") == 0) {
             argv[argindex] = NULL;
             argindex++;
             if (!argv[argindex]) { /* if we have reached the end, then break */
                 break;
-	    }
+            }
             stdout_redir[cmdindex] = argindex;
-	} else if (strcmp(argv[argindex], "|") == 0) {
+        } else if (strcmp(argv[argindex], "|") == 0) {
             argv[argindex] = NULL;
             argindex++;
             if (!argv[argindex]) { /* if we have reached the end, then break */
                 break;
-	    }
+            }
             cmdindex++;
             cmds[cmdindex] = argindex;
             stdin_redir[cmdindex] = -1;
             stdout_redir[cmdindex] = -1;
-	}
+        }
         argindex++;
     }
 
@@ -274,7 +312,7 @@ int parseline(const char *cmdline, char **argv)
 int builtin_cmd(char **argv) 
 {
 
-    if (strcmp(argv[0],"qut") == 0){
+    if (strcmp(argv[0],"quit") == 0){
         // printf("quitting now\n");
         exit(0);
     }
