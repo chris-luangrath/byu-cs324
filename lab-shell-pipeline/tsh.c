@@ -123,11 +123,11 @@ void eval(char *cmdline)
     char *newenviron[] = { NULL };
 
     // only 1 thing
-    printf("numcommands: %d\n", num_commands);
-    printf("numargs: %d\n", num_args);
+    // printf("numcommands: %d\n", num_commands);
+    // printf("numargs: %d\n", num_args);
     // printf("stdout1: %d\n", stdout_redir[1]);
     if(num_args <= 1) {
-        printf("just 1 thing\n" );
+        // printf("just 1 thing\n" );
         if ((pid1 = fork()) < 0) {
             fprintf(stderr, "Could not fork()");
             exit(1);
@@ -170,7 +170,7 @@ void eval(char *cmdline)
     }   
 
     // multiple things
-    printf("just 2 thing\n" );
+    // printf("just 2 thing\n" );
     // Create a pipe.
     pipe(p);
     // if(pipe(p) != 0){
@@ -185,20 +185,15 @@ void eval(char *cmdline)
 	// 	exit(1);
 	// }
 
-    // child1
+    
     if(pid1==0){
+        // child1 ---
         // Check the command for any input or output redirection, and perform that redirection.
         FILE * fp;
         if((int)stdin_redir[0] > (int)0){
-            // redirect stdin to stdin_redir[i]
-
             fp = fopen(argv[stdin_redir[0]],"r");
             dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
             close(fileno(fp));
-            // dup2(stdin_redir[0],1); // TODO: i 
-            // Duplicate the appropriate pipe file descriptors to enable the standard output 
-            // of one process to be piped to the standard input of the other process.
-            
         }
         dup2(p[1],STDOUT_FILENO);
         close(p[0]);
@@ -208,34 +203,22 @@ void eval(char *cmdline)
 
     } else {
         if(pid2 == 0){
-            // child 2
-            // Check the command for any input or output redirection, and perform that redirection.
+            // child 2 ---
             FILE * fp;  
-            
-            if ((int)stdout_redir[1] > (int)0){
+            if (stdout_redir[1] > 0){
                 // redirect stdout to stddout_redir[i]
                 fp = fopen(argv[stdout_redir[1]],"w");
                 dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1
                 close(fileno(fp));
-                // TODO close file -----------------------
             }
             dup2(p[0],STDIN_FILENO);
             close(p[0]);
             close(p[1]);
-            // Duplicate the appropriate pipe file descriptors to enable the standard output 
-            // of one process to be piped to the standard input of the other process.
-
-            // Close any open file descriptors that will not be used by the child process. 
-
-            // Do i need to read from child 1 here?
-
-            // This includes file descriptors that were created as part of input/output redirection. ???? TODODODO
             
-
             // Run the executable in the context of the child process using execve()
             execve(argv[cmds[1]],&argv[cmds[1]],newenviron); // TODO: i 
         } else {
-            // (pid2 = fork());
+            // parent ---
 
             // Put the child process in its own process group,
             setpgid(pid1,pid1);
