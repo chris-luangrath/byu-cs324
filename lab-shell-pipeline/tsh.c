@@ -123,9 +123,9 @@ void eval(char *cmdline)
     char *newenviron[] = { NULL };
 
     // only 1 thing
-    printf("numcommands: %d\n", num_commands);
-    printf("numargs: %d\n", num_args);
-    printf("stdout1: %d\n", stdout_redir[1]);
+    // printf("numcommands: %d\n", num_commands);
+    // printf("numargs: %d\n", num_args);
+    // printf("stdout1: %d\n", stdout_redir[1]);
     if(num_args <= 1) {
         if ((pid1 = fork()) < 0) {
             fprintf(stderr, "Could not fork()");
