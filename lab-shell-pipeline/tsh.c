@@ -116,7 +116,7 @@ void eval(char *cmdline)
     int num_commands = parseline(cmdline, argv);
     int num_args = parseargs(argv,cmds,stdin_redir,stdout_redir);
 
-    builtin_cmd(argv);
+    // builtin_cmd(argv);
 
     builtin_cmd(&argv[cmds[0]]);
     
