@@ -232,7 +232,7 @@ void eval(char *cmdline)
             
             waitpid(pid1, status,0);
             waitpid(pid2, status,0);
-            kill(pid1);
+            kill(pid1,0);
         }
     }
 
