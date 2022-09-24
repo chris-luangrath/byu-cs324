@@ -200,7 +200,7 @@ void eval(char *cmdline)
             // of one process to be piped to the standard input of the other process.
             
         }
-        dup2(p[1]),STDOUT_FILENO);
+        dup2(p[1],STDOUT_FILENO);
         close(p[0]);
         close(p[1]);
         
