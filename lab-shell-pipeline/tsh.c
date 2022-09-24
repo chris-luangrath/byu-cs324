@@ -202,42 +202,17 @@ void eval(char *cmdline)
         dup2(fileno(p[1]),STDOUT_FILENO);
         close(p[0]);
         close(p[1]);
-        // if (stdout_redir[0] > 0){
-        //     // redirect stdout to stddout_redir[i]
-
-        //     fp = fopen(argv[stdout_redir[0]],"w");
-        //     dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1 (?)
-        //     // Duplicate the appropriate pipe file descriptors to enable the standard output 
-        //     // of one process to be piped to the standard input of the other process.
-        //     dup2(fileno(p[0]),STDIN_FILENO);
-        // }
-
-        // Duplicate the appropriate pipe file descriptors to enable the standard output 
-        // of one process to be piped to the standard input of the other process.
-        // dup2(fileno(p[1]),STDOUT_FILENO);
-
-        // Close any open file descriptors that will not be used by the child process. 
-        // This includes file descriptors that were created as part of input/output redirection. ???? TODODODO
         
-        // Run the executable in the context of the child process using execve()
         execve(argv[cmds[0]],&argv[cmds[0]],newenviron); // TODO: i 
 
     } else {
         if(pid2 == 0){
-            // child2
+            // child 2
             // Check the command for any input or output redirection, and perform that redirection.
             FILE * fp;  
-            // if(stdin_redir[1] > 0){
-            //     // redirect stdin to stdin_redir[i]
-
-            //     fp = fopen(argv[stdin_redir[1]],"r");
-            //     dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
-            //     // dup2(stdin_redir[0],1); // TODO: i 
-            // }
+            
             if ((int)stdout_redir[1] > (int)0){
                 // redirect stdout to stddout_redir[i]
-                fprintf("%d\n", stdout_redir[1]);
-
                 fp = fopen(argv[stdout_redir[1]],"w");
                 dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1
                 close(fileno(fp));
