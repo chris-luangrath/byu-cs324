@@ -125,8 +125,9 @@ void eval(char *cmdline)
     // only 1 thing
     printf("numcommands: %d\n", num_commands);
     printf("numargs: %d\n", num_args);
-    printf("stdout1: %d\n", stdout_redir[1]);
+    // printf("stdout1: %d\n", stdout_redir[1]);
     if(num_args <= 1) {
+        printf("just 1 thing\n" );
         if ((pid1 = fork()) < 0) {
             fprintf(stderr, "Could not fork()");
             exit(1);
@@ -169,7 +170,7 @@ void eval(char *cmdline)
     }   
 
     // multiple things
-    
+    printf("just 2 thing\n" );
     // Create a pipe.
     pipe(p);
     // if(pipe(p) != 0){
