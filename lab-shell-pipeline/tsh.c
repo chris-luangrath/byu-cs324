@@ -235,7 +235,7 @@ void eval(char *cmdline)
             // }
             if (stdout_redir[1] > 0){
                 // redirect stdout to stddout_redir[i]
-                fprintf("%s\n", stdout_redir[1]);
+                fprintf("%d\n", stdout_redir[1]);
 
                 fp = fopen(argv[stdout_redir[1]],"w");
                 dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1
