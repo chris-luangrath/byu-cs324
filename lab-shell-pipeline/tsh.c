@@ -152,8 +152,6 @@ void eval(char *cmdline)
             }
             execve(argv[cmds[0]],&argv[cmds[0]],newenviron); 
 
-            // Close any open file descriptors that will not be used by the child process. 
-            // This includes file descriptors that were created as part of input/output redirection.
             // Run the executable in the context of the child process using execve()
 
         } else {
@@ -163,7 +161,8 @@ void eval(char *cmdline)
             setpgid(pid1,pid1); 
             // wait for the child process to complete.
             int *status;
-            waitpid(pid1, status,0); 
+            waitpid(pid1, status,0);
+            kill(pid1,0);
         }
             
 
