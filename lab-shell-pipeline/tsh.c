@@ -142,7 +142,7 @@ void eval(char *cmdline)
                 dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
                 // dup2(stdin_redir[0],1); // TODO: i ------------------------------------------
             }
-            if ((int)stdout_redir[0] > 0){
+            if ((int)stdout_redir[0] > (int)0){
                 // redirect stdout to stddout_redir[i]
                 
                 fp = fopen(argv[stdout_redir[0]],"w");
@@ -188,7 +188,7 @@ void eval(char *cmdline)
     if(pid1==0){
         // Check the command for any input or output redirection, and perform that redirection.
         FILE * fp;
-        if((int)stdin_redir[0] > 0){
+        if((int)stdin_redir[0] > (int)0){
             // redirect stdin to stdin_redir[i]
 
             fp = fopen(argv[stdin_redir[0]],"r");
@@ -234,7 +234,7 @@ void eval(char *cmdline)
             //     dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
             //     // dup2(stdin_redir[0],1); // TODO: i 
             // }
-            if ((int)stdout_redir[1] > 0){
+            if ((int)stdout_redir[1] > (int)0){
                 // redirect stdout to stddout_redir[i]
                 fprintf("%d\n", stdout_redir[1]);
 
