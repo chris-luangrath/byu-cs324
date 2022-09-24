@@ -181,6 +181,28 @@ void eval(char *cmdline)
 	// 	exit(1);
 	// }
 
+
+    /*
+    first child
+    store first pid
+    open file
+    close stuff
+    
+
+    middle
+    get previous pipe, redirect to open of new pipe
+    set previous pipe number to current number
+    close stuff
+
+    end
+    get previous pipe, redirect to std out
+
+    parent
+    do all the pgids?
+
+
+    */
+
     // child1
     if(pid1==0){
         // Check the command for any input or output redirection, and perform that redirection.
@@ -191,7 +213,6 @@ void eval(char *cmdline)
             fp = fopen(argv[stdin_redir[0]],"r");
             dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
             close(fileno(fp));
-            // dup2(stdin_redir[0],1); // TODO: i 
             // Duplicate the appropriate pipe file descriptors to enable the standard output 
             // of one process to be piped to the standard input of the other process.
             
@@ -199,15 +220,6 @@ void eval(char *cmdline)
         dup2(fileno(p[1]),STDOUT_FILENO);
         close(p[0]);
         close(p[1]);
-        // if (stdout_redir[0] > 0){
-        //     // redirect stdout to stddout_redir[i]
-
-        //     fp = fopen(argv[stdout_redir[0]],"w");
-        //     dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1 (?)
-        //     // Duplicate the appropriate pipe file descriptors to enable the standard output 
-        //     // of one process to be piped to the standard input of the other process.
-        //     dup2(fileno(p[0]),STDIN_FILENO);
-        // }
 
         // Duplicate the appropriate pipe file descriptors to enable the standard output 
         // of one process to be piped to the standard input of the other process.
@@ -229,7 +241,6 @@ void eval(char *cmdline)
 
             //     fp = fopen(argv[stdin_redir[1]],"r");
             //     dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
-            //     // dup2(stdin_redir[0],1); // TODO: i 
             // }
             if (stdout_redir[1] > 0){
                 // redirect stdout to stddout_redir[i]
@@ -237,7 +248,6 @@ void eval(char *cmdline)
                 fp = fopen(argv[stdout_redir[1]],"w");
                 dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1
                 close(fileno(fp));
-                // TODO close file -----------------------
             }
             dup2(fileno(p[0]),STDIN_FILENO);
             close(p[0]);
@@ -247,15 +257,13 @@ void eval(char *cmdline)
 
             // Close any open file descriptors that will not be used by the child process. 
 
-            // Do i need to read from child 1 here?
-
             // This includes file descriptors that were created as part of input/output redirection. ???? TODODODO
             
 
             // Run the executable in the context of the child process using execve()
             execve(argv[cmds[1]],&argv[cmds[1]],newenviron); // TODO: i 
         } else {
-            // (pid2 = fork());
+            // Parent
 
             // Put the child process in its own process group,
             setpgid(pid1,pid1);
