@@ -162,7 +162,7 @@ void eval(char *cmdline)
             // wait for the child process to complete.
             int *status;
             waitpid(pid1, status,0);
-            kill(pid1,0);
+            // kill(pid1,0);
         }
             
 
@@ -232,7 +232,7 @@ void eval(char *cmdline)
             
             waitpid(pid1, status,0);
             waitpid(pid2, status,0);
-            kill(pid1,0);
+            // kill(pid1,0);
         }
     }
 
@@ -363,22 +363,12 @@ int parseline(const char *cmdline, char **argv)
  */
 int builtin_cmd(char **argv) 
 {
-
     if (strcmp(argv[0],"quit") == 0){
-        // printf("quitting now\n");
         exit(0);
     }
     else{
-            // printf("hey2\n");
-        //     printf("%ld\n",sizeof(argv));
-        // for (int i = 0; i < sizeof(argv); i++){
-        //     printf("it is: %s\n",argv[i]);
-        //     // printf("hey3\n");
-        // }
-        // printf("%s\n",argv[0]);
-
-        return 0;
-    }     /* not a builtin command */
+        return 0; /* not a builtin command */
+    }     
 }
 
 /***********************
