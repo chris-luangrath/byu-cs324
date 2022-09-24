@@ -179,12 +179,10 @@ void eval(char *cmdline)
     // }
 
     pid1 = fork();
-
     // if ((pid1 = fork() < 0)) {
 	// 	fprintf(stderr, "Could not fork()");
 	// 	exit(1);
 	// }
-
     
     if(pid1==0){
         // child1 ---
