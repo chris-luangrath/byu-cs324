@@ -229,18 +229,12 @@ void eval(char *cmdline)
 
             // wait for the child process to complete.
             int *status;
+            
             waitpid(pid1, status,0);
             waitpid(pid2, status,0);
+            kill(pid1);
         }
     }
-
-    /*
-    keep track of old pipe for all commands except last
-    first case 
-    middle cases
-    last case
-    */
-    
 
     return;
 }
