@@ -171,10 +171,11 @@ void eval(char *cmdline)
     // multiple things
     
     // Create a pipe.
-    if(pipe(p) != 0){
-        fprintf(stderr, "Could not pipe()");
-        exit(1);
-    }
+    pipe(p);
+    // if(pipe(p) != 0){
+    //     fprintf(stderr, "Could not pipe()");
+    //     exit(1);
+    // }
 
     // saw this online, does this work? --------------------------------------------
     pid1 = fork();
