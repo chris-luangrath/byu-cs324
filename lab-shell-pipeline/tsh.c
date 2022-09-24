@@ -141,15 +141,16 @@ void eval(char *cmdline)
 
                 fp = fopen(argv[stdin_redir[0]],"r");
                 dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
-                // dup2(stdin_redir[0],1); // TODO: i ------------------------------------------
+                close(fileno(fp));
             }
             if ((int)stdout_redir[0] > (int)0){
                 // redirect stdout to stddout_redir[i]
                 
                 fp = fopen(argv[stdout_redir[0]],"w");
                 dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1 (?)
+                close(fileno(fp));
             }
-            execve(argv[cmds[0]],&argv[cmds[0]],newenviron); // TODO: i ------------------------------------------
+            execve(argv[cmds[0]],&argv[cmds[0]],newenviron); 
 
             // Close any open file descriptors that will not be used by the child process. 
             // This includes file descriptors that were created as part of input/output redirection.
