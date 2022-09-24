@@ -123,7 +123,7 @@ void eval(char *cmdline)
     char *newenviron[] = { NULL };
 
     // only 1 thing
-    if(num_args == 0) {
+    if(num_args <= 1) {
         if ((pid1 = fork()) < 0) {
             fprintf(stderr, "Could not fork()");
             exit(1);
