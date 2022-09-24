@@ -200,7 +200,7 @@ void eval(char *cmdline)
             // of one process to be piped to the standard input of the other process.
             
         }
-        dup2(fileno(p[1]),STDOUT_FILENO);
+        dup2(p[1]),STDOUT_FILENO);
         close(p[0]);
         close(p[1]);
         
@@ -219,7 +219,7 @@ void eval(char *cmdline)
                 close(fileno(fp));
                 // TODO close file -----------------------
             }
-            dup2(fileno(p[0]),STDIN_FILENO);
+            dup2(p[0]),STDIN_FILENO);
             close(p[0]);
             close(p[1]);
             // Duplicate the appropriate pipe file descriptors to enable the standard output 
