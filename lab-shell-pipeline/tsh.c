@@ -143,7 +143,7 @@ void eval(char *cmdline)
         // child
         if(pid==0){
             // printf("child%d",i);
-            fprintf(stderr, "child%d",i);
+            fprintf(stderr, "child%d\n",i);
             // Check the command for any input or output redirection, and perform that redirection.
             FILE * fp;
 
@@ -179,13 +179,13 @@ void eval(char *cmdline)
                     exit(1);
                 }
                 newp[1] = -1;
-            } else if(newp[1] != -1){
+            } else if(newp[1] != -1 && i + 1 != num_args){
                 // close(newp[0]);
-                // if (close(newp[0]) < 0) {
-                //     fprintf(stderr, "this 4?");
-                //     exit(1);
-                // }
-                // newp[0] = -1;
+                if (close(newp[0]) < 0) {
+                    fprintf(stderr, "this 4?");
+                    exit(1);
+                }
+                newp[0] = -1;
                 dup2(newp[1],STDOUT_FILENO);
             }
 
