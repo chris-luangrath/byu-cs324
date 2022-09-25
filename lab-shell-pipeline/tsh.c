@@ -146,7 +146,7 @@ void eval(char *cmdline)
             if((int)stdin_redir[i] > 0){
                 // redirect stdin to stdin_redir[i
                 fp = fopen(argv[stdin_redir[i]],"r");
-                dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
+                dup2(fileno(fp),STDIN_FILENO);
                 close(fileno(fp));
             } else if(oldp[0] != -1){
                 close(oldp[1]);
@@ -175,13 +175,11 @@ void eval(char *cmdline)
             allPids[i] = pid;
             if (oldp[0] != -1){
                 close(oldp[0]);
-                // printf("huh");
             }
             if (oldp[1] != -1){
                 close(oldp[1]);
-                // printf("huh");
             }
-            close(newp[1]);
+            // close(newp[1]);
             oldp[0] = newp[0];
             oldp[1] = newp[1];
             newp[0] = -1;
