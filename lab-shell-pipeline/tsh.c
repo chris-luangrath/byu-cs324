@@ -12,7 +12,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <errno.h>
-#include <fcntl.h> // not needed
+// #include <fcntl.h> // not needed
 
 /* Misc manifest constants */
 #define MAXLINE    1024   /* max line size */
@@ -195,18 +195,18 @@ void eval(char *cmdline)
 	// }
     
     if(pid1==0){
-        open("ch1",O_RDONLY);
+        // open("ch1",O_RDONLY);
         // child1 ---
         // Check the command for any input or output redirection, and perform that redirection.
         FILE * fp;
         if((int)stdin_redir[0] > (int)0){
             fp = fopen(argv[stdin_redir[0]],"r");
             dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
-            close(STDIN_FILENO);
             close(fileno(fp));
         }
         dup2(p[1],STDOUT_FILENO);
-        // close(STDIN_FILENO)
+
+        close(STDIN_FILENO);
         close(STDOUT_FILENO);
         close(p[0]);
         close(p[1]);
@@ -216,7 +216,7 @@ void eval(char *cmdline)
     } else {
         pid2 = fork();
         if(pid2 == 0){
-            open("ch2",O_RDONLY);
+            // open("ch2",O_RDONLY);
             // child 2 ---
             FILE * fp;  
             if (stdout_redir[1] > 0){
@@ -224,10 +224,12 @@ void eval(char *cmdline)
                 fp = fopen(argv[stdout_redir[1]],"w");
                 dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1
                 close(fileno(fp));
-                close(STDOUT_FILENO);
             }
             dup2(p[0],STDIN_FILENO);
-            // close(p[0]); -----------------
+
+            close(STDIN_FILENO);
+            close(STDOUT_FILENO);
+            close(p[0]);
             close(p[1]);
             
             // Run the executable in the context of the child process using execve()
@@ -235,7 +237,7 @@ void eval(char *cmdline)
         } else {
             
             // parent ---
-            open("par",O_RDONLY);
+            // open("par",O_RDONLY);
 
             // Put the child process in its own process group,
             setpgid(pid1,pid1);
