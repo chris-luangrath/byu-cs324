@@ -129,7 +129,7 @@ void eval(char *cmdline)
 
     printf("numcommands: %d\n", num_commands);
     printf("numargs: %d\n", num_args);
-    for (int i = 0; i < num_commands; i++){
+    for (int i = 0; i < num_args; i++){
         builtin_cmd(argv[cmds[i]]);
         if ((pipe(newp)) < 0) {
             fprintf(stderr, "Could not pipe()");
@@ -188,7 +188,7 @@ void eval(char *cmdline)
             setpgid(pid,pid1); 
         }
     }
-    for(int i = 0; i < num_commands; i++){
+    for(int i = 0; i < num_args; i++){
         waitpid(allPids[i], status,0);
     }
     return;
