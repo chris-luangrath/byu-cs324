@@ -133,6 +133,10 @@ void eval(char *cmdline)
     // printf("stdout1: %d\n", stdout_redir[1]);
     for (int i = 0; i < num_commands; i++){
         builtin_cmd(argv[cmds[i]]);
+        if ((fork(pipe(newp))) < 0) {
+            fprintf(stderr, "Could not pipe()");
+            exit(1);
+        }
         if ((pid = fork()) < 0) {
             fprintf(stderr, "Could not fork()");
             exit(1);
@@ -164,14 +168,19 @@ void eval(char *cmdline)
             execve(argv[cmds[i]],&argv[cmds[i]],newenviron); 
             printf("%s: Command not found\n%s\n", argv[cmds[i]]);
             exit(1);
-            // Run the executable in the context of the child process using execve()
-
         } else {
             // parent
             if(pid1 == -1){
                 pid = pid;
             }
             setpgid(pid,pid1);
+            allPids[i] = pid;
+            if (oldp[0] != -1){
+                close(oldp[0]);
+            }
+            if (oldp[1] != -1){
+                close(oldp[1]);
+            }
             oldp[0] = newp[0];
             oldp[1] = newp[1];
             newp[0] = -1;
@@ -179,10 +188,7 @@ void eval(char *cmdline)
             
             // Put the child process in its own process group,
             setpgid(pid,pid1); 
-            // wait for the child process to complete.
         }
-            
-
     }
     for(int i = 0; i < num_commands; i++){
         waitpid(allPids[i], status,0);
