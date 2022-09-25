@@ -178,11 +178,11 @@ void eval(char *cmdline)
                 newp[1] = -1;
             } else if(newp[1] != -1){
                 // close(newp[0]);
-                if (close(newp[0]) < 0) {
-                    fprintf(stderr, "this 4?");
-                    exit(1);
-                }
-                newp[0] = -1;
+                // if (close(newp[0]) < 0) {
+                //     fprintf(stderr, "this 4?");
+                //     exit(1);
+                // }
+                // newp[0] = -1;
                 dup2(newp[1],STDOUT_FILENO);
             }
 
