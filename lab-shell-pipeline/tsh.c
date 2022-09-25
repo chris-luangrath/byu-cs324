@@ -164,12 +164,12 @@ void eval(char *cmdline)
             }
 
             execve(argv[cmds[i]],&argv[cmds[i]],newenviron); 
-            printf("%s: Command not found\n%s\n", argv[cmds[i]]);
+            printf("%s: Command not found\n", argv[cmds[i]]);
             exit(1);
         } else {
             // parent
             if(pid1 == -1){
-                pid = pid;
+                pid1 = pid;
             }
             setpgid(pid,pid1);
             allPids[i] = pid;
@@ -192,83 +192,6 @@ void eval(char *cmdline)
         waitpid(allPids[i], status,0);
     }
     return;
-
-    // // 1 or no
-    // if(num_args <= 1) {
-    //     // printf("just 1 thing\n" );
-        
-    // } 
-    // else {
-
-    //     pipe(p);
-    //     // if(pipe(p) != 0){
-    //     //     fprintf(stderr, "Could not pipe()");
-    //     //     exit(1);
-    //     // }
-
-    //     pid = fork();
-    //     // if ((pid1 = fork() < 0)) {
-    //     // 	fprintf(stderr, "Could not fork()");
-    //     // 	exit(1);
-    //     // }
-        
-    //     if(pid==0){
-    //         // child1 ---
-    //         // Check the command for any input or output redirection, and perform that redirection.
-    //         FILE * fp;
-    //         if((int)stdin_redir[0] > (int)0){
-    //             fp = fopen(argv[stdin_redir[0]],"r");
-    //             dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
-    //             close(fileno(fp));
-    //         }
-    //         if (stdout_redir[1] > 0){
-    //             // redirect stdout to stddout_redir[i]
-    //             fp = fopen(argv[stdout_redir[1]],"w");
-    //             dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1
-    //             close(fileno(fp));
-    //         }
-
-    //         dup2(p[1],STDOUT_FILENO);
-
-    //         close(p[0]);
-    //         close(p[1]);
-            
-    //         execve(argv[cmds[0]],&argv[cmds[0]],newenviron); // TODO: i 
-
-    //     } else {
-    //         pid2 = fork();  
-    //         if(pid2 == 0){
-    //             // child 2 ---
-    //             FILE * fp;  
-                
-    //             dup2(p[0],STDIN_FILENO);
-
-    //             close(p[0]);
-    //             close(p[1]);
-                
-    //             // Run the executable in the context of the child process using execve()
-    //             execve(argv[cmds[1]],&argv[cmds[1]],newenviron); // TODO: i 
-    //         } else {
-    //             // parent ---
-
-    //             // Put the child process in its own process group,
-    //             setpgid(pid,pid);
-    //             setpgid(pid2,pid); 
-
-    //             close(p[0]);
-    //             close(p[1]);
-
-    //             // wait for the child process to complete.
-    //             int *status;
-                
-    //             waitpid(pid, status,0);
-    //             waitpid(pid2, status,0);
-    //         }
-    //     }
-
-    //     return;
-    // }
-    // exit(1);
 
 }
 
