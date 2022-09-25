@@ -200,8 +200,6 @@ void eval(char *cmdline)
         execve(argv[cmds[0]],&argv[cmds[0]],newenviron); // TODO: i 
 
     } else {
-        pid2 = fork();
-        
         if(pid2 == 0){
             // child 2 ---
             FILE * fp;  
@@ -218,6 +216,7 @@ void eval(char *cmdline)
             // Run the executable in the context of the child process using execve()
             execve(argv[cmds[1]],&argv[cmds[1]],newenviron); // TODO: i 
         } else {
+            pid2 = fork();
             // parent ---
 
             // Put the child process in its own process group,
