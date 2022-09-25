@@ -225,14 +225,14 @@ void eval(char *cmdline)
 
                 close(STDIN_FILENO);
                 close(STDOUT_FILENO);
-                close(p[0]);
+                // close(p[0]);
                 close(p[1]);
                 
                 // Run the executable in the context of the child process using execve()
                 execve(argv[cmds[1]],&argv[cmds[1]],newenviron); // TODO: i 
             } else {
                 // parent ---
-                
+
                 // open("par",O_RDONLY);
                 printf("child1: %d\n", pid1);
                 printf("child2: %d\n", pid2);
