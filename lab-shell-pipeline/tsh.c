@@ -142,7 +142,8 @@ void eval(char *cmdline)
         }
         // child
         if(pid==0){
-            printf("child%d",i);
+            // printf("child%d",i);
+            fprintf(stderr, "child%d",i);
             // Check the command for any input or output redirection, and perform that redirection.
             FILE * fp;
 
@@ -154,11 +155,11 @@ void eval(char *cmdline)
                 // redirect stdin to stdin_redir[i
                 fp = fopen(argv[stdin_redir[i]],"r");
                 dup2(fileno(fp),STDIN_FILENO);
-                // close(fileno(fp));
-                if (close(fileno(fp)) < 0) {
-                    fprintf(stderr, "1");
-                    exit(1);
-                }
+                close(fileno(fp));
+                // if (close(fileno(fp)) < 0) {
+                //     fprintf(stderr, "1");
+                //     exit(1);
+                // }
             } else if(oldp[0] != -1){
                 dup2(oldp[0],STDIN_FILENO);
             }
