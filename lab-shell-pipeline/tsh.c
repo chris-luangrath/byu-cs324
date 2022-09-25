@@ -143,7 +143,7 @@ void eval(char *cmdline)
         // child
         if(pid==0){
             // printf("child%d",i);
-            fprintf(stderr, "child%d\n",i);
+            // fprintf(stderr, "child%d\n",i);
             // Check the command for any input or output redirection, and perform that redirection.
             FILE * fp;
 
