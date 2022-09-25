@@ -210,7 +210,6 @@ void eval(char *cmdline)
             execve(argv[cmds[0]],&argv[cmds[0]],newenviron); // TODO: i 
 
         } else {
-            pid2 = fork();
             if(pid2 == 0){
                 // open("ch2",O_RDONLY);
                 // child 2 ---
@@ -231,7 +230,7 @@ void eval(char *cmdline)
                 // Run the executable in the context of the child process using execve()
                 execve(argv[cmds[1]],&argv[cmds[1]],newenviron); // TODO: i 
             } else {
-                
+                pid2 = fork();
                 // parent ---
                 // open("par",O_RDONLY);
                 printf("child1: %d\n", pid1);
