@@ -194,6 +194,7 @@ void eval(char *cmdline)
 	// }
     
     if(pid1==0){
+        fprintf(stderr, "child1");
         // child1 ---
         // Check the command for any input or output redirection, and perform that redirection.
         FILE * fp;
@@ -214,6 +215,7 @@ void eval(char *cmdline)
     } else {
         pid2 = fork();
         if(pid2 == 0){
+            fprintf(stderr, "child2");
             // child 2 ---
             FILE * fp;  
             if (stdout_redir[1] > 0){
@@ -232,6 +234,7 @@ void eval(char *cmdline)
         } else {
             
             // parent ---
+            fprintf(stderr, "par");
 
             // Put the child process in its own process group,
             setpgid(pid1,pid1);
