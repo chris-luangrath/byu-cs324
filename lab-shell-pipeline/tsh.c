@@ -122,7 +122,7 @@ void eval(char *cmdline)
     int pid, pid2;
     int pid1 = -1;
     // p[2], oldp[2], newp[2], pid1;
-    int foldp[2], newp[2] = {-1,-1}; 
+    int oldp[2], newp[2] = {-1,-1}; 
     int *status;
     int allPids[MAXCMDS];
     char *newenviron[] = { NULL };
