@@ -181,9 +181,9 @@ void eval(char *cmdline)
                 close(oldp[1]);
                 // printf("huh");
             }
+            close(newp[1]);
             oldp[0] = newp[0];
             oldp[1] = newp[1];
-            close(newp[1]);
             newp[0] = -1;
             newp[1] = -1;
             
