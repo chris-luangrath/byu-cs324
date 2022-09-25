@@ -119,7 +119,7 @@ void eval(char *cmdline)
 
     // builtin_cmd(argv);
 
-    int pid, pid2;
+    int pid;
     int pid1 = -1;
     // p[2], oldp[2], newp[2], pid1;
     int oldp[2], newp[2] = {-1,-1}; 
@@ -128,7 +128,7 @@ void eval(char *cmdline)
     char *newenviron[] = { NULL };
 
     // printf("numcommands: %d\n", num_commands);
-    // printf("numargs: %d\n", num_args);
+    printf("numargs: %d\n", num_args);
     for (int i = 0; i < num_args; i++){
         builtin_cmd(&argv[cmds[i]]);
         if ((pipe(newp)) < 0) {
