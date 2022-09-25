@@ -156,7 +156,7 @@ void eval(char *cmdline)
 
         } else {
             // parent
-
+            
             // Put the child process in its own process group,
             setpgid(pid1,pid1); 
             // wait for the child process to complete.
@@ -216,8 +216,9 @@ void eval(char *cmdline)
             // Run the executable in the context of the child process using execve()
             execve(argv[cmds[1]],&argv[cmds[1]],newenviron); // TODO: i 
         } else {
-            pid2 = fork();
+            
             // parent ---
+            pid2 = fork();
 
             // Put the child process in its own process group,
             setpgid(pid1,pid1);
