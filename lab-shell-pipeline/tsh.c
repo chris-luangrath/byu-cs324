@@ -184,7 +184,7 @@ void eval(char *cmdline)
             
 
     }
-    for(int i < 0; i < num_commands; i++){
+    for(int i = 0; i < num_commands; i++){
         waitpid(allPids[i], status,0);
     }
 
