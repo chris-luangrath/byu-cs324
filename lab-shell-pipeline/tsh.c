@@ -117,6 +117,11 @@ void eval(char *cmdline)
     int num_commands = parseline(cmdline, argv);
     int num_args = parseargs(argv,cmds,stdin_redir,stdout_redir);
 
+    if(num_commands == 0){
+        num_commands = num_commands;
+        // This is just to suppress warning, gross
+    }
+
     builtin_cmd(argv);
 
     int pid1, pid2, p[2];
@@ -158,7 +163,7 @@ void eval(char *cmdline)
             }
 
             execve(argv[cmds[0]],&argv[cmds[0]],newenviron); 
-            printf("%s: Command not found\n%s\n", argv[cmds[0]]);
+            printf("%s: Command not found\n", argv[cmds[0]]);
             exit(1);
             // Run the executable in the context of the child process using execve()
 
@@ -179,11 +184,11 @@ void eval(char *cmdline)
         // multiple things
         // printf("just 2 thing\n" );
         // Create a pipe.
-        pipe(p);
-        // if(pipe(p) != 0){
-        //     fprintf(stderr, "Could not pipe()");
-        //     exit(1);
-        // }
+        // pipe(p);
+        if(pipe(p) != 0){
+            fprintf(stderr, "Could not pipe()");
+            exit(1);
+        }
 
         pid1 = fork();
         // if ((pid1 = fork() < 0)) {
@@ -236,10 +241,10 @@ void eval(char *cmdline)
                 close(p[1]);
 
                 // wait for the child process to complete.
-                int *status;
+                // int *status;
                 
-                waitpid(pid1, status,0);
-                waitpid(pid2, status,0);
+                waitpid(pid1, NULL,0);
+                waitpid(pid2, NULL,0);
             }
         }
 
