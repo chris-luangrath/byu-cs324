@@ -159,11 +159,6 @@ void eval(char *cmdline)
                 }
             } else if(oldp[0] != -1){
                 dup2(oldp[0],STDIN_FILENO);
-                // close(newp[0]);
-                if (close(newp[0]) < 0) {
-                    fprintf(stderr, "2");
-                    exit(1);
-                }
             }
             
             if ((int)stdout_redir[i] > (int)0){
@@ -180,7 +175,7 @@ void eval(char *cmdline)
                     fprintf(stderr, "3");
                     exit(1);
                 }
-            } else if(newp[0] != -1){
+            } else if(newp[1] != -1){
                 // close(newp[0]);
                 if (close(newp[0]) < 0) {
                     fprintf(stderr, "4");
