@@ -147,6 +147,7 @@ void eval(char *cmdline)
                 dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
                 
                 close(fileno(fp));
+                close(STDIN_FILENO); // why is this breaking????
             }
             if ((int)stdout_redir[0] > (int)0){
                 // redirect stdout to stddout_redir[i]
@@ -155,8 +156,9 @@ void eval(char *cmdline)
                 dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1 (?)
                 close(fileno(fp));
             }
-            // close(STDIN_FILENO); why is this breaking????
-            // close(STDOUT_FILENO); why is this breaking?????
+            
+
+            // close(STDOUT_FILENO); // why is this breaking?????
             execve(argv[cmds[0]],&argv[cmds[0]],newenviron); 
 
             // Run the executable in the context of the child process using execve()
