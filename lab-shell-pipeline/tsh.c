@@ -207,7 +207,7 @@ void eval(char *cmdline)
         // close(STDIN_FILENO)
         close(STDOUT_FILENO);
         close(p[0]);
-        close(p[1]); -----------------
+        close(p[1]);
         
         execve(argv[cmds[0]],&argv[cmds[0]],newenviron); // TODO: i 
 
