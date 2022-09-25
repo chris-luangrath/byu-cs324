@@ -174,88 +174,87 @@ void eval(char *cmdline)
             
 
         return;
-    }   
-
-
-
-
-    // multiple things
-    // printf("just 2 thing\n" );
-    // Create a pipe.
-    pipe(p);
-    // if(pipe(p) != 0){
-    //     fprintf(stderr, "Could not pipe()");
-    //     exit(1);
-    // }
-
-    pid1 = fork();
-    // if ((pid1 = fork() < 0)) {
-	// 	fprintf(stderr, "Could not fork()");
-	// 	exit(1);
-	// }
-    
-    if(pid1==0){
-        // open("ch1",O_RDONLY);
-        // child1 ---
-        // Check the command for any input or output redirection, and perform that redirection.
-        FILE * fp;
-        if((int)stdin_redir[0] > (int)0){
-            fp = fopen(argv[stdin_redir[0]],"r");
-            dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
-            close(fileno(fp));
-        }
-        dup2(p[1],STDOUT_FILENO);
-
-        close(STDIN_FILENO);
-        close(STDOUT_FILENO);
-        close(p[0]);
-        close(p[1]);
-        
-        execve(argv[cmds[0]],&argv[cmds[0]],newenviron); // TODO: i 
-
     } else {
-        pid2 = fork();
-        if(pid2 == 0){
-            // open("ch2",O_RDONLY);
-            // child 2 ---
-            FILE * fp;  
-            if (stdout_redir[1] > 0){
-                // redirect stdout to stddout_redir[i]
-                fp = fopen(argv[stdout_redir[1]],"w");
-                dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1
+        // multiple things
+        // printf("just 2 thing\n" );
+        // Create a pipe.
+        pipe(p);
+        // if(pipe(p) != 0){
+        //     fprintf(stderr, "Could not pipe()");
+        //     exit(1);
+        // }
+
+        pid1 = fork();
+        // if ((pid1 = fork() < 0)) {
+        // 	fprintf(stderr, "Could not fork()");
+        // 	exit(1);
+        // }
+        
+        if(pid1==0){
+            // open("ch1",O_RDONLY);
+            // child1 ---
+            // Check the command for any input or output redirection, and perform that redirection.
+            FILE * fp;
+            if((int)stdin_redir[0] > (int)0){
+                fp = fopen(argv[stdin_redir[0]],"r");
+                dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
                 close(fileno(fp));
             }
-            dup2(p[0],STDIN_FILENO);
+            dup2(p[1],STDOUT_FILENO);
 
             close(STDIN_FILENO);
             close(STDOUT_FILENO);
             close(p[0]);
             close(p[1]);
             
-            // Run the executable in the context of the child process using execve()
-            execve(argv[cmds[1]],&argv[cmds[1]],newenviron); // TODO: i 
+            execve(argv[cmds[0]],&argv[cmds[0]],newenviron); // TODO: i 
+
         } else {
-            
-            // parent ---
-            // open("par",O_RDONLY);
+            pid2 = fork();
+            if(pid2 == 0){
+                // open("ch2",O_RDONLY);
+                // child 2 ---
+                FILE * fp;  
+                if (stdout_redir[1] > 0){
+                    // redirect stdout to stddout_redir[i]
+                    fp = fopen(argv[stdout_redir[1]],"w");
+                    dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1
+                    close(fileno(fp));
+                }
+                dup2(p[0],STDIN_FILENO);
 
-            // Put the child process in its own process group,
-            setpgid(pid1,pid1);
-            setpgid(pid2,pid1); 
+                close(STDIN_FILENO);
+                close(STDOUT_FILENO);
+                close(p[0]);
+                close(p[1]);
+                
+                // Run the executable in the context of the child process using execve()
+                execve(argv[cmds[1]],&argv[cmds[1]],newenviron); // TODO: i 
+            } else {
+                
+                // parent ---
+                // open("par",O_RDONLY);
 
-            close(p[0]);
-            close(p[1]);
+                // Put the child process in its own process group,
+                setpgid(pid1,pid1);
+                setpgid(pid2,pid1); 
 
-            // wait for the child process to complete.
-            int *status;
-            
-            waitpid(pid1, status,0);
-            waitpid(pid2, status,0);
-            // kill(pid1,0);
+                close(p[0]);
+                close(p[1]);
+
+                // wait for the child process to complete.
+                int *status;
+                
+                waitpid(pid1, status,0);
+                waitpid(pid2, status,0);
+                // kill(pid1,0);
+            }
         }
-    }
 
-    return;
+        return;
+    }
+    exit(1);
+
 }
 
 /* 
