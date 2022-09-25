@@ -230,7 +230,7 @@ void eval(char *cmdline)
 
                 // close(STDIN_FILENO); WHY DID COMMENTING THIS OUT FIX IT??????????????????
                 // close(STDOUT_FILENO);
-                // close(p[0]);
+                close(p[0]);
                 close(p[1]);
                 
                 // Run the executable in the context of the child process using execve()
