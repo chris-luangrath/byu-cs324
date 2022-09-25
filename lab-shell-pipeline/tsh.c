@@ -151,6 +151,8 @@ void eval(char *cmdline)
             } else if(oldp[0] != -1){
                 close(oldp[1]);
                 dup2(oldp[0],STDIN_FILENO);
+            } else {
+                close(newp[1]);
             }
             
             if ((int)stdout_redir[i] > (int)0){
@@ -161,6 +163,8 @@ void eval(char *cmdline)
             } else if(newp[0] != -1){
                 close(newp[0]);
                 dup2(newp[1],STDOUT_FILENO);
+            } else {
+                clse(newp[0]);
             }
 
             execve(argv[cmds[i]],&argv[cmds[i]],newenviron); 
