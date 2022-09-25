@@ -207,8 +207,8 @@ void eval(char *cmdline)
             }
             dup2(p[1],STDOUT_FILENO);
 
-            close(STDIN_FILENO);
-            close(STDOUT_FILENO);
+            // close(STDIN_FILENO);
+            // close(STDOUT_FILENO);
             close(p[0]);
             close(p[1]);
             
