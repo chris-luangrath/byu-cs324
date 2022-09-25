@@ -156,7 +156,7 @@ void eval(char *cmdline)
                 close(fileno(fp));
             }
             close(STDIN_FILENO);
-            close(STDOUT_FILENO);
+            // close(STDOUT_FILENO); why is this breaking?????
             execve(argv[cmds[0]],&argv[cmds[0]],newenviron); 
 
             // Run the executable in the context of the child process using execve()
@@ -223,7 +223,7 @@ void eval(char *cmdline)
                 }
                 dup2(p[0],STDIN_FILENO);
 
-                // close(STDIN_FILENO);
+                // close(STDIN_FILENO); WHY DID COMMENTING THIS OUT FIX IT??????????????????
                 // close(STDOUT_FILENO);
                 // close(p[0]);
                 close(p[1]);
