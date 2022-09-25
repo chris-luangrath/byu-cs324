@@ -162,7 +162,7 @@ void eval(char *cmdline)
             // close(STDOUT_FILENO); // why is this breaking????? DONT TAKE THESE OUT!!!!
 
             execve(argv[cmds[0]],&argv[cmds[0]],newenviron); 
-            printf("%s: Command not found\n%s\n", myArgs[0], strerror(errno));
+            printf("%s: Command not found\n%s\n", argv[cmds[0]], strerror(errno));
             exit(1);
             // Run the executable in the context of the child process using execve()
 
