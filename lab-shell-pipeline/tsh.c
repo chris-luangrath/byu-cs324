@@ -163,6 +163,8 @@ void eval(char *cmdline)
 
         } else {
             // parent
+            printf("child1: %d\n", pid1);
+            printf("child2: %d\n", pid2);
             
             // Put the child process in its own process group,
             setpgid(pid1,pid1); 
