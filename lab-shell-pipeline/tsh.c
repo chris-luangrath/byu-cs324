@@ -143,9 +143,9 @@ void eval(char *cmdline)
             // Check the command for any input or output redirection, and perform that redirection.
             FILE * fp;
 
-            if(oldp[0] != -1){
+            if(oldp[1] != -1){
                 close(oldp[1]);
-                oldp = -1
+                oldp[1] = -1;
             }
             if((int)stdin_redir[i] > 0){
                 // redirect stdin to stdin_redir[i
@@ -162,6 +162,7 @@ void eval(char *cmdline)
                 fp = fopen(argv[stdout_redir[i]],"w");
                 dup2(fileno(fp),STDOUT_FILENO); 
                 close(fileno(fp));
+                close(newp[1]);
             } else if(newp[0] != -1){
                 close(newp[0]);
                 dup2(newp[1],STDOUT_FILENO);
@@ -188,6 +189,12 @@ void eval(char *cmdline)
             oldp[1] = newp[1];
             newp[0] = -1;
             newp[1] = -1;
+            if (newp[0] != -1){
+                close(oldp[0]);
+            }
+            if (newp[1] != -1){
+                close(oldp[1]);
+            }
             
         }
     }
