@@ -119,78 +119,92 @@ void eval(char *cmdline)
 
     builtin_cmd(argv);
 
-    int pid1, pid2, p[2];
+    int pid, pid2
+    int pid1 = -1;
+    // p[2], oldp[2], newp[2], pid1;
+    int p[2], oldp[2], newp[2] = {-1,-1}; 
     char *newenviron[] = { NULL };
 
     // only 1 thing
     // printf("numcommands: %d\n", num_commands);
     // printf("numargs: %d\n", num_args);
     // printf("stdout1: %d\n", stdout_redir[1]);
+    for (int i = 0; i < num_commands;i++){
 
+    }
 
     // 1 or no
     if(num_args <= 1) {
         // printf("just 1 thing\n" );
-        if ((pid1 = fork()) < 0) {
+        if ((pid = fork()) < 0) {
             fprintf(stderr, "Could not fork()");
             exit(1);
         }
         // child
-        if(pid1==0){
+        if(pid==0){
             // Check the command for any input or output redirection, and perform that redirection.
             FILE * fp;
-            if((int)stdin_redir[0] > 0){
-                // redirect stdin to stdin_redir[i]
-
-                fp = fopen(argv[stdin_redir[0]],"r");
+            if((int)stdin_redir[i] > 0){
+                // redirect stdin to stdin_redir[i
+                fp = fopen(argv[stdin_redir[i]],"r");
                 dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
                 close(fileno(fp));
-
+            } else if(oldp[0] != -1){
+                close(oldp[1]);
+                dup2(oldp[0],STDIN_FILENO);
             }
-            if ((int)stdout_redir[0] > (int)0){
+            
+            if ((int)stdout_redir[i] > (int)0){
                 // redirect stdout to stddout_redir[i]
-                
-                fp = fopen(argv[stdout_redir[0]],"w");
+                fp = fopen(argv[stdout_redir[i]],"w");
                 dup2(fileno(fp),STDOUT_FILENO); 
                 close(fileno(fp));
+            } else if(newp[0] != -1){
+                close(newp[0]);
+                dup2(newp[1],STDOUT_FILENO);
             }
 
-
-            execve(argv[cmds[0]],&argv[cmds[0]],newenviron); 
-            printf("%s: Command not found\n%s\n", argv[cmds[0]]);
+            execve(argv[cmds[i]],&argv[cmds[i]],newenviron); 
+            printf("%s: Command not found\n%s\n", argv[cmds[i]]);
             exit(1);
             // Run the executable in the context of the child process using execve()
 
         } else {
             // parent
+            if(pid1 == -1){
+                pid = pid;
+            }
+            setpgid(pid,pid1);
+            oldp[0] = newp[0];
+            oldp[1] = newp[1];
+            newp[0] = -1;
+            newp[1] = -1;
             
             // Put the child process in its own process group,
-            setpgid(pid1,pid1); 
+            setpgid(pid,pid); 
             // wait for the child process to complete.
             int *status;
-            waitpid(pid1, status,0);
+            waitpid(pid, status,0);
             // kill(pid1,0);
         }
             
 
         return;
     } else {
-        // multiple things
-        // printf("just 2 thing\n" );
-        // Create a pipe.
+
         pipe(p);
         // if(pipe(p) != 0){
         //     fprintf(stderr, "Could not pipe()");
         //     exit(1);
         // }
 
-        pid1 = fork();
+        pid = fork();
         // if ((pid1 = fork() < 0)) {
         // 	fprintf(stderr, "Could not fork()");
         // 	exit(1);
         // }
         
-        if(pid1==0){
+        if(pid==0){
             // child1 ---
             // Check the command for any input or output redirection, and perform that redirection.
             FILE * fp;
@@ -199,6 +213,13 @@ void eval(char *cmdline)
                 dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
                 close(fileno(fp));
             }
+            if (stdout_redir[1] > 0){
+                // redirect stdout to stddout_redir[i]
+                fp = fopen(argv[stdout_redir[1]],"w");
+                dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1
+                close(fileno(fp));
+            }
+
             dup2(p[1],STDOUT_FILENO);
 
             close(p[0]);
@@ -211,12 +232,7 @@ void eval(char *cmdline)
             if(pid2 == 0){
                 // child 2 ---
                 FILE * fp;  
-                if (stdout_redir[1] > 0){
-                    // redirect stdout to stddout_redir[i]
-                    fp = fopen(argv[stdout_redir[1]],"w");
-                    dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1
-                    close(fileno(fp));
-                }
+                
                 dup2(p[0],STDIN_FILENO);
 
                 close(p[0]);
@@ -228,8 +244,8 @@ void eval(char *cmdline)
                 // parent ---
 
                 // Put the child process in its own process group,
-                setpgid(pid1,pid1);
-                setpgid(pid2,pid1); 
+                setpgid(pid,pid);
+                setpgid(pid2,pid); 
 
                 close(p[0]);
                 close(p[1]);
@@ -237,7 +253,7 @@ void eval(char *cmdline)
                 // wait for the child process to complete.
                 int *status;
                 
-                waitpid(pid1, status,0);
+                waitpid(pid, status,0);
                 waitpid(pid2, status,0);
             }
         }
