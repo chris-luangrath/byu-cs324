@@ -178,7 +178,7 @@ void eval(char *cmdline)
             } else if(newp[1] != -1){
                 // close(newp[0]);
                 if (close(newp[0]) < 0) {
-                    fprintf(stderr, "4");
+                    fprintf(stderr, "this 4?");
                     exit(1);
                 }
                 dup2(newp[1],STDOUT_FILENO);
