@@ -126,6 +126,9 @@ void eval(char *cmdline)
     // printf("numcommands: %d\n", num_commands);
     // printf("numargs: %d\n", num_args);
     // printf("stdout1: %d\n", stdout_redir[1]);
+
+
+
     if(num_args <= 1) {
         // printf("just 1 thing\n" );
         if ((pid1 = fork()) < 0) {
@@ -150,6 +153,8 @@ void eval(char *cmdline)
                 dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1 (?)
                 close(fileno(fp));
             }
+            close(STDIN_FILENO);
+            close(STDOUT_FILENO)
             execve(argv[cmds[0]],&argv[cmds[0]],newenviron); 
 
             // Run the executable in the context of the child process using execve()
@@ -168,6 +173,9 @@ void eval(char *cmdline)
 
         return;
     }   
+
+
+
 
     // multiple things
     // printf("just 2 thing\n" );
@@ -194,6 +202,7 @@ void eval(char *cmdline)
             close(fileno(fp));
         }
         dup2(p[1],STDOUT_FILENO);
+        // close(STDIN_FILENO)
         close(p[0]);
         close(p[1]);
         
