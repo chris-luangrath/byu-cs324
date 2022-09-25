@@ -156,9 +156,6 @@ void eval(char *cmdline)
                 close(fileno(fp));
                 // close(STDOUT_FILENO);
             }
-            // fflush(stdout);
-            // close(STDIN_FILENO); // why is this breaking????
-            // close(STDOUT_FILENO); // why is this breaking????? DONT TAKE THESE OUT!!!!
 
             execve(argv[cmds[0]],&argv[cmds[0]],newenviron); 
             printf("%s: Command not found\n%s\n", argv[cmds[0]]);
