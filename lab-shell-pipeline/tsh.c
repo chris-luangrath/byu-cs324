@@ -145,8 +145,9 @@ void eval(char *cmdline)
 
                 fp = fopen(argv[stdin_redir[0]],"r");
                 dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
-                
+                close(STDIN_FILENO);
                 close(fileno(fp));
+
             }
             if ((int)stdout_redir[0] > (int)0){
                 // redirect stdout to stddout_redir[i]
@@ -154,10 +155,11 @@ void eval(char *cmdline)
                 fp = fopen(argv[stdout_redir[0]],"w");
                 dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1 (?)
                 close(fileno(fp));
+                close(STDOUT_FILENO);
             }
-            fflush(stdout);
-            close(STDIN_FILENO); // why is this breaking????
-            close(STDOUT_FILENO); // why is this breaking????? DONT TAKE THESE OUT!!!!
+            // fflush(stdout);
+            // close(STDIN_FILENO); // why is this breaking????
+            // close(STDOUT_FILENO); // why is this breaking????? DONT TAKE THESE OUT!!!!
 
             execve(argv[cmds[0]],&argv[cmds[0]],newenviron); 
 
