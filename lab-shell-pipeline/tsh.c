@@ -123,7 +123,7 @@ void eval(char *cmdline)
     int pid1 = -1;
     int oldp[2] = {-1,-1};
     int newp[2] = {-1,-1};
-    printf("%d, %d", oldp[0], oldp[1]);
+    // printf("%d, %d", oldp[0], oldp[1]);
     int *status;
     int allPids[MAXCMDS];
     char *newenviron[] = { NULL };
