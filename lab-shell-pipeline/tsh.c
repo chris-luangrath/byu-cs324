@@ -156,7 +156,7 @@ void eval(char *cmdline)
                 close(fileno(fp));
             }
             close(STDIN_FILENO); // why is this breaking????
-            close(STDOUT_FILENO); // why is this breaking????? DONT TAKE THESE OUT!!!!
+            // close(STDOUT_FILENO); // why is this breaking????? DONT TAKE THESE OUT!!!!
             execve(argv[cmds[0]],&argv[cmds[0]],newenviron); 
 
             // Run the executable in the context of the child process using execve()
