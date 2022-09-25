@@ -148,7 +148,7 @@ void eval(char *cmdline)
                 close(oldp[1]);
                 oldp[1] = -1;
             }
-            if((int)stdin_redir[i] > 0){
+            if(stdin_redir[i] > 0){
                 // redirect stdin to stdin_redir[i
                 fp = fopen(argv[stdin_redir[i]],"r");
                 dup2(fileno(fp),STDIN_FILENO);
@@ -161,7 +161,7 @@ void eval(char *cmdline)
                 dup2(oldp[0],STDIN_FILENO);
             }
             
-            if ((int)stdout_redir[i] > (int)0){
+            if (stdout_redir[i] > 0){
                 // redirect stdout to stddout_redir[i]
                 fp = fopen(argv[stdout_redir[i]],"w");
                 dup2(fileno(fp),STDOUT_FILENO); 
@@ -206,10 +206,10 @@ void eval(char *cmdline)
             newp[0] = -1;
             newp[1] = -1;
             if (newp[0] != -1){
-                close(oldp[0]);
+                close(newp[0]);
             }
             if (newp[1] != -1){
-                close(oldp[1]);
+                close(newp[1]);
             }
             
         }
