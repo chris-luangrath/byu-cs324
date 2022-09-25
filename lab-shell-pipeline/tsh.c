@@ -175,12 +175,15 @@ void eval(char *cmdline)
             allPids[i] = pid;
             if (oldp[0] != -1){
                 close(oldp[0]);
+                // printf("huh");
             }
             if (oldp[1] != -1){
                 close(oldp[1]);
+                // printf("huh");
             }
             oldp[0] = newp[0];
             oldp[1] = newp[1];
+            close(newp[1]);
             newp[0] = -1;
             newp[1] = -1;
             
