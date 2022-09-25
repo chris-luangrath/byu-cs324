@@ -144,6 +144,7 @@ void eval(char *cmdline)
 
                 fp = fopen(argv[stdin_redir[0]],"r");
                 dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
+                close(STDIN_FILENO);
                 close(fileno(fp));
             }
             if ((int)stdout_redir[0] > (int)0){
@@ -151,10 +152,10 @@ void eval(char *cmdline)
                 
                 fp = fopen(argv[stdout_redir[0]],"w");
                 dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1 (?)
+                close(STDOUT_FILENO);
                 close(fileno(fp));
             }
-            close(STDIN_FILENO);
-            close(STDOUT_FILENO);
+            
             execve(argv[cmds[0]],&argv[cmds[0]],newenviron); 
 
             // Run the executable in the context of the child process using execve()
@@ -203,6 +204,9 @@ void eval(char *cmdline)
         }
         dup2(p[1],STDOUT_FILENO);
         // close(STDIN_FILENO)
+        
+        close(STDIN_FILENO);
+        close(STDOUT_FILENO);
         close(p[0]);
         close(p[1]);
         
@@ -219,7 +223,7 @@ void eval(char *cmdline)
                 dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1
                 close(fileno(fp));
             }
-            dup2(p[0],STDIN_FILENO);
+            // dup2(p[0],STDIN_FILENO);
             close(p[0]);
             close(p[1]);
             
