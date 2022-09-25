@@ -12,6 +12,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <errno.h>
+#include <fcntl.h> // not needed
 
 /* Misc manifest constants */
 #define MAXLINE    1024   /* max line size */
