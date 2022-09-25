@@ -187,6 +187,7 @@ void eval(char *cmdline)
     for(int i = 0; i < num_commands; i++){
         waitpid(allPids[i], status,0);
     }
+    return;
 
     // // 1 or no
     // if(num_args <= 1) {
