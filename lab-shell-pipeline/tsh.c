@@ -118,7 +118,6 @@ void eval(char *cmdline)
     int num_args = parseargs(argv,cmds,stdin_redir,stdout_redir);
 
     builtin_cmd(argv);
-    // builtin_cmd(&argv[cmds[0]]);
 
     int pid1, pid2, p[2];
     char *newenviron[] = { NULL };
@@ -196,7 +195,6 @@ void eval(char *cmdline)
         // }
         
         if(pid1==0){
-            // open("ch1",O_RDONLY);
             // child1 ---
             // Check the command for any input or output redirection, and perform that redirection.
             FILE * fp;
@@ -207,17 +205,14 @@ void eval(char *cmdline)
             }
             dup2(p[1],STDOUT_FILENO);
 
-            // close(STDIN_FILENO);
-            // close(STDOUT_FILENO);
             close(p[0]);
             close(p[1]);
             
             execve(argv[cmds[0]],&argv[cmds[0]],newenviron); // TODO: i 
 
         } else {
-            pid2 = fork();
+            pid2 = fork();  
             if(pid2 == 0){
-                // open("ch2",O_RDONLY);
                 // child 2 ---
                 FILE * fp;  
                 if (stdout_redir[1] > 0){
@@ -228,8 +223,6 @@ void eval(char *cmdline)
                 }
                 dup2(p[0],STDIN_FILENO);
 
-                // close(STDIN_FILENO); WHY DID COMMENTING THIS OUT FIX IT??????????????????
-                // close(STDOUT_FILENO);
                 close(p[0]);
                 close(p[1]);
                 
@@ -237,10 +230,6 @@ void eval(char *cmdline)
                 execve(argv[cmds[1]],&argv[cmds[1]],newenviron); // TODO: i 
             } else {
                 // parent ---
-
-                // open("par",O_RDONLY);
-                // printf("child1: %d\n", pid1);
-                // printf("child2: %d\n", pid2);
 
                 // Put the child process in its own process group,
                 setpgid(pid1,pid1);
@@ -254,7 +243,6 @@ void eval(char *cmdline)
                 
                 waitpid(pid1, status,0);
                 waitpid(pid2, status,0);
-                // kill(pid1,0);
             }
         }
 
