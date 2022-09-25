@@ -164,7 +164,7 @@ void eval(char *cmdline)
                 close(newp[0]);
                 dup2(newp[1],STDOUT_FILENO);
             } else {
-                clse(newp[0]);
+                close(newp[0]);
             }
 
             execve(argv[cmds[i]],&argv[cmds[i]],newenviron); 
