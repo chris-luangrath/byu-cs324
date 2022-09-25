@@ -127,8 +127,8 @@ void eval(char *cmdline)
     int allPids[MAXCMDS];
     char *newenviron[] = { NULL };
 
-    printf("numcommands: %d\n", num_commands);
-    printf("numargs: %d\n", num_args);
+    // printf("numcommands: %d\n", num_commands);
+    // printf("numargs: %d\n", num_args);
     for (int i = 0; i < num_args; i++){
         builtin_cmd(&argv[cmds[i]]);
         if ((pipe(newp)) < 0) {
@@ -184,8 +184,6 @@ void eval(char *cmdline)
             newp[0] = -1;
             newp[1] = -1;
             
-            // Put the child process in its own process group,
-            setpgid(pid,pid1); 
         }
     }
     for(int i = 0; i < num_args; i++){
