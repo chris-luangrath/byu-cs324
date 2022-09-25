@@ -173,8 +173,8 @@ void eval(char *cmdline)
             // Put the child process in its own process group,
             setpgid(pid1,pid1); 
             // wait for the child process to complete.
-            int *status;
-            waitpid(pid1, status,0);
+            // int *status;
+            waitpid(pid1, NULL,0);
             // kill(pid1,0);
         }
             
