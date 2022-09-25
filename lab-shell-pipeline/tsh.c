@@ -129,7 +129,7 @@ void eval(char *cmdline)
     // printf("stdout1: %d\n", stdout_redir[1]);
 
 
-
+    // 1 or no
     if(num_args <= 1) {
         // printf("just 1 thing\n" );
         if ((pid1 = fork()) < 0) {
@@ -145,7 +145,7 @@ void eval(char *cmdline)
 
                 fp = fopen(argv[stdin_redir[0]],"r");
                 dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
-                close(STDIN_FILENO);
+                // close(STDIN_FILENO);
                 close(fileno(fp));
 
             }
@@ -155,7 +155,7 @@ void eval(char *cmdline)
                 fp = fopen(argv[stdout_redir[0]],"w");
                 dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1 (?)
                 close(fileno(fp));
-                close(STDOUT_FILENO);
+                // close(STDOUT_FILENO);
             }
             // fflush(stdout);
             // close(STDIN_FILENO); // why is this breaking????
