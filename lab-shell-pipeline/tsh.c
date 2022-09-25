@@ -125,7 +125,7 @@ void eval(char *cmdline)
 
     // only 1 thing
     // printf("numcommands: %d\n", num_commands);
-    printf("numargs: %d\n", num_args);
+    // printf("numargs: %d\n", num_args);
     // printf("stdout1: %d\n", stdout_redir[1]);
 
 
