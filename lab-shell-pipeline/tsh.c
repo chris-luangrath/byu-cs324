@@ -133,7 +133,7 @@ void eval(char *cmdline)
     // printf("stdout1: %d\n", stdout_redir[1]);
     for (int i = 0; i < num_commands; i++){
         builtin_cmd(argv[cmds[i]]);
-        if ((fork(pipe(newp))) < 0) {
+        if ((pipe(newp)) < 0) {
             fprintf(stderr, "Could not pipe()");
             exit(1);
         }
