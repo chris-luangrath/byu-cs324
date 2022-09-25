@@ -122,15 +122,13 @@ void eval(char *cmdline)
     int pid, pid2;
     int pid1 = -1;
     // p[2], oldp[2], newp[2], pid1;
-    int p[2], oldp[2], newp[2] = {-1,-1}; 
+    int foldp[2], newp[2] = {-1,-1}; 
     int *status;
     int allPids[MAXCMDS];
     char *newenviron[] = { NULL };
 
-    // only 1 thing
-    // printf("numcommands: %d\n", num_commands);
-    // printf("numargs: %d\n", num_args);
-    // printf("stdout1: %d\n", stdout_redir[1]);
+    printf("numcommands: %d\n", num_commands);
+    printf("numargs: %d\n", num_args);
     for (int i = 0; i < num_commands; i++){
         builtin_cmd(argv[cmds[i]]);
         if ((pipe(newp)) < 0) {
