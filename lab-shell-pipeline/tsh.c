@@ -121,14 +121,13 @@ void eval(char *cmdline)
 
     int pid;
     int pid1 = -1;
-    // p[2], oldp[2], newp[2], pid1;
     int oldp[2], newp[2] = {-1,-1}; 
     int *status;
     int allPids[MAXCMDS];
     char *newenviron[] = { NULL };
 
     // printf("numcommands: %d\n", num_commands);
-    printf("numargs: %d\n", num_args);
+    // printf("numargs: %d\n", num_args);
     for (int i = 0; i < num_args; i++){
         builtin_cmd(&argv[cmds[i]]);
         if ((pipe(newp)) < 0) {
@@ -143,16 +142,19 @@ void eval(char *cmdline)
         if(pid==0){
             // Check the command for any input or output redirection, and perform that redirection.
             FILE * fp;
+
+            if(oldp[0] != -1){
+                close(oldp[1]);
+                oldp = -1
+            }
             if((int)stdin_redir[i] > 0){
                 // redirect stdin to stdin_redir[i
                 fp = fopen(argv[stdin_redir[i]],"r");
                 dup2(fileno(fp),STDIN_FILENO);
                 close(fileno(fp));
             } else if(oldp[0] != -1){
-                close(oldp[1]);
                 dup2(oldp[0],STDIN_FILENO);
-            } else {
-                close(newp[1]);
+                close(newp[0])
             }
             
             if ((int)stdout_redir[i] > (int)0){
@@ -163,8 +165,6 @@ void eval(char *cmdline)
             } else if(newp[0] != -1){
                 close(newp[0]);
                 dup2(newp[1],STDOUT_FILENO);
-            } else {
-                close(newp[0]);
             }
 
             execve(argv[cmds[i]],&argv[cmds[i]],newenviron); 
