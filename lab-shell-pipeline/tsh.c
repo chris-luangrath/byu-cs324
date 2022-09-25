@@ -201,7 +201,6 @@ void eval(char *cmdline)
             fp = fopen(argv[stdin_redir[0]],"r");
             dup2(fileno(fp),STDIN_FILENO); // STDIN_FILENO is 0
             close(STDIN_FILENO);
-
             close(fileno(fp));
         }
         dup2(p[1],STDOUT_FILENO);
