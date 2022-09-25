@@ -223,7 +223,7 @@ void eval(char *cmdline)
                 }
                 dup2(p[0],STDIN_FILENO);
 
-                close(STDIN_FILENO);
+                // close(STDIN_FILENO);
                 // close(STDOUT_FILENO);
                 // close(p[0]);
                 close(p[1]);
