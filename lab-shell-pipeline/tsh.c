@@ -123,6 +123,8 @@ void eval(char *cmdline)
     int pid1 = -1;
     // p[2], oldp[2], newp[2], pid1;
     int p[2], oldp[2], newp[2] = {-1,-1}; 
+    int *status;
+    int allPids[MAXCMDS];
     char *newenviron[] = { NULL };
 
     // only 1 thing
@@ -176,15 +178,14 @@ void eval(char *cmdline)
             newp[1] = -1;
             
             // Put the child process in its own process group,
-            setpgid(pid,pid); 
+            setpgid(pid,pid1); 
             // wait for the child process to complete.
-            int *status;
-            waitpid(pid, status,0);
-            // kill(pid1,0);
         }
             
 
-        return;
+    }
+    for(int i < 0; i < num_commands; i++){
+        waitpid(allPids[i], status,0);
     }
 
     // // 1 or no
