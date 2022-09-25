@@ -154,7 +154,7 @@ void eval(char *cmdline)
                 close(fileno(fp));
             } else if(oldp[0] != -1){
                 dup2(oldp[0],STDIN_FILENO);
-                close(newp[0])
+                close(newp[0]);
             }
             
             if ((int)stdout_redir[i] > (int)0){
