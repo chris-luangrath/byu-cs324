@@ -155,7 +155,7 @@ void eval(char *cmdline)
                 dup2(fileno(fp),STDOUT_FILENO); // STDOUT_FILENO is 1 (?)
                 close(fileno(fp));
             }
-            close(STDIN_FILENO);
+            // close(STDIN_FILENO); why is this breaking????
             // close(STDOUT_FILENO); why is this breaking?????
             execve(argv[cmds[0]],&argv[cmds[0]],newenviron); 
 
