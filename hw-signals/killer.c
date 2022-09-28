@@ -36,9 +36,9 @@ int main(int argc, char *argv[]) {
 		sleep(1);
 		kill(pid, 12);
 		// sleep(1);
-		// kill(pid, SIGQUIT);
+		kill(pid, SIGQUIT);
 		// sleep(1);
-		kill(pid, SIGINT);
+		// kill(pid, SIGINT);
 		// printf("heh");
 		// kill(pid, SIGCHLD);
 		sleep(1);
