@@ -34,9 +34,10 @@ int main(int argc, char *argv[]) {
 	case '1':
 		kill(pid, 31);
 		kill(pid, 12);
-		kill(pid, SIGINT);
+		kill(pid, SIGQUIT);
+		// kill(pid, SIGINT);
 		// printf("heh");
-		kill(pid, SIGCHLD);
+		// kill(pid, SIGCHLD);
 		break;
 	case '2':
 		break;

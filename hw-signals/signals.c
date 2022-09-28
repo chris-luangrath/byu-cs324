@@ -28,11 +28,13 @@ void sig_handler2(int signum) {
 	printf("9\n"); fflush(stdout);
 }
 
+// SIGTERM
 // Prints foo, which is -1 by default
 void sig_handler3(int signum) {
 	printf("%d\n", foo); fflush(stdout);
 }
 
+// 30
 void sig_handler4(int signum) {
 	if (foo > 0) {
 		foo = 6;
@@ -82,6 +84,7 @@ void sig_handler8(int signum) {
 	// (i.e., as if there was no handler installed).
 }
 
+// SIGCHLD
 // inits status, waits for a child to close, prints exit status
 void sig_handler9(int signum) {
 	int status;
