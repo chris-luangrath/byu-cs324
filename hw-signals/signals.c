@@ -11,12 +11,14 @@
 int foo;
 int block;
 
+// Prints 1, sleeps for 4, sprints 2
 void sig_handler1(int signum) {
 	printf("1\n"); fflush(stdout);
 	sleep(4);
 	printf("2\n"); fflush(stdout);
 }
 
+// Prints 8, kills and sends a signal?, prints 9
 void sig_handler2(int signum) {
 	printf("8\n"); fflush(stdout);
 	kill(getpid(), SIGINT);
@@ -24,6 +26,7 @@ void sig_handler2(int signum) {
 	printf("9\n"); fflush(stdout);
 }
 
+// Prints foo, which is -1 by default
 void sig_handler3(int signum) {
 	printf("%d\n", foo); fflush(stdout);
 }
@@ -34,6 +37,7 @@ void sig_handler4(int signum) {
 	}
 }
 
+// Forks, if foo is 0, exit with signal 7
 void sig_handler5(int signum) {
 	foo = fork();
 	if (foo == 0) {
@@ -41,6 +45,8 @@ void sig_handler5(int signum) {
 	}
 }
 
+// Waits for a child to close, whatever the status is
+// then rpints whatever error it is?
 void sig_handler6(int signum) {
 	int pid, status;
 	pid = waitpid(-1, &status, WNOHANG);
@@ -49,6 +55,7 @@ void sig_handler6(int signum) {
 	}
 }
 
+// Sets block to either 0 or 1
 void sig_handler7(int signum) {
 	if (block) {
 		block = 0;
@@ -57,14 +64,19 @@ void sig_handler7(int signum) {
 	}
 }
 
+// It does a sig act restart?
 void sig_handler8(int signum) {
 	struct sigaction sigact;
 
 	sigact.sa_flags = SA_RESTART;
 	sigact.sa_handler = SIG_DFL;
 	sigaction(SIGTERM, &sigact, NULL);
+	// Assigning SIG_DFL as the "handler" for a given 
+	// signal returns the signal to its default behavior 
+	// (i.e., as if there was no handler installed).
 }
 
+// inits status, waits for a child to close, prints exit status
 void sig_handler9(int signum) {
 	int status;
 	waitpid(-1, &status, 0);
