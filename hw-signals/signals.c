@@ -69,6 +69,7 @@ void sig_handler7(int signum) {
 	}
 }
 
+// 12
 // It does a sig act restart?
 void sig_handler8(int signum) {
 	struct sigaction sigact;
