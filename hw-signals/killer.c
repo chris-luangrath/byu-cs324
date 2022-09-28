@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
 		kill(pid, SIGHUP);
 		break;
 	case '1':
-		kill(pid, 31);
+		kill(pid, 10);
 		break;
 	case '2':
 		break;

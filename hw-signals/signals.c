@@ -57,7 +57,6 @@ void sig_handler6(int signum) {
 
 // Sets block to either 0 or 1
 void sig_handler7(int signum) {
-	printf("this was quitted\n");
 	if (block) {
 		block = 0;
 	} else {
