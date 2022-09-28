@@ -11,6 +11,7 @@
 int foo;
 int block;
 
+// sighup, sigint
 // Prints 1, sleeps for 4, sprints 2
 void sig_handler1(int signum) {
 	printf("1\n"); fflush(stdout);
@@ -18,6 +19,7 @@ void sig_handler1(int signum) {
 	printf("2\n"); fflush(stdout);
 }
 
+// sigquit
 // Prints 8, kills and sends a signal?, prints 9
 void sig_handler2(int signum) {
 	printf("8\n"); fflush(stdout);
@@ -37,6 +39,7 @@ void sig_handler4(int signum) {
 	}
 }
 
+// 10
 // Forks, if foo is 0, exit with signal 7
 void sig_handler5(int signum) {
 	foo = fork();
@@ -45,6 +48,7 @@ void sig_handler5(int signum) {
 	}
 }
 
+// 16
 // Waits for a child to close, whatever the status is
 // then rpints whatever error it is?
 void sig_handler6(int signum) {
@@ -55,6 +59,7 @@ void sig_handler6(int signum) {
 	}
 }
 
+// 31
 // Sets block to either 0 or 1
 void sig_handler7(int signum) {
 	if (block) {
