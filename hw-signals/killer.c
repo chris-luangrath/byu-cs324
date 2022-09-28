@@ -28,14 +28,14 @@ int main(int argc, char *argv[]) {
 
 	switch (scenario[0]) {
 	case '0':
-		// kill(pid, SIGHUP);
+		kill(pid, SIGHUP);
 		// sleep(3);
-		// kill(pid, SIGQUIT);
+		kill(pid, SIGQUIT);
 		// sleep(5);
-		// // kill(pid, SIGHUP);
+		kill(pid, SIGHUP);
 		// // sleep(3);
-		// kill(pid, SIGTERM);
-		// sleep(1);
+		kill(pid, SIGTERM);
+		sleep(1);
 		break;
 	case '1':
 		break;
