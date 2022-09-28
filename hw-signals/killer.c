@@ -33,6 +33,7 @@ int main(int argc, char *argv[]) {
 		break;
 	case '1':
 		kill(pid, 10);
+		kill(pid, 12);
 		break;
 	case '2':
 		break;
