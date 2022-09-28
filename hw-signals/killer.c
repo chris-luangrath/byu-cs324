@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
 	case '0':
 		// kill(pid, SIGHUP);
 		sleep(3);
-		// kill(pid, SIGQUIT);
+		kill(pid, SIGQUIT);
 		sleep(5);
 		// kill(pid, SIGHUP);
 		// sleep(3);
