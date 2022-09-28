@@ -34,6 +34,7 @@ int main(int argc, char *argv[]) {
 	case '1':
 		kill(pid, 31);
 		kill(pid, SIGINT);
+		kill(pid, SIGCHLD);
 		break;
 	case '2':
 		break;
