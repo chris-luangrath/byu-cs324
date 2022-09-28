@@ -30,15 +30,9 @@ int main(int argc, char *argv[]) {
 	case '0':
 		sleep(5);
 		kill(pid, SIGHUP);
-		// kill(pid, SIGINT);
-		// kill(pid, SIGQUIT);
-		// // sleep(5);
-		// kill(pid, SIGHUP);
-		// // // sleep(3);
-		// kill(pid, SIGTERM);
-		// sleep(1);
 		break;
 	case '1':
+		sleep(5);
 		break;
 	case '2':
 		break;
