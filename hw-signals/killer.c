@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 		kill(pid, 31);
 		kill(pid, 12);
 		kill(pid, SIGINT);
-		printf("heh");
+		// printf("heh");
 		kill(pid, SIGCHLD);
 		break;
 	case '2':
