@@ -32,18 +32,19 @@ int main(int argc, char *argv[]) {
 		kill(pid, SIGHUP);
 		break;
 	case '1':
-		kill(pid, 31);
+		kill(pid, 12);
+		sleep(1);
+		kill(pid, SIGTERM);
+		sleep(1);
+		break;
+	case '2':
+		sleep(5);
+		kill(pid, SIGHUP);
 		sleep(1);
 		kill(pid, 12);
 		sleep(1);
 		kill(pid, SIGTERM);
-		// sleep(1);
-		// kill(pid, SIGINT);
-		// printf("heh");
-		// kill(pid, SIGCHLD);
 		sleep(1);
-		break;
-	case '2':
 		break;
 	case '3':
 		break;
