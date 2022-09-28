@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 		// kill(pid, SIGHUP);
 		// sleep(3);
 		kill(pid, SIGTERM);
-		sleep(3);
+		sleep(1);
 		break;
 	case '1':
 		break;
