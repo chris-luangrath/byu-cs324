@@ -116,8 +116,8 @@ int main(int argc, char *argv[]) {
 		sleep(3);
 		kill(pid, 30); // change foo
 		sleep(1);
-		kill(pid, 31); // block/un
-		sleep(1);
+		// kill(pid, 31); // block/un
+		// sleep(1);
 		kill(pid, SIGTERM); // print foo 
 		sleep(1);
 		
