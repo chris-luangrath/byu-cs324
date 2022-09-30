@@ -70,6 +70,12 @@ int main(int argc, char *argv[]) {
 		sleep(1);
 		break;
 	case '5':
+		kill(pid, SIGHUP);
+		sleep(1);
+		kill(pid, 12);
+		sleep(1);
+		kill(pid, SIGTERM);
+		sleep(1);
 		break;
 	case '6':
 		// sighandler 6
