@@ -113,11 +113,9 @@ int main(int argc, char *argv[]) {
 		kill(pid, 31); // block/un
 		sleep(1);
 		kill(pid, 10); // fork
-		sleep(3);
+		sleep(1);
 		kill(pid, 30); // change foo
 		sleep(1);
-		// kill(pid, 31); // block/un
-		// sleep(1);
 		kill(pid, SIGTERM); // print foo 
 		sleep(1);
 		
@@ -128,6 +126,13 @@ int main(int argc, char *argv[]) {
 		sleep(1);
 		break;
 	case '9': 
+		kill(pid, SIGQUIT);
+		sleep(1);
+		// quit
+		kill(pid, 12); 
+		sleep(1);
+		kill(pid, SIGTERM);
+		sleep(1);
 		break;
 
 	}
