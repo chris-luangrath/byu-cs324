@@ -71,12 +71,9 @@ int main(int argc, char *argv[]) {
 		kill(pid, 12);
 		sleep(1);
 		kill(pid, SIGINT);
-		// kill(pid, SIGINT);
 		sleep(1);
-		// kill(pid, 16);
-		// sleep(1);
 		
-		
+		// man this one was a little tricky
 		kill(pid, SIGTERM);
 		sleep(1);
 		break;
@@ -91,7 +88,6 @@ int main(int argc, char *argv[]) {
 		sleep(1);
 		kill(pid, SIGTERM);
 		sleep(1);
-		// sighandler 6
 		break;
 	case '7':
 		kill(pid, SIGINT);
