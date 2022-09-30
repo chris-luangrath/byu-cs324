@@ -114,6 +114,8 @@ int main(int argc, char *argv[]) {
 		sleep(1);
 		kill(pid, 30);
 		sleep(1);
+		kill(pid, SIGTERM);
+		sleep(1);
 		kill(pid, 12);
 		sleep(1);
 		kill(pid, SIGTERM);
