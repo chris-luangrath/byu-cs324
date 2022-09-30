@@ -110,12 +110,17 @@ int main(int argc, char *argv[]) {
 	case '8':
 		kill(pid, SIGINT);
 		sleep(1);
-		kill(pid, 10);
+		kill(pid, 31); // block/un
 		sleep(1);
-		kill(pid, 30);
+		kill(pid, 10); // fork
 		sleep(1);
-		kill(pid, SIGTERM);
+		kill(pid, 30); // change foo
 		sleep(1);
+		kill(pid, 31); // block/un
+		sleep(1);
+		kill(pid, SIGTERM); // print foo 
+		sleep(1);
+		// quit
 		kill(pid, 12);
 		sleep(1);
 		kill(pid, SIGTERM);
