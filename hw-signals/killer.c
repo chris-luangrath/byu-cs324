@@ -70,9 +70,9 @@ int main(int argc, char *argv[]) {
 		sleep(1);
 		break;
 	case '5':
-		kill(pid, SIGHUP);
+		kill(pid, SIGINT);
 		sleep(1);
-		kill(pid, 12);
+		kill(pid, 31);
 		sleep(1);
 		kill(pid, SIGTERM);
 		sleep(1);
