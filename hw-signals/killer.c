@@ -70,8 +70,8 @@ int main(int argc, char *argv[]) {
 		sleep(1);
 		break;
 	case '5':
-		kill(pid, SIGINT);
-		sleep(1);
+		// kill(pid, SIGINT);
+		// sleep(1);
 		// kill(pid, SIGINT);
 		// sleep(1);
 		
