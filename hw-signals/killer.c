@@ -130,6 +130,8 @@ int main(int argc, char *argv[]) {
 		sleep(1);
 		kill(pid, SIGQUIT);
 		sleep(1);
+		kill(pid, 31); // block/un
+		sleep(1);
 		// quit
 		kill(pid, 12); 
 		sleep(1);
