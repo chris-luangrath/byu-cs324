@@ -113,15 +113,16 @@ int main(int argc, char *argv[]) {
 		kill(pid, 31); // block/un
 		sleep(1);
 		kill(pid, 10); // fork
-		sleep(1);
+		sleep(3);
 		kill(pid, 30); // change foo
 		sleep(1);
 		kill(pid, 31); // block/un
 		sleep(1);
 		kill(pid, SIGTERM); // print foo 
 		sleep(1);
+		
 		// quit
-		kill(pid, 12);
+		kill(pid, 12); 
 		sleep(1);
 		kill(pid, SIGTERM);
 		sleep(1);
