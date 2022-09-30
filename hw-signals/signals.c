@@ -71,7 +71,7 @@ void sig_handler7(int signum) {
 		block = 0;
 	} else {
 		block = 1;
-		printf("it's blocked yo");
+		// printf("it's blocked yo");
 	}
 }
 
