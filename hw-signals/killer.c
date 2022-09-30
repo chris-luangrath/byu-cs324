@@ -58,8 +58,8 @@ int main(int argc, char *argv[]) {
 		sleep(1);
 		break;
 	case '4':
-		kill(pid, 31);
-		sleep(1);
+		// kill(pid, 31);
+		// sleep(1);
 		kill(pid, SIGHUP);
 		sleep(1);
 		kill(pid, SIGINT);
