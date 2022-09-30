@@ -69,6 +69,7 @@ int main(int argc, char *argv[]) {
 		break;
 	case '5':
 		kill(pid, SIGINT);
+		kill(pid, SIGINT);
 		sleep(1);
 		kill(pid, 16);
 		sleep(1);
