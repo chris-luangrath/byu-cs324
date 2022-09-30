@@ -13,6 +13,7 @@ int block;
 
 // sighup, sigint
 // Prints 1, sleeps for 4, sprints 2
+// sigint can be blocked
 void sig_handler1(int signum) {
 	printf("1\n"); fflush(stdout);
 	sleep(4);
@@ -88,6 +89,7 @@ void sig_handler8(int signum) {
 
 // SIGCHLD
 // inits status, waits for a child to close, prints exit status
+// can be blocked
 void sig_handler9(int signum) {
 	int status;
 	waitpid(-1, &status, 0);
