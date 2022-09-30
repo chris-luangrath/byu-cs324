@@ -75,8 +75,8 @@ int main(int argc, char *argv[]) {
 		// kill(pid, 16);
 		// sleep(1);
 		
-		kill(pid, 31);
-		sleep(1);
+		// kill(pid, 31);
+		// sleep(1);
 		kill(pid, 31); // block/un
 		sleep(1);
 		// kill(pid, SIGCHLD);
