@@ -60,9 +60,11 @@ int main(int argc, char *argv[]) {
 	case '4':
 		kill(pid, 31);
 		sleep(1);
-		kill(pid, SIGINT);
+		kill(pid, SIGHUP);
+		// kill(pid, SIGINT);
 		sleep(1);
 		kill(pid, SIGHUP);
+		// kill(pid, SIGINT);
 		sleep(5);
 		break;
 	case '5':
