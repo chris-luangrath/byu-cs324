@@ -58,10 +58,15 @@ int main(int argc, char *argv[]) {
 		sleep(1);
 		break;
 	case '4':
+		kill(pid, SIGHUP);
+		// sleep(1);
+		kill(pid, SIGHUP);
+		sleep(5);
 		break;
 	case '5':
 		break;
 	case '6':
+		// sighandler 6
 		break;
 	case '7':
 		break;
