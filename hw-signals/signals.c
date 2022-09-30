@@ -30,6 +30,7 @@ void sig_handler2(int signum) {
 
 // SIGTERM
 // Prints foo, which is -1 by default
+// But can be 6
 void sig_handler3(int signum) {
 	printf("%d\n", foo); fflush(stdout);
 }
@@ -43,6 +44,7 @@ void sig_handler4(int signum) {
 
 // 10
 // Forks, if foo is 0, exit with signal 7
+// and it prints 7 too
 void sig_handler5(int signum) {
 	foo = fork();
 	if (foo == 0) {
