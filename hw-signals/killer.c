@@ -28,9 +28,7 @@ int main(int argc, char *argv[]) {
 
 	switch (scenario[0]) {
 	case '0':
-		// sleep(5);
 		kill(pid, SIGHUP);
-		
 		break;
 	case '1':
 		kill(pid, 12);
@@ -51,7 +49,7 @@ int main(int argc, char *argv[]) {
 		kill(pid, SIGHUP);
 		sleep(1);
 		kill(pid, SIGHUP);
-		sleep(5);
+		sleep(1);
 		kill(pid, 12);
 		sleep(1);
 		kill(pid, SIGTERM);
