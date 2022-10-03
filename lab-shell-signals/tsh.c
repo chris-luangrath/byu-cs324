@@ -290,6 +290,7 @@ void eval(char *cmdline)
     }
     for(int i = 0; i < num_args; i++){
         waitpid(allPids[i], NULL,0);
+        deletejob(jobs,allPids[i]);
     }
     return;
 }
