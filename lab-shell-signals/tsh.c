@@ -175,12 +175,12 @@ void eval(char *cmdline)
     int stdout_redir[MAXCMDS];
 
     // **char argc[MAXARGS];
-    int num_commands = parseline(cmdline, argv);
+    int bg = parseline(cmdline, argv);
     int num_args = parseargs(argv,cmds,stdin_redir,stdout_redir);
 
-    if(num_commands == -37){
-        printf("this is a dumb warning suppression\n");
-    }
+    // if(num_commands == -37){
+    //     printf("this is a dumb warning suppression\n");
+    // }
 
     int pid;
     int pid1 = -1;
@@ -258,6 +258,13 @@ void eval(char *cmdline)
                 pid1 = pid;
             }
             setpgid(pid,pid1);
+
+            // if(bg =)
+
+            addjob(jobs, pid, pid1, bg + 1, cmdline);
+            // if(bg){
+                
+            // }
             allPids[i] = pid;
             if (oldp[0] != -1){
                 close(oldp[0]);
