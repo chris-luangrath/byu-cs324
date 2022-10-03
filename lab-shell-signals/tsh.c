@@ -192,7 +192,9 @@ void eval(char *cmdline)
     // printf("numcommands: %d\n", num_commands);
     // printf("numargs: %d\n", num_args);
     for (int i = 0; i < num_args; i++){
-        builtin_cmd(&argv[cmds[i]]);
+        if(builtin_cmd(&argv[cmds[i]]) == 1){
+            return;
+        }
         if ((pipe(newp)) < 0) {
             fprintf(stderr, "Could not pipe()");
             exit(1);
