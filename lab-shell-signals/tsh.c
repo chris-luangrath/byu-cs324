@@ -422,7 +422,7 @@ int builtin_cmd(char **argv)
         exit(0);
     }
     else if (strcmp(argv[0],"jobs") == 0){
-        printf("it's here\n");
+        // printf("it's here\n");
         listjobs(jobs);
         return 1;
     }
