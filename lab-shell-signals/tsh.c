@@ -196,6 +196,7 @@ void eval(char *cmdline)
             return;
         }
         sigset_t mask;
+        struct sigaction sigact;
         sigaddset(&mask, SIGCHLD);
         sigaddset(&mask, SIGINT);
         sigaddset(&mask, SIGTSTP);
