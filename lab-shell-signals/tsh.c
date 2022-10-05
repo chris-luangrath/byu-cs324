@@ -479,10 +479,14 @@ void do_bgfg(char **argv)
  */
 void waitfg(pid_t pid)
 {
-    while(getjobpid(jobs, pid) != NULL && getjobpid(jobs, pid)->state == FG){
+    while(fgpid(pid) != 0){
         sleep(1);
     }
     return;
+    // while(getjobpid(jobs, pid) != NULL && getjobpid(jobs, pid)->state == FG){
+    //     sleep(1);
+    // }
+    // return;
 }
 
 /*****************
