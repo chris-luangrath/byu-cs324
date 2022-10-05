@@ -280,7 +280,7 @@ void eval(char *cmdline)
             if(!bg){
                 waitpid(pid,NULL,0); // waitfg()
             } else {
-                printf("It's in the background, trust me");
+                printf("It's in the background, trust me\n");
             }
 
             
@@ -490,7 +490,9 @@ void waitfg(pid_t pid)
  */
 void sigchld_handler(int sig) 
 {
-    return;
+    if (verbose)
+        printf("sigchld_handler: entering\n");
+	return;
 }
 
 /* 
