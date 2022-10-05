@@ -188,6 +188,7 @@ void eval(char *cmdline)
     int newp[2] = {-1,-1};
     int allPids[MAXCMDS];
     char *newenviron[] = { NULL };
+    sigset_t mask;
 
     // printf("numcommands: %d\n", num_commands);
     // printf("numargs: %d\n", num_args);
@@ -195,7 +196,7 @@ void eval(char *cmdline)
         if(builtin_cmd(&argv[cmds[i]]) == 1){
             return;
         }
-        sigset_t mask;
+
         struct sigaction sigact;
         sigaddset(&mask, SIGCHLD);
         sigaddset(&mask, SIGINT);
