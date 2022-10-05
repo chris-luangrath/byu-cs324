@@ -282,7 +282,8 @@ void eval(char *cmdline)
             sigprocmask(SIG_SETMASK, &mask, NULL);
 
             if(!bg){
-                waitpid(pid,NULL,0); // waitfg()
+                // waitpid(pid,NULL,0); // waitfg()
+                wwaitfg(pid);
             } else {
                 printf("It's in the background, trust me\n");
             }
@@ -478,6 +479,9 @@ void do_bgfg(char **argv)
  */
 void waitfg(pid_t pid)
 {
+    while(getjobpid(pid) != NULL && getjobpid(pid).state == FG){
+        sleep(1);
+    }
     return;
 }
 
@@ -494,9 +498,25 @@ void waitfg(pid_t pid)
  */
 void sigchld_handler(int sig) 
 {
-    printf("hey hey hey \n");
-    if (verbose) {
-        printf("sigchld_handler: entering\n");
+    int pid;
+    // if (verbose) {
+    //     printf("sigchld_handler: entering\n");
+    // }
+    int status;
+    while((pid = waitpid(-1,status,WNOHANG | WUNTRACED)) && pid != NULL){
+        if(WIFSTOPPED(status)){
+            // deletejob(jobs,pid);
+            getjobpid(jobs,pid).state->ST;
+            printf("the job has been stopped\n");
+        } else if(WIFSIGNALED(status)){
+            deletejob(jobs,pid);
+            printf("the job has been terminated by a signal\n");
+
+        } else if(WIFEXITED(status)){
+            deletejob(jobs,pid);
+            // printf("the job has been terminated normally yo\n");
+
+        }
     }
         
 	return;
