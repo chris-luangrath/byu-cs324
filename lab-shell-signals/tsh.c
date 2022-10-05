@@ -502,7 +502,7 @@ void sigchld_handler(int sig)
     // if (verbose) {
     //     printf("sigchld_handler: entering\n");
     // }
-    int *status;
+    int status;
     while((pid = waitpid(-1,status,WNOHANG | WUNTRACED)) && pid != NULL){
         if(WIFSTOPPED(status)){
             // deletejob(jobs,pid);
