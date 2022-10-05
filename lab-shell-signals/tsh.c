@@ -283,14 +283,14 @@ void eval(char *cmdline)
 
             if(!bg){
                 // waitpid(pid,NULL,0); // waitfg()
-                wwaitfg(pid);
+                waitfg(pid);
             } else {
                 printf("It's in the background, trust me\n");
             }
 
             
 
-            allPids[i] = pid;
+            // allPids[i] = pid;
             if (oldp[0] != -1){
                 close(oldp[0]);
             }
@@ -479,7 +479,7 @@ void do_bgfg(char **argv)
  */
 void waitfg(pid_t pid)
 {
-    while(getjobpid(jobs, pid) != NULL && getjobpid(jobs, pid).state == FG){
+    while(getjobpid(jobs, pid) != NULL && getjobpid(jobs, pid)->state == FG){
         sleep(1);
     }
     return;
@@ -502,7 +502,7 @@ void sigchld_handler(int sig)
     // if (verbose) {
     //     printf("sigchld_handler: entering\n");
     // }
-    int status;
+    int *status;
     while((pid = waitpid(-1,status,WNOHANG | WUNTRACED)) && pid != NULL){
         if(WIFSTOPPED(status)){
             // deletejob(jobs,pid);
