@@ -479,7 +479,7 @@ void do_bgfg(char **argv)
  */
 void waitfg(pid_t pid)
 {
-    while(getjobpid(pid) != NULL && getjobpid(pid).state == FG){
+    while(getjobpid(jobs, pid) != NULL && getjobpid(jobs, pid).state == FG){
         sleep(1);
     }
     return;
@@ -506,7 +506,7 @@ void sigchld_handler(int sig)
     while((pid = waitpid(-1,status,WNOHANG | WUNTRACED)) && pid != NULL){
         if(WIFSTOPPED(status)){
             // deletejob(jobs,pid);
-            getjobpid(jobs,pid).state->ST;
+            getjobpid(jobs,pid)->state = ST;
             printf("the job has been stopped\n");
         } else if(WIFSIGNALED(status)){
             deletejob(jobs,pid);
