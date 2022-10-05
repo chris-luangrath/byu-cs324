@@ -215,6 +215,7 @@ void eval(char *cmdline)
         if(pid==0){
             sigact.sa_handler = SIG_DFL;
             sigemptyset(&mask);
+            sigprocmask(SIG_SETMASK, &mask, NULL);
             // sigaction(SIGCHLD, &sigact, NULL);
             // sigaction(SIGINT, &sigact, NULL);
             // sigaction(SIGSTP, &sigact, NULL);
@@ -278,6 +279,8 @@ void eval(char *cmdline)
 
             addjob(jobs, pid, pid1, bg + 1, cmdline);
             sigemptyset(&mask);
+            sigprocmask(SIG_SETMASK, &mask, NULL);
+
             if(!bg){
                 waitpid(pid,NULL,0); // waitfg()
             } else {
