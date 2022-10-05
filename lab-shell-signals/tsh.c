@@ -491,8 +491,11 @@ void waitfg(pid_t pid)
  */
 void sigchld_handler(int sig) 
 {
-    if (verbose)
+    printf("hey hey hey \n");
+    if (verbose) {
         printf("sigchld_handler: entering\n");
+    }
+        
 	return;
 }
 
@@ -560,19 +563,19 @@ int addjob(struct job_t *jobs, pid_t pid, pid_t pgid, int state, char *cmdline)
 	return 0;
 
     for (i = 0; i < MAXJOBS; i++) {
-	if (jobs[i].pid == 0) {
-	    jobs[i].pid = pid;
-	    jobs[i].pgid = pgid;
-	    jobs[i].state = state;
-	    jobs[i].jid = nextjid++;
-	    if (nextjid > MAXJOBS)
-		nextjid = 1;
-	    strcpy(jobs[i].cmdline, cmdline);
-  	    if(verbose){
-	        printf("Added job [%d] %d %s\n", jobs[i].jid, jobs[i].pid, jobs[i].cmdline);
+        if (jobs[i].pid == 0) {
+            jobs[i].pid = pid;
+            jobs[i].pgid = pgid;
+            jobs[i].state = state;
+            jobs[i].jid = nextjid++;
+            if (nextjid > MAXJOBS)
+            nextjid = 1;
+            strcpy(jobs[i].cmdline, cmdline);
+            if(verbose){
+                printf("Added job [%d] %d %s\n", jobs[i].jid, jobs[i].pid, jobs[i].cmdline);
             }
             return 1;
-	}
+        }
     }
     printf("Tried to create too many jobs\n");
     return 0;
