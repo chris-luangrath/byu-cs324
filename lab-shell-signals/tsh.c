@@ -195,6 +195,12 @@ void eval(char *cmdline)
         if(builtin_cmd(&argv[cmds[i]]) == 1){
             return;
         }
+        sigset_t mask;
+        sigaddset(&mask, SIGCHLD);
+        sigaddset(&mask, SIGINT);
+        sigaddset(&mask, SIGTSTP);
+        sigprocmask(SIG_SETMASK, &mask, NULL);
+
         if ((pipe(newp)) < 0) {
             fprintf(stderr, "Could not pipe()");
             exit(1);
@@ -205,6 +211,11 @@ void eval(char *cmdline)
         }
         // child
         if(pid==0){
+            sigact.sa_handler = SIG_DFL;
+            sigemptyset(&mask);
+            // sigaction(SIGCHLD, &sigact, NULL);
+            // sigaction(SIGINT, &sigact, NULL);
+            // sigaction(SIGSTP, &sigact, NULL);
             // fprintf(stderr, "child%d\n",i);
             // Check the command for any input or output redirection, and perform that redirection.
             FILE * fp;
@@ -232,19 +243,19 @@ void eval(char *cmdline)
                 dup2(fileno(fp),STDOUT_FILENO); 
                 // close(fileno(fp));
                 if (close(fileno(fp)) < 0) {
-                    fprintf(stderr, "3");
+                    // fprintf(stderr, "3");
                     exit(1);
                 }
                 // close(newp[1]);
                 if (close(newp[1]) < 0) {
-                    fprintf(stderr, "3");
+                    // fprintf(stderr, "3");
                     exit(1);
                 }
                 newp[1] = -1;
             } else if(newp[1] != -1 && i + 1 != num_args){
                 // close(newp[0]);
                 if (close(newp[0]) < 0) {
-                    fprintf(stderr, "this 4?");
+                    // fprintf(stderr, "this 4?");
                     exit(1);
                 }
                 newp[0] = -1;
@@ -264,9 +275,15 @@ void eval(char *cmdline)
             // if(bg =)
 
             addjob(jobs, pid, pid1, bg + 1, cmdline);
-            // if(bg){
-                
-            // }
+            sigemptyset(&mask);
+            if(!bg){
+                waitpid(pid,NULL,0); // waitfg()
+            } else {
+                printf("It's in the background, trust me");
+            }
+
+            
+
             allPids[i] = pid;
             if (oldp[0] != -1){
                 close(oldp[0]);
@@ -288,10 +305,10 @@ void eval(char *cmdline)
             
         }
     }
-    for(int i = 0; i < num_args; i++){
-        waitpid(allPids[i], NULL,0);
-        deletejob(jobs,allPids[i]);
-    }
+    // for(int i = 0; i < num_args; i++){
+    //     waitpid(allPids[i], NULL,0);
+    //     // deletejob(jobs,allPids[i]);
+    // }
     return;
 }
 
