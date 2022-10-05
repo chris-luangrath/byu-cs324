@@ -186,7 +186,7 @@ void eval(char *cmdline)
     int pid1 = -1;
     int oldp[2] = {-1,-1};
     int newp[2] = {-1,-1};
-    int allPids[MAXCMDS];
+    // int allPids[MAXCMDS];
     char *newenviron[] = { NULL };
     sigset_t mask;
 
@@ -197,7 +197,7 @@ void eval(char *cmdline)
             return;
         }
 
-        struct sigaction sigact;
+        // struct sigaction sigact;
         sigaddset(&mask, SIGCHLD);
         sigaddset(&mask, SIGINT);
         sigaddset(&mask, SIGTSTP);
@@ -213,7 +213,7 @@ void eval(char *cmdline)
         }
         // child
         if(pid==0){
-            sigact.sa_handler = SIG_DFL;
+            // sigact.sa_handler = SIG_DFL;
             sigemptyset(&mask);
             sigprocmask(SIG_SETMASK, &mask, NULL);
             // sigaction(SIGCHLD, &sigact, NULL);
@@ -503,7 +503,7 @@ void sigchld_handler(int sig)
     //     printf("sigchld_handler: entering\n");
     // }
     int status;
-    while((pid = waitpid(-1,status,WNOHANG | WUNTRACED)) && pid != NULL){
+    while((pid = waitpid(-1,status,WNOHANG | WUNTRACED)) && &pid != NULL){
         if(WIFSTOPPED(status)){
             // deletejob(jobs,pid);
             getjobpid(jobs,pid)->state = ST;
