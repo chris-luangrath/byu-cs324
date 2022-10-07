@@ -256,32 +256,8 @@ void eval(char *cmdline)
             }
 
             
-
-            // allPids[i] = pid;
-            // if (oldp[0] != -1){
-            //     close(oldp[0]);
-            // }
-            // if (oldp[1] != -1){
-            //     close(oldp[1]);
-            // }
-            // close(newp[1]);
-            // oldp[0] = newp[0];
-            // oldp[1] = newp[1];
-            // newp[0] = -1;
-            // newp[1] = -1;
-            // if (newp[0] != -1){
-            //     close(newp[0]);
-            // }
-            // if (newp[1] != -1){
-            //     close(newp[1]);
-            // }
-            
         }
     }
-    // for(int i = 0; i < num_args; i++){
-    //     waitpid(allPids[i], NULL,0);
-    //     // deletejob(jobs,allPids[i]);
-    // }
     return;
 }
 
