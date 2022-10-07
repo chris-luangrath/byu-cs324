@@ -220,7 +220,7 @@ void eval(char *cmdline)
                 close(fileno(fp));
                 
             }
-            
+            printf("hey1\n");
             if (stdout_redir[i] > 0){
                 // redirect stdout to stddout_redir[i]
                 fp = fopen(argv[stdout_redir[i]],"w");
