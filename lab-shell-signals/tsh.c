@@ -481,6 +481,7 @@ void do_bgfg(char **argv)
  */
 void waitfg(pid_t pid)
 {
+    printf("hey");
     while(fgpid(pid) != 0){
         sleep(1);
     }
