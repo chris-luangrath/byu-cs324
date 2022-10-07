@@ -123,8 +123,8 @@ void eval(char *cmdline)
 
     int pid;
     int pid1 = -1;
-    // int oldp[2] = {-1,-1};
-    // int newp[2] = {-1,-1};
+    int oldp[2] = {-1,-1};
+    int newp[2] = {-1,-1};
     int allPids[MAXCMDS];
     char *newenviron[] = { NULL };
 
@@ -146,10 +146,10 @@ void eval(char *cmdline)
             // Check the command for any input or output redirection, and perform that redirection.
             FILE * fp;
 
-            // if(oldp[1] != -1){
-            //     close(oldp[1]);
-            //     oldp[1] = -1;
-            // }
+            if(oldp[1] != -1){
+                close(oldp[1]);
+                oldp[1] = -1;
+            }
             if(stdin_redir[i] > 0){
                 // redirect stdin to stdin_redir[i
                 fp = fopen(argv[stdin_redir[i]],"r");
@@ -159,10 +159,9 @@ void eval(char *cmdline)
                 //     fprintf(stderr, "1");
                 //     exit(1);
                 // }
-            } 
-            // else if(oldp[0] != -1){
-            //     dup2(oldp[0],STDIN_FILENO);
-            // }
+            } else if(oldp[0] != -1){
+                dup2(oldp[0],STDIN_FILENO);
+            }
             
             if (stdout_redir[i] > 0){
                 // redirect stdout to stddout_redir[i]
@@ -174,21 +173,20 @@ void eval(char *cmdline)
                     exit(1);
                 }
                 // close(newp[1]);
-                // if (close(newp[1]) < 0) {
-                //     fprintf(stderr, "3");
-                //     exit(1);
-                // }
-                // newp[1] = -1;
-            } 
-            // else if(newp[1] != -1 && i + 1 != num_args){
-            //     // close(newp[0]);
-            //     if (close(newp[0]) < 0) {
-            //         fprintf(stderr, "this 4?");
-            //         exit(1);
-            //     }
-            //     newp[0] = -1;
-            //     dup2(newp[1],STDOUT_FILENO);
-            // }
+                if (close(newp[1]) < 0) {
+                    fprintf(stderr, "3");
+                    exit(1);
+                }
+                newp[1] = -1;
+            } else if(newp[1] != -1 && i + 1 != num_args){
+                // close(newp[0]);
+                if (close(newp[0]) < 0) {
+                    fprintf(stderr, "this 4?");
+                    exit(1);
+                }
+                newp[0] = -1;
+                dup2(newp[1],STDOUT_FILENO);
+            }
 
             execve(argv[cmds[i]],&argv[cmds[i]],newenviron); 
             printf("%s: Command not found\n", argv[cmds[i]]);
@@ -200,23 +198,23 @@ void eval(char *cmdline)
             }
             setpgid(pid,pid1);
             allPids[i] = pid;
-            // if (oldp[0] != -1){
-            //     close(oldp[0]);
-            // }
-            // if (oldp[1] != -1){
-            //     close(oldp[1]);
-            // }
+            if (oldp[0] != -1){
+                close(oldp[0]);
+            }
+            if (oldp[1] != -1){
+                close(oldp[1]);
+            }
             // close(newp[1]);
-            // oldp[0] = newp[0];
-            // oldp[1] = newp[1];
-            // newp[0] = -1;
-            // newp[1] = -1;
-            // if (newp[0] != -1){
-            //     close(newp[0]);
-            // }
-            // if (newp[1] != -1){
-            //     close(newp[1]);
-            // }
+            oldp[0] = newp[0];
+            oldp[1] = newp[1];
+            newp[0] = -1;
+            newp[1] = -1;
+            if (newp[0] != -1){
+                close(newp[0]);
+            }
+            if (newp[1] != -1){
+                close(newp[1]);
+            }
             
         }
     }
