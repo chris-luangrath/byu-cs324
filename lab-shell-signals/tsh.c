@@ -184,9 +184,7 @@ void eval(char *cmdline)
 
     int pid;
     int pid1 = -1;
-    // int oldp[2] = {-1,-1};
-    // int newp[2] = {-1,-1};
-    // int allPids[MAXCMDS];
+    
     char *newenviron[] = { NULL };
     sigset_t mask;
 
