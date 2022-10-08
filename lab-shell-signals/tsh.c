@@ -456,8 +456,10 @@ void sigchld_handler(int sig)
     //     printf("sigchld_handler: entering\n");
     // }
     int status;
-    while((pid = waitpid(-1,status, WNOHANG | WUNTRACED)) && pid != NULL){
+    while((pid = waitpid(-1,status, WNOHANG | WUNTRACED)) && pid != 0){
         printf("hey it's breaking here\n");
+        fprintf(stderr, "hey it's breaking here\n");
+        // fprintf(stdout, "%s: %s\n", msg, strerror(errno));
         if(WIFSTOPPED(status)){
             // deletejob(jobs,pid);
             getjobpid(jobs,pid)->state = ST;
