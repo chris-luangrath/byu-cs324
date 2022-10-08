@@ -253,6 +253,7 @@ void eval(char *cmdline)
             if(!bg){
                 // waitpid(pid,NULL,0); // waitfg()
                 printf("hey3\n");
+                printf("%d\n",pid);
                 waitfg(pid);
                 printf("hey4\n");
             } else {
