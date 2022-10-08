@@ -457,8 +457,8 @@ void sigchld_handler(int sig)
     // }
     int status;
     while((pid = waitpid(-1,status, WNOHANG | WUNTRACED)) && pid != 0){
-        printf("hey it's breaking here\n");
-        fprintf(stderr, "hey it's breaking here\n");
+        // printf("hey it's breaking here\n");
+        // fprintf(stderr, "hey it's breaking here\n");
         // fprintf(stdout, "%s: %s\n", msg, strerror(errno));
         if(WIFSTOPPED(status)){
             // deletejob(jobs,pid);
@@ -471,7 +471,8 @@ void sigchld_handler(int sig)
         } else if(WIFEXITED(status)){
             deletejob(jobs,pid);
             // printf("the job has been terminated normally yo\n");
-
+        } else {
+            printf("nothing here....\n");
         }
     }
         
