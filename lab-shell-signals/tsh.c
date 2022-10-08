@@ -237,13 +237,13 @@ void eval(char *cmdline)
             exit(1);
         } else {
             // parent
-            printf("hey1\n");
-            printf("hey1\n");
+            // printf("hey1\n");
+            // printf("hey1\n");
             if(pid1 == -1){
                 pid1 = pid;
             }
             setpgid(pid,pid1);
-            printf("hey2\n");
+            // printf("hey2\n");
             // if(bg =)
 
             addjob(jobs, pid, pid1, bg + 1, cmdline);
@@ -254,6 +254,7 @@ void eval(char *cmdline)
                 // waitpid(pid,NULL,0); // waitfg()
                 printf("hey3\n");
                 waitfg(pid);
+                printf("hey4\n");
             } else {
                 printf("It's in the background, trust me\n");
             }
