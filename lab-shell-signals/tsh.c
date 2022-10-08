@@ -457,6 +457,7 @@ void sigchld_handler(int sig)
     // }
     int status;
     while((pid = waitpid(-1,status, WNOHANG | WUNTRACED)) && pid != NULL){
+        printf("hey it's breaking here\n");
         if(WIFSTOPPED(status)){
             // deletejob(jobs,pid);
             getjobpid(jobs,pid)->state = ST;
