@@ -252,8 +252,8 @@ void eval(char *cmdline)
 
             if(!bg){
                 // waitpid(pid,NULL,0); // waitfg()
-                printf("hey3\n");
-                printf("%d\n",pid);
+                // printf("hey3\n");
+                // printf("%d\n",pid);
                 waitfg(pid);
                 printf("hey4\n");
             } else {
@@ -430,8 +430,13 @@ void do_bgfg(char **argv)
 void waitfg(pid_t pid)
 {
     printf("hey");
-    while(fgpid(jobs) != 0){
+    int job_pid;
+    while((job_pid = fgpid(jobs)) && (job_pid != 0)){
         // check if it's == pid
+        if(job_pid != pid){
+            fprintf(stderr, "hey, those are different!\n");
+            return;
+        }
         fprintf(stderr, "it's waiting\n");
         sleep(1);
     }
