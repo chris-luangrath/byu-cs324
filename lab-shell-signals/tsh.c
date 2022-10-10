@@ -465,7 +465,7 @@ void sigchld_handler(int sig)
     //     printf("sigchld_handler: entering\n");
     // }
     int status;
-    // fprintf(stderr, "before while\n");
+    fprintf(stderr, "before while\n");
     while((pid = waitpid(-1,status, WNOHANG | WUNTRACED)) && pid > 0){
         // printf("hey it's breaking here\n");
 
@@ -473,12 +473,15 @@ void sigchld_handler(int sig)
         if(WIFSTOPPED(status)){
             // deletejob(jobs,pid);
             getjobpid(jobs,pid)->state = ST;
-            printf("the job has been stopped\n");
+            // printf("the job has been stopped\n");
+            struct job_t *job = getjobpid(jobs,pid);
+            printf("Job [%d] (%d) stopped by signal %d\n",job->jid,job->pid,status);
         } else if(WIFSIGNALED(status)){
             deletejob(jobs,pid);
             struct job_t *job = getjobpid(jobs,pid);
+            printf("the job has been terminated by a signal\n");
             // printf("[%d] (%d) %s\n",job->jid,job->pid,job->cmdline);
-            printf("Job [%d] (%d) terminated by signal %d\n",job->jid,job->pid,status);
+            // printf("Job [%d] (%d) terminated by signal %d\n",job->jid,job->pid,status);
             
 
         } else if(WIFEXITED(status)){
@@ -490,7 +493,7 @@ void sigchld_handler(int sig)
             // fprintf(stderr, "hey it's breaking here\n");
         }
     }
-    // fprintf(stderr, "after while\n");
+    fprintf(stderr, "after while\n");
         
 	return;
 }
