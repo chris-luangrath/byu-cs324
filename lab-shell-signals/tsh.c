@@ -255,7 +255,8 @@ void eval(char *cmdline)
                 // printf("%d\n",pid);
                 waitfg(pid);
             } else {
-                // printf("It's in the background, trust me\n");
+                job_t job = getjobpid(jobs,pid);
+                printf("[%d] (%d) %s\n",job->jid,job->pid,job->cmdline);
             }
 
             
