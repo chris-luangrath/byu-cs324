@@ -255,8 +255,8 @@ void eval(char *cmdline)
                 // printf("%d\n",pid);
                 waitfg(pid);
             } else {
-                job_t job = getjobpid(jobs,pid);
-                printf("[%d] (%d) %s\n",job->jid,job->pid,job->cmdline);
+                struct job_t job = getjobpid(jobs,pid);
+                printf("[%d] (%d) %s\n",job.jid,job.pid,job.cmdline);
             }
 
             
