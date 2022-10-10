@@ -393,9 +393,9 @@ int builtin_cmd(char **argv)
     }
     else if (strcmp(argv[0],"jobs") == 0){
         // printf("it's here\n");
-        fprintf(stderr, "hey it's breaking here\n");
+        // fprintf(stderr, "hey it's breaking here\n");
         listjobs(jobs);
-        fprintf(stderr, "hey it's breaking here2\n");
+        // fprintf(stderr, "hey it's breaking here2\n");
         return 1;
     }
     else if ((strcmp(argv[0],"bg") == 0) || strcmp(argv[0],"fg") == 0){ // or?
@@ -427,7 +427,7 @@ void do_bgfg(char **argv)
  */
 void waitfg(pid_t pid)
 {
-    printf("hey");
+    // printf("hey");
     int job_pid;
     while((job_pid = fgpid(jobs)) && (job_pid != 0)){
         // check if it's == pid
