@@ -431,14 +431,14 @@ void waitfg(pid_t pid)
     int job_pid;
     while((job_pid = fgpid(jobs)) && (job_pid != 0)){
         // check if it's == pid
-        if(job_pid != pid){
-            fprintf(stderr, "hey, those are different!\n");
-            return;
-        }
-        fprintf(stderr, "it's waiting\n");
+        // if(job_pid != pid){
+        //     // fprintf(stderr, "hey, those are different!\n");
+        //     return;
+        // }
+        // fprintf(stderr, "it's waiting\n");
         sleep(1);
     }
-    fprintf(stderr, "it's done!\n");
+    // fprintf(stderr, "it's done!\n");
     return;
     // while(getjobpid(jobs, pid) != NULL && getjobpid(jobs, pid)->state == FG){
     //     sleep(1);
@@ -478,7 +478,7 @@ void sigchld_handler(int sig)
             printf("the job has been terminated by a signal\n");
 
         } else if(WIFEXITED(status)){
-            fprintf(stderr, "wifexited\n");
+            // fprintf(stderr, "wifexited\n");
             deletejob(jobs,pid);
             // printf("the job has been terminated normally yo\n");
         } else {
