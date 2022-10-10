@@ -466,6 +466,7 @@ void sigchld_handler(int sig)
     //     printf("sigchld_handler: entering\n");
     // }
     int status;
+    fprintf(stderr, "before while\n");
     while((pid = waitpid(-1,status, WNOHANG | WUNTRACED)) && pid < 0){
         // printf("hey it's breaking here\n");
 
@@ -488,6 +489,7 @@ void sigchld_handler(int sig)
             // fprintf(stderr, "hey it's breaking here\n");
         }
     }
+    fprintf(stderr, "after while\n");
         
 	return;
 }
