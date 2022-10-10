@@ -252,10 +252,8 @@ void eval(char *cmdline)
 
             if(!bg){
                 // waitpid(pid,NULL,0); // waitfg()
-                // printf("hey3\n");
                 // printf("%d\n",pid);
                 waitfg(pid);
-                printf("hey4\n");
             } else {
                 printf("It's in the background, trust me\n");
             }
@@ -466,7 +464,7 @@ void sigchld_handler(int sig)
     //     printf("sigchld_handler: entering\n");
     // }
     int status;
-    fprintf(stderr, "before while\n");
+    // fprintf(stderr, "before while\n");
     while((pid = waitpid(-1,status, WNOHANG | WUNTRACED)) && pid > 0){
         // printf("hey it's breaking here\n");
 
@@ -480,16 +478,15 @@ void sigchld_handler(int sig)
             printf("the job has been terminated by a signal\n");
 
         } else if(WIFEXITED(status)){
-            fprintf(stderr, "hey it's breaking here wifexited\n");
+            fprintf(stderr, "wifexited\n");
             deletejob(jobs,pid);
             // printf("the job has been terminated normally yo\n");
         } else {
             printf("nothing here....\n");
-            fprintf(stderr, "hey it's breaking here\n");
             // fprintf(stderr, "hey it's breaking here\n");
         }
     }
-    fprintf(stderr, "after while\n");
+    // fprintf(stderr, "after while\n");
         
 	return;
 }
