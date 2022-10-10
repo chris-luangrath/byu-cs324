@@ -430,7 +430,8 @@ void do_bgfg(char **argv)
 void waitfg(pid_t pid)
 {
     printf("hey");
-    while(fgpid(pid) != 0){
+    while(fgpid(jobs) != 0){
+        fprintf(stderr, "it's waiting\n");
         sleep(1);
     }
     return;
