@@ -478,7 +478,7 @@ void sigchld_handler(int sig)
             deletejob(jobs,pid);
             struct job_t *job = getjobpid(jobs,pid);
             // printf("[%d] (%d) %s\n",job->jid,job->pid,job->cmdline);
-            printf("Job [%d] (%d) terminated by signal %d\n"job->jid,job->pid,status);
+            printf("Job [%d] (%d) terminated by signal %d\n",job->jid,job->pid,status);
             
 
         } else if(WIFEXITED(status)){
