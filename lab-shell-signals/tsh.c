@@ -476,7 +476,10 @@ void sigchld_handler(int sig)
             printf("the job has been stopped\n");
         } else if(WIFSIGNALED(status)){
             deletejob(jobs,pid);
-            printf("the job has been terminated by a signal\n");
+            struct job_t *job = getjobpid(jobs,pid);
+            // printf("[%d] (%d) %s\n",job->jid,job->pid,job->cmdline);
+            printf("Job [%d] (%d) terminated by signal %d\n"job->jid,job->pid,status);
+            
 
         } else if(WIFEXITED(status)){
             // fprintf(stderr, "wifexited\n");
