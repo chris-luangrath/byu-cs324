@@ -255,7 +255,7 @@ void eval(char *cmdline)
                 // printf("%d\n",pid);
                 waitfg(pid);
             } else {
-                printf("It's in the background, trust me\n");
+                // printf("It's in the background, trust me\n");
             }
 
             
