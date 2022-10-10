@@ -479,6 +479,7 @@ void sigchld_handler(int sig)
             printf("the job has been terminated by a signal\n");
 
         } else if(WIFEXITED(status)){
+            fprintf(stderr, "hey it's breaking here wifexited\n");
             deletejob(jobs,pid);
             // printf("the job has been terminated normally yo\n");
         } else {
