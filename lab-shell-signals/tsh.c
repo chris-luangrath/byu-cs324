@@ -467,7 +467,7 @@ void sigchld_handler(int sig)
     // }
     int status;
     fprintf(stderr, "before while\n");
-    while((pid = waitpid(-1,status, WNOHANG | WUNTRACED)) && pid < 0){
+    while((pid = waitpid(-1,status, WNOHANG | WUNTRACED)) && pid > 0){
         // printf("hey it's breaking here\n");
 
         // fprintf(stdout, "%s: %s\n", msg, strerror(errno));
