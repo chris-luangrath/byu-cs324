@@ -431,9 +431,11 @@ void waitfg(pid_t pid)
 {
     printf("hey");
     while(fgpid(jobs) != 0){
+        // check if it's == pid
         fprintf(stderr, "it's waiting\n");
         sleep(1);
     }
+    fprintf(stderr, "it's done!\n");
     return;
     // while(getjobpid(jobs, pid) != NULL && getjobpid(jobs, pid)->state == FG){
     //     sleep(1);
@@ -459,7 +461,7 @@ void sigchld_handler(int sig)
     //     printf("sigchld_handler: entering\n");
     // }
     int status;
-    while((pid = waitpid(-1,status, WNOHANG | WUNTRACED)) && pid != 0){
+    while((pid = waitpid(-1,status, WNOHANG | WUNTRACED)) && pid < 0){
         // printf("hey it's breaking here\n");
 
         // fprintf(stdout, "%s: %s\n", msg, strerror(errno));
