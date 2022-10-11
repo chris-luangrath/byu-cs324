@@ -435,12 +435,12 @@ void do_bgfg(char **argv)
 {
     // if it's not valid, return. else do the stuff
     if((strcmp(argv[0][0],'%') == 0)){
-        if(getjobjid(atoi(argv[0]+1)) == NULL){
+        if(atoi(argv[0]+1) != 0 && getjobjid(jobs,atoi(argv[0]+1)) == NULL){
             printf("%s: No such job\n",argv[1]);
             return;
         }
-    } else if(getjobpid(atoi(argv[1])) == NULL){
-        printf("(%d): No such process\n",argv[1]);
+    } else if(atoi(argv[1]) != 0 && getjobpid(jobs,atoi(argv[1])) == NULL){
+        printf("(%s): No such process\n",argv[1]);
         return;
     }
     printf("it's legal\n");
