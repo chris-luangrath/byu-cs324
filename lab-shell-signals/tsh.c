@@ -199,7 +199,7 @@ void eval(char *cmdline)
         // struct sigaction sigact;
         sigaddset(&mask, SIGCHLD);
         sigaddset(&mask, SIGINT);
-        sigaddset(&mask, SIGTSTP);
+        // sigaddset(&mask, SIGTSTP);
         sigprocmask(SIG_SETMASK, &mask, NULL);
 
         if ((pid = fork()) < 0) {
@@ -483,8 +483,6 @@ void sigchld_handler(int sig)
             printf("the job has been terminated by a signal\n");
             // printf("[%d] (%d) %s\n",job->jid,job->pid,job->cmdline);
             // printf("Job [%d] (%d) terminated by signal %d\n",job->jid,job->pid,status);
-            
-
         } else if(WIFEXITED(status)){
             fprintf(stderr, "wifexited\n");
             deletejob(jobs,pid);
