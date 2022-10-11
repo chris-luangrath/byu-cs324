@@ -434,7 +434,7 @@ int builtin_cmd(char **argv)
 void do_bgfg(char **argv) 
 {
     // if it's not valid, return. else do the stuff
-    if((strcmp(argv[0][0],'%') == 0)){
+    if((strcmp(argv[0][0],'%%') == 0)){
         if(atoi(argv[0]+1) != 0 && getjobjid(jobs,atoi(argv[0]+1)) == NULL){
             printf("%s: No such job\n",argv[1]);
             return;
