@@ -491,7 +491,7 @@ void sigchld_handler(int sig)
             printf("Job [%d] (%d) stopped by signal %d\n",job->jid,job->pid,WSTOPSIG(status));
         } else if(WIFSIGNALED(status)){
             deletejob(jobs,pid);
-            struct job_t *job = getjobpid(jobs,pid);
+            // struct job_t *job = getjobpid(jobs,pid);
             printf("the job has been terminated by a signal\n");
             // printf("[%d] (%d) %s\n",job->jid,job->pid,job->cmdline);
             // printf("Job [%d] (%d) terminated by signal %d\n",job->jid,job->pid,status);
@@ -525,6 +525,10 @@ void sigint_handler(int sig)
  */
 void sigtstp_handler(int sig) 
 {
+    fprintf(stderr, "here\n");
+    int pid = fgpid(jobs);
+    kill(-pid,SIGTSTP);
+
     return;
 }
 
