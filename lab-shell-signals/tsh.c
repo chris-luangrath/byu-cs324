@@ -484,21 +484,18 @@ void sigchld_handler(int sig)
         // fprintf(stdout, "%s: %s\n", msg, strerror(errno));
         if(WIFSTOPPED(status)){
             getjobpid(jobs,pid)->state = ST;
-            // printf("the job has been stopped\n");
             struct job_t *job = getjobpid(jobs,pid);
-            fprintf(stderr, "stopping\n");
-            printf("stopping\n");
             printf("Job [%d] (%d) stopped by signal %d\n",job->jid,job->pid,WSTOPSIG(status));
         } else if(WIFSIGNALED(status)){
             deletejob(jobs,pid);
-            // struct job_t *job = getjobpid(jobs,pid);
-            printf("the job has been terminated by a signal\n");
+            // printf("the job has been terminated by a signal\n");
             // printf("[%d] (%d) %s\n",job->jid,job->pid,job->cmdline);
-            // printf("Job [%d] (%d) terminated by signal %d\n",job->jid,job->pid,status);
+            struct job_t *job = getjobpid(jobs,pid);
+            printf("Job [%d] (%d) terminated by signal %d\n",job->jid,job->pid,status);
         } else if(WIFEXITED(status)){
-            fprintf(stderr, "wifexited\n");
+            // fprintf(stderr, "wifexited\n");
             deletejob(jobs,pid);
-            // printf("the job has been terminated normally yo\n");
+            printf("the job has been terminated normally yo\n");
         } else {
             printf("nothing here....\n");
             // fprintf(stderr, "hey it's breaking here\n");
