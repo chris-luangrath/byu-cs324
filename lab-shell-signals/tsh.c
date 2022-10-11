@@ -199,7 +199,7 @@ void eval(char *cmdline)
         // struct sigaction sigact;
         sigaddset(&mask, SIGCHLD);
         sigaddset(&mask, SIGINT);
-        // sigaddset(&mask, SIGTSTP);
+        sigaddset(&mask, SIGTSTP); 
         sigprocmask(SIG_SETMASK, &mask, NULL);
 
         if ((pid = fork()) < 0) {
@@ -208,8 +208,8 @@ void eval(char *cmdline)
         }
         // child
         if(pid==0){
-            sigemptyset(&mask);
-            sigprocmask(SIG_SETMASK, &mask, NULL);
+            // sigemptyset(&mask);
+            // sigprocmask(SIG_SETMASK, &mask, NULL);
             // fprintf(stderr, "child%d\n",i);
             // Check the command for any input or output redirection, and perform that redirection.
             FILE * fp;
