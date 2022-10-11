@@ -200,7 +200,11 @@ void eval(char *cmdline)
         sigaddset(&mask, SIGCHLD);
         sigaddset(&mask, SIGINT);
         sigaddset(&mask, SIGTSTP); 
-        sigprocmask(SIG_SETMASK, &mask, NULL);
+        if(sigprocmask(SIG_SETMASK, &mask, NULL) < 0){
+            fprintf(stderr, "Could not mask");
+            exit(1);
+        }
+        // sigprocmask(SIG_SETMASK, &mask, NULL);
 
         if ((pid = fork()) < 0) {
             fprintf(stderr, "Could not fork()");
@@ -208,8 +212,12 @@ void eval(char *cmdline)
         }
         // child
         if(pid==0){
-            // sigemptyset(&mask);
+            sigemptyset(&mask);
             // sigprocmask(SIG_SETMASK, &mask, NULL);
+            if(sigprocmask(SIG_SETMASK, &mask, NULL) < 0){
+                fprintf(stderr, "Could not mask");
+                exit(1);
+            }
             // fprintf(stderr, "child%d\n",i);
             // Check the command for any input or output redirection, and perform that redirection.
             FILE * fp;
@@ -249,7 +257,11 @@ void eval(char *cmdline)
 
             addjob(jobs, pid, pid1, bg + 1, cmdline);
             sigemptyset(&mask);
-            sigprocmask(SIG_SETMASK, &mask, NULL);
+            // sigprocmask(SIG_SETMASK, &mask, NULL);
+            if(sigprocmask(SIG_SETMASK, &mask, NULL) < 0){
+                fprintf(stderr, "Could not mask");
+                exit(1);
+            }
 
             if(!bg){
                 // waitpid(pid,NULL,0); // waitfg()
