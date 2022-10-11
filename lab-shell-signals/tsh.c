@@ -512,9 +512,8 @@ void sigchld_handler(int sig)
  */
 void sigint_handler(int sig) 
 {
-    if (verbose){
-        printf("sigint_handler: entering\n");
-    }
+    int pid = fgpid(jobs);
+    kill(-pid,SIGINT);
 	return;
 }
 
@@ -525,10 +524,9 @@ void sigint_handler(int sig)
  */
 void sigtstp_handler(int sig) 
 {
-    fprintf(stderr, "here\n");
+    // fprintf(stderr, "here\n");
     int pid = fgpid(jobs);
     kill(-pid,SIGTSTP);
-
     return;
 }
 
