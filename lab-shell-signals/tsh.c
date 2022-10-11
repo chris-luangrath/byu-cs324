@@ -122,7 +122,7 @@ int main(int argc, char **argv)
     /* Install the signal handlers */
 
     /* These are the ones you will need to implement */
-    // Signal(SIGINT,  sigint_handler);   /* ctrl-c */
+    Signal(SIGINT,  sigint_handler);   /* ctrl-c */
     Signal(SIGTSTP, sigtstp_handler);  /* ctrl-z */
     Signal(SIGCHLD, sigchld_handler);  /* Terminated or stopped child */
 
@@ -512,7 +512,10 @@ void sigchld_handler(int sig)
  */
 void sigint_handler(int sig) 
 {
-    return;
+    if (verbose){
+        printf("sigint_handler: entering\n");
+    }
+	return;
 }
 
 /*
