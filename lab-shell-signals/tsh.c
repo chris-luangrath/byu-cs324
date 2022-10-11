@@ -187,6 +187,7 @@ void eval(char *cmdline)
     
     char *newenviron[] = { NULL };
     sigset_t mask;
+    sigemptyset(&mask);
 
     // printf("numcommands: %d\n", num_commands);
     // printf("numargs: %d\n", num_args);
