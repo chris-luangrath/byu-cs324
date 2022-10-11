@@ -495,7 +495,7 @@ void sigchld_handler(int sig)
         } else if(WIFEXITED(status)){
             // fprintf(stderr, "wifexited\n");
             deletejob(jobs,pid);
-            printf("the job has been terminated normally yo\n");
+            // printf("the job has been terminated normally yo\n");
         } else {
             printf("nothing here....\n");
             // fprintf(stderr, "hey it's breaking here\n");
