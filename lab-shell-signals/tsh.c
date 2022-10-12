@@ -437,6 +437,7 @@ void do_bgfg(char **argv)
     printf("1\n");
     printf("%d\n",argv[0]);
     printf("%s\n",argv[0]);
+    printf("%s\n",argv[1]);
     printf("%d\n",getjobpid(jobs,argv[1]));
     // printf("%d\n",(argv[0]));
     // printf("%d\n",argv[1]);
