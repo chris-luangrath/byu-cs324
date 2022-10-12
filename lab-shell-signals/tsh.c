@@ -438,11 +438,11 @@ void do_bgfg(char **argv)
     printf("argv0 - %d\n",argv[0]);
     printf("argv0- %s\n",argv[0]);
     printf("argv1 - %s\n",argv[1]);
-    printf("argv1 - %d\n",getjobpid(jobs,argv[1]));
+    printf("argv1 jobpid - %d\n",getjobpid(jobs,argv[1]));
     // printf("%d\n",(argv[0]));
     // printf("%d\n",argv[1]);
     // printf("%d\n",atoi(argv[1]));
-    if(argv[1] != 0 && getjobpid(jobs,argv[1]) == NULL){
+    if(argv[1] != NULL && argv[1] > 0 && getjobpid(jobs,argv[1]) == NULL){
         printf("4\n");
         printf("(%d): No such process\n",argv[1]);
         return;
