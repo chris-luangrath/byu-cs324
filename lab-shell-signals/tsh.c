@@ -433,7 +433,7 @@ int builtin_cmd(char **argv)
  */
 void do_bgfg(char **argv) 
 {
-    if(argv[1] == NULL || !(argv[1][0] == '%') || atoi(argv[1]+1) > 0){
+    if(argv[1] == NULL || !(argv[1][0] == '%') || atoi(argv[1]+1) == 0){
         printf("%s command requires PID or %%jobid argument\n",argv[0]);
         return;
     } 
