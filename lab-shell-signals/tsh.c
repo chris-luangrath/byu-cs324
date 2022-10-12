@@ -414,7 +414,7 @@ int builtin_cmd(char **argv)
     }
     else if ((strcmp(argv[0],"bg") == 0) || strcmp(argv[0],"fg") == 0){ // or?
         // printf("it's here\n");
-        do_bgfg(*argv);
+        do_bgfg(argv);
         return 1;
     }
     // else if (strcmp(argv[0],"fg") == 0){
@@ -435,7 +435,7 @@ void do_bgfg(char **argv)
 {
     // if it's not valid, return. else do the stuff
     printf("1\n");
-    printf("%s\n",argv[0]);
+    printf("%d\n",argv[0]);
     // printf("%d\n",(argv[0]));
     // printf("%d\n",argv[1]);
     // printf("%d\n",atoi(argv[1]));
