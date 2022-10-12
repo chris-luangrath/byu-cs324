@@ -459,7 +459,7 @@ void do_bgfg(char **argv)
     }
     printf("arv10 - %c\n",argv[1][0]);
     printf("test - %c\n",'%%');
-    if((argv[1][0] == '%%')){
+    if((argv[1][0] == '%')){
         printf("2\n");
         // if(argv[0]+1 != NULL && getjobjid(jobs,argv[0]+1) == NULL){
         if(getjobjid(jobs,argv[0]+1) == NULL){
