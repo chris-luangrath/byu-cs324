@@ -456,7 +456,7 @@ void do_bgfg(char **argv)
     }
     // they're legal
     if(strcmp(argv[0],"bg") == 0){
-        printf("[%d] (%d) %s\n",job->jid,job->pid,job->cmdline);
+        printf("[%d] (%d) %s",job->jid,job->pid,job->cmdline);
         job->state = 2;
         kill(-(job->pgid),SIGCONT);
     } else if (strcmp(argv[0],"fg") == 0){
