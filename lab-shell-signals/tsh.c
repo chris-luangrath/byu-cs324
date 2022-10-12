@@ -456,6 +456,7 @@ void do_bgfg(char **argv)
     }
     // they're legal
     if(strcmp(argv[0],"bg") == 0){
+        job->state = 2;
         kill(-(job->pgid),SIGCONT);
     } else if (strcmp(argv[0],"fg") == 0){
 
