@@ -435,6 +435,7 @@ void do_bgfg(char **argv)
 {
     // if it's not valid, return. else do the stuff
     printf("1\n");
+    printf("%s",argv[0]);
     if((strcmp(argv[0][0],'%%') == 0)){
         printf("2\n");
         if(atoi(argv[0]+1) != 0 && getjobjid(jobs,atoi(argv[0]+1)) == NULL){
