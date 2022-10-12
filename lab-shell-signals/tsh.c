@@ -433,7 +433,8 @@ int builtin_cmd(char **argv)
  */
 void do_bgfg(char **argv) 
 {
-    if(argv[0] == NULL || argv[1] == NULL){
+    if(argv[1] == NULL){
+        printf("%s command requires PID or %%jobid argument\n",argv[0]);
         return;
     }
     struct job_t *job;
@@ -446,11 +447,23 @@ void do_bgfg(char **argv)
         } else {
             // job = getjobjid(jobs,atoi(argv[1]+1));
         }
-    } else if(getjobpid(jobs,atoi(argv[1])) == NULL){
-        printf("(%d): No such process\n",atoi(argv[1]));
-        return;
-    } 
+    } else {
+        job = getjobpid(jobs,atoi(argv[1]));
+        if(job == NULL){
+            printf("(%d): No such process\n",atoi(argv[1]));
+            return;
+        } 
+    }
     // they're legal
+    if(strcmp(argv[0],"bg") == 0){
+        kill(-pid,SIGCONT);
+    } else if (strcmp(argv[0],"fg") == 0){
+        
+    } else {
+        printf("????\n");
+    }
+    
+    || 
     
     
     return;
