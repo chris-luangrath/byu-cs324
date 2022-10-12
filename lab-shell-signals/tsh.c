@@ -439,7 +439,8 @@ void do_bgfg(char **argv)
     struct job_t *job;
     if((argv[1][0] == '%')){
         // if(job = getjobjid(jobs,atoi(argv[1]+1)) || job == NULL){
-        if((job = getjobjid(jobs,atoi(argv[1]+1))) < 0){
+        job = getjobjid(jobs,atoi(argv[1]+1));
+        if(job == NULL){
             printf("%%%d: No such job\n",atoi(argv[1]+1));
             return;
         } else {
