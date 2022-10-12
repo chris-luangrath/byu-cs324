@@ -442,23 +442,27 @@ void do_bgfg(char **argv)
     // printf("%d\n",(argv[0]));
     // printf("%d\n",argv[1]);
     // printf("%d\n",atoi(argv[1]));
-    if((argv[1] != NULL)){
-        printf("yes1\n");
-    }
-    if( atoi(argv[1]) > 0){
-        printf("ues2\n");
+    // if((argv[1] != NULL)){
+    //     printf("yes1\n");
+    // }
+    // if( atoi(argv[1]) > 0){
+    //     printf("ues2\n");
+    //     return;
+    // }
+    // if(getjobpid(jobs,argv[1]) > 0){
+    //     printf("yes3\n");
+    //     return;
+    // }
+    // printf("checkss\n");
+    if(argv[0] == NULL || argv[1] == NULL){
         return;
     }
-    if(getjobpid(jobs,argv[1]) > 0){
-        printf("yes3\n");
-        return;
-    }
-    printf("checkss\n");
-    if((argv[1] != NULL) && atoi(argv[1]) > 0 && getjobpid(jobs,argv[1]) > 0){
-        printf("4\n");
-        printf("(%d): No such process\n",argv[1]);
-        return;
-    } else if((strcmp(argv[0][0],'%%') == 0)){
+    // if(atoi(argv[1]) == 0 && getjobpid(jobs,argv[1] == NULL){
+    //     printf("4\n");
+    //     printf("(%d): No such process\n",argv[1]);
+    //     return;
+    // } else 
+    if((strcmp(argv[1][0],'%%') == 0)){
         printf("2\n");
         if(argv[0]+1 != 0 && getjobjid(jobs,argv[0]+1) == NULL){
             printf("3\n");
