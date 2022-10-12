@@ -433,53 +433,24 @@ int builtin_cmd(char **argv)
  */
 void do_bgfg(char **argv) 
 {
-    // if it's not valid, return. else do the stuff
-    // printf("1\n");
-    // printf("argv0 - %d\n",argv[0]);
-    // printf("argv0- %s\n",argv[0]);
-    // printf("argv1 - %s\n",argv[1]);
-    // printf("argv1 jobpid - %d\n",getjobpid(jobs,argv[1]));
-    // printf("%d\n",(argv[0]));
-    // printf("%d\n",argv[1]);
-    // printf("%d\n",atoi(argv[1]));
-    // if((argv[1] != NULL)){
-    //     printf("yes1\n");
-    // }
-    // if( atoi(argv[1]) > 0){
-    //     printf("ues2\n");
-    //     return;
-    // }
-    // if(getjobpid(jobs,argv[1]) > 0){
-    //     printf("yes3\n");
-    //     return;
-    // }
-    // printf("checkss\n");
     if(argv[0] == NULL || argv[1] == NULL){
         return;
     }
-    // printf("arv10 - %c\n",argv[1][0]);
-    // printf("test - %c\n",'%%');
+    struct job_t *job;
     if((argv[1][0] == '%')){
-        // printf("2\n");
-        // if(argv[0]+1 != NULL && getjobjid(jobs,argv[0]+1) == NULL){
-        if(getjobjid(jobs,atoi(argv[1]+1)) == NULL){
-            // printf("3\n");
+        if(job = getjobjid(jobs,atoi(argv[1]+1)) && job == NULL){
             printf("%%%d: No such job\n",atoi(argv[1]+1));
             return;
+        } else {
+            // job = getjobjid(jobs,atoi(argv[1]+1));
         }
     } else if(getjobpid(jobs,atoi(argv[1])) == NULL){
-        // printf("4\n");
         printf("(%d): No such process\n",atoi(argv[1]));
         return;
     } 
+    // they're legal
     
-    // printf("5\n");
-    printf("it's legal\n");
-    // if(strcmp(argv[0],"bg") == 0){
-
-    // } else if (strcmp(argv[0],"fg")){
-
-    // }
+    
     return;
 }
 
