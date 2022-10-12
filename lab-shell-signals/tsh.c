@@ -459,9 +459,12 @@ void do_bgfg(char **argv)
         job->state = 2;
         kill(-(job->pgid),SIGCONT);
     } else if (strcmp(argv[0],"fg") == 0){
-
+        job->state = 1;
+        kill(-(job->pgid),SIGCONT);
+        waitfg(job->pgid);
     } else {
         printf("????\n");
+        
     }
     
     return;
