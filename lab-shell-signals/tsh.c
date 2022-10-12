@@ -440,7 +440,7 @@ void do_bgfg(char **argv)
         }
         printf("%s command requires PID or %%jobid argument\n",argv[0]);
         return;
-    } else 
+    }
     // if(){
 
     // }
