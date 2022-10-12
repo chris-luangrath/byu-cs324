@@ -414,7 +414,7 @@ int builtin_cmd(char **argv)
     }
     else if ((strcmp(argv[0],"bg") == 0) || strcmp(argv[0],"fg") == 0){ // or?
         // printf("it's here\n");
-        do_bgfg(&argv);
+        do_bgfg(*argv);
         return 1;
     }
     // else if (strcmp(argv[0],"fg") == 0){
