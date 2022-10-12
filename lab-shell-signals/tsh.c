@@ -443,7 +443,7 @@ void do_bgfg(char **argv)
     //     printf("%s command requires PID or %%jobid argument\n",argv[0]);
     //     return;
     // }
-    if(atoi(argv[1]+1) == 0 || !(argv[1][0] == '%') || atoi(argv[1]) == 0){
+    if(atoi((argv[1]+1) == 0 && atoi(argv[1]) == 0) && !(argv[1][0] == '%')){
         // if(atoi(argv[1]+1) == 0 && atoi(argv[1]) != 0){
         //     printf("%s: argument must be a PID or %%jobid\n",argv[0]);
         //     return;
