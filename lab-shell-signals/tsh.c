@@ -434,11 +434,11 @@ int builtin_cmd(char **argv)
 void do_bgfg(char **argv) 
 {
     // if it's not valid, return. else do the stuff
-    printf("1\n");
-    printf("argv0 - %d\n",argv[0]);
-    printf("argv0- %s\n",argv[0]);
-    printf("argv1 - %s\n",argv[1]);
-    printf("argv1 jobpid - %d\n",getjobpid(jobs,argv[1]));
+    // printf("1\n");
+    // printf("argv0 - %d\n",argv[0]);
+    // printf("argv0- %s\n",argv[0]);
+    // printf("argv1 - %s\n",argv[1]);
+    // printf("argv1 jobpid - %d\n",getjobpid(jobs,argv[1]));
     // printf("%d\n",(argv[0]));
     // printf("%d\n",argv[1]);
     // printf("%d\n",atoi(argv[1]));
@@ -460,7 +460,7 @@ void do_bgfg(char **argv)
     // printf("arv10 - %c\n",argv[1][0]);
     // printf("test - %c\n",'%%');
     if((argv[1][0] == '%')){
-        printf("2\n");
+        // printf("2\n");
         // if(argv[0]+1 != NULL && getjobjid(jobs,argv[0]+1) == NULL){
         if(getjobjid(jobs,atoi(argv[1]+1)) == NULL){
             // printf("3\n");
@@ -468,7 +468,7 @@ void do_bgfg(char **argv)
             return;
         }
     } else if(getjobpid(jobs,atoi(argv[1])) == NULL){
-        printf("4\n");
+        // printf("4\n");
         printf("(%d): No such process\n",atoi(argv[1]));
         return;
     } 
