@@ -435,10 +435,10 @@ void do_bgfg(char **argv)
 {
     // if it's not valid, return. else do the stuff
     printf("1\n");
-    printf("%d\n",argv[0]);
-    printf("%s\n",argv[0]);
-    printf("%s\n",argv[1]);
-    printf("%d\n",getjobpid(jobs,argv[1]));
+    printf("argv0 - %d\n",argv[0]);
+    printf("argv0- %s\n",argv[0]);
+    printf("argv1 - %s\n",argv[1]);
+    printf("argv1 - %d\n",getjobpid(jobs,argv[1]));
     // printf("%d\n",(argv[0]));
     // printf("%d\n",argv[1]);
     // printf("%d\n",atoi(argv[1]));
