@@ -464,7 +464,7 @@ void do_bgfg(char **argv)
         // if(argv[0]+1 != NULL && getjobjid(jobs,argv[0]+1) == NULL){
         if(getjobjid(jobs,atoi(argv[1]+1)) == NULL){
             // printf("3\n");
-            printf("\%%d: No such job\n",atoi(argv[1]+1));
+            printf("%%%d: No such job\n",atoi(argv[1]+1));
             return;
         }
     } else if(getjobpid(jobs,atoi(argv[1])) == NULL){
