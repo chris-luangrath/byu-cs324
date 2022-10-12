@@ -433,10 +433,13 @@ int builtin_cmd(char **argv)
  */
 void do_bgfg(char **argv) 
 {
-    if(argv[1] == NULL){
+    if(argv[1] == NULL || !(argv[1][0] == '%') || atoi(argv[1]+1) > 0){
         printf("%s command requires PID or %%jobid argument\n",argv[0]);
         return;
-    }
+    } 
+    // if(){
+
+    // }
     struct job_t *job;
     if((argv[1][0] == '%')){
         // if(job = getjobjid(jobs,atoi(argv[1]+1)) || job == NULL){
