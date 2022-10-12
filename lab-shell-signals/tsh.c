@@ -462,7 +462,7 @@ void do_bgfg(char **argv)
     //     printf("(%d): No such process\n",argv[1]);
     //     return;
     // } else 
-    if((strcmp(argv[1][0],'%%') == 0)){
+    if((argv[1][0] == '%%')){
         printf("2\n");
         if(argv[0]+1 != 0 && getjobjid(jobs,argv[0]+1) == NULL){
             printf("3\n");
