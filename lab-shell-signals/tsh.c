@@ -246,18 +246,13 @@ void eval(char *cmdline)
             exit(1);
         } else {
             // parent
-            // printf("hey1\n");
-            // printf("hey1\n");
             if(pid1 == -1){
                 pid1 = pid;
             }
             setpgid(pid,pid1);
-            // printf("hey2\n");
-            // if(bg =)
 
             addjob(jobs, pid, pid1, bg + 1, cmdline);
             sigemptyset(&mask);
-            // sigprocmask(SIG_SETMASK, &mask, NULL);
             if(sigprocmask(SIG_SETMASK, &mask, NULL) < 0){
                 fprintf(stderr, "Could not mask");
                 exit(1);
@@ -406,26 +401,16 @@ int builtin_cmd(char **argv)
         exit(0);
     }
     else if (strcmp(argv[0],"jobs") == 0){
-        // printf("it's here\n");
-        // fprintf(stderr, "hey it's breaking here\n");
         listjobs(jobs);
-        // fprintf(stderr, "hey it's breaking here2\n");
         return 1;
     }
     else if ((strcmp(argv[0],"bg") == 0) || strcmp(argv[0],"fg") == 0){ // or?
-        // printf("it's here\n");
         do_bgfg(argv);
         return 1;
     }
-    // else if (strcmp(argv[0],"fg") == 0){
-    //     // printf("it's here\n");
-    //     listjobs(jobs);
-    //     return 1;
-    // }
     else{
         return 0; /* not a builtin command */
     }   
-    // return 0;     /* not a builtin command */
 }
 
 /* 
@@ -451,18 +436,12 @@ void do_bgfg(char **argv)
         printf("%s: argument must be a PID or %%jobid\n",argv[0]);
         return;
     }
-    // if(){
-
-    // }
     struct job_t *job;
     if((argv[1][0] == '%')){
-        // if(job = getjobjid(jobs,atoi(argv[1]+1)) || job == NULL){
         job = getjobjid(jobs,atoi(argv[1]+1));
         if(job == NULL){
             printf("%%%d: No such job\n",atoi(argv[1]+1));
             return;
-        } else {
-            // job = getjobjid(jobs,atoi(argv[1]+1));
         }
     } else {
         job = getjobpid(jobs,atoi(argv[1]));
