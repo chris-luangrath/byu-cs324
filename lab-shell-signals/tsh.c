@@ -439,13 +439,13 @@ void do_bgfg(char **argv)
     printf("%d\n",argv[1]);
     if(argv[1] != 0 && getjobpid(jobs,argv[1]) == NULL){
         printf("4\n");
-        printf("(%s): No such process\n",argv[1]);
+        printf("(%d): No such process\n",argv[1]);
         return;
     } else if((strcmp(argv[0][0],'%%') == 0)){
         printf("2\n");
-        if(atoi(argv[0]+1) != 0 && getjobjid(jobs,atoi(argv[0]+1)) == NULL){
+        if(argv[0]+1 != 0 && getjobjid(jobs,argv[0]+1) == NULL){
             printf("3\n");
-            printf("%s: No such job\n",argv[1]);
+            printf("%d: No such job\n",argv[1]);
             return;
         }
     }
