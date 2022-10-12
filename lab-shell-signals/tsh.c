@@ -435,8 +435,8 @@ void do_bgfg(char **argv)
 {
     // if it's not valid, return. else do the stuff
     printf("1\n");
-    printf("%s\n",itoa(argv[0]));
-    printf("%s\n",itoa(argv[1]));
+    printf("%d\n",argv[0]);
+    printf("%d\n",argv[1]);
     if(argv[1] != 0 && getjobpid(jobs,argv[1]) == NULL){
         printf("4\n");
         printf("(%d): No such process\n",argv[1]);
