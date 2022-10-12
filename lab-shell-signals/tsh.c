@@ -458,13 +458,10 @@ void do_bgfg(char **argv)
     if(strcmp(argv[0],"bg") == 0){
         kill(-pid,SIGCONT);
     } else if (strcmp(argv[0],"fg") == 0){
-        
+
     } else {
         printf("????\n");
     }
-    
-    || 
-    
     
     return;
 }
