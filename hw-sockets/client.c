@@ -137,12 +137,14 @@ int main(int argc, char *argv[]) {
 		printf("read: %d\n",readed);
 		exit(EXIT_FAILURE);
 	}
+
 	p = buffer2;
 	totalRead = 0;
 	while((readed = read(sfd, p,CHUNK_SIZE)) > 0 && totalRead < MAX_READ){
 		p += readed;
 		totalRead += readed;
 	}
+
 	p = buffer2;
 	totalWrote = 0;
 	while (totalWrote < totalRead) {
@@ -154,6 +156,8 @@ int main(int argc, char *argv[]) {
 		p += wrote;
 		totalWrote += wrote;
 	}
+	fprintf(stderr, "total_Read: %d\n",totalRead);
+	fprintf(stderr, "total_Wrote: %d\n",totalWrote);
 	printf("\n");
 	
 
