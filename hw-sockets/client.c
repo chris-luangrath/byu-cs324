@@ -107,6 +107,7 @@ int main(int argc, char *argv[]) {
 		totalRead += read;
 		// read = fread(buffer,sizeof(char),512,stdin);	
 	}
+	printf("read: %d\n",read);
 	p = buffer;
 	// totalWrote = totalRead;
 	while ((wrote = write(sfd, p, CHUNK_SIZE)) > 0 && totalWrote < totalRead) {
