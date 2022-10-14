@@ -108,7 +108,7 @@ int main(int argc, char *argv[]) {
 		// read = fread(buffer,sizeof(char),512,stdin);	
 	}
 	p = buffer;
-	totalWrote = totalRead;
+	// totalWrote = totalRead;
 	while (wrote = write(sfd, p, CHUNK_SIZE) > totalRead) {
 		if(wrote < 0){
 			fprintf(stderr, "partial/failed write\n");
