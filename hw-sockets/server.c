@@ -88,8 +88,10 @@ int main(int argc, char *argv[]) {
 
 	for (;;) {
 		remote_addr_len = sizeof(struct sockaddr_storage);
+		printf("before recvfrom()\n"); fflush(stdout);
 		nread = recvfrom(sfd, buf, BUF_SIZE, 0,
 				(struct sockaddr *) &remote_addr, &remote_addr_len);
+		printf("after recvfrom()\n"); fflush(stdout);   
 		if (nread == -1)
 			continue;   /* Ignore failed request */
 
