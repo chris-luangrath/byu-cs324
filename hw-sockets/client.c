@@ -151,10 +151,14 @@ int main(int argc, char *argv[]) {
 	while (totalWrote < totalRead) {
 		amountToSend = totalRead - totalWrote; 
 		// amountToSend = totalRead - totalWrote > CHUNK_SIZE ? CHUNK_SIZE : totalRead - totalWrote; 
-		if((wrote = fwrite(p,1,amountToSend,stdout)) < 0){
+		if((wrote = write(p,amountToSend,stdout)) < 0){
 			fprintf(stderr, "partial/failed write\n");
 			exit(EXIT_FAILURE);
 		}
+		// if((wrote = fwrite(p,1,amountToSend,stdout)) < 0){
+		// 	fprintf(stderr, "partial/failed write\n");
+		// 	exit(EXIT_FAILURE);
+		// }
 		p += wrote;
 		totalWrote += wrote;
 	}
