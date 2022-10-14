@@ -30,9 +30,9 @@ Accept() finds a passive socket to use for the next connection.
 12. If udp/the socket type is sock_dgram, it correlates a socket with port to receive data from
 If tcp/the socket type is is sock_stream, it will perform a 3-way handshake with the server
 
-13. 
+13. Messages are sent to confirm communication in the initial connection
 
-14.
+14. 
 
 15.
 
