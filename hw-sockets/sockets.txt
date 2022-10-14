@@ -13,7 +13,10 @@ address with bind(), a free local port would be bound to INADDR_ANY
 
 7. 3 calls to write()
 
-8. 1? I mean, the messages are sent almost immediately, so technically after it recieves the first 
+8. 2 kernal yeah
+
+
+1? I mean, the messages are sent almost immediately, so technically after it recieves the first 
 message, there are two more floating around. But the server still prints one at a time, which I
 guess means it receives only 1?
 
@@ -24,11 +27,10 @@ guess means it receives only 1?
 11. Listen() marks the socket as passive, making it available to use. 
 Accept() finds a passive socket to use for the next connection.
 
-12. If udp/the socket type is sock_dgram, it will only receive data from the address in addr.
-If tcp/the socket type is is sock_stream, it will make a connection to the socket from the address in addr
-(?)
+12. If udp/the socket type is sock_dgram, it correlates a socket with port to receive data from
+If tcp/the socket type is is sock_stream, it will perform a 3-way handshake with the server
 
-13.
+13. 
 
 14.
 
