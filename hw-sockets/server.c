@@ -94,6 +94,7 @@ int main(int argc, char *argv[]) {
 			perror("Could not accept");	
 			exit(EXIT_FAILURE);
 		}
+		sleep(5);
 		for (;;) {
 			remote_addr_len = sizeof(struct sockaddr_storage);
 			// printf("before recvfrom()\n"); fflush(stdout);
