@@ -119,6 +119,7 @@ int main(int argc, char *argv[]) {
 		totalWrote += wrote;
 		
 	}
+	printf("wrote: %d\n",wrote);
 	if(totalRead != totalWrote){
 		fprintf(stderr, "did not read/write all data\n");
 		fprintf(stderr, "total_Read: %d\n",totalRead);
