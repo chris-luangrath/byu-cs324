@@ -21,10 +21,12 @@ guess means it receives only 1?
 
 10. "All receive operations return only one packet."
 
-11. Both represent sockets that will send messages. The sfd from socket represents an endpoint
-created by socket while the sfd from accept  
+11. Listen() marks the socket as passive, making it available to use. 
+Accept() finds a passive socket to use for the next connection.
 
-12.
+12. If udp/the socket type is sock_dgram, it will only receive data from the address in addr.
+If tcp/the socket type is is sock_stream, it will make a connection to the socket from the address in addr
+(?)
 
 13.
 

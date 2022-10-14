@@ -74,8 +74,9 @@ int main(int argc, char *argv[]) {
 			continue;
 
 		if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
-			if (bind(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
-				break;  /* Success */
+			break;
+			// if (bind(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
+				// break;  /* Success */
 
 		close(sfd);
 	}
