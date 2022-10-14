@@ -174,7 +174,7 @@ int main(int argc, char *argv[]) {
 		printf("read: %d\n",readed);
 		exit(EXIT_FAILURE);
 	}
-	printf("\n");
+	// printf("\n");
 	
 
 	/* SECTION C - interact with server; send, receive, print messages */
