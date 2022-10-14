@@ -95,21 +95,21 @@ int main(int argc, char *argv[]) {
 	char* buffer[IN_SIZE];
 	char* buffer2[IN_SIZE];
 	char* p = buffer;
-	int read;
+	int readed;
 	int wrote;
 	int totalRead = 0;
 	int totalWrote = 0;
 	int oldRead = 0;
 	int oldWrote = 0;
 	int amountToSend;
-	while((read = fread(p,1,CHUNK_SIZE,stdin)) > 0 && totalRead < IN_SIZE){
-		if(read < 0){
+	while((readed = fread(p,1,CHUNK_SIZE,stdin)) > 0 && totalRead < IN_SIZE){
+		if(readed < 0){
 			fprintf(stderr, "partial/failed read\n");
 			exit(EXIT_FAILURE);
 		}
-		p += read;
+		p += readed;
 		oldRead = totalRead;
-		totalRead += read;
+		totalRead += readed;
 		// read = fread(buffer,sizeof(char),512,stdin);	
 	}
 	p = buffer;
@@ -134,19 +134,27 @@ int main(int argc, char *argv[]) {
 		printf("oldWrote: %d\n",oldWrote);
 		printf("wrote: %d\n",wrote);
 		printf("oldread: %d\n",oldRead);
-		printf("read: %d\n",read);
+		printf("read: %d\n",readed);
 		exit(EXIT_FAILURE);
 	}
 	p = buffer2;
 	totalRead = 0;
-	while((nread = read(sfd, p,CHUNK_SIZE)) > 0 && totalRead < MAX_READ){
-		p += nread;
-		totalRead += nread;
+	while((readed = read(sfd, p,CHUNK_SIZE)) > 0 && totalRead < MAX_READ){
+		p += readed;
+		totalRead += readed;
 	}
-	while(fwrite(buffer2,1,CHUNK_SIZE,stdout) != EOF){
-		// p += nread;
-		// totalRead += nread;
+	p = buffer2;
+	totalWrote = 0;
+	while (totalWrote < totalRead) {
+		amountToSend = totalRead - totalWrote > CHUNK_SIZE ? CHUNK_SIZE : totalRead - totalWrote; 
+		if((wrote = fwrite(p,1,CHUNK_SIZE,stdout)) < 0){
+			fprintf(stderr, "partial/failed write\n");
+			exit(EXIT_FAILURE);
+		}
+		p += wrote;
+		totalWrote += wrote;
 	}
+	printf("\n");
 	
 
 	/* SECTION C - interact with server; send, receive, print messages */
