@@ -139,7 +139,7 @@ int main(int argc, char *argv[]) {
 	}
 	p = buffer2;
 	totalRead = 0;
-	while(nread = read(sfd, p,CHUNK_SIZE) > 0 && totalRead < MAX_READ){
+	while((nread = read(sfd, p,CHUNK_SIZE)) > 0 && totalRead < MAX_READ){
 		p += nread;
 		totalRead += nread;
 	}
