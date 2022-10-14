@@ -96,6 +96,7 @@ int main(int argc, char *argv[]) {
 	int read = 0;
 	int wrote;
 	int totalRead = 0;
+	int totalWrote = 0;
 	
 	while((read = fread(p,1,CHUNK_SIZE,stdin)) > 0 && totalRead < IN_SIZE){
 		// if(read < 0){
@@ -107,17 +108,20 @@ int main(int argc, char *argv[]) {
 		// read = fread(buffer,sizeof(char),512,stdin);	
 	}
 	p = buffer;
+	totalWrote = totalRead;
 	while (wrote = write(sfd, p, CHUNK_SIZE) > totalRead) {
 		if(wrote < 0){
 			fprintf(stderr, "partial/failed write\n");
 			exit(EXIT_FAILURE);
 		}
 		p += wrote;
-		totalRead -= wrote;
+		totalWrote += wrote;
 		
 	}
-	if(totalRead != 0){
+	if(totalRead != totalWrote){
 		fprintf(stderr, "did not read/write all data\n");
+		fprintf(stderr, "total_Read: %d\n",totalRead);
+		fprintf(stderr, "total_Wrote: %d\n",totalWrote);
 		exit(EXIT_FAILURE);
 	}
 
