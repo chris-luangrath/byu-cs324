@@ -87,5 +87,6 @@ All safe and blessed we shall meet at last.
 27. If the amount of data available is less than the requested amount, then read/recv will say that
 it read the requested amount of data, but bad data will be written to the buffer.
 
-28. 
+28. It only reads the specified amount of bytes of each message sent, moving to the next message after
+processing that amount.
 
