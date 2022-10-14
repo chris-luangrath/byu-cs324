@@ -46,7 +46,8 @@ int main(int argc, char *argv[]) {
 	}
 
 	port = atoi(argv[portindex]);
-	sock_type = SOCK_DGRAM;
+	// sock_type = SOCK_DGRAM;
+	sock_type = SOCK_STREAM;
 
 
 	/* SECTION A - populate address structures */
@@ -85,32 +86,44 @@ int main(int argc, char *argv[]) {
 	/* SECTION C - interact with clients; receive and send messages */
 
 	/* Read datagrams and echo them back to sender */
-
+	listen(sfd,100);
+	int fds;
 	for (;;) {
 		remote_addr_len = sizeof(struct sockaddr_storage);
-		// printf("before recvfrom()\n"); fflush(stdout);
-		nread = recvfrom(sfd, buf, BUF_SIZE, 0,
-				(struct sockaddr *) &remote_addr, &remote_addr_len);
-		// printf("after recvfrom()\n"); fflush(stdout);   
-		sleep(5);
-		if (nread == -1)
-			continue;   /* Ignore failed request */
+		if ((fds = accept(sfd, &remote_addr, &remote_addr_len)) != 0 || fds < 0) {
+			perror("Could not accept");	
+			exit(EXIT_FAILURE);
+		}
+		for (;;) {
+			remote_addr_len = sizeof(struct sockaddr_storage);
+			// printf("before recvfrom()\n"); fflush(stdout);
+			// nread = recvfrom(sfd, buf, BUF_SIZE, 0, (struct sockaddr *) &remote_addr, &remote_addr_len);
+			nread = recv(fds, buf, BUF_SIZE, 0);
+			// printf("after recvfrom()\n"); fflush(stdout);   
+			// sleep(5);
+			if (nread == -1)
+				continue;   /* Ignore failed request */
+			
+			if (nread == 0)
+				close(fds);
+				break;
 
-		char host[NI_MAXHOST], service[NI_MAXSERV];
+			char host[NI_MAXHOST], service[NI_MAXSERV];
 
-		s = getnameinfo((struct sockaddr *) &remote_addr,
-						remote_addr_len, host, NI_MAXHOST,
-						service, NI_MAXSERV, NI_NUMERICSERV | NI_NUMERICHOST);
-	
-		if (s == 0)
-			printf("Received %zd bytes from %s:%s\n",
-					nread, host, service);
-		else
-			fprintf(stderr, "getnameinfo: %s\n", gai_strerror(s));
+			s = getnameinfo((struct sockaddr *) &remote_addr,
+							remote_addr_len, host, NI_MAXHOST,
+							service, NI_MAXSERV, NI_NUMERICSERV | NI_NUMERICHOST);
+		
+			if (s == 0)
+				printf("Received %zd bytes from %s:%s\n",
+						nread, host, service);
+			else
+				fprintf(stderr, "getnameinfo: %s\n", gai_strerror(s));
 
-		if (sendto(sfd, buf, nread, 0,
-					(struct sockaddr *) &remote_addr,
-					remote_addr_len) < 0)
-			fprintf(stderr, "Error sending response\n");
+			// if (sendto(sfd, buf, nread, 0,(struct sockaddr *) &remote_addr,remote_addr_len) < 0)
+			if (send(fds, buf, nread, 0) < 0)
+				fprintf(stderr, "Error sending response\n");
+		}
 	}
+	
 }

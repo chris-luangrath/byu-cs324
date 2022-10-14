@@ -46,7 +46,8 @@ int main(int argc, char *argv[]) {
 	memset(&hints, 0, sizeof(struct addrinfo));
 	hints.ai_family = af;    /* Allow IPv4, IPv6, or both, depending on
 				    what was specified on the command line. */
-	hints.ai_socktype = SOCK_DGRAM; /* Datagram socket */
+	// hints.ai_socktype = SOCK_DGRAM; /* Datagram socket */
+	hints.ai_socktype = SOCK_STREAM; /* Datagram socket */
 	hints.ai_flags = 0;
 	hints.ai_protocol = 0;  /* Any protocol */
 
@@ -66,13 +67,15 @@ int main(int argc, char *argv[]) {
 	/* SECTION B - pre-socket setup; getaddrinfo() */
 
 	for (rp = result; rp != NULL; rp = rp->ai_next) {
-		sfd = socket(rp->ai_family, rp->ai_socktype,
-				rp->ai_protocol);
+		sfd = socket(rp->ai_family, rp->ai_socktype,rp->ai_protocol);
+		// sfd = socket(rp->ai_family, rp->ai_socktype,rp->ai_protocol);
+		
 		if (sfd == -1)
 			continue;
 
 		if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
-			break;  /* Success */
+			if (bind(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
+				break;  /* Success */
 
 		close(sfd);
 	}
@@ -104,13 +107,13 @@ int main(int argc, char *argv[]) {
 			exit(EXIT_FAILURE);
 		}
 
-		// nread = read(sfd, buf, BUF_SIZE);
+		nread = read(sfd, buf, BUF_SIZE);
 		if (nread == -1) {
 			perror("read");
 			exit(EXIT_FAILURE);
 		}
 
-		// printf("Received %zd bytes: %s\n", nread, buf);
+		printf("Received %zd bytes: %s\n", nread, buf);
 
 	}
 
