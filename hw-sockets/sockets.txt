@@ -40,7 +40,7 @@ If tcp/the socket type is is sock_stream, it will perform a 3-way handshake with
 19. The kernal made 1 call
 
 20. Question 9 used the udp socket, processed the 3 messages seperately. Question 19 with the TCP uses
-a stream, so it's able to process all the messages so soon as it recieves it.
+a stream, so it's able to process all the messages so soon as it receives it.
 
 21. The output is 0ef39a3f241cdd6552ad131e01afa9171b3dab8d
 
@@ -80,11 +80,12 @@ All safe and blessed we shall meet at last.
 
 24. ./client -4 www-notls.imaal.byu.edu 0080 < http-socket.txt | ./strip_http.py > socket.jpg
 
-25. d8ae74ab77e3236368fef0905858ca2756237096  socket.jpg
+25. c03ce59f9d77e2a3cf001d9dfcb66675ac1a5a81
 
-26.
+26. It hangs until it receives a message 
 
-27.
+27. If the amount of data available is less than the requested amount, then read/recv will say that
+it read the requested amount of data, but bad data will be written to the buffer.
 
-28.
+28. 
 
