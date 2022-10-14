@@ -109,7 +109,7 @@ int main(int argc, char *argv[]) {
 	}
 	p = buffer;
 	// totalWrote = totalRead;
-	while (wrote = write(sfd, p, CHUNK_SIZE) > totalRead) {
+	while (wrote = write(sfd, p, CHUNK_SIZE) < totalRead) {
 		if(wrote < 0){
 			fprintf(stderr, "partial/failed write\n");
 			exit(EXIT_FAILURE);
