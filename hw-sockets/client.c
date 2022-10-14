@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
 			exit(EXIT_FAILURE);
 		}
 
-		nread = read(sfd, buf, 1);
+		nread = read(sfd, buf, 20);
 		if (nread == -1) {
 			perror("read");
 			exit(EXIT_FAILURE);
