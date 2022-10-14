@@ -98,7 +98,7 @@ int main(int argc, char *argv[]) {
 	int totalRead = 0;
 	int totalWrote = 0;
 	
-	while((read = fread(p,1,CHUNK_SIZE,stdin)) > 0 && totalRead < IN_SIZE){
+	while((read = fread(p,1,CHUNK_SIZE,stdin)) > 0 && totalRead <= IN_SIZE){
 		// if(read < 0){
 		// 	fprintf(stderr, "partial/failed write\n");
 		// 	exit(EXIT_FAILURE);
