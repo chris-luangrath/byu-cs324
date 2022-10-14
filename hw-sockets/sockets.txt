@@ -42,7 +42,7 @@ If tcp/the socket type is is sock_stream, it will perform a 3-way handshake with
 20. Question 9 used the udp socket, processed the 3 messages seperately. Question 19 with the TCP uses
 a stream, so it's able to process all the messages so soon as it recieves it.
 
-21. 
+21. The output is 0ef39a3f241cdd6552ad131e01afa9171b3dab8d
 
 22.
 

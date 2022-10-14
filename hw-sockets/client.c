@@ -9,6 +9,7 @@
 #define BUF_SIZE 500
 #define IN_SIZE 4096
 #define CHUNK_SIZE 512
+#define MAX_READ 16384
 
 int main(int argc, char *argv[]) {
 	struct addrinfo hints;
@@ -92,6 +93,7 @@ int main(int argc, char *argv[]) {
 
 	// Part 3
 	char* buffer[IN_SIZE];
+	char* buffer2[IN_SIZE];
 	char* p = buffer;
 	int read;
 	int wrote;
@@ -110,8 +112,6 @@ int main(int argc, char *argv[]) {
 		totalRead += read;
 		// read = fread(buffer,sizeof(char),512,stdin);	
 	}
-	printf("oldread: %d\n",oldRead);
-	printf("read: %d\n",read);
 	p = buffer;
 	// totalWrote = totalRead;
 	while (totalWrote < totalRead) {
@@ -126,14 +126,28 @@ int main(int argc, char *argv[]) {
 		totalWrote += wrote;
 		
 	}
-	printf("oldWrote: %d\n",oldWrote);
-	printf("wrote: %d\n",wrote);
+	
 	if(totalRead != totalWrote){
 		fprintf(stderr, "did not read/write all data\n");
 		fprintf(stderr, "total_Read: %d\n",totalRead);
 		fprintf(stderr, "total_Wrote: %d\n",totalWrote);
+		printf("oldWrote: %d\n",oldWrote);
+		printf("wrote: %d\n",wrote);
+		printf("oldread: %d\n",oldRead);
+		printf("read: %d\n",read);
 		exit(EXIT_FAILURE);
 	}
+	p = buffer2;
+	totalRead = 0;
+	while(nread = read(sfd, p,CHUNK_SIZE) > 0 && totalRead < MAX_READ){
+		p += nread;
+		totalRead += nread;
+	}
+	while(fwrite(buffer2,1,CHUNK_SIZE,stdout) != EOF){
+		// p += nread;
+		// totalRead += nread;
+	}
+	
 
 	/* SECTION C - interact with server; send, receive, print messages */
 
