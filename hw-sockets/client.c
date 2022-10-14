@@ -99,6 +99,7 @@ int main(int argc, char *argv[]) {
 	int totalWrote = 0;
 	int oldRead = 0;
 	int oldWrote = 0;
+	int amountToSend;
 	while((read = fread(p,1,CHUNK_SIZE,stdin)) > 0 && totalRead < IN_SIZE){
 		if(read < 0){
 			fprintf(stderr, "partial/failed read\n");
@@ -113,8 +114,10 @@ int main(int argc, char *argv[]) {
 	printf("read: %d\n",read);
 	p = buffer;
 	// totalWrote = totalRead;
-	while ((wrote = write(sfd, p, CHUNK_SIZE)) > 0 && totalWrote < totalRead) {
-		if(wrote < 0){
+	while (totalWrote < totalRead) {
+		amountToSend = totalRead - totalWrote > CHUNK_SIZE ? CHUNK_SIZE : totalRead - totalWrote; 
+
+		if((wrote = write(sfd, p, amountToSend)) < 0)
 			fprintf(stderr, "partial/failed write\n");
 			exit(EXIT_FAILURE);
 		}
