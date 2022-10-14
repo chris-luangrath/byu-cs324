@@ -104,9 +104,11 @@ int main(int argc, char *argv[]) {
 			if (nread == -1)
 				continue;   /* Ignore failed request */
 			
-			if (nread == 0)
+			if (nread == 0){
 				close(fds);
 				break;
+			}
+				
 
 			char host[NI_MAXHOST], service[NI_MAXSERV];
 
