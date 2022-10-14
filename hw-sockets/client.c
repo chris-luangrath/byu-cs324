@@ -94,6 +94,7 @@ int main(int argc, char *argv[]) {
 	// Part 3
 	char* buffer[IN_SIZE];
 	char* buffer2[IN_SIZE];
+	char* buffer3[MAX_READ];
 	char* p = buffer;
 	int readed;
 	int wrote;
@@ -138,14 +139,14 @@ int main(int argc, char *argv[]) {
 		exit(EXIT_FAILURE);
 	}
 
-	p = buffer2;
+	p = buffer3;
 	totalRead = 0;
 	while((readed = read(sfd, p,CHUNK_SIZE)) > 0 && totalRead < MAX_READ){
 		p += readed;
 		totalRead += readed;
 	}
 
-	p = buffer2;
+	p = buffer3;
 	totalWrote = 0;
 	while (totalWrote < totalRead) {
 		amountToSend = totalRead - totalWrote > CHUNK_SIZE ? CHUNK_SIZE : totalRead - totalWrote; 
@@ -156,8 +157,16 @@ int main(int argc, char *argv[]) {
 		p += wrote;
 		totalWrote += wrote;
 	}
-	fprintf(stderr, "total_Read: %d\n",totalRead);
-	fprintf(stderr, "total_Wrote: %d\n",totalWrote);
+	if(totalRead != totalWrote){
+		fprintf(stderr, "did not read/write all data\n");
+		fprintf(stderr, "total_Read: %d\n",totalRead);
+		fprintf(stderr, "total_Wrote: %d\n",totalWrote);
+		printf("oldWrote: %d\n",oldWrote);
+		printf("wrote: %d\n",wrote);
+		printf("oldread: %d\n",oldRead);
+		printf("read: %d\n",readed);
+		exit(EXIT_FAILURE);
+	}
 	printf("\n");
 	
 
