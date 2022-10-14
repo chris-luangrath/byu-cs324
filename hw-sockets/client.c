@@ -7,6 +7,8 @@
 #include <string.h>
 
 #define BUF_SIZE 500
+#define IN_SIZE 4096
+#define CHUNK_SIZE 512
 
 int main(int argc, char *argv[]) {
 	struct addrinfo hints;
@@ -87,6 +89,37 @@ int main(int argc, char *argv[]) {
 	}
 
 	freeaddrinfo(result);   /* No longer needed */
+
+	// Part 3
+	char * buffer[IN_SIZE];
+	char * p = buffer;
+	int read = 0;
+	int wrote;
+	int totalRead = 0;
+	
+	while((read = fread(p,1,CHUNK_SIZE,stdin)) > 0 && totalRead < IN_SIZE){
+		// if(read < 0){
+		// 	fprintf(stderr, "partial/failed write\n");
+		// 	exit(EXIT_FAILURE);
+		// }
+		p += read;
+		totalRead += read;
+		// read = fread(buffer,sizeof(char),512,stdin);	
+	}
+	p = buffer;
+	while (wrote = write(sfd, p, CHUNK_SIZE) > totalRead) {
+		if(wrote < 0){
+			fprintf(stderr, "partial/failed write\n");
+			exit(EXIT_FAILURE);
+		}
+		p += wrote;
+		totalRead -= wrote;
+		
+	}
+	if(totalRead != 0){
+		fprintf(stderr, "did not read/write all data\n");
+		exit(EXIT_FAILURE);
+	}
 
 	/* SECTION C - interact with server; send, receive, print messages */
 

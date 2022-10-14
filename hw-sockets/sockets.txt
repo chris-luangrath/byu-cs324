@@ -33,15 +33,16 @@ If tcp/the socket type is is sock_stream, it will perform a 3-way handshake with
 
 16. The server uses one socket for each client, compard to UDP that uses one socket for all clients.
 
-17. 
+17. Client made 3 calls to write/sendto
 
-18.
+18. The kernal received 3 messages in the first call to recv
 
-19.
+19. The kernal made 1 call
 
-20.
+20. Question 9 used the udp socket, processed the 3 messages seperately. Question 19 with the TCP uses
+a stream, so it's able to process all the messages so soon as it recieves it.
 
-21.
+21. 
 
 22.
 
