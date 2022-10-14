@@ -91,18 +91,18 @@ int main(int argc, char *argv[]) {
 	freeaddrinfo(result);   /* No longer needed */
 
 	// Part 3
-	char * buffer[IN_SIZE];
-	char * p = buffer;
-	int read = 0;
+	char* buffer[IN_SIZE];
+	char* p = buffer;
+	int read;
 	int wrote;
 	int totalRead = 0;
 	int totalWrote = 0;
 	
-	while((read = fread(p,1,CHUNK_SIZE,stdin)) > 0 && totalRead <= IN_SIZE){
-		// if(read < 0){
-		// 	fprintf(stderr, "partial/failed write\n");
-		// 	exit(EXIT_FAILURE);
-		// }
+	while((read = fread(p,1,CHUNK_SIZE,stdin)) > 0 && totalRead < IN_SIZE){
+		if(read < 0){
+			fprintf(stderr, "partial/failed read\n");
+			exit(EXIT_FAILURE);
+		}
 		p += read;
 		totalRead += read;
 		// read = fread(buffer,sizeof(char),512,stdin);	
