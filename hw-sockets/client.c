@@ -117,7 +117,7 @@ int main(int argc, char *argv[]) {
 	while (totalWrote < totalRead) {
 		amountToSend = totalRead - totalWrote > CHUNK_SIZE ? CHUNK_SIZE : totalRead - totalWrote; 
 
-		if((wrote = write(sfd, p, amountToSend)) < 0)
+		if((wrote = write(sfd, p, amountToSend)) < 0){
 			fprintf(stderr, "partial/failed write\n");
 			exit(EXIT_FAILURE);
 		}
