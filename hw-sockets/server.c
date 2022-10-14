@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
 	int fds;
 	for (;;) {
 		remote_addr_len = sizeof(struct sockaddr_storage);
-		if ((fds = accept(sfd, &remote_addr, &remote_addr_len)) != 0 || fds < 0) {
+		if ((fds = accept(sfd, &remote_addr, &remote_addr_len)) < 0) {
 			perror("Could not accept");	
 			exit(EXIT_FAILURE);
 		}
