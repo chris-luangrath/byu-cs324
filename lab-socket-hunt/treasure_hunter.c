@@ -20,13 +20,15 @@ int main(int argc, char *argv[]) {
 	int level = atoi(argv[3]);
 	int seed = atoi(argv[4]);
 
+	printf("hey\n");
 	unsigned char buf[BUF_SIZE];
 	bzero(buf,BUF_SIZE);
+	printf("hey\n");
 
 	memcpy(&buf[1], level, BYTE_SIZE);
 	memcpy(&buf[2], USERID, ID_SIZE);
 	memcpy(&buf[6], seed, SEED_SIZE);
-	printf("hey\n");
+	printf("hey2\n");
 
 	print_bytes(buf,BUF_SIZE);
 
