@@ -24,11 +24,11 @@ int main(int argc, char *argv[]) {
 	bzero(buf,BUF_SIZE);
 
 	printf("hey\n");
-	memcpy(&buf[1], level, BYTE_SIZE);
+	memcpy(&buf[1], &level, BYTE_SIZE);
 	printf("hey2\n");
-	memcpy(&buf[2], USERID, ID_SIZE);
+	memcpy(&buf[2], &USERID, ID_SIZE);
 	printf("hey3\n");
-	memcpy(&buf[6], seed, SEED_SIZE);
+	memcpy(&buf[6], &seed, SEED_SIZE);
 	printf("hey4\n");
 
 	print_bytes(buf,BUF_SIZE);
