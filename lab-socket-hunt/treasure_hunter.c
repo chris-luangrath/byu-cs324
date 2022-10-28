@@ -23,9 +23,9 @@ int main(int argc, char *argv[]) {
 	unsigned char buf[BUF_SIZE];
 	bzero(buf,BUF_SIZE);
 
-	memcopy(&buf[1], level, BYTE_SIZE);
-	memcopy(&buf[2], USERID, ID_SIZE);
-	memcopy(&buf[6], seed, SEED_SIZE);
+	memcpy(&buf[1], level, BYTE_SIZE);
+	memcpy(&buf[2], USERID, ID_SIZE);
+	memcpy(&buf[6], seed, SEED_SIZE);
 
 	print_bytes(buf,BUF_SIZE);
 
