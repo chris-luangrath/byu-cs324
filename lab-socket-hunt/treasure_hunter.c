@@ -26,6 +26,7 @@ int main(int argc, char *argv[]) {
 	memcpy(&buf[1], level, BYTE_SIZE);
 	memcpy(&buf[2], USERID, ID_SIZE);
 	memcpy(&buf[6], seed, SEED_SIZE);
+	print("hey\n");
 
 	print_bytes(buf,BUF_SIZE);
 
