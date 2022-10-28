@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
 	memcopy(&buf[2], USERID, ID_SIZE);
 	memcopy(&buf[6], seed, SEED_SIZE);
 
-	print_bytes(buf,BUF_SIZE)
+	print_bytes(buf,BUF_SIZE);
 
 }
 
