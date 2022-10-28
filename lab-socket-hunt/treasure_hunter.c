@@ -1,10 +1,14 @@
 // Replace PUT_USERID_HERE with your actual BYU CS user id, which you can find
 // by running `id -u` on a CS lab machine.
 #define USERID 1823700709
+// #define BUF_SIZE 8
+// #define BYTE_SIZE 2
+// #define ID_SIZE 8
+// #define SEED_SIZE 4
 #define BUF_SIZE 8
-#define BYTE_SIZE 2
-#define ID_SIZE 8
-#define SEED_SIZE 4
+#define BYTE_SIZE 1
+#define ID_SIZE 4
+#define SEED_SIZE 2
 
 #include <stdio.h>
 #include <string.h>
