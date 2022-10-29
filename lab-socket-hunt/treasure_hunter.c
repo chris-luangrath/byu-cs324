@@ -138,6 +138,7 @@ int main(int argc, char *argv[]) {
 		perror("read");
 		exit(EXIT_FAILURE);
 	}
+	print_bytes(rec_buf,REC_SIZE)
 
 
 }
