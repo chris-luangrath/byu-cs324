@@ -34,7 +34,7 @@ void print_bytes(unsigned char *bytes, int byteslen);
 int main(int argc, char *argv[]) {
 	// printf("hey1");
 	int sfd, s;
-	struct sockaddr_storage remote_addr;
+	// struct sockaddr_storage remote_addr;
 	int nread;
 	struct addrinfo hints;
 	struct addrinfo *result, *rp;
@@ -138,8 +138,9 @@ int main(int argc, char *argv[]) {
 
 	// remote_addr_len = sizeof(struct sockaddr_storage);
 	// // nread = read(sfd, buf, 2);
+	struct sockaddr_in remote_addr;
 	nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
-				(result->ai_addr), remote_addr_len);
+				(struct sockaddr *) &remote_addr, remote_addr_len);
 				// (struct sockaddr *) (rp->ai_addr), &remote_addr_len);
 				// (struct sockaddr *) &remote_addr, &remote_addr_len);
 	// printf("hey1\n");
