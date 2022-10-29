@@ -42,21 +42,19 @@ int main(int argc, char *argv[]) {
 
 
 	memset(&hints, 0, sizeof(struct addrinfo));
-	hints.ai_family = af;    /* Allow IPv4, IPv6, or both, depending on
+	hints.ai_family = AF_INET;    /* Allow IPv4, IPv6, or both, depending on
 				    what was specified on the command line. */
 	hints.ai_socktype = SOCK_DGRAM; /* Datagram socket */
 	hints.ai_flags = 0;
 	hints.ai_protocol = 0;  /* Any protocol */
 
-	int af = AF_INET;
-
 	int server = atoi(argv[1]);
 	int port = atoi(argv[2]);
 	char * port_c = argv[2]; 
-	int level = atoi(argv[3]);
-	int seed = atoi(argv[4]);
+	int level = htnos(atoi(argv[3]));
+	int seed = htnos(atoi(argv[4]));
 
-	int id = USERID;
+	int id = htnos(USERID);
 
 	unsigned char send_buf[SEND_SIZE];
 	bzero(send_buf,SEND_SIZE);
@@ -72,7 +70,7 @@ int main(int argc, char *argv[]) {
 
 	// pre-socket
 
-	s = getaddrinfo(*server, *port, &hints, &result);
+	s = getaddrinfo((*server), (*port), &hints, &result);
 	if (s != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
 		exit(EXIT_FAILURE);
