@@ -113,6 +113,7 @@ int main(int argc, char *argv[]) {
 	// 	fprintf(stderr, "partial/failed write\n");
 	// 	exit(EXIT_FAILURE);
 	// }
+	remote_addr_len = sizeof(struct sockaddr_storage);
 	if (sendto(sfd, send_buf, len, 0,
 					(struct sockaddr *) &remote_addr,
 					remote_addr_len) < 0)
