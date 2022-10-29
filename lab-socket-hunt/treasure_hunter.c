@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
 	sfd = socket(result->ai_family, result->ai_socktype,
 				result->ai_protocol);
 	
-	size_t len = SEND_SIZE + 1;
+	size_t len = SEND_SIZE;
 	
 
 	remote_addr_len = sizeof(struct sockaddr_in);
