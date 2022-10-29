@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
 	int server = atoi(argv[1]);
 	int port = atoi(argv[2]);
 	char * port_c = argv[2]; 
-	int level = htoms(atoi(argv[3]));
+	int level = htons(atoi(argv[3]));
 	int seed = htons(atoi(argv[4]));
 
 	int id = htons(USERID);
