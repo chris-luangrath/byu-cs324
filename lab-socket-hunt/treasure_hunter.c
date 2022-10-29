@@ -33,7 +33,7 @@ void print_bytes(unsigned char *bytes, int byteslen);
 
 int main(int argc, char *argv[]) {
 	// printf("hey1");
-	int sfd, s, j;
+	int sfd, s;
 	struct sockaddr_storage remote_addr;
 	int nread;
 	struct addrinfo hints;
