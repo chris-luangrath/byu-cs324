@@ -32,7 +32,7 @@ int verbose = 0;
 void print_bytes(unsigned char *bytes, int byteslen);
 
 int main(int argc, char *argv[]) {
-	printf("hey1");
+	// printf("hey1");
 	int sfd, s, j;
 	struct sockaddr_storage remote_addr;
 	int nread;
@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
 	// socklen_t local_addr_len, remote_addr_len;
 
 
-	printf("hey1");
+	// printf("hey1");
 
 	memset(&hints, 0, sizeof(struct addrinfo));
 	hints.ai_family = AF_INET;    /* Allow IPv4, IPv6, or both, depending on
@@ -65,15 +65,15 @@ int main(int argc, char *argv[]) {
 	unsigned char rec_buf[REC_SIZE];
 	bzero(rec_buf,REC_SIZE);
 
-	printf("hey1");
+	// printf("hey1\n");
 	memcpy(&send_buf[1], &level, BYTE_SIZE);
-	printf("hey2");
+	// printf("hey2\n");
 	memcpy(&send_buf[2], &id, ID_SIZE);
-	printf("hey3");
+	// printf("hey3\n");
 	memcpy(&send_buf[6], &seed, SEED_SIZE);
-	printf("hey4");
+	// printf("hey4\n");
 	// 
-	// print_bytes(buf,BUF_SIZE);
+	print_bytes(buf,BUF_SIZE);
 
 	// // pre-socket
 
