@@ -124,16 +124,18 @@ int main(int argc, char *argv[]) {
 
 	remote_addr_len = sizeof(struct sockaddr_storage);
 	if (sendto(sfd, send_buf, len, 0,
-					// (rp->ai_addr),
-					(struct sockaddr *) &(rp->ai_addr),
+					(rp->ai_addr),
+					// (struct sockaddr *) &(rp->ai_addr),
 					// (struct sockaddr *) &remote_addr,
-					remote_addr_len) < 0)
+					remote_addr_len) < 0){
 			fprintf(stderr, "Error sending response\n");
+			exit(EXIT_FAILURE);
+			}
 
 	// remote_addr_len = sizeof(struct sockaddr_storage);
 	// // nread = read(sfd, buf, 2);
 	nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
-				(rp->ai_addr), &remote_addr_len);
+				(rp->ai_addr), remote_addr_len);
 				// (struct sockaddr *) (rp->ai_addr), &remote_addr_len);
 				// (struct sockaddr *) &remote_addr, &remote_addr_len);
 	// printf("hey1\n");
