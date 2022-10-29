@@ -75,48 +75,48 @@ int main(int argc, char *argv[]) {
 	// 
 	// print_bytes(buf,BUF_SIZE);
 
-	// pre-socket
+	// // pre-socket
 
-	s = getaddrinfo((server), port_c, &hints, &result);
-	if (s != 0) {
-		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
-		exit(EXIT_FAILURE);
-	}
+	// s = getaddrinfo((server), port_c, &hints, &result);
+	// if (s != 0) {
+	// 	fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
+	// 	exit(EXIT_FAILURE);
+	// }
 
-	// pre-socket
-	for (rp = result; rp != NULL; rp = rp->ai_next) {
-		sfd = socket(rp->ai_family, rp->ai_socktype,
-				rp->ai_protocol);
-		if (sfd == -1)
-			continue;
+	// // pre-socket
+	// for (rp = result; rp != NULL; rp = rp->ai_next) {
+	// 	sfd = socket(rp->ai_family, rp->ai_socktype,
+	// 			rp->ai_protocol);
+	// 	if (sfd == -1)
+	// 		continue;
 
-		if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
-			break;  /* Success */
+	// 	if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
+	// 		break;  /* Success */
 
-		close(sfd);
-	}
+	// 	close(sfd);
+	// }
 
-	if (rp == NULL) {   /* No address succeeded */
-		fprintf(stderr, "Could not connect\n");
-		exit(EXIT_FAILURE);
-	}
+	// if (rp == NULL) {   /* No address succeeded */
+	// 	fprintf(stderr, "Could not connect\n");
+	// 	exit(EXIT_FAILURE);
+	// }
 
-	// sending/recieving message
-	size_t len;
-	len = strlen(seed) + 1;
-	if (write(sfd, seed, len) != len) {
-		fprintf(stderr, "partial/failed write\n");
-		exit(EXIT_FAILURE);
-	}
+	// // sending/recieving message
+	// size_t len;
+	// len = strlen(seed) + 1;
+	// if (write(sfd, seed, len) != len) {
+	// 	fprintf(stderr, "partial/failed write\n");
+	// 	exit(EXIT_FAILURE);
+	// }
 
-	remote_addr_len = sizeof(struct sockaddr_storage);
-	// nread = read(sfd, buf, 2);
-	nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
-				(struct sockaddr *) &remote_addr, &remote_addr_len);
-	if (nread == -1) {
-		perror("read");
-		exit(EXIT_FAILURE);
-	}
+	// remote_addr_len = sizeof(struct sockaddr_storage);
+	// // nread = read(sfd, buf, 2);
+	// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
+	// 			(struct sockaddr *) &remote_addr, &remote_addr_len);
+	// if (nread == -1) {
+	// 	perror("read");
+	// 	exit(EXIT_FAILURE);
+	// }
 
 
 }
