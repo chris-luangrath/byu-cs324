@@ -96,18 +96,18 @@ int main(int argc, char *argv[]) {
 		close(sfd);
 	}
 
-	// if (rp == NULL) {   /* No address succeeded */
-	// 	fprintf(stderr, "Could not connect\n");
-	// 	exit(EXIT_FAILURE);
-	// }
+	if (rp == NULL) {   /* No address succeeded */
+		fprintf(stderr, "Could not connect\n");
+		exit(EXIT_FAILURE);
+	}
 
-	// // sending/recieving message
-	// size_t len;
-	// len = strlen(seed) + 1;
-	// if (write(sfd, seed, len) != len) {
-	// 	fprintf(stderr, "partial/failed write\n");
-	// 	exit(EXIT_FAILURE);
-	// }
+	// sending/recieving message
+	size_t len;
+	len = strlen(seed) + 1;
+	if (write(sfd, seed, len) != len) {
+		fprintf(stderr, "partial/failed write\n");
+		exit(EXIT_FAILURE);
+	}
 
 	// remote_addr_len = sizeof(struct sockaddr_storage);
 	// // nread = read(sfd, buf, 2);
