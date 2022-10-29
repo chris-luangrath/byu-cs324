@@ -90,9 +90,12 @@ int main(int argc, char *argv[]) {
 		if (sfd == -1)
 			continue;
 
-		if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
+		if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1){
+			printf("it connect\n");
 			break;  /* Success */
 
+		}
+		
 		close(sfd);
 	}
 
