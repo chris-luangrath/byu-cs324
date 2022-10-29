@@ -92,37 +92,7 @@ int main(int argc, char *argv[]) {
 	// pre-socket
 	sfd = socket(result->ai_family, result->ai_socktype,
 				result->ai_protocol);
-	// for (rp = result; rp != NULL; rp = rp->ai_next) {
-		
-	// 	if (sfd == -1)
-	// 		continue;
-
-	// 	if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1){
-	// 		// remote_addr = rp->ai_addr;
-	// 		// printf("it connect\n");
-	// 		break;  /* Success */
-
-	// 	}
-	// 	// printf("closing")
-		
-	// 	close(sfd);
-	// }
-
 	
-
-	// // len = strlen(seed) + 1;
-	// len = SEND_SIZE + 1;
-	
-	// if (write(sfd, seed, len) != len) {
-	// 	fprintf(stderr, "partial/failed write\n");
-	// 	exit(EXIT_FAILURE);
-	// }
-
-	// if (sendto(sfd, buf, nread, 0,
-	// 				(struct sockaddr *) &remote_addr,
-	// 				remote_addr_len) < 0)
-	// 		fprintf(stderr, "Error sending response\n");
-	// sending/recieving message
 	size_t len = SEND_SIZE + 1;
 	
 
@@ -137,9 +107,8 @@ int main(int argc, char *argv[]) {
 			}
 
 	// remote_addr_len = sizeof(struct sockaddr_storage);
-	// // nread = read(sfd, buf, 2);
 	struct sockaddr_in remote_addr;
-	nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
+	nread = recvfrom(sfd, rec_buf, REC_SIZE + 1, 0,
 				(struct sockaddr *) &remote_addr, &remote_addr_len);
 				// (struct sockaddr *) (rp->ai_addr), &remote_addr_len);
 				// (struct sockaddr *) &remote_addr, &remote_addr_len);
