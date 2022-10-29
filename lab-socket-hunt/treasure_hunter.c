@@ -131,12 +131,13 @@ int main(int argc, char *argv[]) {
 
 	// remote_addr_len = sizeof(struct sockaddr_storage);
 	// // nread = read(sfd, buf, 2);
-	// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
-	// 			(struct sockaddr *) &remote_addr, &remote_addr_len);
-	// if (nread == -1) {
-	// 	perror("read");
-	// 	exit(EXIT_FAILURE);
-	// }
+	nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
+				(rp->ai_addr), &remote_addr_len);
+				// (struct sockaddr *) &remote_addr, &remote_addr_len);
+	if (nread == -1) {
+		perror("read");
+		exit(EXIT_FAILURE);
+	}
 
 
 }
