@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
 
 	// pre-socket
 
-	s = getaddrinfo(&server, &port, &hints, &result);
+	s = getaddrinfo(*server, *port, &hints, &result);
 	if (s != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
 		exit(EXIT_FAILURE);
