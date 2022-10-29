@@ -126,7 +126,7 @@ int main(int argc, char *argv[]) {
 	size_t len = SEND_SIZE + 1;
 	
 
-	remote_addr_len = sizeof(struct sockaddr_storage);
+	remote_addr_len = sizeof(struct sockaddr_in);
 	if (sendto(sfd, send_buf, len, 0,
 					(result->ai_addr),
 					// (struct sockaddr *) &(rp->ai_addr),
