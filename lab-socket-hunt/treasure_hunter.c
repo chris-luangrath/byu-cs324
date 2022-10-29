@@ -90,11 +90,11 @@ int main(int argc, char *argv[]) {
 		if (sfd == -1)
 			continue;
 
-	// 	if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
-	// 		break;  /* Success */
+		if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
+			break;  /* Success */
 
-	// 	close(sfd);
-	// }
+		close(sfd);
+	}
 
 	// if (rp == NULL) {   /* No address succeeded */
 	// 	fprintf(stderr, "Could not connect\n");
