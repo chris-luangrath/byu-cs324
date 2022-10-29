@@ -48,6 +48,7 @@ int main(int argc, char *argv[]) {
 	hints.ai_socktype = SOCK_DGRAM; /* Datagram socket */
 	hints.ai_flags = 0;
 	hints.ai_protocol = 0;  /* Any protocol */
+	printf("hey1");
 
 	int server = atoi(argv[1]);
 	int port = atoi(argv[2]);
