@@ -52,8 +52,8 @@ int main(int argc, char *argv[]) {
 	int server = atoi(argv[1]);
 	int port = atoi(argv[2]);
 	char * port_c = argv[2]; 
-	int level = htons(atoi(argv[3]));
-	int seed = htons(atoi(argv[4]));
+	int level = atoi(argv[3]);
+	int seed = atoi(argv[4]);
 
 	int id = htons(USERID);
 
@@ -63,15 +63,19 @@ int main(int argc, char *argv[]) {
 	unsigned char rec_buf[REC_SIZE];
 	bzero(rec_buf,REC_SIZE);
 
-	memcpy(&send_buf[1], &level, BYTE_SIZE);
+	printf("hey1");
+	memcpy(&send_buf[1], &(htons(level)), BYTE_SIZE);
+	printf("hey2");
 	memcpy(&send_buf[2], &id, ID_SIZE);
+	printf("hey3");
 	memcpy(&send_buf[6], &seed, SEED_SIZE);
+	printf("hey4");
 	// 
 	// print_bytes(buf,BUF_SIZE);
 
 	// pre-socket
 
-	s = getaddrinfo((server), (port), &hints, &result);
+	s = getaddrinfo((server), port_c, &hints, &result);
 	if (s != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
 		exit(EXIT_FAILURE);
