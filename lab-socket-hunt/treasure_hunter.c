@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
 			continue;
 
 		if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1){
-			remote_addr = rp->ai_addr;
+			// remote_addr = rp->ai_addr;
 			// printf("it connect\n");
 			break;  /* Success */
 
@@ -123,7 +123,7 @@ int main(int argc, char *argv[]) {
 
 	remote_addr_len = sizeof(struct sockaddr_storage);
 	if (sendto(sfd, send_buf, len, 0,
-					(struct sockaddr *) rp->ai_addr,
+					(struct sockaddr *) &(rp->ai_addr),
 					// (struct sockaddr *) &remote_addr,
 					remote_addr_len) < 0)
 			fprintf(stderr, "Error sending response\n");
