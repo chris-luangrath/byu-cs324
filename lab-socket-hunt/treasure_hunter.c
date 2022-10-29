@@ -1,7 +1,7 @@
 // Replace PUT_USERID_HERE with your actual BYU CS user id, which you can find
 // by running `id -u` on a CS lab machine.
-#define USERID 1823700709
-// #define USERID 12345
+// #define USERID 1823700709
+#define USERID 12345
 // #define BUF_SIZE 8
 // #define BYTE_SIZE 2
 // #define ID_SIZE 8
