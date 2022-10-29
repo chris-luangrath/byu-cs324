@@ -57,8 +57,8 @@ int main(int argc, char *argv[]) {
 	unsigned int level = htons(atoi(argv[3]));
 	unsigned int seed = htons(atoi(argv[4]));
 
-	unsigned int id = htons(USERID);
-	// unsigned int id = htonl(USERID);
+	// unsigned int id = htons(USERID);
+	unsigned int id = htonl(USERID);
 
 	unsigned char send_buf[SEND_SIZE];
 	bzero(send_buf,SEND_SIZE);
@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
 	// printf("hey1\n");
 	memcpy(&send_buf[1], &level, BYTE_SIZE);
 	// printf("hey2\n");
-	memcpy(&send_buf[4], &id, ID_SIZE);
+	memcpy(&send_buf[2], &id, ID_SIZE);
 	// printf("hey3\n");
 	memcpy(&send_buf[6], &seed, SEED_SIZE);
 	// printf("hey4\n");
