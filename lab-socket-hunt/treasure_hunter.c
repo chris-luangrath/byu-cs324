@@ -41,6 +41,7 @@ int main(int argc, char *argv[]) {
 	// socklen_t local_addr_len, remote_addr_len;
 
 
+	printf("hey1");
 
 	memset(&hints, 0, sizeof(struct addrinfo));
 	hints.ai_family = AF_INET;    /* Allow IPv4, IPv6, or both, depending on
@@ -48,7 +49,6 @@ int main(int argc, char *argv[]) {
 	hints.ai_socktype = SOCK_DGRAM; /* Datagram socket */
 	hints.ai_flags = 0;
 	hints.ai_protocol = 0;  /* Any protocol */
-	printf("hey1");
 
 	int server = atoi(argv[1]);
 	int port = atoi(argv[2]);
