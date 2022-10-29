@@ -52,10 +52,10 @@ int main(int argc, char *argv[]) {
 	int server = atoi(argv[1]);
 	int port = atoi(argv[2]);
 	char * port_c = argv[2]; 
-	int level = htnos(atoi(argv[3]));
-	int seed = htnos(atoi(argv[4]));
+	int level = htoms(atoi(argv[3]));
+	int seed = htons(atoi(argv[4]));
 
-	int id = htnos(USERID);
+	int id = htons(USERID);
 
 	unsigned char send_buf[SEND_SIZE];
 	bzero(send_buf,SEND_SIZE);
