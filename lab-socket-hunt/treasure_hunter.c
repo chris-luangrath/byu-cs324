@@ -32,7 +32,7 @@ int verbose = 0;
 void print_bytes(unsigned char *bytes, int byteslen);
 
 int main(int argc, char *argv[]) {
-	printf("hey1");
+	// printf("hey1");
 	int sfd, s, j;
 	struct sockaddr_storage remote_addr;
 	int nread;
@@ -51,11 +51,11 @@ int main(int argc, char *argv[]) {
 	hints.ai_flags = 0;
 	hints.ai_protocol = 0;  /* Any protocol */
 
-	int server = atoi(argv[1]);
-	int port = atoi(argv[2]);
+	unsigned int server = htons(atoi(argv[1]));
+	unsigned int port = htons(atoi(argv[2]));
 	char * port_c = argv[2]; 
-	int level = atoi(argv[3]);
-	int seed = atoi(argv[4]);
+	unsigned int level = htons(atoi(argv[3]));
+	unsigned int seed = htons(atoi(argv[4]));
 
 	int id = USERID;
 
@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
 	bzero(rec_buf,REC_SIZE);
 
 	printf("hey1");
-	memcpy(&send_buf[1], htons(&level), BYTE_SIZE);
+	memcpy(&send_buf[1], &level, BYTE_SIZE);
 	printf("hey2");
 	memcpy(&send_buf[2], &id, ID_SIZE);
 	printf("hey3");
