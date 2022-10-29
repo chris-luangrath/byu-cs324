@@ -107,7 +107,8 @@ int main(int argc, char *argv[]) {
 	// sending/recieving message
 	size_t len;
 	// // len = strlen(seed) + 1;
-	len = SEND_SIZE + 1;
+	// len = SEND_SIZE + 1;
+	len = SEND_SIZE;
 	// if (write(sfd, seed, len) != len) {
 	// 	fprintf(stderr, "partial/failed write\n");
 	// 	exit(EXIT_FAILURE);
