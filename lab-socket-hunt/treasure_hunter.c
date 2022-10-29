@@ -91,10 +91,12 @@ int main(int argc, char *argv[]) {
 			continue;
 
 		if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1){
+			remote_addr = rp->ai_addr;
 			// printf("it connect\n");
 			break;  /* Success */
 
 		}
+		// printf("closing")
 		
 		close(sfd);
 	}
@@ -105,14 +107,20 @@ int main(int argc, char *argv[]) {
 	}
 
 	// sending/recieving message
-	size_t len;
+	size_t len = SEND_SIZE + 1;
 	// // len = strlen(seed) + 1;
 	// len = SEND_SIZE + 1;
-	len = SEND_SIZE;
+	
 	// if (write(sfd, seed, len) != len) {
 	// 	fprintf(stderr, "partial/failed write\n");
 	// 	exit(EXIT_FAILURE);
 	// }
+
+	// if (sendto(sfd, buf, nread, 0,
+	// 				(struct sockaddr *) &remote_addr,
+	// 				remote_addr_len) < 0)
+	// 		fprintf(stderr, "Error sending response\n");
+
 	remote_addr_len = sizeof(struct sockaddr_storage);
 	if (sendto(sfd, send_buf, len, 0,
 					(struct sockaddr *) &remote_addr,
