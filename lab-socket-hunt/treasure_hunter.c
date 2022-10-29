@@ -140,7 +140,7 @@ int main(int argc, char *argv[]) {
 	// // nread = read(sfd, buf, 2);
 	struct sockaddr_in remote_addr;
 	nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
-				(struct sockaddr *) &remote_addr, remote_addr_len);
+				(struct sockaddr *) &remote_addr, &remote_addr_len);
 				// (struct sockaddr *) (rp->ai_addr), &remote_addr_len);
 				// (struct sockaddr *) &remote_addr, &remote_addr_len);
 	// printf("hey1\n");
