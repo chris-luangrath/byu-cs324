@@ -8,6 +8,7 @@
 // #define SEED_SIZE 4
 #define SEND_SIZE 8
 #define REC_SIZE 256
+#define NONCE_SIZE 1024
 #define BYTE_SIZE 1
 #define ID_SIZE 4
 #define SEED_SIZE 2
@@ -126,7 +127,8 @@ int main(int argc, char *argv[]) {
 	int n = 0;
 	int op = 1;
 	int par = 2;
-	char* nonce[4];
+	char* nonce[NONCE_SIZE];
+	// char* nonce[4];
 	// char * n[1];
 	// printf("hey1\n");
 	// printf("hey2\n");
@@ -141,38 +143,43 @@ int main(int argc, char *argv[]) {
 	printf("par=%d\n",par);
 
 	// bzero(buf, BUFSIZE);
-	memcpy(&nonce,&rec_buf[n+4], 4);
+	memcpy(&nonce[i],&rec_buf[n+4], 4);
+	i += 4;
 	// printf("hey3\n");
 	printf("nonce=%x\n", ntohs(nonce));
 	// for (i = 0; i < 4; i++) {
 	// 	printf("%x ", nonce[i]);
 	// }
-	switch(op){
-		case 0:
-			if (sendto(sfd, send_buf, SEND_SIZE, 0,
-					(result->ai_addr),
-					// (struct sockaddr *) &(rp->ai_addr),
-					// (struct sockaddr *) &remote_addr,
-					remote_addr_len) < 0){
-				fprintf(stderr, "Error sending response\n");
-				exit(EXIT_FAILURE);
-			}
-			nread = recvfrom(sfd, rec_buf, 4, 0,
-				(struct sockaddr *) &remote_addr, &remote_addr_len);
-			if (nread == -1) {
-				perror("read");
-				exit(EXIT_FAILURE);
-			}
-			print_bytes(rec_buf,nread);
-			break;
-		case 1:
-			break;
-		case 2:
-			break;
-		case 3:
-			break;
-		case 4:
-			break;
+	while(n != 0){
+		switch(op){
+			case 0:
+				if (sendto(sfd, send_buf, SEND_SIZE, 0,
+						(result->ai_addr),
+						// (struct sockaddr *) &(rp->ai_addr),
+						// (struct sockaddr *) &remote_addr,
+						remote_addr_len) < 0){
+					fprintf(stderr, "Error sending response\n");
+					exit(EXIT_FAILURE);
+				}
+				nread = recvfrom(sfd, rec_buf, 4, 0,
+					(struct sockaddr *) &remote_addr, &remote_addr_len);
+				if (nread == -1) {
+					perror("read");
+					exit(EXIT_FAILURE);
+				}
+				memcpy(&nonce[i],&rec_buf[0], nread);
+				i += nread;
+				print_bytes(rec_buf,nread);
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+		}
 	}
 
 
