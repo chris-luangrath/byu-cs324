@@ -131,6 +131,7 @@ int main(int argc, char *argv[]) {
 	printf("hey1\n");
 	memcpy(&n,&rec_buf[1], 4);
 	printf("hey2\n");
+	printf("%d\n",n);
 	// bzero(buf, BUFSIZE);
 	char* nonce[4];
 	memcpy(&nonce,&rec_buf[n+4], 4);
