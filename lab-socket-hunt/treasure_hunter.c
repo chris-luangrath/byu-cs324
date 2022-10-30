@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
 	memcpy(&send_buf[6], &seed, SEED_SIZE);
 	// printf("hey4\n");
 	// 
-	print_bytes(send_buf,SEND_SIZE);
+	// print_bytes(send_buf,SEND_SIZE);
 
 	// pre-socket
 
@@ -127,9 +127,11 @@ int main(int argc, char *argv[]) {
 
 	// unsigned short val = 0x0000000000000000;
 	int i = 0;
+	int n = 0;
+	memcpy(&n,&rec_buf[1], 4);
 	// bzero(buf, BUFSIZE);
 	char* nonce[4];
-	memcpy(&nonce,&rec_buf[4], 4);
+	memcpy(&nonce,&rec_buf[n+4], 4);
 	printf("%x\n", ntohs(nonce));
 	// for (i = 0; i < 4; i++) {
 	// 	printf("%x ", nonce[i]);
