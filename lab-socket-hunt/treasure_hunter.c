@@ -127,8 +127,9 @@ int main(int argc, char *argv[]) {
 	int n = 0;
 	int op = 1;
 	int par = 2;
-	char* nonce[NONCE_SIZE];
+	char* full_nonce[NONCE_SIZE];
 	// char* nonce[4];
+	int nonce = 0;
 	// char * n[1];
 	// printf("hey1\n");
 	// printf("hey2\n");
@@ -143,7 +144,8 @@ int main(int argc, char *argv[]) {
 	printf("par=%d\n",par);
 
 	// bzero(buf, BUFSIZE);
-	memcpy(&nonce[i],&rec_buf[n+4], 4);
+	memcpy(&nonce,&rec_buf[n+4], 4);
+	memcpy(&full_nonce[i],&nonce, 4);
 	i += 4;
 	// printf("hey3\n");
 	printf("nonce=%x\n", ntohs(nonce));
@@ -153,10 +155,8 @@ int main(int argc, char *argv[]) {
 	while(n != 0){
 		switch(op){
 			case 0:
-				if (sendto(sfd, &nonce[i-4], 4, 0,
+				if (sendto(sfd, &(nonce+1), 4, 0,
 						(result->ai_addr),
-						// (struct sockaddr *) &(rp->ai_addr),
-						// (struct sockaddr *) &remote_addr,
 						remote_addr_len) < 0){
 					fprintf(stderr, "Error sending response\n");
 					exit(EXIT_FAILURE);
@@ -167,7 +167,7 @@ int main(int argc, char *argv[]) {
 					perror("read");
 					exit(EXIT_FAILURE);
 				}
-				memcpy(&nonce[i],&rec_buf[0], nread);
+				memcpy(&full_nonce[i],&rec_buf[0], nread);
 				i += nread;
 				print_bytes(rec_buf,nread);
 				break;
