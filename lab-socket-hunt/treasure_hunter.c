@@ -136,12 +136,12 @@ int main(int argc, char *argv[]) {
 	// printf("hey2\n");
 	memcpy(&n,&rec_buf[1], 1);
 	printf("n=%d\n",n);
-	n += 1;
+	// n += 1;
 
 	memcpy(&dir,&rec_buf[n+1], 1);
 	printf("dir=%d\n",dir);
 
-	memcpy(&par,&rec_buf[n+2], 2);
+	memcpy(&par,&rec_buf[n+1], 2);
 	printf("par=%d\n",par);
 
 	// bzero(buf, BUFSIZE);
