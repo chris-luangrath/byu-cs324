@@ -129,7 +129,7 @@ int main(int argc, char *argv[]) {
 	int i = 0;
 	// bzero(buf, BUFSIZE);
 	char* nonce[4];
-	memcpy(&rec_buf[4],&nonce, 4);
+	memcpy(&nonce,&rec_buf[4], 4);
 	for (i = 0; i < 4; i++) {
 		printf("%x ", nonce[i]);
 	}
