@@ -128,8 +128,8 @@ int main(int argc, char *argv[]) {
 	// unsigned short val = 0x0000000000000000;
 	int i = 0;
 	int n = 0;
-	int op;
-	int par;
+	int op = 0;
+	int par = 0;
 	char* nonce[4];
 	// char * n[1];
 	// printf("hey1\n");
@@ -138,7 +138,7 @@ int main(int argc, char *argv[]) {
 	printf("n=%d\n",n);
 	// n += 1;
 
-	memcpy(&op,&rec_buf[n+1], 2);
+	memcpy(&op,&rec_buf[n+1], 1);
 	printf("op=%d\n",op);
 
 	memcpy(&par,&rec_buf[n+2], 2);
