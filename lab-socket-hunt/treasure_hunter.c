@@ -128,7 +128,7 @@ int main(int argc, char *argv[]) {
 	// unsigned short val = 0x0000000000000000;
 	int i = 0;
 	int n = 0;
-	int dir;
+	int op;
 	int par;
 	char* nonce[4];
 	// char * n[1];
@@ -138,10 +138,10 @@ int main(int argc, char *argv[]) {
 	printf("n=%d\n",n);
 	// n += 1;
 
-	memcpy(&dir,&rec_buf[n+1], 1);
-	printf("dir=%d\n",dir);
+	memcpy(&op,&rec_buf[n+1], 1);
+	printf("op=%d\n",dir);
 
-	memcpy(&par,&rec_buf[n+1], 2);
+	memcpy(&par,&rec_buf[n+2], 2);
 	printf("par=%d\n",par);
 
 	// bzero(buf, BUFSIZE);
@@ -151,6 +151,18 @@ int main(int argc, char *argv[]) {
 	// for (i = 0; i < 4; i++) {
 	// 	printf("%x ", nonce[i]);
 	// }
+	switch(op){
+		case 0:
+			break;
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+	}
 
 
 
