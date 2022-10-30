@@ -111,11 +111,7 @@ int main(int argc, char *argv[]) {
 	struct sockaddr_in remote_addr;
 	nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 				(struct sockaddr *) &remote_addr, &remote_addr_len);
-				// (struct sockaddr *) (rp->ai_addr), &remote_addr_len);
-				// (struct sockaddr *) &remote_addr, &remote_addr_len);
-	// printf("hey1\n");
 	if (nread == -1) {
-		// printf("hey2\n");
 		perror("read");
 		exit(EXIT_FAILURE);
 	}
@@ -153,6 +149,13 @@ int main(int argc, char *argv[]) {
 	// }
 	switch(op){
 		case 0:
+			nread = recvfrom(sfd, rec_buf, 4, 0,
+				(struct sockaddr *) &remote_addr, &remote_addr_len);
+			if (nread == -1) {
+				perror("read");
+				exit(EXIT_FAILURE);
+			}
+			print_bytes(rec_buf,nread);
 			break;
 		case 1:
 			break;
