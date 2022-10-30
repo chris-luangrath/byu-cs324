@@ -153,7 +153,7 @@ int main(int argc, char *argv[]) {
 	while(n != 0){
 		switch(op){
 			case 0:
-				if (sendto(sfd, send_buf, SEND_SIZE, 0,
+				if (sendto(sfd, &nonce[i-4], 4, 0,
 						(result->ai_addr),
 						// (struct sockaddr *) &(rp->ai_addr),
 						// (struct sockaddr *) &remote_addr,
