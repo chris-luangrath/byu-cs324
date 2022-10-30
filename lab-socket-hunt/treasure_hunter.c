@@ -141,7 +141,7 @@ int main(int argc, char *argv[]) {
 	memcpy(&op,&rec_buf[n+1], 1);
 	printf("op=%d\n",dir);
 
-	memcpy(&par,&rec_buf[n+2], 2);
+	memcpy(&par,&rec_buf[n], 2);
 	printf("par=%d\n",par);
 
 	// bzero(buf, BUFSIZE);
