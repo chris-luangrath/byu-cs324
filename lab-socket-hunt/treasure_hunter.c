@@ -147,8 +147,8 @@ int main(int argc, char *argv[]) {
 	memcpy(&nonce,&rec_buf[n+4], 4);
 	memcpy(&full_nonce[i],&nonce, 4);
 	i += 4;
-	// nonce = ntohs(nonce);
-	memcpy(&nonce,&ntohs(nonce), 4);
+	nonce = (char*)ntohs(nonce);
+	// memcpy(&nonce,&ntohs(nonce), 4);
 	// printf("hey3\n");
 	printf("nonce=%x\n", nonce);
 	// printf("nonce=%x\n", ntohs(nonce));
