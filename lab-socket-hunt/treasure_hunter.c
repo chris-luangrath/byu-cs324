@@ -128,8 +128,8 @@ int main(int argc, char *argv[]) {
 	int op = 1;
 	int par = 2;
 	char* full_nonce[NONCE_SIZE];
-	// char* nonce[4];
-	int nonce = 0;
+	char* nonce[4];
+	// int nonce = 0;
 	// char * n[1];
 	// printf("hey1\n");
 	// printf("hey2\n");
