@@ -170,6 +170,7 @@ int main(int argc, char *argv[]) {
 				memcpy(&full_nonce[i],&rec_buf[0], nread);
 				i += nread;
 				print_bytes(rec_buf,nread);
+				sleep(1);
 				break;
 			case 1:
 				break;
