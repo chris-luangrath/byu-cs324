@@ -155,7 +155,7 @@ int main(int argc, char *argv[]) {
 	while(n != 0){
 		switch(op){
 			case 0:
-				if (sendto(sfd, nonce, 4, 0,
+				if (sendto(sfd, &nonce, 4, 0,
 						(result->ai_addr),
 						remote_addr_len) < 0){
 					fprintf(stderr, "Error sending response\n");
