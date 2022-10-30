@@ -138,7 +138,7 @@ int main(int argc, char *argv[]) {
 	printf("n=%d\n",n);
 	// n += 1;
 
-	memcpy(&op,&rec_buf[n+1], 1);
+	memcpy(&op,&rec_buf[n+1], 2);
 	printf("op=%d\n",op);
 
 	memcpy(&par,&rec_buf[n+2], 2);
