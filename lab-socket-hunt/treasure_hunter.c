@@ -149,6 +149,14 @@ int main(int argc, char *argv[]) {
 	// }
 	switch(op){
 		case 0:
+			if (sendto(sfd, send_buf, SEND_SIZE, 0,
+					(result->ai_addr),
+					// (struct sockaddr *) &(rp->ai_addr),
+					// (struct sockaddr *) &remote_addr,
+					remote_addr_len) < 0){
+				fprintf(stderr, "Error sending response\n");
+				exit(EXIT_FAILURE);
+			}
 			nread = recvfrom(sfd, rec_buf, 4, 0,
 				(struct sockaddr *) &remote_addr, &remote_addr_len);
 			if (nread == -1) {
