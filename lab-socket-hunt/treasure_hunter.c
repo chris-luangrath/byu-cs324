@@ -122,6 +122,20 @@ int main(int argc, char *argv[]) {
 	print_bytes(rec_buf,nread);
 
 
+	// unsigned char nonce[4];
+	// bzero(rec_buf,4);
+
+	// unsigned short val = 0x0000000000000000;
+	int i = 0;
+	// bzero(buf, BUFSIZE);
+	char* nonce[4];
+	memcpy(&rec_buf[4],&nonce, 4);
+	for (i = 0; i < 4; i++) {
+		printf("%x ", nonce[i]);
+	}
+
+
+
 }
 
 void print_bytes(unsigned char *bytes, int byteslen) {
