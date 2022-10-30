@@ -128,8 +128,8 @@ int main(int argc, char *argv[]) {
 	// unsigned short val = 0x0000000000000000;
 	int i = 0;
 	int n = 0;
-	int op = 0;
-	int par = 0;
+	int op = 1;
+	int par = 2;
 	char* nonce[4];
 	// char * n[1];
 	// printf("hey1\n");
