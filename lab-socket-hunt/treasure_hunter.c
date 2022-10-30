@@ -129,18 +129,24 @@ int main(int argc, char *argv[]) {
 	int i = 0;
 	int n = 0;
 	int dir;
+	int par;
+	char* nonce[4];
 	// char * n[1];
 	// printf("hey1\n");
 	// printf("hey2\n");
 	memcpy(&n,&rec_buf[1], 1);
-	printf("%d\n",n);
+	printf("n=%d\n",n);
+
 	memcpy(&dir,&rec_buf[n+1], 1);
-	printf("%d\n",dir);
+	printf("dir=%d\n",dir);
+
+	memcpy(&par,&rec_buf[n+2], 2);
+	printf("dir=%d\n",par);
+
 	// bzero(buf, BUFSIZE);
-	char* nonce[4];
 	memcpy(&nonce,&rec_buf[n+4], 4);
-	printf("hey3\n");
-	printf("%x\n", ntohs(nonce));
+	// printf("hey3\n");
+	printf("nonce=%x\n", ntohs(nonce));
 	// for (i = 0; i < 4; i++) {
 	// 	printf("%x ", nonce[i]);
 	// }
