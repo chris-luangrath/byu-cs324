@@ -127,10 +127,10 @@ int main(int argc, char *argv[]) {
 
 	// unsigned short val = 0x0000000000000000;
 	int i = 0;
-	// int n = 0;
-	char * n[1];
+	int n = 0;
+	// char * n[1];
 	printf("hey1\n");
-	memcpy(&n,&rec_buf[1], 4);
+	memcpy(&n,&rec_buf[1], 1);
 	printf("hey2\n");
 	printf("%d\n",n);
 	// bzero(buf, BUFSIZE);
