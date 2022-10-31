@@ -190,6 +190,7 @@ int main(int argc, char *argv[]) {
 	}
 	printf("loop finished\n");
 	print_bytes(&treasure,i);
+	printf("%s\n",treasure);
 
 
 
