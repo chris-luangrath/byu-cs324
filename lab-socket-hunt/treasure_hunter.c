@@ -146,13 +146,13 @@ int main(int argc, char *argv[]) {
 	// bzero(buf, BUFSIZE);
 	memcpy(&nonce,&rec_buf[n+4], 4);
 	memcpy(&full_nonce[i],&nonce, 4);
-	i += 4;
+	// i += 4;
 	// print_bytes((unsigned char *)&nonce,4);
-	nonce = ntohl(nonce);
+	// nonce = ntohl(nonce);
 	// print_bytes((unsigned char *)&nonce,4);
-	nonce += 1;
+	// nonce += 1;
 	// print_bytes((unsigned char *)&nonce,4);
-	nonce = htonl(nonce);
+	nonce = htonl(ntohl(nonce) + 1);
 	// print_bytes((unsigned char *)&nonce,4);
 	// nonce = (char*)ntohs(nonce);
 	// memcpy(&nonce,&ntohs(nonce), 4);
