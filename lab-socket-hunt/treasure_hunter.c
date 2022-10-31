@@ -165,7 +165,7 @@ int main(int argc, char *argv[]) {
 				memcpy(&treasure[i],&rec_buf[1],n);
 				i += n;
 				printf("i=%d\n",i);
-				print_bytes(&treasure,i);
+				print_bytes(treasure,i);
 
 				memcpy(&op,&rec_buf[n+1], 1);
 				// printf("op=%d\n",op);
@@ -191,7 +191,7 @@ int main(int argc, char *argv[]) {
 		}
 	}
 	printf("loop finished\n");
-	print_bytes(&treasure,i);
+	print_bytes(treasure,i);
 	printf("%s\n",treasure);
 
 
