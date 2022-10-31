@@ -148,7 +148,8 @@ int main(int argc, char *argv[]) {
 	memcpy(&full_nonce[i],&nonce, 4);
 	i += 4;
 	print_bytes((unsigned char *)&nonce,4);
-	nonce = htonl(ntohl(nonce) + 1);
+	nonce = ntohl(nonce) + 1;
+	nonce = htonl(nonce);
 	print_bytes((unsigned char *)&nonce,4);
 	// nonce = (char*)ntohs(nonce);
 	// memcpy(&nonce,&ntohs(nonce), 4);
