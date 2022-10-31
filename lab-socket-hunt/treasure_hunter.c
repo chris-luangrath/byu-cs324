@@ -161,7 +161,7 @@ int main(int argc, char *argv[]) {
 						fprintf(stderr, "Error sending response\n");
 						exit(EXIT_FAILURE);
 					}
-					start = 0
+					start = 0;
 				} else {
 					if (sendto(sfd, &nonce, 4, 0,
 						(result->ai_addr),
