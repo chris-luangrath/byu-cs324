@@ -110,15 +110,6 @@ int main(int argc, char *argv[]) {
 	// 		exit(EXIT_FAILURE);
 	// 		}
 
-	// // remote_addr_len = sizeof(struct sockaddr_storage);
-	// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
-	// 			(struct sockaddr *) &remote_addr, &remote_addr_len);
-	// if (nread == -1) {
-	// 	perror("read");
-	// 	exit(EXIT_FAILURE);
-	// }
-	// print_bytes(rec_buf,nread);
-
 
 	// unsigned char nonce[4];
 	// bzero(rec_buf,4);
@@ -170,17 +161,7 @@ int main(int argc, char *argv[]) {
 					}
 				}
 				
-				// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
-				// 	(struct sockaddr *) &remote_addr, &remote_addr_len);
-				// if (nread == -1) {
-				// 	perror("read");
-				// 	exit(EXIT_FAILURE);
-				// }
 				// i += nread;
-				// print_bytes(rec_buf,nread);
-				// sleep(1);
-				
-
 				// remote_addr_len = sizeof(struct sockaddr_storage);
 				nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 							(struct sockaddr *) &remote_addr, &remote_addr_len);
