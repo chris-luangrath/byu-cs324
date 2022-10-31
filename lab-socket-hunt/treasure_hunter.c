@@ -133,7 +133,7 @@ int main(int argc, char *argv[]) {
 	// char * n[1];
 	// printf("hey1\n");
 	// printf("hey2\n");
-	memcpy(&n,&rec_buf[1], 1);
+	memcpy(&n,&rec_buf[0], 1);
 	printf("n=%d\n",n);
 	// n += 1;
 
