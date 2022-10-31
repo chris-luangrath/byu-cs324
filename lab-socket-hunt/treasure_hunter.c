@@ -157,7 +157,7 @@ int main(int argc, char *argv[]) {
 				print_bytes(rec_buf,nread);
 				
 				memcpy(&n,&rec_buf[0], 1);
-				// printf("n=%d\n",n);
+				printf("n=%d\n",n);
 				
 				// memcpy(&treasure[i],&rec_buf[1],n);
 				// i += n;
@@ -166,13 +166,13 @@ int main(int argc, char *argv[]) {
 				i += n;
 
 				memcpy(&op,&rec_buf[n+1], 1);
-				// printf("op=%d\n",op);
+				printf("op=%d\n",op);
 
 				memcpy(&par,&rec_buf[n+2], 2);
-				// printf("par=%d\n",par);
+				printf("par=%d\n",par);
 
 				// bzero(buf, BUFSIZE);
-				// printf("nonce=");
+				printf("nonce=");
 				memcpy(&nonce,&rec_buf[n+4], 4);
 				nonce = htonl(ntohl(nonce) + 1);
 
