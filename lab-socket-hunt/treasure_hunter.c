@@ -147,13 +147,13 @@ int main(int argc, char *argv[]) {
 	memcpy(&nonce,&rec_buf[n+4], 4);
 	memcpy(&full_nonce[i],&nonce, 4);
 	i += 4;
-	print_bytes((unsigned char *)&nonce,4);
+	// print_bytes((unsigned char *)&nonce,4);
 	nonce = ntohl(nonce);
-	print_bytes((unsigned char *)&nonce,4);
+	// print_bytes((unsigned char *)&nonce,4);
 	nonce += 1;
-	print_bytes((unsigned char *)&nonce,4);
+	// print_bytes((unsigned char *)&nonce,4);
 	nonce = htonl(nonce);
-	print_bytes((unsigned char *)&nonce,4);
+	// print_bytes((unsigned char *)&nonce,4);
 	// nonce = (char*)ntohs(nonce);
 	// memcpy(&nonce,&ntohs(nonce), 4);
 	// printf("hey3\n");
@@ -171,12 +171,13 @@ int main(int argc, char *argv[]) {
 					fprintf(stderr, "Error sending response\n");
 					exit(EXIT_FAILURE);
 				}
-				nread = recvfrom(sfd, rec_buf, 4, 0,
+				nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 					(struct sockaddr *) &remote_addr, &remote_addr_len);
 				if (nread == -1) {
 					perror("read");
 					exit(EXIT_FAILURE);
 				}
+				// memcpy(&full_nonce[i],&rec_buf[0], nread);
 				memcpy(&full_nonce[i],&rec_buf[0], nread);
 				i += nread;
 				print_bytes(rec_buf,nread);
