@@ -125,9 +125,9 @@ int main(int argc, char *argv[]) {
 
 	// unsigned short val = 0x0000000000000000;
 	int i = 0;
-	int n = 0;
-	int op = 1;
-	int par = 2;
+	int n = -1;
+	int op = 0;
+	int par = 0;
 	char* full_nonce[NONCE_SIZE];
 	// char* nonce[4];
 	int nonce = 0;
