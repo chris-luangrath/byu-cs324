@@ -166,13 +166,13 @@ int main(int argc, char *argv[]) {
 				i += n;
 
 				memcpy(&op,&rec_buf[n+1], 1);
-				printf("op=%d\n",op);
+				// printf("op=%d\n",op);
 
 				memcpy(&par,&rec_buf[n+2], 2);
-				printf("par=%d\n",par);
+				// printf("par=%d\n",par);
 
 				// bzero(buf, BUFSIZE);
-				printf("nonce=");
+				// printf("nonce=");
 				memcpy(&nonce,&rec_buf[n+4], 4);
 				nonce = htonl(ntohl(nonce) + 1);
 
