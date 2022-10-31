@@ -206,8 +206,7 @@ int main(int argc, char *argv[]) {
 				nonce = htonl(ntohl(nonce) + 1);
 				// printf("nonce=%x\n", nonce);
 				printf("nonce=", nonce);
-				printf("nonce=%x\n", nonce);
-
+				print_bytes(nonce,4);
 
 				sleep(1);
 				break;
