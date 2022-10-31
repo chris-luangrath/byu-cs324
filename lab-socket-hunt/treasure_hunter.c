@@ -202,10 +202,9 @@ int main(int argc, char *argv[]) {
 
 				// bzero(buf, BUFSIZE);
 				memcpy(&nonce,&rec_buf[n+4], 4);
-				// i += 4;
 				nonce = htonl(ntohl(nonce) + 1);
 				// printf("nonce=%x\n", nonce);
-				printf("nonce=", nonce);
+				printf("nonce=");
 				print_bytes(nonce,4);
 
 				sleep(1);
