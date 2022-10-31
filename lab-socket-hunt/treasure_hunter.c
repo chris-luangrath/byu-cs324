@@ -131,6 +131,7 @@ int main(int argc, char *argv[]) {
 	char* full_nonce[NONCE_SIZE];
 	// char* nonce[4];
 	int nonce = 0;
+	int start = 1;
 	// char * n[1];
 	// printf("hey1\n");
 	// printf("hey2\n");
@@ -154,12 +155,22 @@ int main(int argc, char *argv[]) {
 	while(n != 0){
 		switch(op){
 			case 0:
-				// if (sendto(sfd, &nonce, 4, 0,
-				// 		(result->ai_addr),
-				// 		remote_addr_len) < 0){
-				// 	fprintf(stderr, "Error sending response\n");
-				// 	exit(EXIT_FAILURE);
-				// }
+				if(start){
+					if (sendto(sfd, send_buf, SEND_SIZE, 0,
+					(result->ai_addr),remote_addr_len) < 0){
+						fprintf(stderr, "Error sending response\n");
+						exit(EXIT_FAILURE);
+					}
+					start = 0
+				} else {
+					if (sendto(sfd, &nonce, 4, 0,
+						(result->ai_addr),
+						remote_addr_len) < 0){
+					fprintf(stderr, "Error sending response\n");
+					exit(EXIT_FAILURE);
+					}
+				}
+				
 				// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 				// 	(struct sockaddr *) &remote_addr, &remote_addr_len);
 				// if (nread == -1) {
@@ -171,14 +182,7 @@ int main(int argc, char *argv[]) {
 				// i += nread;
 				// print_bytes(rec_buf,nread);
 				// sleep(1);
-				if (sendto(sfd, send_buf, SEND_SIZE, 0,
-					(result->ai_addr),
-					// (struct sockaddr *) &(rp->ai_addr),
-					// (struct sockaddr *) &remote_addr,
-					remote_addr_len) < 0){
-						fprintf(stderr, "Error sending response\n");
-						exit(EXIT_FAILURE);
-						}
+				
 
 				// remote_addr_len = sizeof(struct sockaddr_storage);
 				nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
@@ -205,6 +209,8 @@ int main(int argc, char *argv[]) {
 				// i += 4;
 				nonce = htonl(ntohl(nonce) + 1);
 				printf("nonce=%x\n", nonce);
+
+				sleep(1);
 				break;
 			case 1:
 				break;
