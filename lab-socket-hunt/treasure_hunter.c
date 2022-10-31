@@ -149,7 +149,9 @@ int main(int argc, char *argv[]) {
 	i += 4;
 	print_bytes((unsigned char *)&nonce,4);
 	nonce = ntohl(nonce);
+	print_bytes((unsigned char *)&nonce,4);
 	nonce += 1;
+	print_bytes((unsigned char *)&nonce,4);
 	nonce = htonl(nonce);
 	print_bytes((unsigned char *)&nonce,4);
 	// nonce = (char*)ntohs(nonce);
