@@ -154,7 +154,7 @@ int main(int argc, char *argv[]) {
 					perror("read");
 					exit(EXIT_FAILURE);
 				}
-				print_bytes(rec_buf,nread);
+				// print_bytes(rec_buf,nread);
 				
 				memcpy(&n,&rec_buf[0], 1);
 				printf("n=%d\n",n);
