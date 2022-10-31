@@ -135,7 +135,7 @@ int main(int argc, char *argv[]) {
 						exit(EXIT_FAILURE);
 					}
 					start = 0;
-					printf("started\n");
+					// printf("started\n");
 				} else {
 					if (sendto(sfd, &nonce, 4, 0,
 						(result->ai_addr),
@@ -157,14 +157,14 @@ int main(int argc, char *argv[]) {
 				// print_bytes(rec_buf,nread);
 				
 				memcpy(&n,&rec_buf[0], 1);
-				printf("n=%d\n",n);
+				// printf("n=%d\n",n);
 				
 				// memcpy(&treasure[i],&rec_buf[1],n);
 				// i += n;
 
 				memcpy(&treasure[i],&rec_buf[1],n);
 				i += n;
-				printf("i=%d\n",i);
+				// printf("i=%d\n",i);
 				// print_bytes(treasure,i);
 
 				memcpy(&op,&rec_buf[n+1], 1);
@@ -190,9 +190,9 @@ int main(int argc, char *argv[]) {
 				break;
 		}
 	}
-	printf("loop finished\n");
+	// printf("loop finished\n");
 	// print_bytes(treasure,i);
-	printf("%s\n",treasure);
+	printf("%s",treasure);
 
 
 
