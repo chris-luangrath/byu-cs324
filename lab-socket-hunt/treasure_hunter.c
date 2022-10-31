@@ -147,10 +147,8 @@ int main(int argc, char *argv[]) {
 
 	// // bzero(buf, BUFSIZE);
 	// memcpy(&nonce,&rec_buf[n+4], 4);
-	// memcpy(&full_nonce[i],&nonce, 4);
 	// // i += 4;
 	// nonce = htonl(ntohl(nonce) + 1);
-	// printf("nonce=%x\n", nonce);
 
 	while(n != 0){
 		switch(op){
@@ -178,8 +176,6 @@ int main(int argc, char *argv[]) {
 				// 	perror("read");
 				// 	exit(EXIT_FAILURE);
 				// }
-				// // memcpy(&full_nonce[i],&rec_buf[0], nread);
-				// memcpy(&full_nonce[i],&rec_buf[0], nread);
 				// i += nread;
 				// print_bytes(rec_buf,nread);
 				// sleep(1);
@@ -206,10 +202,12 @@ int main(int argc, char *argv[]) {
 
 				// bzero(buf, BUFSIZE);
 				memcpy(&nonce,&rec_buf[n+4], 4);
-				memcpy(&full_nonce[i],&nonce, 4);
 				// i += 4;
 				nonce = htonl(ntohl(nonce) + 1);
+				// printf("nonce=%x\n", nonce);
+				printf("nonce=", nonce);
 				printf("nonce=%x\n", nonce);
+
 
 				sleep(1);
 				break;
