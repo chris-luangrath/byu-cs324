@@ -190,7 +190,7 @@ int main(int argc, char *argv[]) {
 				printf("nonce=");
 				// print_bytes((unsigned char *)&nonce,4);
 
-				// sleep(1);
+				sleep(1);
 				break;
 			case 1:
 				break;
