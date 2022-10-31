@@ -120,6 +120,7 @@ int main(int argc, char *argv[]) {
 	int op = 0;
 	int par = 0;
 	char treasure[TREASURE_SIZE];
+	bzero(treasure,TREASURE_SIZE);
 	// char* nonce[4];
 	int nonce = 0;
 	int start = 1;
@@ -147,7 +148,6 @@ int main(int argc, char *argv[]) {
 				
 				// i += nread;
 				// remote_addr_len = sizeof(struct sockaddr_storage);
-				bzero(rec_buf,REC_SIZE);
 				nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 							(struct sockaddr *) &remote_addr, &remote_addr_len);
 				if (nread == -1) {
