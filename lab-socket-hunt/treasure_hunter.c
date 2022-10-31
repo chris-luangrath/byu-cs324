@@ -157,8 +157,11 @@ int main(int argc, char *argv[]) {
 				
 				memcpy(&n,&rec_buf[0], 1);
 				// printf("n=%d\n",n);
+				
+				// memcpy(&treasure[i],&rec_buf[1],n);
+				// i += n;
 
-				memcpy(&treasure[i],&rec_buf[1],n);
+				memcpy(&(treasure+i),&rec_buf[1],n);
 				i += n;
 
 				memcpy(&op,&rec_buf[n+1], 1);
