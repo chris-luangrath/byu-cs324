@@ -158,7 +158,7 @@ int main(int argc, char *argv[]) {
 					print_bytes(rec_buf,nread);
 				
 				memcpy(&n,&rec_buf[0], 1);
-				if (verbose):
+				if (verbose)
 					printf("n=%d\n",n);
 				
 				// memcpy(&treasure[i],&rec_buf[1],n);
