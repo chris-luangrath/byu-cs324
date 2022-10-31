@@ -128,8 +128,8 @@ int main(int argc, char *argv[]) {
 	int op = 1;
 	int par = 2;
 	char* full_nonce[NONCE_SIZE];
-	char* nonce[4];
-	// int nonce = 0;
+	// char* nonce[4];
+	int nonce = 0;
 	// char * n[1];
 	// printf("hey1\n");
 	// printf("hey2\n");
@@ -147,7 +147,8 @@ int main(int argc, char *argv[]) {
 	memcpy(&nonce,&rec_buf[n+4], 4);
 	memcpy(&full_nonce[i],&nonce, 4);
 	i += 4;
-	nonce = (char*)ntohs(nonce);
+	nonce = 
+	// nonce = (char*)ntohs(nonce);
 	// memcpy(&nonce,&ntohs(nonce), 4);
 	// printf("hey3\n");
 	printf("nonce=%x\n", nonce);
