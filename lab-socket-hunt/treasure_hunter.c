@@ -223,6 +223,7 @@ int main(int argc, char *argv[]) {
 				break;
 		}
 	}
+	printf("loop finished\n");
 
 
 
