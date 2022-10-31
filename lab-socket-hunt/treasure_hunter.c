@@ -8,7 +8,7 @@
 // #define SEED_SIZE 4
 #define SEND_SIZE 8
 #define REC_SIZE 256
-#define NONCE_SIZE 1024
+#define TREASURE_SIZE 1024
 #define BYTE_SIZE 1
 #define ID_SIZE 4
 #define SEED_SIZE 2
@@ -119,27 +119,11 @@ int main(int argc, char *argv[]) {
 	int n = 1;
 	int op = 0;
 	int par = 0;
-	char* full_nonce[NONCE_SIZE];
+	char* treasure[TREASURE_SIZE];
 	// char* nonce[4];
 	int nonce = 0;
 	int start = 1;
 	// char * n[1];
-	// printf("hey1\n");
-	// printf("hey2\n");
-	// memcpy(&n,&rec_buf[0], 1);
-	// printf("n=%d\n",n);
-	// // n += 1;
-
-	// memcpy(&op,&rec_buf[n+1], 1);
-	// printf("op=%d\n",op);
-
-	// memcpy(&par,&rec_buf[n+2], 2);
-	// printf("par=%d\n",par);
-
-	// // bzero(buf, BUFSIZE);
-	// memcpy(&nonce,&rec_buf[n+4], 4);
-	// // i += 4;
-	// nonce = htonl(ntohl(nonce) + 1);
 
 	while(n != 0){
 		switch(op){
@@ -173,7 +157,9 @@ int main(int argc, char *argv[]) {
 				
 				memcpy(&n,&rec_buf[0], 1);
 				printf("n=%d\n",n);
-				// n += 1;
+
+				mempy(&treasure[i],&rec_buf[1],n);
+				i += n;
 
 				memcpy(&op,&rec_buf[n+1], 1);
 				printf("op=%d\n",op);
@@ -202,6 +188,7 @@ int main(int argc, char *argv[]) {
 		}
 	}
 	printf("loop finished\n");
+	print_bytes(&treasure,i);
 
 
 
