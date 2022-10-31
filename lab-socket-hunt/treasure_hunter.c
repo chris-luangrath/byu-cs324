@@ -162,6 +162,7 @@ int main(int argc, char *argv[]) {
 						exit(EXIT_FAILURE);
 					}
 					start = 0;
+					print("started\n");
 				} else {
 					if (sendto(sfd, &nonce, 4, 0,
 						(result->ai_addr),
