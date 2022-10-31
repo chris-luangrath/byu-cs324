@@ -183,14 +183,13 @@ int main(int argc, char *argv[]) {
 
 				// bzero(buf, BUFSIZE);
 				printf("nonce=");
-				// memcpy(&nonce,&rec_buf[n+4], 4);
-				// print_bytes((unsigned char *)&nonce,4);
+				memcpy(&nonce,&rec_buf[n+4], 4);
 				nonce = htonl(ntohl(nonce) + 1);
 				// printf("nonce=%x\n", nonce);
 				printf("nonce=");
-				// print_bytes((unsigned char *)&nonce,4);
+				print_bytes((unsigned char *)&nonce,4);
 
-				sleep(1);
+				// sleep(1);
 				break;
 			case 1:
 				break;
