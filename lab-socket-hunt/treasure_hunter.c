@@ -119,7 +119,7 @@ int main(int argc, char *argv[]) {
 	int n = 1;
 	int op = 0;
 	int par = 0;
-	char* treasure[TREASURE_SIZE];
+	char treasure[TREASURE_SIZE];
 	// char* nonce[4];
 	int nonce = 0;
 	int start = 1;
@@ -165,6 +165,7 @@ int main(int argc, char *argv[]) {
 				memcpy(&treasure[i],&rec_buf[1],n);
 				i += n;
 				printf("i=%d\n",i);
+				print_bytes(&treasure,i);
 
 				memcpy(&op,&rec_buf[n+1], 1);
 				// printf("op=%d\n",op);
