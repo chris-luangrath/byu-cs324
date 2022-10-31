@@ -147,6 +147,7 @@ int main(int argc, char *argv[]) {
 				
 				// i += nread;
 				// remote_addr_len = sizeof(struct sockaddr_storage);
+				bzero(rec_buf,REC_SIZE);
 				nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 							(struct sockaddr *) &remote_addr, &remote_addr_len);
 				if (nread == -1) {
@@ -161,7 +162,7 @@ int main(int argc, char *argv[]) {
 				// memcpy(&treasure[i],&rec_buf[1],n);
 				// i += n;
 
-				memcpy(&(treasure+i),&rec_buf[1],n);
+				memcpy(&treasure[i],&rec_buf[1],n);
 				i += n;
 
 				memcpy(&op,&rec_buf[n+1], 1);
@@ -174,12 +175,8 @@ int main(int argc, char *argv[]) {
 				// printf("nonce=");
 				memcpy(&nonce,&rec_buf[n+4], 4);
 				nonce = htonl(ntohl(nonce) + 1);
-				// printf("nonce=%x\n", nonce);
-				// printf("nonce=");
-				// print_bytes((unsigned char *)&nonce,4);
 
 				// sleep(1);
-				bzero(rec_buf,REC_SIZE);
 				break;
 			case 1:
 				break;
