@@ -154,10 +154,12 @@ int main(int argc, char *argv[]) {
 					perror("read");
 					exit(EXIT_FAILURE);
 				}
-				// print_bytes(rec_buf,nread);
+				if (verbose)
+					print_bytes(rec_buf,nread);
 				
 				memcpy(&n,&rec_buf[0], 1);
-				// printf("n=%d\n",n);
+				if (verbose):
+					printf("n=%d\n",n);
 				
 				// memcpy(&treasure[i],&rec_buf[1],n);
 				// i += n;
@@ -165,13 +167,16 @@ int main(int argc, char *argv[]) {
 				memcpy(&treasure[i],&rec_buf[1],n);
 				i += n;
 				// printf("i=%d\n",i);
-				// print_bytes(treasure,i);
+				if (verbose)
+					print_bytes(treasure,i);
 
 				memcpy(&op,&rec_buf[n+1], 1);
-				// printf("op=%d\n",op);
+				if (verbose)
+					printf("op=%d\n",op);
 
 				memcpy(&par,&rec_buf[n+2], 2);
-				// printf("par=%d\n",par);
+				if (verbose)
+					printf("par=%d\n",par);
 
 				// bzero(buf, BUFSIZE);
 				// printf("nonce=");
