@@ -32,7 +32,7 @@ int verbose = 1;
 
 void print_bytes(unsigned char *bytes, int byteslen);
 
-int connect_socket(char* server, char* port_c, struct addrinfo hints, struct addrinfo *result);
+int connect_socket(char* server, char* port_c, struct addrinfo hints, struct addrinfo **result);
 
 int main(int argc, char *argv[]) {
 	// printf("hey1");
@@ -272,7 +272,7 @@ int main(int argc, char *argv[]) {
 
 }
 
-int connect_socket(char* server, char* port_c, struct addrinfo hints, struct addrinfo * result){
+int connect_socket(char* server, char* port_c, struct addrinfo hints, struct addrinfo ** result){
 	printf("hey1\n");
 	int s = getaddrinfo(server, port_c, &hints, &result);
 	printf("hey1\n");
