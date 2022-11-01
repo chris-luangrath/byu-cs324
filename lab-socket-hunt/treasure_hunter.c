@@ -110,7 +110,7 @@ int main(int argc, char *argv[]) {
 	// sfd = socket(result->ai_family, result->ai_socktype,
 	// 			result->ai_protocol);
 
-	sfd = connect_socket(server,port_c,hints,result);
+	sfd = connect_socket(server,port_c,hints,&result);
 	
 	size_t len = SEND_SIZE;
 
