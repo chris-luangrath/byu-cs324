@@ -273,12 +273,15 @@ int main(int argc, char *argv[]) {
 }
 
 int connect_socket(char* server, char* port_c, struct addrinfo hints, struct addrinfo * result){
+	printf("hey1\n");
 	int s = getaddrinfo(server, port_c, &hints, &result);
+	printf("hey1\n");
 	// s = getaddrinfo(server, port_c, &hints, &result);
 	if (s != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
 		exit(EXIT_FAILURE);
 	}
+	printf("hey1\n");
 
 	if (result == NULL) {   /* No address succeeded */
 		fprintf(stderr, "Could not connect\n");
