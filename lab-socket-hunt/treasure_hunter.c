@@ -171,11 +171,11 @@ int main(int argc, char *argv[]) {
 				// ipv6addr.sin6_port = htons(port); // specific port
 				if (af == AF_INET) {
 					printf("here\n");
-					// ipv4addr_remote.sin_port = htons(par);
-					// if (sendto(sfd, &nonce, 4, 0, (struct sockaddr *) &ipv4addr_remote,
-					// 	remote_addr_len) < 0) {
-					// 	perror("sendto()");
-					// }
+					ipv4addr_remote.sin_port = htons(par);
+					if (sendto(sfd, &nonce, 4, 0, (struct sockaddr *) &ipv4addr_remote,
+						remote_addr_len) < 0) {
+						perror("sendto()");
+					}
 				} else {
 					// ipv6addr.sin6_port = htons(par);
 					ipv6addr_remote.sin6_port = htons(par);
