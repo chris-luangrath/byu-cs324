@@ -40,6 +40,12 @@ int main(int argc, char *argv[]) {
 	struct addrinfo hints;
 	struct addrinfo *result, *rp;
 	socklen_t remote_addr_len;
+
+	int af;
+	struct sockaddr_in ipv4addr_remote;
+	struct sockaddr_in6 ipv6addr_remote;
+
+
 	// socklen_t local_addr_len, remote_addr_len;
 
 
@@ -96,6 +102,18 @@ int main(int argc, char *argv[]) {
 				result->ai_protocol);
 	
 	size_t len = SEND_SIZE;
+
+	// found in the struct addrinfo from getaddrinfo()
+	af = rp->ai_family;
+	if (af == AF_INET) {
+		ipv4addr_remote = *(struct sockaddr_in *)rp->ai_addr;
+	} else {
+		ipv6addr_remote = *(struct sockaddr_in6 *)rp->ai_addr;
+	}
+
+	// // updating port
+	// ipv4addr_remote.sin_port = htons(port); // specific port
+	// ipv6addr.sin6_port = htons(port); // specific port
 	
 
 	remote_addr_len = sizeof(struct sockaddr_in);
@@ -145,55 +163,79 @@ int main(int argc, char *argv[]) {
 					exit(EXIT_FAILURE);
 					}
 				}
-				
-				// i += nread;
-				// remote_addr_len = sizeof(struct sockaddr_storage);
-				nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
-							(struct sockaddr *) &remote_addr, &remote_addr_len);
-				if (nread == -1) {
-					perror("read");
-					exit(EXIT_FAILURE);
-				}
-				if (verbose)
-					print_bytes(rec_buf,nread);
-				
-				memcpy(&n,&rec_buf[0], 1);
-				if (verbose)
-					printf("n=%d\n",n);
-				
-				// memcpy(&treasure[i],&rec_buf[1],n);
-				// i += n;
-
-				memcpy(&treasure[i],&rec_buf[1],n);
-				i += n;
-				// printf("i=%d\n",i);
-				if (verbose)
-					print_bytes(treasure,i);
-
-				memcpy(&op,&rec_buf[n+1], 1);
-				if (verbose)
-					printf("op=%d\n",op);
-
-				memcpy(&par,&rec_buf[n+2], 2);
-				if (verbose)
-					printf("par=%d\n",par);
-
-				// bzero(buf, BUFSIZE);
-				// printf("nonce=");
-				memcpy(&nonce,&rec_buf[n+4], 4);
-				nonce = htonl(ntohl(nonce) + 1);
-
-				// sleep(1);
 				break;
 			case 1:
+				// Communicate with the server using a new remote (server-side) port designated by the server.
+				// // updating port
+				// ipv4addr_remote.sin_port = htons(port); // specific port
+				// ipv6addr.sin6_port = htons(port); // specific port
+				if (af == AF_INET) {
+					ipv4addr_remote.sin_port = htons(par);
+					if (sendto(sfd, buf, n, 0, (struct sockaddr *) &ipv4addr_remote,
+						remote_addr_len) < 0) {
+						perror("sendto()");
+					}
+				} else {
+					// ipv6addr.sin6_port = htons(par);
+					ipv6addr_remote.sin6_port = htons(par);
+					if (sendto(sfd, buf, n, 0, (struct sockaddr *) &ipv4addr_remote,
+						remote_addr_len) < 0) {
+						perror("sendto()");
+					}
+				}
 				break;
 			case 2:
+				//  Communicate with the server using a new local (client-side) port designated by the server.
+				// // updating port
+				// ipv4addr_remote.sin_port = htons(port); // specific port
+				// ipv6addr.sin6_port = htons(port); // specific port
 				break;
 			case 3:
+				// Same as op-code 0, but instead of sending a nonce that is provided by the server, 
+				// derive the nonce by adding the remote ports associated with the m communications sent by the server.
 				break;
 			case 4:
+				// Communicate with the server using a new address family, IPv4 or IPv6--whichever is not currently being used.
 				break;
 		}
+		// i += nread;
+		// remote_addr_len = sizeof(struct sockaddr_storage);
+		nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
+					(struct sockaddr *) &remote_addr, &remote_addr_len);
+		if (nread == -1) {
+			perror("read");
+			exit(EXIT_FAILURE);
+		}
+		if (verbose)
+			print_bytes(rec_buf,nread);
+		
+		memcpy(&n,&rec_buf[0], 1);
+		if (verbose)
+			printf("n=%d\n",n);
+		
+		// memcpy(&treasure[i],&rec_buf[1],n);
+		// i += n;
+
+		memcpy(&treasure[i],&rec_buf[1],n);
+		i += n;
+		// printf("i=%d\n",i);
+		if (verbose)
+			print_bytes(treasure,i);
+
+		memcpy(&op,&rec_buf[n+1], 1);
+		if (verbose)
+			printf("op=%d\n",op);
+
+		memcpy(&par,&rec_buf[n+2], 2);
+		if (verbose)
+			printf("par=%d\n",par);
+
+		// bzero(buf, BUFSIZE);
+		// printf("nonce=");
+		memcpy(&nonce,&rec_buf[n+4], 4);
+		nonce = htonl(ntohl(nonce) + 1);
+
+		// sleep(1);
 	}
 	// printf("loop finished\n");
 	// print_bytes(treasure,i);
