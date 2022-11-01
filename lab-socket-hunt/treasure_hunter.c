@@ -287,6 +287,7 @@ int connect_socket(char* server, char* port_c, struct addrinfo hints, struct add
 		fprintf(stderr, "Could not connect\n");
 		exit(EXIT_FAILURE);
 	}
+	printf("hey1\n");
 
 	// pre-socket
 	return socket(result->ai_family, result->ai_socktype,
