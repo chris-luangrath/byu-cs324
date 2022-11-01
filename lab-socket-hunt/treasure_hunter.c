@@ -32,7 +32,7 @@ int verbose = 1;
 
 void print_bytes(unsigned char *bytes, int byteslen);
 
-int connect_socket(char* server, char* port_c, struct addrinfo hints, struct addrinfo **result);
+int connect_socket(char* server, char* port_c, struct addrinfo hints);
 
 struct addrinfo *result;
 
@@ -292,7 +292,7 @@ int connect_socket(char* server, char* port_c, struct addrinfo hints){
 
 	// pre-socket
 	return socket(result->ai_family, result->ai_socktype,
-				*result->ai_protocol);
+				result->ai_protocol);
 }
 
 void print_bytes(unsigned char *bytes, int byteslen) {
