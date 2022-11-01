@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
 	memcpy(&send_buf[1], &level, BYTE_SIZE);
 	// printf("hey2\n");
 	memcpy(&send_buf[2], &id, ID_SIZE);
-	// printf("hey3\n");
+	printf("%d\n",level);
 	memcpy(&send_buf[6], &seed, SEED_SIZE);
 	// printf("hey4\n");
 	// 
