@@ -95,22 +95,22 @@ int main(int argc, char *argv[]) {
 
 	// pre-socket
 
-	// s = getaddrinfo(argv[1], argv[2], &hints, &result);
-	s = getaddrinfo(server, port_c, &hints, &result);
 	// s = getaddrinfo(server, port_c, &hints, &result);
-	if (s != 0) {
-		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
-		exit(EXIT_FAILURE);
-	}
+	// if (s != 0) {
+	// 	fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
+	// 	exit(EXIT_FAILURE);
+	// }
 
-	if (result == NULL) {   /* No address succeeded */
-		fprintf(stderr, "Could not connect\n");
-		exit(EXIT_FAILURE);
-	}
+	// if (result == NULL) {   /* No address succeeded */
+	// 	fprintf(stderr, "Could not connect\n");
+	// 	exit(EXIT_FAILURE);
+	// }
 
-	// pre-socket
-	sfd = socket(result->ai_family, result->ai_socktype,
-				result->ai_protocol);
+	// // pre-socket
+	// sfd = socket(result->ai_family, result->ai_socktype,
+	// 			result->ai_protocol);
+
+	sfd = connect_socket(server,port_c,hints,result);
 	
 	size_t len = SEND_SIZE;
 
