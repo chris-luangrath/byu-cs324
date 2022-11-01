@@ -68,11 +68,6 @@ int main(int argc, char *argv[]) {
 	char * port_c = argv[2]; 
 	unsigned int level = 0;
 	level = atoi(argv[3]);
-	printf("leve=%x\n",level);
-	// level = htons(level);
-	printf("leve=%d\n",level);
-	// level = htons(atoi(argv[3]));
-	// printf("leve=%d\n",level);
 	unsigned int seed = htons(atoi(argv[4]));
 
 	// unsigned int id = htons(USERID);
@@ -175,13 +170,14 @@ int main(int argc, char *argv[]) {
 					sprintf(port_c, "%d", par);
 					ipv4addr_remote.sin_port = port_c;
 					// ipv4addr_remote.sin_port = htons(port_c);
+					// close(sfd);
 					connect_socket(server,port_c,hints);
 					if (sendto(sfd, &nonce, 4, 0, 
 								(struct sockaddr *) &ipv4addr_remote, remote_addr_len) < 0) {
 						perror("sendto()");
 					}
 					printf("sent\n");
-					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
+					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, ///////////////////////////////////////////////////////////////////////
 								// (struct sockaddr *) &remote_addr, &remote_addr_len);
 								(struct sockaddr *) &ipv4addr_remote, &remote_addr_len);
 					if (nread == -1) {
@@ -260,6 +256,9 @@ int main(int argc, char *argv[]) {
 }
 
 void connect_socket(char* server, char* port_c, struct addrinfo hints){
+	if(sfd != 0){
+		close(sfd);
+	}
 	// printf("hey1\n");
 	int s = getaddrinfo(server, port_c, &hints, &result);
 	// printf("hey1\n");
