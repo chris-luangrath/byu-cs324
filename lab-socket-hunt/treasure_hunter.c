@@ -25,6 +25,7 @@
 #include <string.h>
 
 int verbose = 1;
+int sfd = 0;
 
 // hongkong:32400
 
@@ -32,13 +33,12 @@ int verbose = 1;
 
 void print_bytes(unsigned char *bytes, int byteslen);
 
-int connect_socket(char* server, char* port_c, struct addrinfo hints);
+void connect_socket(char* server, char* port_c, struct addrinfo hints);
 
 struct addrinfo *result;
 
 int main(int argc, char *argv[]) {
 	// printf("hey1");
-	int sfd, s;
 	// struct sockaddr_storage remote_addr;
 	int nread;
 	struct addrinfo hints;
@@ -111,7 +111,8 @@ int main(int argc, char *argv[]) {
 	// sfd = socket(result->ai_family, result->ai_socktype,
 	// 			result->ai_protocol);
 
-	sfd = connect_socket(server,port_c,hints);
+	// sfd = connect_socket(server,port_c,hints);
+	connect_socket(server,port_c,hints);
 	
 	size_t len = SEND_SIZE;
 
@@ -273,7 +274,7 @@ int main(int argc, char *argv[]) {
 
 }
 
-int connect_socket(char* server, char* port_c, struct addrinfo hints){
+void connect_socket(char* server, char* port_c, struct addrinfo hints){
 	printf("hey1\n");
 	int s = getaddrinfo(server, port_c, &hints, &result);
 	printf("hey1\n");
@@ -291,7 +292,7 @@ int connect_socket(char* server, char* port_c, struct addrinfo hints){
 	printf("hey1\n");
 
 	// pre-socket
-	return socket(result->ai_family, result->ai_socktype,
+	sfd = socket(result->ai_family, result->ai_socktype,
 				result->ai_protocol);
 }
 
