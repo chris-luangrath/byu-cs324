@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
 	unsigned int server = htons(atoi(argv[1]));
 	unsigned int port = htons(atoi(argv[2]));
 	char * port_c = argv[2]; 
-	unsigned int level = htons(atoi(argv[3]));
+	unsigned int level = htonl(atoi(argv[3]));
 	unsigned int seed = htons(atoi(argv[4]));
 
 	// unsigned int id = htons(USERID);
