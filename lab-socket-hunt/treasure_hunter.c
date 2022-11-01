@@ -61,8 +61,8 @@ int main(int argc, char *argv[]) {
 	unsigned int server = htons(atoi(argv[1]));
 	unsigned int port = htons(atoi(argv[2]));
 	char * port_c = argv[2]; 
-	// unsigned int level = 0;
-	unsigned int level = atoi(argv[3]);
+	unsigned int level = 0;
+	level = atoi(argv[3]);
 	printf("leve=%d\n",level);
 	level = htons(atoi(argv[3]));
 	printf("leve=%d\n",level);
