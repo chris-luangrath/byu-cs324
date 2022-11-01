@@ -168,7 +168,8 @@ int main(int argc, char *argv[]) {
 				if (af == AF_INET) {
 					// printf("here\n");
 					sprintf(port_c, "%d", par);
-					ipv4addr_remote.sin_port = port_c;
+					ipv4addr_remote.sin_port = par;
+					// ipv4addr_remote.sin_port = port_c;
 					// ipv4addr_remote.sin_port = htons(port_c);
 					// close(sfd);
 					connect_socket(server,port_c,hints);
@@ -236,7 +237,7 @@ int main(int argc, char *argv[]) {
 		if (verbose)
 			printf("op=%d\n",op);
 
-		memcpy(&par,&rec_buf[n+2], 2);
+		memcpy(&par,&rec_buf[n+2], 2); // ntoh later
 		if (verbose)
 			printf("par=%d\n",par);
 
