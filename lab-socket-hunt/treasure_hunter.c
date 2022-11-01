@@ -173,12 +173,14 @@ int main(int argc, char *argv[]) {
 				if (af == AF_INET) {
 					// printf("here\n");
 					sprintf(port_c, "%d", par);
-					ipv4addr_remote.sin_port = htons(port_c);
+					ipv4addr_remote.sin_port = port_c;
+					// ipv4addr_remote.sin_port = htons(port_c);
 					connect_socket(server,port_c,hints);
 					if (sendto(sfd, &nonce, 4, 0, 
 								(struct sockaddr *) &ipv4addr_remote, remote_addr_len) < 0) {
 						perror("sendto()");
 					}
+					printf("sent\n");
 					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 								// (struct sockaddr *) &remote_addr, &remote_addr_len);
 								(struct sockaddr *) &ipv4addr_remote, &remote_addr_len);
@@ -258,21 +260,21 @@ int main(int argc, char *argv[]) {
 }
 
 void connect_socket(char* server, char* port_c, struct addrinfo hints){
-	printf("hey1\n");
+	// printf("hey1\n");
 	int s = getaddrinfo(server, port_c, &hints, &result);
-	printf("hey1\n");
+	// printf("hey1\n");
 	// s = getaddrinfo(server, port_c, &hints, &result);
 	if (s != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
 		exit(EXIT_FAILURE);
 	}
-	printf("hey1\n");
+	// printf("hey1\n");
 
 	if (result == NULL) {   /* No address succeeded */
 		fprintf(stderr, "Could not connect\n");
 		exit(EXIT_FAILURE);
 	}
-	printf("hey1\n");
+	// printf("hey1\n");
 
 	// pre-socket
 	sfd = socket(result->ai_family, result->ai_socktype,
