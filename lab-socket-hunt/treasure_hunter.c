@@ -290,8 +290,8 @@ int connect_socket(char* server, char* port_c, struct addrinfo hints, struct add
 	printf("hey1\n");
 
 	// pre-socket
-	return socket((*result)->ai_family, result->ai_socktype,
-				result->ai_protocol);
+	return socket((*result)->ai_family, (*result)->ai_socktype,
+				(*result)->ai_protocol);
 }
 
 void print_bytes(unsigned char *bytes, int byteslen) {
