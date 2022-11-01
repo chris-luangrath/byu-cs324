@@ -33,7 +33,7 @@ int verbose = 0;
 void print_bytes(unsigned char *bytes, int byteslen);
 
 int main(int argc, char *argv[]) {
-	printf("hey1");
+	// printf("hey1");
 	int sfd, s;
 	// struct sockaddr_storage remote_addr;
 	int nread;
@@ -165,24 +165,24 @@ int main(int argc, char *argv[]) {
 				}
 				break;
 			case 1:
-				// Communicate with the server using a new remote (server-side) port designated by the server.
-				// // updating port
-				// ipv4addr_remote.sin_port = htons(port); // specific port
-				// ipv6addr.sin6_port = htons(port); // specific port
-				if (af == AF_INET) {
-					ipv4addr_remote.sin_port = htons(par);
-					if (sendto(sfd, &nonce, 4, 0, (struct sockaddr *) &ipv4addr_remote,
-						remote_addr_len) < 0) {
-						perror("sendto()");
-					}
-				} else {
-					// ipv6addr.sin6_port = htons(par);
-					ipv6addr_remote.sin6_port = htons(par);
-					if (sendto(sfd, &nonce, 4, 0, (struct sockaddr *) &ipv4addr_remote,
-						remote_addr_len) < 0) {
-						perror("sendto()");
-					}
-				}
+				// // Communicate with the server using a new remote (server-side) port designated by the server.
+				// // // updating port
+				// // ipv4addr_remote.sin_port = htons(port); // specific port
+				// // ipv6addr.sin6_port = htons(port); // specific port
+				// if (af == AF_INET) {
+				// 	ipv4addr_remote.sin_port = htons(par);
+				// 	if (sendto(sfd, &nonce, 4, 0, (struct sockaddr *) &ipv4addr_remote,
+				// 		remote_addr_len) < 0) {
+				// 		perror("sendto()");
+				// 	}
+				// } else {
+				// 	// ipv6addr.sin6_port = htons(par);
+				// 	ipv6addr_remote.sin6_port = htons(par);
+				// 	if (sendto(sfd, &nonce, 4, 0, (struct sockaddr *) &ipv4addr_remote,
+				// 		remote_addr_len) < 0) {
+				// 		perror("sendto()");
+				// 	}
+				// }
 				break;
 			case 2:
 				//  Communicate with the server using a new local (client-side) port designated by the server.
