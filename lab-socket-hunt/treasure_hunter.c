@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
 	// unsigned int level = 0;
 	unsigned int level = atoi(argv[3]);
 	printf("leve=%d\n",level);
-	level = htonl(atoi(argv[3]));
+	level = htons(atoi(argv[3]));
 	printf("leve=%d\n",level);
 	unsigned int seed = htons(atoi(argv[4]));
 
