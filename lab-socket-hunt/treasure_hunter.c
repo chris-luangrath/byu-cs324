@@ -94,7 +94,6 @@ int main(int argc, char *argv[]) {
 	// 
 	print_bytes(send_buf,SEND_SIZE);
 
-	
 	connect_socket(server,port_c,hints);
 	
 	size_t len = SEND_SIZE;
@@ -175,6 +174,7 @@ int main(int argc, char *argv[]) {
 					// printf("here\n");
 					sprintf(port_c, "%d", par);
 					ipv4addr_remote.sin_port = htons(port_c);
+					connect_socket(server,port_c,hints);
 					if (sendto(sfd, &nonce, 4, 0, 
 								(struct sockaddr *) &ipv4addr_remote, remote_addr_len) < 0) {
 						perror("sendto()");
