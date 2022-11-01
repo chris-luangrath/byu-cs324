@@ -169,6 +169,7 @@ int main(int argc, char *argv[]) {
 					// printf("here\n");
 					sprintf(port_c, "%d", par);
 					ipv4addr_remote.sin_port = par;
+					print_bytes((unsigned char *) &par,2);
 					// ipv4addr_remote.sin_port = port_c;
 					// ipv4addr_remote.sin_port = htons(port_c);
 					// close(sfd);
