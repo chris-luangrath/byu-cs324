@@ -59,7 +59,8 @@ int main(int argc, char *argv[]) {
 	hints.ai_protocol = 0;  /* Any protocol */
 
 	// unsigned int server = htons(atoi(argv[1]));
-	unsigned int server = argv[1];
+	// unsigned int server = argv[1];
+	char * server = argv[1];
 	// unsigned int port = htons(atoi(argv[2]));
 	char * port_c = argv[2]; 
 	unsigned int level = 0;
@@ -92,8 +93,8 @@ int main(int argc, char *argv[]) {
 
 	// pre-socket
 
-	s = getaddrinfo(argv[1], argv[2], &hints, &result);
-	// s = getaddrinfo(server, port_c, &hints, &result);
+	// s = getaddrinfo(argv[1], argv[2], &hints, &result);
+	s = getaddrinfo(server, port_c, &hints, &result);
 	// s = getaddrinfo(server, port_c, &hints, &result);
 	if (s != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
