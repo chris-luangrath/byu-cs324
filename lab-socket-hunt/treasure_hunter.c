@@ -274,7 +274,7 @@ int main(int argc, char *argv[]) {
 
 int connect_socket(char* server, char* port_c, struct addrinfo hints, struct addrinfo ** result){
 	printf("hey1\n");
-	int s = getaddrinfo(server, port_c, &hints, &result);
+	int s = getaddrinfo(server, port_c, &hints, &(*result));
 	printf("hey1\n");
 	// s = getaddrinfo(server, port_c, &hints, &result);
 	if (s != 0) {
