@@ -64,8 +64,10 @@ int main(int argc, char *argv[]) {
 	unsigned int level = 0;
 	level = atoi(argv[3]);
 	printf("leve=%x\n",level);
-	level = htons(atoi(argv[3]));
+	level = htons(level);
 	printf("leve=%d\n",level);
+	// level = htons(atoi(argv[3]));
+	// printf("leve=%d\n",level);
 	unsigned int seed = htons(atoi(argv[4]));
 
 	// unsigned int id = htons(USERID);
