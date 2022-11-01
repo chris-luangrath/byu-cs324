@@ -106,9 +106,9 @@ int main(int argc, char *argv[]) {
 	// found in the struct addrinfo from getaddrinfo()
 	af = result->ai_family;
 	if (af == AF_INET) {
-		ipv4addr_remote = *(struct sockaddr_in *)rp->ai_addr;
+		ipv4addr_remote = *(struct sockaddr_in *)result->ai_addr;
 	} else {
-		ipv6addr_remote = *(struct sockaddr_in6 *)rp->ai_addr;
+		ipv6addr_remote = *(struct sockaddr_in6 *)result->ai_addr;
 	}
 
 	// // updating port
