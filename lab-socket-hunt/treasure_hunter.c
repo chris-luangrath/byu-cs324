@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
 	size_t len = SEND_SIZE;
 
 	// found in the struct addrinfo from getaddrinfo()
-	af = rp->ai_family;
+	af = result->ai_family;
 	if (af == AF_INET) {
 		ipv4addr_remote = *(struct sockaddr_in *)rp->ai_addr;
 	} else {
