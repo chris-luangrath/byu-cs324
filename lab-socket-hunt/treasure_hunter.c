@@ -58,8 +58,9 @@ int main(int argc, char *argv[]) {
 	hints.ai_flags = 0;
 	hints.ai_protocol = 0;  /* Any protocol */
 
-	unsigned int server = htons(atoi(argv[1]));
-	unsigned int port = htons(atoi(argv[2]));
+	// unsigned int server = htons(atoi(argv[1]));
+	unsigned int server = argv[1];
+	// unsigned int port = htons(atoi(argv[2]));
 	char * port_c = argv[2]; 
 	unsigned int level = 0;
 	level = atoi(argv[3]);
@@ -91,7 +92,7 @@ int main(int argc, char *argv[]) {
 
 	// pre-socket
 
-	s = getaddrinfo(argv[1], argv[2], &hints, &result);
+	s = getaddrinfo(server, port_c, &hints, &result);
 	// s = getaddrinfo(server, port_c, &hints, &result);
 	if (s != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
@@ -183,9 +184,10 @@ int main(int argc, char *argv[]) {
 				// ipv6addr.sin6_port = htons(port); // specific port
 				if (af == AF_INET) {
 					// printf("here\n");
-					ipv4addr_remote.sin_port = htons((unsigned short *)par);
-					if (sendto(sfd, &nonce, 4, 0, (struct sockaddr *) &ipv4addr_remote,
-						remote_addr_len) < 0) {
+					sprintf(port_c, "%d", port);
+					ipv4addr_remote.sin_port = htons(port_c);
+					if (sendto(sfd, &nonce, 4, 0, 
+								(struct sockaddr *) &ipv4addr_remote, remote_addr_len) < 0) {
 						perror("sendto()");
 					}
 					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
