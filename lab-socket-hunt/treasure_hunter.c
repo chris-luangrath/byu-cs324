@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
 	memcpy(&send_buf[6], &seed, SEED_SIZE);
 	// printf("hey4\n");
 	// 
-	// print_bytes(send_buf,SEND_SIZE);
+	print_bytes(send_buf,SEND_SIZE);
 
 	// pre-socket
 
