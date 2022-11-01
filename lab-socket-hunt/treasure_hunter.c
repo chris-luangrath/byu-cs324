@@ -183,7 +183,7 @@ int main(int argc, char *argv[]) {
 				// ipv6addr.sin6_port = htons(port); // specific port
 				if (af == AF_INET) {
 					// printf("here\n");
-					ipv4addr_remote.sin_port = htons(par);
+					ipv4addr_remote.sin_port = htons((unsigned short *)par);
 					if (sendto(sfd, &nonce, 4, 0, (struct sockaddr *) &ipv4addr_remote,
 						remote_addr_len) < 0) {
 						perror("sendto()");
