@@ -197,6 +197,7 @@ int main(int argc, char *argv[]) {
 					}
 				} else {
 					// ipv6addr.sin6_port = htons(par);
+					printf("the 6 one\n");
 					ipv6addr_remote.sin6_port = htons(par);
 					if (sendto(sfd, &nonce, 4, 0, (struct sockaddr *) &ipv4addr_remote,
 						remote_addr_len) < 0) {
