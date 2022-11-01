@@ -32,6 +32,8 @@ int verbose = 1;
 
 void print_bytes(unsigned char *bytes, int byteslen);
 
+void connect_socket(char* server, char* port_c, struct addrinfo hints, struct addrinfo result);
+
 int main(int argc, char *argv[]) {
 	// printf("hey1");
 	int sfd, s;
@@ -268,6 +270,24 @@ int main(int argc, char *argv[]) {
 
 
 
+}
+
+int connect_socket(char* server, char* port_c, struct addrinfo hints, struct addrinfo result){
+	int s = getaddrinfo(server, port_c, &hints, &result);
+	// s = getaddrinfo(server, port_c, &hints, &result);
+	if (s != 0) {
+		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
+		exit(EXIT_FAILURE);
+	}
+
+	if (result == NULL) {   /* No address succeeded */
+		fprintf(stderr, "Could not connect\n");
+		exit(EXIT_FAILURE);
+	}
+
+	// pre-socket
+	return socket(result->ai_family, result->ai_socktype,
+				result->ai_protocol);
 }
 
 void print_bytes(unsigned char *bytes, int byteslen) {
