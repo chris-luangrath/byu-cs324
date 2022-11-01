@@ -169,6 +169,12 @@ int main(int argc, char *argv[]) {
 					exit(EXIT_FAILURE);
 					}
 				}
+				nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
+							(struct sockaddr *) &remote_addr, &remote_addr_len);
+				if (nread == -1) {
+					perror("read");
+					exit(EXIT_FAILURE);
+				}
 				break;
 			case 1:
 				// Communicate with the server using a new remote (server-side) port designated by the server.
@@ -176,11 +182,18 @@ int main(int argc, char *argv[]) {
 				// ipv4addr_remote.sin_port = htons(port); // specific port
 				// ipv6addr.sin6_port = htons(port); // specific port
 				if (af == AF_INET) {
-					printf("here\n");
+					// printf("here\n");
 					ipv4addr_remote.sin_port = htons(par);
 					if (sendto(sfd, &nonce, 4, 0, (struct sockaddr *) &ipv4addr_remote,
 						remote_addr_len) < 0) {
 						perror("sendto()");
+					}
+					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
+								// (struct sockaddr *) &remote_addr, &remote_addr_len);
+								(struct sockaddr *) &ipv4addr_remote, &remote_addr_len);
+					if (nread == -1) {
+						perror("read");
+						exit(EXIT_FAILURE);
 					}
 				} else {
 					// ipv6addr.sin6_port = htons(par);
@@ -207,12 +220,12 @@ int main(int argc, char *argv[]) {
 		}
 		// i += nread;
 		// remote_addr_len = sizeof(struct sockaddr_storage);
-		nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
-					(struct sockaddr *) &remote_addr, &remote_addr_len);
-		if (nread == -1) {
-			perror("read");
-			exit(EXIT_FAILURE);
-		}
+		// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
+		// 			(struct sockaddr *) &remote_addr, &remote_addr_len);
+		// if (nread == -1) {
+		// 	perror("read");
+		// 	exit(EXIT_FAILURE);
+		// }
 		if (verbose)
 			print_bytes(rec_buf,nread);
 		
