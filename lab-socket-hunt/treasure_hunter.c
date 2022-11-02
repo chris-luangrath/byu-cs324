@@ -177,7 +177,7 @@ int main(int argc, char *argv[]) {
 					// ipv4addr_remote.sin_port = port_c;
 					// ipv4addr_remote.sin_port = htons(port_c);
 					// close(sfd);
-					// connect_socket(server,port_c,hints);
+					connect_socket(server,port_c,hints);
 					if (sendto(sfd, &nonce, 4, 0, 
 								(struct sockaddr *) &remote_addr, remote_addr_len) < 0) {
 								// (struct sockaddr *) &ipv4addr_remote, remote_addr_len) < 0) {
