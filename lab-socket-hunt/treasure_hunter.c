@@ -166,25 +166,17 @@ int main(int argc, char *argv[]) {
 				// ipv4addr_remote.sin_port = htons(port); // specific port
 				// ipv6addr.sin6_port = htons(port); // specific port
 				if (af == AF_INET) {
-					// printf("here\n");
 					sprintf(port_c, "%d", par);
-					// sprintf(port_c, "%d", ntohs(par));
-					printf("port_c=%s\n",port_c);
-					// par = ntohs(par);
 					ipv4addr_remote.sin_port = par;
-					printf("port:");
-					print_bytes((unsigned char *) &par,2);
-					// ipv4addr_remote.sin_port = port_c;
-					// ipv4addr_remote.sin_port = htons(port_c);
-					// close(sfd);
-					// connect_socket(server,port_c,hints);
+					// printf("port:");
+					// print_bytes((unsigned char *) &par,2);
 					if (sendto(sfd, &nonce, 4, 0, 
 								// (struct sockaddr *) &remote_addr, remote_addr_len) < 0) {
 								(struct sockaddr *) &ipv4addr_remote, remote_addr_len) < 0) {
 						perror("sendto()");
 					}
 					printf("sent\n");
-					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, ///////////////////////////////////////////////////////////////////////
+					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
 								// (struct sockaddr *) &remote_addr, &remote_addr_len);
 								(struct sockaddr *) &ipv4addr_remote, &remote_addr_len);
 					if (nread == -1) {
@@ -201,7 +193,7 @@ int main(int argc, char *argv[]) {
 						perror("sendto()");
 					}
 				}
-				sleep(1);
+				// sleep(1);
 				break;
 			case 2:
 				//  Communicate with the server using a new local (client-side) port designated by the server.
