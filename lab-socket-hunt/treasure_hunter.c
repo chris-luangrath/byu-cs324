@@ -186,7 +186,7 @@ int main(int argc, char *argv[]) {
 					printf("sent\n");
 					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, ///////////////////////////////////////////////////////////////////////
 								// (struct sockaddr *) &remote_addr, &remote_addr_len);
-								(struct sockaddr *) &ipv4addr_remote, remote_addr_len);
+								(struct sockaddr *) &ipv4addr_remote, &remote_addr_len);
 					if (nread == -1) {
 						perror("read");
 						exit(EXIT_FAILURE);
