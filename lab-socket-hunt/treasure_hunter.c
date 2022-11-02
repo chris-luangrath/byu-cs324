@@ -200,6 +200,7 @@ int main(int argc, char *argv[]) {
 						perror("sendto()");
 					}
 				}
+				sleep(1);
 				break;
 			case 2:
 				//  Communicate with the server using a new local (client-side) port designated by the server.
