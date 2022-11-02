@@ -190,7 +190,8 @@ int main(int argc, char *argv[]) {
 					addrlen = sizeof(struct sockaddr_in6);
 					getsockname(sfd, (struct sockaddr *)&ipv6addr_local, &addrlen);
 				}
-
+				close(sfd);
+				connect_socket(server,port_c,hints);
 				if (af == AF_INET) {
 					ipv4addr_local.sin_family = AF_INET; // use AF_INET (IPv4)
 					ipv4addr_local.sin_port = par; // specific port
