@@ -175,8 +175,8 @@ int main(int argc, char *argv[]) {
 				}
 				// sleep(1);
 				break;
-			case 2:
-				struct socklen_t addrlen;
+			case 2:;
+				socklen_t addrlen;
 				//  Communicate with the server using a new local (client-side) port designated by the server.
 				// // updating port
 				// ipv4addr_remote.sin_port = htons(port); // specific port
