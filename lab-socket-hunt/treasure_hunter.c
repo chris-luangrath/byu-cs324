@@ -167,7 +167,8 @@ int main(int argc, char *argv[]) {
 				// ipv6addr.sin6_port = htons(port); // specific port
 				if (af == AF_INET) {
 					// printf("here\n");
-					sprintf(port_c, "%d", par);
+					// sprintf(port_c, "%d", par);
+					sprintf(port_c, "%d", ntohs(par));
 					// par = ntohs(par);
 					ipv4addr_remote.sin_port = par;
 					printf("port:\n");
