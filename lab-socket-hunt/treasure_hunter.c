@@ -176,7 +176,8 @@ int main(int argc, char *argv[]) {
 					// close(sfd);
 					connect_socket(server,port_c,hints);
 					if (sendto(sfd, &nonce, 4, 0, 
-								(struct sockaddr *) &ipv4addr_remote, remote_addr_len) < 0) {
+								(struct sockaddr *) &remote_addr, remote_addr_len) < 0) {
+								// (struct sockaddr *) &ipv4addr_remote, remote_addr_len) < 0) {
 						perror("sendto()");
 					}
 					printf("sent\n");
