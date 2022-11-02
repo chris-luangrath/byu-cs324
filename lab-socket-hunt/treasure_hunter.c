@@ -169,9 +169,9 @@ int main(int argc, char *argv[]) {
 					// printf("here\n");
 					// sprintf(port_c, "%d", par);
 					sprintf(port_c, "%d", ntohs(par));
-					// par = ntohs(par);
+					par = ntohs(par);
 					ipv4addr_remote.sin_port = par;
-					printf("port:\n");
+					printf("port:");
 					print_bytes((unsigned char *) &par,2);
 					// ipv4addr_remote.sin_port = port_c;
 					// ipv4addr_remote.sin_port = htons(port_c);
