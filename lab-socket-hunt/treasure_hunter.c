@@ -168,7 +168,7 @@ int main(int argc, char *argv[]) {
 				if (af == AF_INET) {
 					// printf("here\n");
 					// sprintf(port_c, "%d", par);
-					sprintf(port_c, "%d", ntohs(atoi(par)));
+					sprintf(port_c, "%d", ntohs(par));
 					printf("port_c=%s\n",port_c);
 					par = ntohs(par);
 					ipv4addr_remote.sin_port = par;
