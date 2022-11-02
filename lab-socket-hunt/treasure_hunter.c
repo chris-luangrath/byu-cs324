@@ -48,6 +48,9 @@ int main(int argc, char *argv[]) {
 	struct sockaddr_in ipv4addr_remote;
 	struct sockaddr_in6 ipv6addr_remote;
 
+	struct sockaddr_in ipv4addr_local;
+	struct sockaddr_in6 ipv6addr_local;
+
 
 	// socklen_t local_addr_len, remote_addr_len;
 
@@ -61,16 +64,12 @@ int main(int argc, char *argv[]) {
 	hints.ai_flags = 0;
 	hints.ai_protocol = 0;  /* Any protocol */
 
-	// unsigned int server = htons(atoi(argv[1]));
-	// unsigned int server = argv[1];
 	char * server = argv[1];
-	// unsigned int port = htons(atoi(argv[2]));
 	char * port_c = argv[2]; 
 	unsigned int level = 0;
 	level = atoi(argv[3]);
 	unsigned int seed = htons(atoi(argv[4]));
 
-	// unsigned int id = htons(USERID);
 	unsigned int id = htonl(USERID);
 
 	unsigned char send_buf[SEND_SIZE];
@@ -79,14 +78,10 @@ int main(int argc, char *argv[]) {
 	unsigned char rec_buf[REC_SIZE];
 	bzero(rec_buf,REC_SIZE);
 
-	// printf("hey1\n");
 	memcpy(&send_buf[1], &level, BYTE_SIZE);
-	// printf("hey2\n");
 	memcpy(&send_buf[2], &id, ID_SIZE);
-	// printf("%d\n",level);
 	memcpy(&send_buf[6], &seed, SEED_SIZE);
-	// printf("hey4\n");
-	// 
+
 	if (verbose)
 		print_bytes(send_buf,SEND_SIZE);
 
@@ -110,30 +105,14 @@ int main(int argc, char *argv[]) {
 	remote_addr_len = sizeof(struct sockaddr_in);
 	struct sockaddr_in remote_addr;
 
-	// if (sendto(sfd, send_buf, SEND_SIZE, 0,
-	// 				(result->ai_addr),
-	// 				// (struct sockaddr *) &(rp->ai_addr),
-	// 				// (struct sockaddr *) &remote_addr,
-	// 				remote_addr_len) < 0){
-	// 		fprintf(stderr, "Error sending response\n");
-	// 		exit(EXIT_FAILURE);
-	// 		}
-
-
-	// unsigned char nonce[4];
-	// bzero(rec_buf,4);
-
-	// unsigned short val = 0x0000000000000000;
 	int i = 0;
 	int n = 1;
 	int op = 0;
 	int par = 0;
 	char treasure[TREASURE_SIZE];
 	bzero(treasure,TREASURE_SIZE);
-	// char* nonce[4];
 	int nonce = 0;
 	int start = 1;
-	// char * n[1];
 
 	while(n != 0){
 		switch(op){
@@ -166,8 +145,8 @@ int main(int argc, char *argv[]) {
 				// // updating port
 				// ipv4addr_remote.sin_port = htons(port); // specific port
 				// ipv6addr.sin6_port = htons(port); // specific port
+				sprintf(port_c, "%d", par);
 				if (af == AF_INET) {
-					sprintf(port_c, "%d", par);
 					ipv4addr_remote.sin_port = par;
 					// printf("port:");
 					// print_bytes((unsigned char *) &par,2);
@@ -197,10 +176,49 @@ int main(int argc, char *argv[]) {
 				// sleep(1);
 				break;
 			case 2:
+				socklen_t addrlen;
 				//  Communicate with the server using a new local (client-side) port designated by the server.
 				// // updating port
 				// ipv4addr_remote.sin_port = htons(port); // specific port
 				// ipv6addr.sin6_port = htons(port); // specific port
+				// sprintf(port_c, "%d", par);
+				if (af == AF_INET) {
+					addrlen = sizeof(struct sockaddr_in);
+					getsockname(sfd, (struct sockaddr *)&ipv4addr_local, &addrlen);
+				} else {
+					addrlen = sizeof(struct sockaddr_in6);
+					getsockname(sfd, (struct sockaddr *)&ipv6addr_local, &addrlen);
+				}
+
+				if (af == AF_INET) {
+					ipv4addr_local.sin_family = AF_INET; // use AF_INET (IPv4)
+					ipv4addr_local.sin_port = par; // specific port
+					ipv4addr_local.sin_addr.s_addr = 0; // any/all local addresses
+					if (bind(sfd, (struct sockaddr *)&ipv4addr_local,
+							sizeof(struct sockaddr_in)) < 0) {
+						perror("bind()");
+					}
+					if (sendto(sfd, &nonce, 4, 0, 
+								// (struct sockaddr *) &remote_addr, remote_addr_len) < 0) {
+								(struct sockaddr *) &ipv4addr_remote, remote_addr_len) < 0) {
+						perror("sendto()");
+					}
+					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
+								// (struct sockaddr *) &remote_addr, &remote_addr_len);
+								(struct sockaddr *) &ipv4addr_remote, &remote_addr_len);
+					if (nread == -1) {
+						perror("read");
+						exit(EXIT_FAILURE);
+					}
+				} else {
+					ipv6addr_local.sin6_family = AF_INET6; // IPv6 (AF_INET6)
+					ipv6addr_local.sin6_port = htons(port); // specific port
+					bzero(ipv6addr_local.sin6_addr.s6_addr, 16); // any/all local addresses
+					if (bind(sfd, (struct sockaddr *)&ipv6addr_local,
+							sizeof(struct sockaddr_in6)) < 0) {
+						perror("bind()");
+					}
+				}
 				break;
 			case 3:
 				// Same as op-code 0, but instead of sending a nonce that is provided by the server, 
