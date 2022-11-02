@@ -167,10 +167,10 @@ int main(int argc, char *argv[]) {
 				// ipv6addr.sin6_port = htons(port); // specific port
 				if (af == AF_INET) {
 					// printf("here\n");
-					// sprintf(port_c, "%d", par);
-					sprintf(port_c, "%d", ntohs(par));
+					sprintf(port_c, "%d", par);
+					// sprintf(port_c, "%d", ntohs(par));
 					printf("port_c=%s\n",port_c);
-					par = ntohs(par);
+					// par = ntohs(par);
 					ipv4addr_remote.sin_port = par;
 					printf("port:");
 					print_bytes((unsigned char *) &par,2);
@@ -194,6 +194,7 @@ int main(int argc, char *argv[]) {
 				} else {
 					// ipv6addr.sin6_port = htons(par);
 					printf("the 6 one\n");
+					sleep(5);
 					ipv6addr_remote.sin6_port = htons(par);
 					if (sendto(sfd, &nonce, 4, 0, (struct sockaddr *) &ipv4addr_remote,
 						remote_addr_len) < 0) {
