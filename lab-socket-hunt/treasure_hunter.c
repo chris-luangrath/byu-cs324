@@ -87,7 +87,8 @@ int main(int argc, char *argv[]) {
 	memcpy(&send_buf[6], &seed, SEED_SIZE);
 	// printf("hey4\n");
 	// 
-	print_bytes(send_buf,SEND_SIZE);
+	if (verbose)
+		print_bytes(send_buf,SEND_SIZE);
 
 	connect_socket(server,port_c,hints);
 	
