@@ -48,6 +48,7 @@ int main(int argc, char *argv[]) {
 	struct sockaddr_in ipv4addr_remote;
 	struct sockaddr_in6 ipv6addr_remote;
 
+	socklen_t addrlen;
 	struct sockaddr_in ipv4addr_local;
 	struct sockaddr_in6 ipv6addr_local;
 
@@ -175,8 +176,8 @@ int main(int argc, char *argv[]) {
 				}
 				// sleep(1);
 				break;
-			case 2:;
-				socklen_t addrlen;
+			case 2:
+
 				//  Communicate with the server using a new local (client-side) port designated by the server.
 				// // updating port
 				// ipv4addr_remote.sin_port = htons(port); // specific port
