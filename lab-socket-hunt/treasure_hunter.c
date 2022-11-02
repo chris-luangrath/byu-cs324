@@ -176,7 +176,7 @@ int main(int argc, char *argv[]) {
 				// sleep(1);
 				break;
 			case 2:
-				socklen_t addrlen;
+				struct socklen_t addrlen;
 				//  Communicate with the server using a new local (client-side) port designated by the server.
 				// // updating port
 				// ipv4addr_remote.sin_port = htons(port); // specific port
@@ -211,8 +211,9 @@ int main(int argc, char *argv[]) {
 						exit(EXIT_FAILURE);
 					}
 				} else {
+					printf("the 6 one\n");
 					ipv6addr_local.sin6_family = AF_INET6; // IPv6 (AF_INET6)
-					ipv6addr_local.sin6_port = htons(port); // specific port
+					// ipv6addr_local.sin6_port = htons(port); // specific port
 					bzero(ipv6addr_local.sin6_addr.s6_addr, 16); // any/all local addresses
 					if (bind(sfd, (struct sockaddr *)&ipv6addr_local,
 							sizeof(struct sockaddr_in6)) < 0) {
