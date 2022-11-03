@@ -234,7 +234,7 @@ int main(int argc, char *argv[]) {
 				printf("m=%hu",m);
 				unsigned int sum = 0;
 				for (int j = 0; j < m; j++){
-					printf("help\n");
+					printf("%d\n",j);
 				}
 				for (int j = 0; j < m; j++){
 					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
