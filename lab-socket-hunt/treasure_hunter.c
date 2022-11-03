@@ -256,8 +256,20 @@ int main(int argc, char *argv[]) {
 				if (af == AF_INET){
 					hints.ai_family = AF_INET6;
 
+				} else {
+					hints.ai_family = AF_INET;
 				}
-				break;
+				close(sfd);
+				connect_socket(server,port_c);
+				af = result->ai_family;
+				if (af == AF_INET) {
+					ipv4addr_remote = *(struct sockaddr_in *)result->ai_addr;
+				} else {
+					ipv6addr_remote = *(struct sockaddr_in6 *)result->ai_addr;
+				}
+				op = 1;
+				continue;
+				// break;
 		}
 		// i += nread;
 		// remote_addr_len = sizeof(struct sockaddr_storage);
