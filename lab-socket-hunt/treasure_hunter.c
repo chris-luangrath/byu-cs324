@@ -226,7 +226,7 @@ int main(int argc, char *argv[]) {
 			case 3:;
 				int m = ntohl(par);
 				unsigned int sum = 0;
-				for (int j = 0; j < m +5; j++){
+				for (int j = 0; j < m; j++){
 					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
 								// (struct sockaddr *) &remote_addr, &remote_addr_len);
 								(struct sockaddr *) &ipv4addr_remote, &remote_addr_len);
@@ -236,8 +236,12 @@ int main(int argc, char *argv[]) {
 					}
 					getsockname(sfd, (struct sockaddr *)&ipv4addr_local, &addrlen);
 					printf("%d\n",ipv4addr_local.sin_port);
+					sum += ntohs(&ipv4addr_local.sin_port);
+					printf("sum=%d\n",sum);
+
 					printf("read\n");
 				}
+				printf("left the loop\n");
 				// Same as op-code 0, but instead of sending a nonce that is provided by the server, 
 				// derive the nonce by adding the remote ports associated with the m communications sent by the server.
 				break;
