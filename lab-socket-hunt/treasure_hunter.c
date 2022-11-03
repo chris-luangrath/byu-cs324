@@ -260,7 +260,7 @@ int main(int argc, char *argv[]) {
 					hints.ai_family = AF_INET;
 				}
 				close(sfd);
-				connect_socket(server,port_c);
+				connect_socket(server,port_c,hints);
 				af = result->ai_family;
 				if (af == AF_INET) {
 					ipv4addr_remote = *(struct sockaddr_in *)result->ai_addr;
