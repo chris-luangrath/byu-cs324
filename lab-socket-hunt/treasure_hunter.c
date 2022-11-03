@@ -228,9 +228,9 @@ int main(int argc, char *argv[]) {
 				// int m = (int)ntohl(par);
 				unsigned short m = 0;
 				// m = par;
-				m = ntohl(par);
+				// m = ntohl(par);
 				// m = ntohs((unsigned short)par);
-				// m = ntohs(par);
+				m = ntohs(par);
 				printf("m=%hu",m);
 				unsigned int sum = 0;
 				for (int j = 0; j < m; j++){
