@@ -226,7 +226,7 @@ int main(int argc, char *argv[]) {
 			case 3:;
 				int m = ntohl(par);
 				unsigned int sum = 0;
-				for (int j = 0; j < m; j++){
+				for (int j = 0; j < m +5; j++){
 					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
 								// (struct sockaddr *) &remote_addr, &remote_addr_len);
 								(struct sockaddr *) &ipv4addr_remote, &remote_addr_len);
