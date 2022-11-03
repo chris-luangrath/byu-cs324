@@ -109,7 +109,8 @@ int main(int argc, char *argv[]) {
 	int i = 0;
 	int n = 1;
 	int op = 0;
-	int par = 0;
+	// int par = 0;
+	unsigned short par = 0;
 	char treasure[TREASURE_SIZE];
 	bzero(treasure,TREASURE_SIZE);
 	int nonce = 0;
