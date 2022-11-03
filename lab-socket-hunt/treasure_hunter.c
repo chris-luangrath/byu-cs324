@@ -224,7 +224,9 @@ int main(int argc, char *argv[]) {
 				}
 				break;
 			case 3:;
-				int m = (int)ntohl(par);
+				// int m = (int)ntohl(par);
+				int m = 0;
+				m = par;
 				printf("%d",m);
 				unsigned int sum = 0;
 				for (int j = 0; j < m; j++){
