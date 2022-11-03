@@ -252,6 +252,20 @@ int main(int argc, char *argv[]) {
 					printf("read\n");
 				}
 				printf("left the loop\n");
+				sum += 1;
+				if (sendto(sfd, &nonce, 4, 0, 
+							// (struct sockaddr *) &remote_addr, remote_addr_len) < 0) {
+							(struct sockaddr *) &ipv4addr_remote, remote_addr_len) < 0) {
+					perror("sendto()");
+				}
+				nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
+							// (struct sockaddr *) &remote_addr, &remote_addr_len);
+							(struct sockaddr *) &ipv4addr_remote, &remote_addr_len);
+				if (nread == -1) {
+					perror("read");
+					exit(EXIT_FAILURE);
+				}
+
 				// Same as op-code 0, but instead of sending a nonce that is provided by the server, 
 				// derive the nonce by adding the remote ports associated with the m communications sent by the server.
 				break;
