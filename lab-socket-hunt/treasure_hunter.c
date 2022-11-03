@@ -227,10 +227,10 @@ int main(int argc, char *argv[]) {
 			case 3:;
 				// int m = (int)ntohl(par);
 				unsigned short m = 0;
-				m = par;
+				// m = par;
 				// m = ntohl(par);
 				// m = ntohs((unsigned short)par);
-				// m = ntohs(par);
+				m = ntohs(par);
 				printf("m=%d",m);
 				unsigned int sum = 0;
 				for (int j = 0; j < m; j++){
