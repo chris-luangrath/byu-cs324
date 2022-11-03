@@ -36,12 +36,12 @@ void print_bytes(unsigned char *bytes, int byteslen);
 void connect_socket(char* server, char* port_c, struct addrinfo hints);
 
 struct addrinfo *result;
+struct addrinfo hints;
 
 int main(int argc, char *argv[]) {
 	// printf("hey1");
 	// struct sockaddr_storage remote_addr;
 	int nread;
-	struct addrinfo hints;
 	socklen_t remote_addr_len;
 
 	int af;
@@ -225,34 +225,22 @@ int main(int argc, char *argv[]) {
 				}
 				break;
 			case 3:;
-				// int m = (int)ntohl(par);
 				unsigned short m = 0;
-				// m = par;
-				// m = ntohl(par);
-				// m = ntohs((unsigned short)par);
 				m = ntohs(par);
 				if(verbose)
 					printf("m=%hu\n",m);
 				unsigned int sum = 0;
-				// for (int j = 0; j < m; j++){
-				// 	printf("%d\n",j);
-				// }
-				// unsinged short orig_port = 
 				struct sockaddr_in temp;
 
 				for (int j = 0; j < m; j++){
 					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
 								(struct sockaddr *) &temp, &remote_addr_len);
-								// (struct sockaddr *) &ipv4addr_remote, &remote_addr_len);
 					if (nread == -1) {
 						perror("read");
 						exit(EXIT_FAILURE);
 					}
-					// getsockname(sfd, (struct sockaddr *)&ipv4addr_local, &addrlen);
 					if(verbose)
 						printf("port=%hu\n",temp.sin_port);
-					// printf("port=%d\n",ipv4addr_local.sin_port);
-					// sum += ntohs(&ipv4addr_local.sin_port);
 					sum += ntohs(temp.sin_port);
 					if(verbose)
 						printf("sum=%d\n",sum);
@@ -265,12 +253,10 @@ int main(int argc, char *argv[]) {
 				sum += 1;
 				nonce = htonl(sum);
 				if (sendto(sfd, &nonce, 4, 0, 
-							// (struct sockaddr *) &remote_addr, remote_addr_len) < 0) {
 							(struct sockaddr *) &ipv4addr_remote, remote_addr_len) < 0) {
 					perror("sendto()");
 				}
 				nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
-							// (struct sockaddr *) &remote_addr, &remote_addr_len);
 							(struct sockaddr *) &ipv4addr_remote, &remote_addr_len);
 				if (nread == -1) {
 					perror("read");
@@ -282,6 +268,10 @@ int main(int argc, char *argv[]) {
 				break;
 			case 4:
 				// Communicate with the server using a new address family, IPv4 or IPv6--whichever is not currently being used.
+				if (af == AF_INET){
+					hints.ai_family = AF_INET6;
+
+				}
 				break;
 		}
 		// i += nread;
