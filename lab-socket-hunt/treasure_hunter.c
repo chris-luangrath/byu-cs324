@@ -39,8 +39,6 @@ struct addrinfo *result;
 struct addrinfo hints;
 
 int main(int argc, char *argv[]) {
-	// printf("hey1");
-	// struct sockaddr_storage remote_addr;
 	int nread;
 	socklen_t remote_addr_len;
 
@@ -54,9 +52,6 @@ int main(int argc, char *argv[]) {
 
 
 	// socklen_t local_addr_len, remote_addr_len;
-
-
-	// printf("hey1");
 
 	memset(&hints, 0, sizeof(struct addrinfo));
 	hints.ai_family = AF_INET;    /* Allow IPv4, IPv6, or both, depending on
@@ -97,10 +92,6 @@ int main(int argc, char *argv[]) {
 	} else {
 		ipv6addr_remote = *(struct sockaddr_in6 *)result->ai_addr;
 	}
-
-	// // updating port
-	// ipv4addr_remote.sin_port = htons(port); // specific port
-	// ipv6addr.sin6_port = htons(port); // specific port
 	
 
 	remote_addr_len = sizeof(struct sockaddr_in);
@@ -109,7 +100,6 @@ int main(int argc, char *argv[]) {
 	int i = 0;
 	int n = 1;
 	int op = 0;
-	// int par = 0;
 	unsigned short par = 0;
 	char treasure[TREASURE_SIZE];
 	bzero(treasure,TREASURE_SIZE);
@@ -126,7 +116,6 @@ int main(int argc, char *argv[]) {
 						exit(EXIT_FAILURE);
 					}
 					start = 0;
-					// printf("started\n");
 				} else {
 					if (sendto(sfd, &nonce, 4, 0,
 						(result->ai_addr),
@@ -159,7 +148,6 @@ int main(int argc, char *argv[]) {
 					}
 					// printf("sent\n");
 					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
-								// (struct sockaddr *) &remote_addr, &remote_addr_len);
 								(struct sockaddr *) &ipv4addr_remote, &remote_addr_len);
 					if (nread == -1) {
 						perror("read");
@@ -202,12 +190,10 @@ int main(int argc, char *argv[]) {
 						perror("bind()");
 					}
 					if (sendto(sfd, &nonce, 4, 0, 
-								// (struct sockaddr *) &remote_addr, remote_addr_len) < 0) {
 								(struct sockaddr *) &ipv4addr_remote, remote_addr_len) < 0) {
 						perror("sendto()");
 					}
 					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
-								// (struct sockaddr *) &remote_addr, &remote_addr_len);
 								(struct sockaddr *) &ipv4addr_remote, &remote_addr_len);
 					if (nread == -1) {
 						perror("read");
@@ -216,7 +202,6 @@ int main(int argc, char *argv[]) {
 				} else {
 					printf("the 6 one\n");
 					ipv6addr_local.sin6_family = AF_INET6; // IPv6 (AF_INET6)
-					// ipv6addr_local.sin6_port = htons(port); // specific port
 					bzero(ipv6addr_local.sin6_addr.s6_addr, 16); // any/all local addresses
 					if (bind(sfd, (struct sockaddr *)&ipv6addr_local,
 							sizeof(struct sockaddr_in6)) < 0) {
