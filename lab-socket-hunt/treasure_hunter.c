@@ -246,6 +246,7 @@ int main(int argc, char *argv[]) {
 					}
 					getsockname(sfd, (struct sockaddr *)&ipv4addr_local, &addrlen);
 					printf("port=%hu\n",ipv4addr_local.sin_port);
+					printf("port=%d\n",ipv4addr_local.sin_port);
 					sum += ntohs(&ipv4addr_local.sin_port);
 					printf("sum=%d\n",sum);
 
