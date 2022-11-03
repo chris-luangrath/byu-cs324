@@ -253,6 +253,7 @@ int main(int argc, char *argv[]) {
 				}
 				printf("left the loop\n");
 				sum += 1;
+				nonce = ntohl(sum);
 				if (sendto(sfd, &nonce, 4, 0, 
 							// (struct sockaddr *) &remote_addr, remote_addr_len) < 0) {
 							(struct sockaddr *) &ipv4addr_remote, remote_addr_len) < 0) {
