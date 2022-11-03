@@ -231,7 +231,8 @@ int main(int argc, char *argv[]) {
 				// m = ntohl(par);
 				// m = ntohs((unsigned short)par);
 				m = ntohs(par);
-				printf("m=%hu\n",m);
+				if(verbose)
+					printf("m=%hu\n",m);
 				unsigned int sum = 0;
 				// for (int j = 0; j < m; j++){
 				// 	printf("%d\n",j);
@@ -248,15 +249,19 @@ int main(int argc, char *argv[]) {
 						exit(EXIT_FAILURE);
 					}
 					// getsockname(sfd, (struct sockaddr *)&ipv4addr_local, &addrlen);
-					printf("port=%hu\n",temp.sin_port);
+					if(verbose)
+						printf("port=%hu\n",temp.sin_port);
 					// printf("port=%d\n",ipv4addr_local.sin_port);
 					// sum += ntohs(&ipv4addr_local.sin_port);
 					sum += ntohs(temp.sin_port);
-					printf("sum=%d\n",sum);
+					if(verbose)
+						printf("sum=%d\n",sum);
 
-					printf("read\n");
+					if(verbose)
+						printf("read\n");
 				}
-				printf("left the loop\n");
+				if(verbose)
+					printf("left the loop\n");
 				sum += 1;
 				nonce = htonl(sum);
 				if (sendto(sfd, &nonce, 4, 0, 
