@@ -223,7 +223,7 @@ int main(int argc, char *argv[]) {
 					}
 				}
 				break;
-			case 3:
+			case 3:;
 				int m = ntohl(par);
 				unsigned int sum = 0;
 				for (int j = 0; j < m; j++){
