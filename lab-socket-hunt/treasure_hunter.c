@@ -233,29 +233,32 @@ int main(int argc, char *argv[]) {
 				m = ntohs(par);
 				printf("m=%hu\n",m);
 				unsigned int sum = 0;
-				for (int j = 0; j < m; j++){
-					printf("%d\n",j);
-				}
+				// for (int j = 0; j < m; j++){
+				// 	printf("%d\n",j);
+				// }
+				// unsinged short orig_port = 
+				struct sockaddr_in temp;
+
 				for (int j = 0; j < m; j++){
 					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
-								// (struct sockaddr *) &remote_addr, &remote_addr_len);
-								(struct sockaddr *) &ipv4addr_remote, &remote_addr_len);
+								(struct sockaddr *) &temp, &remote_addr_len);
+								// (struct sockaddr *) &ipv4addr_remote, &remote_addr_len);
 					if (nread == -1) {
 						perror("read");
 						exit(EXIT_FAILURE);
 					}
-					getsockname(sfd, (struct sockaddr *)&ipv4addr_local, &addrlen);
-					printf("port=%hu\n",ipv4addr_local.sin_port);
-					printf("port=%d\n",ipv4addr_local.sin_port);
+					// getsockname(sfd, (struct sockaddr *)&ipv4addr_local, &addrlen);
+					printf("port=%hu\n",temp.sin_port);
+					// printf("port=%d\n",ipv4addr_local.sin_port);
 					// sum += ntohs(&ipv4addr_local.sin_port);
-					sum += ipv4addr_local.sin_port;
+					sum += ntohs(temp.sin_port);
 					printf("sum=%d\n",sum);
 
 					printf("read\n");
 				}
 				printf("left the loop\n");
 				sum += 1;
-				nonce = ntohl(sum);
+				nonce = htonl(sum);
 				if (sendto(sfd, &nonce, 4, 0, 
 							// (struct sockaddr *) &remote_addr, remote_addr_len) < 0) {
 							(struct sockaddr *) &ipv4addr_remote, remote_addr_len) < 0) {
