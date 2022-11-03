@@ -225,7 +225,7 @@ int main(int argc, char *argv[]) {
 				break;
 			case 3:;
 				// int m = (int)ntohl(par);
-				int m = 0;
+				unsigned short m = 0;
 				// m = par;
 				// m = ntohl(par);
 				m = ntohs(par);
