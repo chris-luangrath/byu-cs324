@@ -33,10 +33,13 @@ int sfd = 0;
 
 void print_bytes(unsigned char *bytes, int byteslen);
 
-void connect_socket(char* server, char* port_c, struct addrinfo hints);
+void connect_socket(char* server, char* port_c);
 
 struct addrinfo *result;
 struct addrinfo hints;
+int af;
+struct sockaddr_in ipv4addr_remote;
+struct sockaddr_in6 ipv6addr_remote;
 
 int main(int argc, char *argv[]) {
 	// printf("hey1");
@@ -44,9 +47,6 @@ int main(int argc, char *argv[]) {
 	int nread;
 	socklen_t remote_addr_len;
 
-	int af;
-	struct sockaddr_in ipv4addr_remote;
-	struct sockaddr_in6 ipv6addr_remote;
 
 	socklen_t addrlen;
 	struct sockaddr_in ipv4addr_local;
@@ -86,17 +86,9 @@ int main(int argc, char *argv[]) {
 	if (verbose)
 		print_bytes(send_buf,SEND_SIZE);
 
-	connect_socket(server,port_c,hints);
+	connect_socket(server,port_c);
 	
 	size_t len = SEND_SIZE;
-
-	// found in the struct addrinfo from getaddrinfo()
-	af = result->ai_family;
-	if (af == AF_INET) {
-		ipv4addr_remote = *(struct sockaddr_in *)result->ai_addr;
-	} else {
-		ipv6addr_remote = *(struct sockaddr_in6 *)result->ai_addr;
-	}
 
 	// // updating port
 	// ipv4addr_remote.sin_port = htons(port); // specific port
@@ -150,16 +142,11 @@ int main(int argc, char *argv[]) {
 				sprintf(port_c, "%d", par);
 				if (af == AF_INET) {
 					ipv4addr_remote.sin_port = par;
-					// printf("port:");
-					// print_bytes((unsigned char *) &par,2);
 					if (sendto(sfd, &nonce, 4, 0, 
-								// (struct sockaddr *) &remote_addr, remote_addr_len) < 0) {
 								(struct sockaddr *) &ipv4addr_remote, remote_addr_len) < 0) {
 						perror("sendto()");
 					}
-					// printf("sent\n");
 					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
-								// (struct sockaddr *) &remote_addr, &remote_addr_len);
 								(struct sockaddr *) &ipv4addr_remote, &remote_addr_len);
 					if (nread == -1) {
 						perror("read");
@@ -184,15 +171,15 @@ int main(int argc, char *argv[]) {
 				// ipv4addr_remote.sin_port = htons(port); // specific port
 				// ipv6addr.sin6_port = htons(port); // specific port
 				// sprintf(port_c, "%d", par);
-				if (af == AF_INET) {
-					addrlen = sizeof(struct sockaddr_in);
-					getsockname(sfd, (struct sockaddr *)&ipv4addr_local, &addrlen);
-				} else {
-					addrlen = sizeof(struct sockaddr_in6);
-					getsockname(sfd, (struct sockaddr *)&ipv6addr_local, &addrlen);
-				}
+				// if (af == AF_INET) {
+				// 	addrlen = sizeof(struct sockaddr_in);
+				// 	getsockname(sfd, (struct sockaddr *)&ipv4addr_local, &addrlen);
+				// } else {
+				// 	addrlen = sizeof(struct sockaddr_in6);
+				// 	getsockname(sfd, (struct sockaddr *)&ipv6addr_local, &addrlen);
+				// }
 				close(sfd);
-				connect_socket(server,port_c,hints);
+				connect_socket(server,port_c);
 				if (af == AF_INET) {
 					ipv4addr_local.sin_family = AF_INET; // use AF_INET (IPv4)
 					ipv4addr_local.sin_port = par; // specific port
@@ -270,6 +257,7 @@ int main(int argc, char *argv[]) {
 				// Communicate with the server using a new address family, IPv4 or IPv6--whichever is not currently being used.
 				if (af == AF_INET){
 					hints.ai_family = AF_INET6;
+					connect_socket(server,port_c);
 
 				}
 				break;
@@ -321,7 +309,7 @@ int main(int argc, char *argv[]) {
 
 }
 
-void connect_socket(char* server, char* port_c, struct addrinfo hints){
+void connect_socket(char* server, char* port_c){
 	if(sfd != 0){
 		close(sfd);
 	}
@@ -344,6 +332,13 @@ void connect_socket(char* server, char* port_c, struct addrinfo hints){
 	// pre-socket
 	sfd = socket(result->ai_family, result->ai_socktype,
 				result->ai_protocol);
+
+	af = result->ai_family;
+	if (af == AF_INET) {
+		ipv4addr_remote = *(struct sockaddr_in *)result->ai_addr;
+	} else {
+		ipv6addr_remote = *(struct sockaddr_in6 *)result->ai_addr;
+	}
 }
 
 void print_bytes(unsigned char *bytes, int byteslen) {
