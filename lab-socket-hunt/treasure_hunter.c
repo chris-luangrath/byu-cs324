@@ -231,7 +231,7 @@ int main(int argc, char *argv[]) {
 				// m = ntohl(par);
 				// m = ntohs((unsigned short)par);
 				m = ntohs(par);
-				printf("m=%hu",m);
+				printf("m=%hu\n",m);
 				unsigned int sum = 0;
 				for (int j = 0; j < m; j++){
 					printf("%d\n",j);
