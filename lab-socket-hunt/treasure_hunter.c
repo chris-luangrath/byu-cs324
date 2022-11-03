@@ -7,7 +7,7 @@
 // #define ID_SIZE 8
 // #define SEED_SIZE 4
 #define SEND_SIZE 8
-#define REC_SIZE 256
+#define REC_SIZE 1024
 #define TREASURE_SIZE 1024
 #define BYTE_SIZE 1
 #define ID_SIZE 4
