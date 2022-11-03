@@ -227,7 +227,8 @@ int main(int argc, char *argv[]) {
 				// int m = (int)ntohl(par);
 				int m = 0;
 				// m = par;
-				m = ntohl(par);
+				// m = ntohl(par);
+				m = ntohs(par);
 				printf("%d",m);
 				unsigned int sum = 0;
 				for (int j = 0; j < m; j++){
