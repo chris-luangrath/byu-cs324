@@ -224,6 +224,18 @@ int main(int argc, char *argv[]) {
 				}
 				break;
 			case 3:
+				int m = ntohl(par);
+				unsigned int sum = 0;
+				for (int j = 0; j < m; j++){
+					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
+								// (struct sockaddr *) &remote_addr, &remote_addr_len);
+								(struct sockaddr *) &ipv4addr_remote, &remote_addr_len);
+					if (nread == -1) {
+						perror("read");
+						exit(EXIT_FAILURE);
+					}
+					printf("read\n");
+				}
 				// Same as op-code 0, but instead of sending a nonce that is provided by the server, 
 				// derive the nonce by adding the remote ports associated with the m communications sent by the server.
 				break;
