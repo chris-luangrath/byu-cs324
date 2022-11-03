@@ -171,13 +171,13 @@ int main(int argc, char *argv[]) {
 				// ipv4addr_remote.sin_port = htons(port); // specific port
 				// ipv6addr.sin6_port = htons(port); // specific port
 				// sprintf(port_c, "%d", par);
-				// if (af == AF_INET) {
-				// 	addrlen = sizeof(struct sockaddr_in);
-				// 	getsockname(sfd, (struct sockaddr *)&ipv4addr_local, &addrlen);
-				// } else {
-				// 	addrlen = sizeof(struct sockaddr_in6);
-				// 	getsockname(sfd, (struct sockaddr *)&ipv6addr_local, &addrlen);
-				// }
+				if (af == AF_INET) {
+					addrlen = sizeof(struct sockaddr_in);
+					getsockname(sfd, (struct sockaddr *)&ipv4addr_local, &addrlen);
+				} else {
+					addrlen = sizeof(struct sockaddr_in6);
+					getsockname(sfd, (struct sockaddr *)&ipv6addr_local, &addrlen);
+				}
 				close(sfd);
 				connect_socket(server,port_c);
 				if (af == AF_INET) {
