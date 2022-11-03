@@ -234,6 +234,8 @@ int main(int argc, char *argv[]) {
 						perror("read");
 						exit(EXIT_FAILURE);
 					}
+					getsockname(sfd, (struct sockaddr *)&ipv4addr_local, &addrlen);
+					printf("%d\n",ipv4addr_local.sin_port);
 					printf("read\n");
 				}
 				// Same as op-code 0, but instead of sending a nonce that is provided by the server, 
