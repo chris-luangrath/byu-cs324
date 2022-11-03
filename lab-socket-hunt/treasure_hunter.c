@@ -225,6 +225,7 @@ int main(int argc, char *argv[]) {
 				break;
 			case 3:;
 				int m = ntohl(par);
+				printf("%d",m);
 				unsigned int sum = 0;
 				for (int j = 0; j < m; j++){
 					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
