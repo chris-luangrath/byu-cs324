@@ -38,8 +38,8 @@ void connect_socket(char* server, char* port_c);
 struct addrinfo *result;
 struct addrinfo hints;
 int af;
-struct sockaddr_in ipv4addr_remote;
-struct sockaddr_in6 ipv6addr_remote;
+	struct sockaddr_in ipv4addr_remote;
+	struct sockaddr_in6 ipv6addr_remote;
 
 int main(int argc, char *argv[]) {
 	// printf("hey1");
@@ -89,6 +89,14 @@ int main(int argc, char *argv[]) {
 	connect_socket(server,port_c);
 	
 	size_t len = SEND_SIZE;
+
+	// found in the struct addrinfo from getaddrinfo()
+	// af = result->ai_family;
+	// if (af == AF_INET) {
+	// 	ipv4addr_remote = *(struct sockaddr_in *)result->ai_addr;
+	// } else {
+	// 	ipv6addr_remote = *(struct sockaddr_in6 *)result->ai_addr;
+	// }
 
 	// // updating port
 	// ipv4addr_remote.sin_port = htons(port); // specific port
@@ -142,11 +150,16 @@ int main(int argc, char *argv[]) {
 				sprintf(port_c, "%d", par);
 				if (af == AF_INET) {
 					ipv4addr_remote.sin_port = par;
+					// printf("port:");
+					// print_bytes((unsigned char *) &par,2);
 					if (sendto(sfd, &nonce, 4, 0, 
+								// (struct sockaddr *) &remote_addr, remote_addr_len) < 0) {
 								(struct sockaddr *) &ipv4addr_remote, remote_addr_len) < 0) {
 						perror("sendto()");
 					}
+					// printf("sent\n");
 					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
+								// (struct sockaddr *) &remote_addr, &remote_addr_len);
 								(struct sockaddr *) &ipv4addr_remote, &remote_addr_len);
 					if (nread == -1) {
 						perror("read");
