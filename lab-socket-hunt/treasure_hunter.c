@@ -228,8 +228,8 @@ int main(int argc, char *argv[]) {
 				unsigned short m = 0;
 				// m = par;
 				// m = ntohl(par);
-				m = (unsigned short) ntohs(par);
-				printf("%hu",m);
+				m = ntohs(par);
+				printf("%d",m);
 				unsigned int sum = 0;
 				for (int j = 0; j < m; j++){
 					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
