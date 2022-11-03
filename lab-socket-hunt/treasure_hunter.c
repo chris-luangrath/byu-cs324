@@ -229,7 +229,7 @@ int main(int argc, char *argv[]) {
 				// m = par;
 				// m = ntohl(par);
 				m = ntohs(par);
-				printf("%d",m);
+				printf("m=%d",m);
 				unsigned int sum = 0;
 				for (int j = 0; j < m; j++){
 					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
