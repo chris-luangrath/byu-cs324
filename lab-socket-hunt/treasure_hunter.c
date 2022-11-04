@@ -218,12 +218,17 @@ int main(int argc, char *argv[]) {
 					// printf("the 6 one\n");
 					ipv6addr_local.sin6_family = AF_INET6; // IPv6 (AF_INET6)
 					ipv6addr_local.sin6_port = par; // specific port
-					ipv6addr_local.sin6_addr.s6_addr = 0; // any/all local addresses
-					// ipv6addr_local.sin6_addr.s_addr = 0; // any/all local addresses
+					bzero(ipv6addr_local.sin6_addr.s6_addr, 16); // any/all local addresses
 					if (bind(sfd, (struct sockaddr *)&ipv6addr_local,
-							sizeof(struct sockaddr_in)) < 0) {
+							sizeof(struct sockaddr_in6)) < 0) {
 						perror("bind()");
 					}
+					// ipv6addr_local.sin6_addr.s6_addr = 0; // any/all local addresses
+					// ipv6addr_local.sin6_addr.s_addr = 0; // any/all local addresses
+					// if (bind(sfd, (struct sockaddr *)&ipv6addr_local,
+					// 		sizeof(struct sockaddr_in)) < 0) {
+					// 	perror("bind()");
+					// }
 					if (sendto(sfd, &nonce, 4, 0, 
 								(struct sockaddr *) &ipv6addr_remote, remote_addr_len) < 0) {
 						perror("sendto()");
