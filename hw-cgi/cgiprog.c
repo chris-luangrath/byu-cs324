@@ -96,7 +96,7 @@
 int main(int argc, char *argv[]){
     char *buf;
     char query[MAXLINE], content[MAXLINE];
-    int n1=0, n2=0;
+    // int n1=0, n2=0;
 
     if ((buf = getenv("QUERY_STRING")) != NULL) {
         strcpy(query, buf);
