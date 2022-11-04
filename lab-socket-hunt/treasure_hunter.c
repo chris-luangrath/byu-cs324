@@ -314,8 +314,8 @@ int main(int argc, char *argv[]) {
 					ipv6addr_remote = *(struct sockaddr_in6 *)result->ai_addr;
 				}
 				op = 1;
-				continue;
-				// break;
+				// continue;
+				break;
 		}
 		// i += nread;
 		// remote_addr_len = sizeof(struct sockaddr_storage);
