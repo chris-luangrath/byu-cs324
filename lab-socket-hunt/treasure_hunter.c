@@ -158,7 +158,7 @@ int main(int argc, char *argv[]) {
 					// sleep(5);
 					ipv6addr_remote.sin6_port = par;
 					// printf("port:");
-					print_bytes((unsigned char *) &par,2);
+					// print_bytes((unsigned char *) &par,2);
 					if (sendto(sfd, &nonce, 4, 0, 
 								(struct sockaddr *) &ipv6addr_remote, remote_addr_len) < 0) {
 						perror("sendto()");
@@ -352,7 +352,7 @@ int main(int argc, char *argv[]) {
 				}
 				close(sfd);
 				freeaddrinfo(result);
-				// sprintf(port_c, "%d", ntohs(par));
+				sprintf(port_c, "%d", ntohs(par));
 				connect_socket(server,port_c,hints);
 				af = result->ai_family;
 				if (af == AF_INET) {
