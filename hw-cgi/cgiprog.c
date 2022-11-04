@@ -106,8 +106,8 @@ int main(int argc, char *argv[]){
 
     // Header
     printf("Content-type: text/plain\r\n");
-    printf("Content-length: %d\r\n", (int)strlen(content));
-    printf("\r\n");
+    printf("Content-length: %d\r\n\r\n", (int)strlen(content));
+    // printf("\r\n");
 
     printf("%s",content);
 
