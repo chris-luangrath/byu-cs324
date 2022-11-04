@@ -91,7 +91,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define MAXLINE 1024
+#define MAXLINE 256
 
 int main(int argc, char *argv[]){
     char *buf;
