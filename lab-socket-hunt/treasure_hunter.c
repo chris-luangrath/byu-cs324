@@ -24,7 +24,7 @@
 #include <unistd.h>
 #include <string.h>
 
-int verbose = 0;
+int verbose = 1;
 int sfd = 0;
 
 // hongkong:32400
@@ -158,7 +158,7 @@ int main(int argc, char *argv[]) {
 					// sleep(5);
 					ipv6addr_remote.sin6_port = par;
 					// printf("port:");
-					// print_bytes((unsigned char *) &par,2);
+					print_bytes((unsigned char *) &par,2);
 					if (sendto(sfd, &nonce, 4, 0, 
 								// (struct sockaddr *) &remote_addr, remote_addr_len) < 0) {
 								(struct sockaddr *) &ipv6addr_remote, remote_addr_len) < 0) {
@@ -209,7 +209,7 @@ int main(int argc, char *argv[]) {
 						exit(EXIT_FAILURE);
 					}
 				} else {
-					// printf("the 6 one\n");
+					printf("the 6 one\n");
 					ipv6addr_local.sin6_family = AF_INET6; // IPv6 (AF_INET6)
 					ipv6addr_local.sin6_port = par; // specific port
 					bzero(ipv6addr_local.sin6_addr.s6_addr, 16); // any/all local addresses
@@ -276,7 +276,7 @@ int main(int argc, char *argv[]) {
 						exit(EXIT_FAILURE);
 					}
 				} else {
-					// printf("the 6 one\n");
+					printf("the 6 one\n");
 					if (sendto(sfd, &nonce, 4, 0, 
 								(struct sockaddr *) &ipv6addr_remote, remote_addr_len) < 0) {
 						perror("sendto()");
