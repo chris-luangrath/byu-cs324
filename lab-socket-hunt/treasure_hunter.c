@@ -154,16 +154,11 @@ int main(int argc, char *argv[]) {
 						exit(EXIT_FAILURE);
 					}
 				} else {
-					// printf("the 6 one\n");
-					// sleep(5);
 					ipv6addr_remote.sin6_port = par;
-					// printf("port:");
-					// print_bytes((unsigned char *) &par,2);
 					if (sendto(sfd, &nonce, 4, 0, 
 								(struct sockaddr *) &ipv6addr_remote, remote_addr_len) < 0) {
 						perror("sendto()");
 					}
-					// printf("sent\n");
 					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
 								(struct sockaddr *) &ipv6addr_remote, &remote_addr_len);
 					if (nread == -1) {
@@ -171,15 +166,11 @@ int main(int argc, char *argv[]) {
 						exit(EXIT_FAILURE);
 					}
 				}
-				// sleep(1);
 				break;
 			case 2:
 
 				//  Communicate with the server using a new local (client-side) port designated by the server.
 				// // updating port
-				// ipv4addr_remote.sin_port = htons(port); // specific port
-				// ipv6addr.sin6_port = htons(port); // specific port
-				// sprintf(port_c, "%d", par);
 				if (af == AF_INET) {
 					addrlen = sizeof(struct sockaddr_in);
 					getsockname(sfd, (struct sockaddr *)&ipv4addr_local, &addrlen);
@@ -208,7 +199,6 @@ int main(int argc, char *argv[]) {
 						exit(EXIT_FAILURE);
 					}
 				} else {
-					// printf("the 6 one\n");
 					ipv6addr_local.sin6_family = AF_INET6; // IPv6 (AF_INET6)
 					ipv6addr_local.sin6_port = par; // specific port
 					bzero(ipv6addr_local.sin6_addr.s6_addr, 16); // any/all local addresses
@@ -216,12 +206,6 @@ int main(int argc, char *argv[]) {
 							sizeof(struct sockaddr_in6)) < 0) {
 						perror("bind()");
 					}
-					// ipv6addr_local.sin6_addr.s6_addr = 0; // any/all local addresses
-					// ipv6addr_local.sin6_addr.s_addr = 0; // any/all local addresses
-					// if (bind(sfd, (struct sockaddr *)&ipv6addr_local,
-					// 		sizeof(struct sockaddr_in)) < 0) {
-					// 	perror("bind()");
-					// }
 					if (sendto(sfd, &nonce, 4, 0, 
 								(struct sockaddr *) &ipv6addr_remote, remote_addr_len) < 0) {
 						perror("sendto()");
@@ -235,7 +219,6 @@ int main(int argc, char *argv[]) {
 				}
 				break;
 			case 3:;
-				// printf("hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n");
 				unsigned short m = 0;
 				m = ntohs(par);
 				if(verbose)
@@ -247,23 +230,6 @@ int main(int argc, char *argv[]) {
 				temp_len = sizeof(struct sockaddr_in6);
 
 				for (int j = 0; j < m; j++){
-					// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
-					// 			// (struct sockaddr *) &temp, &sizeof(struct sockaddr_in));
-					// 			(struct sockaddr *) &temp, &temp_len);
-					// if (nread == -1) {
-					// 	perror("read");
-					// 	exit(EXIT_FAILURE);
-					// }
-					// if(verbose)
-					// 	printf("port=%hu\n",temp.sin_port);
-					// sum += ntohs(temp.sin_port);
-					// if(verbose)
-					// 	printf("sum=%d\n",sum);
-
-					// if(verbose)
-					// 	printf("read\n");
-
-
 					if(af == AF_INET){
 						nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
 								(struct sockaddr *) &temp, &remote_addr_len);
@@ -295,19 +261,6 @@ int main(int argc, char *argv[]) {
 						if(verbose)
 							printf("read\n");
 					}
-					
-					// if (nread == -1) {
-					// 	perror("read");
-					// 	exit(EXIT_FAILURE);
-					// }
-					// if(verbose)
-					// 	printf("port=%hu\n",temp.sin_port);
-					// sum += ntohs(temp.sin_port);
-					// if(verbose)
-					// 	printf("sum=%d\n",sum);
-
-					// if(verbose)
-					// 	printf("read\n");
 				}
 				if(verbose)
 					printf("left the loop\n");
@@ -326,7 +279,6 @@ int main(int argc, char *argv[]) {
 						exit(EXIT_FAILURE);
 					}
 				} else {
-					// printf("the 6 one ------------------------------------\n");
 					if (sendto(sfd, &nonce, 4, 0, 
 								(struct sockaddr *) &ipv6addr_remote, remote_addr_len) < 0) {
 						perror("sendto()");
@@ -356,11 +308,9 @@ int main(int argc, char *argv[]) {
 				connect_socket(server,port_c,hints);
 				af = result->ai_family;
 				if (af == AF_INET) {
-					// printf("it's 44444444444444444444444444444444444444444444444\n");
 					ipv4addr_remote = *(struct sockaddr_in *)result->ai_addr;
 					remote_addr_len = sizeof(struct sockaddr_in);
 				} else {
-					// printf("it's 6666666666666666666666666666666666666666666666\n");
 					ipv6addr_remote = *(struct sockaddr_in6 *)result->ai_addr;
 					remote_addr_len = sizeof(struct sockaddr_in6);
 				}
@@ -368,14 +318,6 @@ int main(int argc, char *argv[]) {
 				continue;
 				break;
 		}
-		// i += nread;
-		// remote_addr_len = sizeof(struct sockaddr_storage);
-		// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
-		// 			(struct sockaddr *) &remote_addr, &remote_addr_len);
-		// if (nread == -1) {
-		// 	perror("read");
-		// 	exit(EXIT_FAILURE);
-		// }
 		if (verbose)
 			print_bytes(rec_buf,nread);
 		
@@ -383,14 +325,9 @@ int main(int argc, char *argv[]) {
 		if (verbose)
 			printf("n=%d\n",n);
 		
-		// memcpy(&treasure[i],&rec_buf[1],n);
-		// i += n;
-
 		memcpy(&treasure[i],&rec_buf[1],n);
 		i += n;
-		// printf("i=%d\n",i);
-		// if (verbose)
-		// 	print_bytes(treasure,i);
+
 		if(op == 4){
 			op = 1;
 		} else {
@@ -403,15 +340,11 @@ int main(int argc, char *argv[]) {
 		if (verbose)
 			printf("par=%d\n",par);
 
-		// bzero(buf, BUFSIZE);
-		// printf("nonce=");
 		memcpy(&nonce,&rec_buf[n+4], 4);
 		nonce = htonl(ntohl(nonce) + 1);
 
 		// sleep(1);
 	}
-	// printf("loop finished\n");
-	// print_bytes(treasure,i);
 	printf("%s\n",treasure);
 
 
