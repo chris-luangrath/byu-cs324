@@ -74,20 +74,20 @@
 
 // 18.
 // The producer is now waiting for either more data or for an empty slot or for the consumer
-// to take something ////////////////////////////////////////////////////////////////////////////CHECK
+// to take something
 
 // 19.
-// most to least expensive: thread-based, threadpool-based, process-based
+// most to least expensive: process-based, thread-based, threadpool-based, 
 
 // 20.
-// which one has a limitation of number of clients?
+// threadpool has a limitation of number of clients
 
 // 21.
 // Process-based doesn't use inter-process communication because it's one thread per process
 
 // 22.
 // Which one seems least complex to implement
-
+// I'd assume threadpool because there's little communication, and there's a static number of threads.
 
 #include <stdio.h>
 #include <string.h>
