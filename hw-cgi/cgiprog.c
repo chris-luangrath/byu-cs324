@@ -102,7 +102,7 @@ int main(int argc, char *argv[]){
         strcpy(query, buf);
     }
     // Response body
-    sprintf(content, "The query string is: %s\n", query);
+    sprintf(content, "The query string is: %s", query);
 
     // Header
     printf("Content-type: text/plain\r\n");
