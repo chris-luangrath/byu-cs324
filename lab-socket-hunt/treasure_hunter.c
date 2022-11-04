@@ -236,6 +236,7 @@ int main(int argc, char *argv[]) {
 				}
 				break;
 			case 3:;
+				printf("hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n");
 				unsigned short m = 0;
 				m = ntohs(par);
 				if(verbose)
