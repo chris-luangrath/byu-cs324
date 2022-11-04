@@ -87,3 +87,34 @@
 
 // 22.
 // Which one seems least complex to implement
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAXLINE 1024
+
+int main(void){
+    char *buf;
+    char query[MAXLINE], content[MAXLINE];
+    int n1=0, n2=0;
+
+    if ((buf = getenv("QUERY_STRING")) != NULL) {
+        strcpy(query, buf);
+    }
+    // Response body
+    sprintf(content, "The query string is: %s\n", query);
+
+    // Header
+    printf("Content-type: text/plain\r\n");
+    printf("Content-length: %d\r\n", (int)strlen(content));
+    printf("\r\n");
+
+    printf("%s",content);
+
+
+    // sprintf(content, "Content-type: text/plain\r\n");
+    // sprintf(content, "Content-length: %d\r\n", (int)strlen(content));
+    // sprintf(content,"\r\n");
+
+
+}
