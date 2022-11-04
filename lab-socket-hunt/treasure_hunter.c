@@ -24,7 +24,7 @@
 #include <unistd.h>
 #include <string.h>
 
-int verbose = 0;
+int verbose = 1;
 int sfd = 0;
 
 // hongkong:32400
