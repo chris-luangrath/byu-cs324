@@ -24,7 +24,7 @@
 #include <unistd.h>
 #include <string.h>
 
-int verbose = 1;
+int verbose = 0;
 int sfd = 0;
 
 // hongkong:32400
@@ -208,7 +208,7 @@ int main(int argc, char *argv[]) {
 						exit(EXIT_FAILURE);
 					}
 				} else {
-					printf("the 6 one\n");
+					// printf("the 6 one\n");
 					ipv6addr_local.sin6_family = AF_INET6; // IPv6 (AF_INET6)
 					ipv6addr_local.sin6_port = par; // specific port
 					bzero(ipv6addr_local.sin6_addr.s6_addr, 16); // any/all local addresses
@@ -235,7 +235,7 @@ int main(int argc, char *argv[]) {
 				}
 				break;
 			case 3:;
-				printf("hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n");
+				// printf("hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n");
 				unsigned short m = 0;
 				m = ntohs(par);
 				if(verbose)
@@ -326,7 +326,7 @@ int main(int argc, char *argv[]) {
 						exit(EXIT_FAILURE);
 					}
 				} else {
-					printf("the 6 one ------------------------------------\n");
+					// printf("the 6 one ------------------------------------\n");
 					if (sendto(sfd, &nonce, 4, 0, 
 								(struct sockaddr *) &ipv6addr_remote, remote_addr_len) < 0) {
 						perror("sendto()");
@@ -356,11 +356,11 @@ int main(int argc, char *argv[]) {
 				connect_socket(server,port_c,hints);
 				af = result->ai_family;
 				if (af == AF_INET) {
-					printf("it's 44444444444444444444444444444444444444444444444\n");
+					// printf("it's 44444444444444444444444444444444444444444444444\n");
 					ipv4addr_remote = *(struct sockaddr_in *)result->ai_addr;
 					remote_addr_len = sizeof(struct sockaddr_in);
 				} else {
-					printf("it's 6666666666666666666666666666666666666666666666\n");
+					// printf("it's 6666666666666666666666666666666666666666666666\n");
 					ipv6addr_remote = *(struct sockaddr_in6 *)result->ai_addr;
 					remote_addr_len = sizeof(struct sockaddr_in6);
 				}
