@@ -91,11 +91,12 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define MAXLINE 256
+#define Q_SIZE 512
+#define C_SIZE 1024
 
 int main(int argc, char *argv[]){
     char *buf;
-    char query[MAXLINE], content[MAXLINE];
+    char query[Q_SIZE], content[C_SIZE];
     // int n1=0, n2=0;
 
     if ((buf = getenv("QUERY_STRING")) != NULL) {
