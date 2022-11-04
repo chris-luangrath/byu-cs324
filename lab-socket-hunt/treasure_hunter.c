@@ -277,7 +277,7 @@ int main(int argc, char *argv[]) {
 						exit(EXIT_FAILURE);
 					}
 				} else {
-					printf("the 6 one\n");
+					printf("the 6 one ------------------------------------\n");
 					if (sendto(sfd, &nonce, 4, 0, 
 								(struct sockaddr *) &ipv6addr_remote, remote_addr_len) < 0) {
 						perror("sendto()");
