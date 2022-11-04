@@ -162,7 +162,7 @@ int main(int argc, char *argv[]) {
 					// 	remote_addr_len) < 0) {
 					// 	perror("sendto()");
 					// }
-					ipv6addr_remote.sin_port = par;
+					ipv6addr_remote.sin6_port = par;
 					// printf("port:");
 					// print_bytes((unsigned char *) &par,2);
 					if (sendto(sfd, &nonce, 4, 0, 
@@ -217,8 +217,8 @@ int main(int argc, char *argv[]) {
 				} else {
 					printf("the 6 one\n");
 					ipv6addr_local.sin6_family = AF_INET6; // IPv6 (AF_INET6)
-					ipv6addr_local.sin_port = par; // specific port
-					ipv6addr_local.sin_addr.s_addr = 0; // any/all local addresses
+					ipv6addr_local.sin6_port = par; // specific port
+					ipv6addr_local.sin6_addr.s_addr = 0; // any/all local addresses
 					if (bind(sfd, (struct sockaddr *)&ipv6addr_local,
 							sizeof(struct sockaddr_in)) < 0) {
 						perror("bind()");
