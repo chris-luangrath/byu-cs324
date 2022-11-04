@@ -352,7 +352,7 @@ int main(int argc, char *argv[]) {
 				}
 				close(sfd);
 				freeaddrinfo(result);
-				sprintf(port_c, "%d", ntohs(par));
+				// sprintf(port_c, "%d", ntohs(par));
 				connect_socket(server,port_c,hints);
 				af = result->ai_family;
 				if (af == AF_INET) {
