@@ -167,7 +167,7 @@ int main(int argc, char *argv[]) {
 					// print_bytes((unsigned char *) &par,2);
 					if (sendto(sfd, &nonce, 4, 0, 
 								// (struct sockaddr *) &remote_addr, remote_addr_len) < 0) {
-								(struct sockaddr *) &ipv6addr_remote, remote_addr_len) < 0) {
+								(struct sockaddr *) &ipv6addr_remote, &remote_addr_len) < 0) {
 						perror("sendto()");
 					}
 					// printf("sent\n");
