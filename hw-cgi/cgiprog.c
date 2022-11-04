@@ -49,10 +49,10 @@
 // There is one process and 9 threads, each thread shares the process context with the other threads
 
 // 10.
-// There are 8 producer threads running ////////////////////////////////CHECK
+// There is 1 producer threads running 
 
 // 11.
-// There are 0 consumer threads running
+// There are 8 consumer threads running
 
 // 12.
 // The producer threads are waiting for an empty slot
@@ -61,7 +61,7 @@
 // The consumer threads are waiting for an item
 
 // 14.
-// The accepting
+// The accepting changed the state of the producer
 
 // 15.
 // The producers inserting an item into the buffer
@@ -87,6 +87,8 @@
 
 // 22.
 // Which one seems least complex to implement
+
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
