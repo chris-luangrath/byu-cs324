@@ -301,6 +301,7 @@ int main(int argc, char *argv[]) {
 					hints.ai_family = AF_INET;
 				}
 				close(sfd);
+				freeaddrinfo(result);
 				connect_socket(server,port_c,hints);
 				af = result->ai_family;
 				if (af == AF_INET) {
