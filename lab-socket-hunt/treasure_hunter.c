@@ -155,12 +155,27 @@ int main(int argc, char *argv[]) {
 					}
 				} else {
 					// ipv6addr.sin6_port = htons(par);
-					printf("the 6 one\n");
-					sleep(5);
-					ipv6addr_remote.sin6_port = htons(par);
-					if (sendto(sfd, &nonce, 4, 0, (struct sockaddr *) &ipv4addr_remote,
-						remote_addr_len) < 0) {
+					// printf("the 6 one\n");
+					// sleep(5);
+					// ipv6addr_remote.sin6_port = htons(par);
+					// if (sendto(sfd, &nonce, 4, 0, (struct sockaddr *) &ipv4addr_remote,
+					// 	remote_addr_len) < 0) {
+					// 	perror("sendto()");
+					// }
+					ipv6addr_remote.sin_port = par;
+					// printf("port:");
+					// print_bytes((unsigned char *) &par,2);
+					if (sendto(sfd, &nonce, 4, 0, 
+								// (struct sockaddr *) &remote_addr, remote_addr_len) < 0) {
+								(struct sockaddr *) &ipv6addr_remote, remote_addr_len) < 0) {
 						perror("sendto()");
+					}
+					// printf("sent\n");
+					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
+								(struct sockaddr *) &ipv6addr_remote, &remote_addr_len);
+					if (nread == -1) {
+						perror("read");
+						exit(EXIT_FAILURE);
 					}
 				}
 				// sleep(1);
