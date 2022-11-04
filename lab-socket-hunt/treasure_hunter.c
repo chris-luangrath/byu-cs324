@@ -307,8 +307,10 @@ int main(int argc, char *argv[]) {
 				af = result->ai_family;
 				if (af == AF_INET) {
 					ipv4addr_remote = *(struct sockaddr_in *)result->ai_addr;
+					remote_addr_len = sizeof(struct sockaddr_in);
 				} else {
 					ipv6addr_remote = *(struct sockaddr_in6 *)result->ai_addr;
+					remote_addr_len = sizeof(struct sockaddr_in6);
 				}
 				op = 1;
 				continue;
