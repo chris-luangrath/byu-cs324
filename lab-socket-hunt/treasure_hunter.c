@@ -313,7 +313,7 @@ int main(int argc, char *argv[]) {
 				} else {
 					ipv6addr_remote = *(struct sockaddr_in6 *)result->ai_addr;
 				}
-				op = 1;
+				// op = 1;
 				// continue;
 				break;
 		}
