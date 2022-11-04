@@ -263,15 +263,29 @@ int main(int argc, char *argv[]) {
 					printf("left the loop\n");
 				sum += 1;
 				nonce = htonl(sum);
-				if (sendto(sfd, &nonce, 4, 0, 
-							(struct sockaddr *) &ipv4addr_remote, remote_addr_len) < 0) {
-					perror("sendto()");
-				}
-				nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
-							(struct sockaddr *) &ipv4addr_remote, &remote_addr_len);
-				if (nread == -1) {
-					perror("read");
-					exit(EXIT_FAILURE);
+				
+				if (af == AF_INET) {
+					if (sendto(sfd, &nonce, 4, 0, 
+								(struct sockaddr *) &ipv4addr_remote, remote_addr_len) < 0) {
+						perror("sendto()");
+					}
+					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
+								(struct sockaddr *) &ipv4addr_remote, &remote_addr_len);
+					if (nread == -1) {
+						perror("read");
+						exit(EXIT_FAILURE);
+					}
+				} else {
+					if (sendto(sfd, &nonce, 4, 0, 
+								(struct sockaddr *) &ipv6addr_remote, remote_addr_len) < 0) {
+						perror("sendto()");
+					}
+					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
+								(struct sockaddr *) &ipv6addr_remote, &remote_addr_len);
+					if (nread == -1) {
+						perror("read");
+						exit(EXIT_FAILURE);
+					}
 				}
 
 				// Same as op-code 0, but instead of sending a nonce that is provided by the server, 
