@@ -246,8 +246,8 @@ int main(int argc, char *argv[]) {
 
 				for (int j = 0; j < m; j++){
 					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
-								(struct sockaddr *) &temp, &sizeof(struct sockaddr_in));
-								// (struct sockaddr *) &temp, &remote_addr_len);
+								// (struct sockaddr *) &temp, &sizeof(struct sockaddr_in));
+								(struct sockaddr *) &temp, &remote_addr_len);
 					if (nread == -1) {
 						perror("read");
 						exit(EXIT_FAILURE);
