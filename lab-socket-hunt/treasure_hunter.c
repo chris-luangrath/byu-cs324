@@ -39,7 +39,7 @@ struct addrinfo *result;
 struct addrinfo hints;
 
 int main(int argc, char *argv[]) {
-	int nread;
+	int nread = -1;
 	socklen_t remote_addr_len;
 
 	int af;
@@ -83,8 +83,6 @@ int main(int argc, char *argv[]) {
 
 	connect_socket(server,port_c,hints);
 	
-	size_t len = SEND_SIZE;
-
 	// found in the struct addrinfo from getaddrinfo()
 	af = result->ai_family;
 	if (af == AF_INET) {
@@ -226,8 +224,6 @@ int main(int argc, char *argv[]) {
 				unsigned int sum = 0;
 				struct sockaddr_in temp; // is the problem this temp not being sockaddr_in6?
 				struct sockaddr_in6 temp6; // is the problem this temp not being sockaddr_in6?
-				socklen_t temp_len;
-				temp_len = sizeof(struct sockaddr_in6);
 
 				for (int j = 0; j < m; j++){
 					if(af == AF_INET){
