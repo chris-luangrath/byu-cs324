@@ -340,8 +340,11 @@ int main(int argc, char *argv[]) {
 		// printf("i=%d\n",i);
 		// if (verbose)
 		// 	print_bytes(treasure,i);
-
-		memcpy(&op,&rec_buf[n+1], 1);
+		if(op == 4){
+			op = 1;
+		} else {
+			memcpy(&op,&rec_buf[n+1], 1);
+		}
 		if (verbose)
 			printf("op=%d\n",op);
 
