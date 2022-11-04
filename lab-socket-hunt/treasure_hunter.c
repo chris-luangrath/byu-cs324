@@ -160,7 +160,6 @@ int main(int argc, char *argv[]) {
 					// printf("port:");
 					print_bytes((unsigned char *) &par,2);
 					if (sendto(sfd, &nonce, 4, 0, 
-								// (struct sockaddr *) &remote_addr, remote_addr_len) < 0) {
 								(struct sockaddr *) &ipv6addr_remote, remote_addr_len) < 0) {
 						perror("sendto()");
 					}
@@ -242,11 +241,18 @@ int main(int argc, char *argv[]) {
 				if(verbose)
 					printf("m=%hu\n",m);
 				unsigned int sum = 0;
-				struct sockaddr_in temp;
+				struct sockaddr_in temp; // is the problem this temp not being sockaddr_in6?
+				struct sockaddr_in6 temp6; // is the problem this temp not being sockaddr_in6?
 
 				for (int j = 0; j < m; j++){
-					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
+					if(af == AF_INET){
+						nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
 								(struct sockaddr *) &temp, &remote_addr_len);
+					} else {
+						nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
+								(struct sockaddr *) &temp6, &remote_addr_len);
+					}
+					
 					if (nread == -1) {
 						perror("read");
 						exit(EXIT_FAILURE);
