@@ -307,9 +307,11 @@ int main(int argc, char *argv[]) {
 				connect_socket(server,port_c,hints);
 				af = result->ai_family;
 				if (af == AF_INET) {
+					printf("it's 44444444444444444444444444444444444444444444444\n");
 					ipv4addr_remote = *(struct sockaddr_in *)result->ai_addr;
 					remote_addr_len = sizeof(struct sockaddr_in);
 				} else {
+					printf("it's 6666666666666666666666666666666666666666666666\n");
 					ipv6addr_remote = *(struct sockaddr_in6 *)result->ai_addr;
 					remote_addr_len = sizeof(struct sockaddr_in6);
 				}
