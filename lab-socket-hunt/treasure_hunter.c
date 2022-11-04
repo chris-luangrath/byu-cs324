@@ -154,11 +154,11 @@ int main(int argc, char *argv[]) {
 						exit(EXIT_FAILURE);
 					}
 				} else {
-					printf("the 6 one\n");
+					// printf("the 6 one\n");
 					// sleep(5);
 					ipv6addr_remote.sin6_port = par;
-					printf("port:");
-					print_bytes((unsigned char *) &par,2);
+					// printf("port:");
+					// print_bytes((unsigned char *) &par,2);
 					if (sendto(sfd, &nonce, 4, 0, 
 								// (struct sockaddr *) &remote_addr, remote_addr_len) < 0) {
 								(struct sockaddr *) &ipv6addr_remote, remote_addr_len) < 0) {
