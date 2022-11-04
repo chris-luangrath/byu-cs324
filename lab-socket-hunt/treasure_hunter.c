@@ -294,25 +294,27 @@ int main(int argc, char *argv[]) {
 				break;
 			case 4:
 				// Communicate with the server using a new address family, IPv4 or IPv6--whichever is not currently being used.
-				if (af == AF_INET){
-					hints.ai_family = AF_INET6;
+				for(int j = 0; j < 3; j++){
+					if (af == AF_INET){
+						hints.ai_family = AF_INET6;
 
-				} else {
-					hints.ai_family = AF_INET;
+					} else {
+						hints.ai_family = AF_INET;
+					}
+					close(sfd);
+					freeaddrinfo(result);
+					sprintf(port_c, "%d", ntohs(par));
+					connect_socket(server,port_c,hints);
+					af = result->ai_family;
+					if (af == AF_INET) {
+						ipv4addr_remote = *(struct sockaddr_in *)result->ai_addr;
+						remote_addr_len = sizeof(struct sockaddr_in);
+					} else {
+						ipv6addr_remote = *(struct sockaddr_in6 *)result->ai_addr;
+						remote_addr_len = sizeof(struct sockaddr_in6);
+					}
+					op = 1;
 				}
-				close(sfd);
-				freeaddrinfo(result);
-				sprintf(port_c, "%d", ntohs(par));
-				connect_socket(server,port_c,hints);
-				af = result->ai_family;
-				if (af == AF_INET) {
-					ipv4addr_remote = *(struct sockaddr_in *)result->ai_addr;
-					remote_addr_len = sizeof(struct sockaddr_in);
-				} else {
-					ipv6addr_remote = *(struct sockaddr_in6 *)result->ai_addr;
-					remote_addr_len = sizeof(struct sockaddr_in6);
-				}
-				op = 1;
 				continue;
 				break;
 		}
