@@ -268,7 +268,7 @@ int main(int argc, char *argv[]) {
 							exit(EXIT_FAILURE);
 						}
 						if(verbose)
-							printf("port=%hu\n",temp6.sin_port);
+							printf("port=%hu\n",temp6.sin6_port);
 						sum += ntohs(temp.sin_port);
 						if(verbose)
 							printf("sum=%d\n",sum);
