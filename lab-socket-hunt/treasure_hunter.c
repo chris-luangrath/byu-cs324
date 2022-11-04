@@ -243,56 +243,58 @@ int main(int argc, char *argv[]) {
 				unsigned int sum = 0;
 				struct sockaddr_in temp; // is the problem this temp not being sockaddr_in6?
 				struct sockaddr_in6 temp6; // is the problem this temp not being sockaddr_in6?
+				socklen_t temp_len;
+				temp_len = sizeof(struct sockaddr_in6);
 
 				for (int j = 0; j < m; j++){
-					nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
-								// (struct sockaddr *) &temp, &sizeof(struct sockaddr_in));
-								(struct sockaddr *) &temp, &remote_addr_len);
-					if (nread == -1) {
-						perror("read");
-						exit(EXIT_FAILURE);
-					}
-					if(verbose)
-						printf("port=%hu\n",temp.sin_port);
-					sum += ntohs(temp.sin_port);
-					if(verbose)
-						printf("sum=%d\n",sum);
-
-					if(verbose)
-						printf("read\n");
-
-
-					// if(af == AF_INET){
-					// 	nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
-					// 			(struct sockaddr *) &temp, &remote_addr_len);
-					// 	if (nread == -1) {
-					// 		perror("read");
-					// 		exit(EXIT_FAILURE);
-					// 	}
-					// 	if(verbose)
-					// 		printf("port=%hu\n",temp.sin_port);
-					// 	sum += ntohs(temp.sin_port);
-					// 	if(verbose)
-					// 		printf("sum=%d\n",sum);
-
-					// 	if(verbose)
-					// 		printf("read\n");
-					// } else {
-					// 	nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
-					// 			(struct sockaddr *) &temp6, &remote_addr_len);
-					// 	if (nread == -1) {
-					// 		perror("read");
-					// 		exit(EXIT_FAILURE);
-					// 	}
-					// 	if(verbose)
-					// 		printf("port=%hu\n",temp6.sin6_port);
-					// 	sum += ntohs(temp.sin_port);
-					// 	if(verbose)
-					// 		printf("sum=%d\n",sum);
-
-					// 	if(verbose)
-					// 		printf("read\n");
+					// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
+					// 			// (struct sockaddr *) &temp, &sizeof(struct sockaddr_in));
+					// 			(struct sockaddr *) &temp, &temp_len);
+					// if (nread == -1) {
+					// 	perror("read");
+					// 	exit(EXIT_FAILURE);
 					// }
+					// if(verbose)
+					// 	printf("port=%hu\n",temp.sin_port);
+					// sum += ntohs(temp.sin_port);
+					// if(verbose)
+					// 	printf("sum=%d\n",sum);
+
+					// if(verbose)
+					// 	printf("read\n");
+
+
+					if(af == AF_INET){
+						nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
+								(struct sockaddr *) &temp, &remote_addr_len);
+						if (nread == -1) {
+							perror("read");
+							exit(EXIT_FAILURE);
+						}
+						if(verbose)
+							printf("port=%hu\n",temp.sin_port);
+						sum += ntohs(temp.sin_port);
+						if(verbose)
+							printf("sum=%d\n",sum);
+
+						if(verbose)
+							printf("read\n");
+					} else {
+						nread = recvfrom(sfd, rec_buf, REC_SIZE, 0, 
+								(struct sockaddr *) &temp6, &remote_addr_len);
+						if (nread == -1) {
+							perror("read");
+							exit(EXIT_FAILURE);
+						}
+						if(verbose)
+							printf("port=%hu\n",temp6.sin6_port);
+						sum += ntohs(temp6.sin6_port);
+						if(verbose)
+							printf("sum=%d\n",sum);
+
+						if(verbose)
+							printf("read\n");
+					}
 					
 					// if (nread == -1) {
 					// 	perror("read");
