@@ -93,7 +93,7 @@
 
 #define MAXLINE 1024
 
-int main(void){
+int main(int argc, char *argv[]){
     char *buf;
     char query[MAXLINE], content[MAXLINE];
     int n1=0, n2=0;
