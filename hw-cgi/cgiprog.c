@@ -110,7 +110,7 @@ int main(int argc, char *argv[]){
     // printf("\r\n");
 
     printf("%s",content);
-
+    fflush(stdout);
 
     // sprintf(content, "Content-type: text/plain\r\n");
     // sprintf(content, "Content-length: %d\r\n", (int)strlen(content));
