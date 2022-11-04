@@ -215,10 +215,11 @@ int main(int argc, char *argv[]) {
 						exit(EXIT_FAILURE);
 					}
 				} else {
-					printf("the 6 one\n");
+					// printf("the 6 one\n");
 					ipv6addr_local.sin6_family = AF_INET6; // IPv6 (AF_INET6)
 					ipv6addr_local.sin6_port = par; // specific port
-					ipv6addr_local.sin6_addr.s_addr = 0; // any/all local addresses
+					ipv6addr_local.sin6_addr.s6_addr = 0; // any/all local addresses
+					// ipv6addr_local.sin6_addr.s_addr = 0; // any/all local addresses
 					if (bind(sfd, (struct sockaddr *)&ipv6addr_local,
 							sizeof(struct sockaddr_in)) < 0) {
 						perror("bind()");
