@@ -28,7 +28,7 @@ int main()
 }
 
 int all_headers_received(char *request) {
-	printf("%s",request[strlen(request)-5]);
+	printf("%s",*request[strlen(request)-5]);
 	// if (request[-4])
 	return 0;
 }
