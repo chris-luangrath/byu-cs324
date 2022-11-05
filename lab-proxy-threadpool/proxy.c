@@ -17,7 +17,8 @@ void print_bytes(unsigned char *, int);
 int main()
 {
 	// test_parser();
-	char* test = "test\r\n\r\n";
+	char test = "test\r\n\r\n";
+	char * 
 	if (all_headers_received(test) == 1){
 		printf("yes\n");
 	} else {
@@ -28,7 +29,7 @@ int main()
 }
 
 int all_headers_received(char *request) {
-	printf("%s",request[strlen(request)-5]);
+	printf("%s",&request[strlen(request)-5]);
 	// if (request[-4])
 	return 0;
 }
