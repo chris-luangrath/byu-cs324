@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <string.h>
+
 
 /* Recommended max cache and object sizes */
 #define MAX_CACHE_SIZE 1049000
@@ -14,12 +16,20 @@ void print_bytes(unsigned char *, int);
 
 int main()
 {
-	test_parser();
+	// test_parser();
+	char* test = "test\r\n\r\n";
+	if (all_headers_received(test) == 1){
+		printf("yes\n");
+	} else {
+		printf("no\n");
+	}
 	printf("%s\n", user_agent_hdr);
 	return 0;
 }
 
 int all_headers_received(char *request) {
+	printf("%s",request[strlen(request)-5]);
+	// if (request[-4])
 	return 0;
 }
 
