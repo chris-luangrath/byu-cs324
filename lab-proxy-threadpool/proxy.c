@@ -18,7 +18,7 @@ int main()
 {
 	// test_parser();
 	char test = "test\r\n\r\n";
-	char * 
+	// char * 
 	if (all_headers_received(test) == 1){
 		printf("yes\n");
 	} else {
