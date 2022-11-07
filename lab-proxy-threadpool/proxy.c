@@ -17,7 +17,7 @@ void print_bytes(unsigned char *, int);
 int main()
 {
 	// test_parser();
-	char test[10] = "test\r\n\r\n";
+	char test[MAX_OBJECT_SIZE] = "yet another test\r\n\r\n";
 	char* p;
 	p = &test;
 	// *p = 
@@ -33,7 +33,7 @@ int main()
 
 int all_headers_received(char *request) {
 	// printf("%s",&request[strlen(request)-4]);
-	unsigned char string[12];
+	// unsigned char string[12];
 	// memcpy(&string,&request[-4])
 	// if (strcmp(request[-4],"\r\n\r\n") == 0){
 	if (strcmp(&request[strlen(request)-4],"\r\n\r\n") == 0){
