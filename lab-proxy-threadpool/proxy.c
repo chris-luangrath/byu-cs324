@@ -17,9 +17,12 @@ void print_bytes(unsigned char *, int);
 int main()
 {
 	// test_parser();
-	char test = "test\r\n\r\n";
+	char test[10] = "test\r\n\r\n";
+	char* p;
+	p = &test;
+	// *p = 
 	// char * 
-	if (all_headers_received(test) == 1){
+	if (all_headers_received(p) == 1){
 		printf("yes\n");
 	} else {
 		printf("no\n");
