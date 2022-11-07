@@ -32,8 +32,8 @@ int main()
 }
 
 int all_headers_received(char *request) {
-	printf("%s",&request[strlen(request)-5]);
-	// if (request[-4])
+	printf("%s",&request[strlen(request)-6]);
+	// if (request[-4] == "\r\n\r\n")
 	return 0;
 }
 
