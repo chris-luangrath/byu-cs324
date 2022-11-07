@@ -38,10 +38,10 @@ int all_headers_received(char *request) {
 	// if (strcmp(request[-4],"\r\n\r\n") == 0){
 	if (strcmp(&request[strlen(request)-4],"\r\n\r\n") == 0){
 		// printf("nice");
-		return 0;
+		return 1;
 	} else {
 		// printf("not nice");
-		return 1;
+		return 0;
 	}
 	// return 0;
 }
