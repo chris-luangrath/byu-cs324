@@ -33,7 +33,7 @@ int main()
 
 int all_headers_received(char *request) {
 	// printf("%s",&request[strlen(request)-4]);
-	if (request[-4] == "\r\n\r\n"){
+	if (strcmp(request[-4],"\r\n\r\n") == 0){
 		printf("nice");
 	} else {
 		printf("not nice");
