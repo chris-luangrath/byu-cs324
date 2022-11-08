@@ -58,7 +58,6 @@ char *hostname, char *port, char *path, char *headers) {
 	// char test[MAX_OBJECT_SIZE];
 	char* ret;
 	
-	printf("try\n");
 	int i = 0;
 	while(*request != ' '){
 		i++;
@@ -70,7 +69,9 @@ char *hostname, char *port, char *path, char *headers) {
 
 	// token = strtok_r(test,"\r\n",&test);
 	// token = strtok_r(request,"\r\n",&request);
+	printf("try\n");
 	ret = strstr(*request,"Host: ");
+	printf("try\n");
 	printf("ret = %s\n",ret);
 
 	// if(token == NULL){
