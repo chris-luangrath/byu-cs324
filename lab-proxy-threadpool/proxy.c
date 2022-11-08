@@ -54,18 +54,19 @@ char *hostname, char *port, char *path, char *headers) {
 	// char spacedelim[] = " ";
 	char rndelim[] = "\r\n";
 	char* token;
-	// char* test = request;
-	char test[MAX_OBJECT_SIZE];
+	char* test = request;
+	// char test[MAX_OBJECT_SIZE];
 	
 	printf("try\n");
 
-	// strtok_r(test,"\r\n",&test);
-	token = strtok_r(request,"\r\n",&request);
+	token = strtok_r(test,"\r\n",&test);
+	// token = strtok_r(request,"\r\n",&request);
+	// strstr
 
-	if(token == NULL){
-		printf("null");
-		fflush(stdout);
-	}
+	// if(token == NULL){
+	// 	printf("null");
+	// 	fflush(stdout);
+	// }
 
 	printf("try\n");
 
