@@ -58,11 +58,11 @@ char *hostname, char *port, char *path, char *headers) {
 	// char test[MAX_OBJECT_SIZE];
 	
 	printf("try\n");
-	int i = 1;
+	int i = 0;
 	while(*request != ' '){
 		printf("request[i]=%c\n",*request);
-		request++;
 		i++;
+		request++;
 		sleep(1);
 	}
 	memcpy(&method,&request,i);
