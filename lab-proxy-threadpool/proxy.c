@@ -52,7 +52,7 @@ char *hostname, char *port, char *path, char *headers) {
 	int i = 0;
 	int argindex = 0;
 	printf("try\n");
-	printf("%s\n",request[0]);
+	printf("%s\n",request);
 
 	// while(request[i] != "\r\n"){
 	// 	i++;
