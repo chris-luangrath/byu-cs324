@@ -59,8 +59,8 @@ char *hostname, char *port, char *path, char *headers) {
 	
 	printf("try\n");
 	int i = 1;
-	while(request != " "){
-		printf("request[i]=%c\n",request);
+	while(*request != " "){
+		printf("request[i]=%c\n",*request);
 		request++;
 		i++;
 	}
