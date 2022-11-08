@@ -73,7 +73,7 @@ char *hostname, char *port, char *path, char *headers) {
 	// token = strtok_r(request,"\r\n",&request);
 	printf("try\n");
 	// strstr(*request,"Host: ");
-	ret = strstr(*request,h);	
+	ret = strstr(request,h);	
 	// ret = strstr(*request,"Host: ");
 	printf("try\n");
 	printf("ret = %s\n",ret);
