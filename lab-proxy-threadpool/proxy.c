@@ -64,6 +64,7 @@ char *hostname, char *port, char *path, char *headers) {
 
 	if(token == NULL){
 		printf("null");
+		fflush(stdout);
 	}
 
 	printf("try\n");
