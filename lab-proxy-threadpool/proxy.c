@@ -51,8 +51,15 @@ int parse_request(char *request, char *method,
 char *hostname, char *port, char *path, char *headers) {
 	int i = 0;
 	int argindex = 0;
+	char spacedelim[] = " ";
+	char rndelim[] = "\r\n";
+	char* token;
 	printf("try\n");
-	printf("%s\n",request);
+
+	token = strtok_r(request,rndelim,&request);
+
+
+	printf("%s\n",token);
 
 	// while(request[i] != "\r\n"){
 	// 	i++;
