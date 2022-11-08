@@ -60,7 +60,7 @@ char *hostname, char *port, char *path, char *headers) {
 	printf("try\n");
 
 	// strtok_r(test,"\r\n",&test);
-	token = strtok_r(test,"\r\n",&test);
+	token = strtok_r(request,"\r\n",&request);
 
 	printf("try\n");
 
