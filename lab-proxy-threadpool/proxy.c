@@ -49,9 +49,9 @@ int all_headers_received(char *request) {
 
 int parse_request(char *request, char *method,
 char *hostname, char *port, char *path, char *headers) {
-	int i = 0;
-	int argindex = 0;
-	char spacedelim[] = " ";
+	// int i = 0;
+	// int argindex = 0;
+	// char spacedelim[] = " ";
 	char rndelim[] = "\r\n";
 	char* token;
 	printf("try\n");
