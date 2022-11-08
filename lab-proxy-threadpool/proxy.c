@@ -56,14 +56,13 @@ char *hostname, char *port, char *path, char *headers) {
 	// char* token;
 	// char* test = request;
 	// char test[MAX_OBJECT_SIZE];
+	char* ret;
 	
 	printf("try\n");
 	int i = 0;
 	while(*request != ' '){
-		printf("request[i]=%c\n",*request);
 		i++;
 		request++;
-		// sleep(1);
 	}
 	request -= i;
 	memcpy(method,request,i);
@@ -71,7 +70,8 @@ char *hostname, char *port, char *path, char *headers) {
 
 	// token = strtok_r(test,"\r\n",&test);
 	// token = strtok_r(request,"\r\n",&request);
-	// strstr
+	ret = strstr(*request,"Host: ");
+	printf("ret = %s\n",ret);
 
 	// if(token == NULL){
 	// 	printf("null");
