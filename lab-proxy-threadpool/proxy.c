@@ -66,7 +66,7 @@ char *hostname, char *port, char *path, char *headers) {
 		sleep(1);
 	}
 	memcpy(&method,&request,i);
-	printf("method=%s\n",method);
+	printf("method=%s\n",*method);
 
 	// token = strtok_r(test,"\r\n",&test);
 	// token = strtok_r(request,"\r\n",&request);
