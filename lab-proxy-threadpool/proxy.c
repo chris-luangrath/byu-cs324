@@ -62,6 +62,10 @@ char *hostname, char *port, char *path, char *headers) {
 	// strtok_r(test,"\r\n",&test);
 	token = strtok_r(request,"\r\n",&request);
 
+	if(token == NULL){
+		printf("null");
+	}
+
 	printf("try\n");
 
 	printf("%s\n",token);
