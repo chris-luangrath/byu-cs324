@@ -63,6 +63,7 @@ char *hostname, char *port, char *path, char *headers) {
 		printf("request[i]=%c\n",*request);
 		request++;
 		i++;
+		sleep(1);
 	}
 	memcpy(&method,&request,i);
 	printf("method=%s\n",method);
