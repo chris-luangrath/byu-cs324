@@ -16,17 +16,18 @@ void print_bytes(unsigned char *, int);
 
 int main()
 {
-	// test_parser();
-	char test[MAX_OBJECT_SIZE] = "yet another test\r\n\r\n";
-	char* p;
-	p = &test;
-	// *p = 
-	// char * 
-	if (all_headers_received(p) == 1){
-		printf("yes\n");
-	} else {
-		printf("no\n");
-	}
+	test_parser();
+	// char test[MAX_OBJECT_SIZE] = "yet another test\r\n\r\n";
+	// char* p;
+	// p = &test;
+	// // *p = 
+	// // char * 
+	// if (all_headers_received(p) == 1){
+	// 	printf("yes\n");
+	// } else {
+	// 	printf("no\n");
+	// }
+
 	printf("%s\n", user_agent_hdr);
 	return 0;
 }
@@ -47,7 +48,21 @@ int all_headers_received(char *request) {
 }
 
 int parse_request(char *request, char *method,
-		char *hostname, char *port, char *path, char *headers) {
+char *hostname, char *port, char *path, char *headers) {
+	int i = 0;
+	int argindex = 0;
+	printf("%s\n",request[0]);
+
+	// while(request[i] != "\r\n"){
+	// 	i++;
+	// }
+	// memcpy(&method,&request);	
+	// memcpy(&hostname,&request);
+	// memcpy(&port,&request);
+	// memcpy(&path,&request);
+	// memcpy(&headers,&request);
+
+
 	return 0;
 }
 
@@ -55,7 +70,7 @@ void test_parser() {
 	int i;
 	char method[16], hostname[64], port[8], path[64], headers[1024];
 
-       	char *reqs[] = {
+	char *reqs[] = {
 		"GET http://www.example.com/index.html HTTP/1.0\r\n"
 		"Host: www.example.com\r\n"
 		"User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0\r\n"
