@@ -56,7 +56,7 @@ char *hostname, char *port, char *path, char *headers) {
 	char* token;
 	printf("try\n");
 
-	token = strtok_r(request,rndelim,&request);
+	token = strtok_r(request,"\r\n",&request);
 
 	printf("try\n");
 
