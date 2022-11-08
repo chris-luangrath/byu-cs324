@@ -54,9 +54,10 @@ char *hostname, char *port, char *path, char *headers) {
 	// char spacedelim[] = " ";
 	char rndelim[] = "\r\n";
 	char* token;
+	char* test = request;
 	printf("try\n");
 
-	token = strtok_r(request,"\r\n",&request);
+	token = strtok_r(test,"\r\n",&test);
 
 	printf("try\n");
 
