@@ -51,7 +51,7 @@ int parse_request(char *request, char *method,
 char *hostname, char *port, char *path, char *headers) {
 	int i = 0;
 	int argindex = 0;
-	printf("%s\n",*request[0]);
+	printf("%s\n",request[0]);
 
 	// while(request[i] != "\r\n"){
 	// 	i++;
