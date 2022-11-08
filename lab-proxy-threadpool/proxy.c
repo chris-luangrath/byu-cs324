@@ -52,14 +52,21 @@ char *hostname, char *port, char *path, char *headers) {
 	// int i = 0;
 	// int argindex = 0;
 	// char spacedelim[] = " ";
-	char rndelim[] = "\r\n";
-	char* token;
-	char* test = request;
+	// char rndelim[] = "\r\n";
+	// char* token;
+	// char* test = request;
 	// char test[MAX_OBJECT_SIZE];
 	
 	printf("try\n");
+	int i = 1;
+	while(request[i-1] != " "){
+		printf("request[i]=%s\n",request[i-1]);
+		i++;
+	}
+	memccpy(&method,&request,i);
+	printf("method=%s\n",method);
 
-	token = strtok_r(test,"\r\n",&test);
+	// token = strtok_r(test,"\r\n",&test);
 	// token = strtok_r(request,"\r\n",&request);
 	// strstr
 
@@ -70,7 +77,7 @@ char *hostname, char *port, char *path, char *headers) {
 
 	printf("try\n");
 
-	printf("%s\n",token);
+	// printf("%s\n",token);
 
 	// while(request[i] != "\r\n"){
 	// 	i++;
