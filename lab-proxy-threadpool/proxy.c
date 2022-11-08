@@ -67,10 +67,13 @@ char *hostname, char *port, char *path, char *headers) {
 	memcpy(method,request,i);
 	printf("method=%s\n",method);
 
+	char h = "Host: ";
+
 	// token = strtok_r(test,"\r\n",&test);
 	// token = strtok_r(request,"\r\n",&request);
 	printf("try\n");
-	strstr(*request,"Host: ");
+	// strstr(*request,"Host: ");
+	ret = strstr(*request,h);	
 	// ret = strstr(*request,"Host: ");
 	printf("try\n");
 	printf("ret = %s\n",ret);
