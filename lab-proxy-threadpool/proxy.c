@@ -44,9 +44,9 @@ int all_headers_received(char *request) {
 
 int parse_request(char *request, char *method,
 char *hostname, char *port, char *path, char *headers) {
-	// if(!all_headers_received(request)){
-	// 	return 0;
-	// }
+	if(!all_headers_received(request)){
+		return 0;
+	}
 	char* ret;
 	char* defaultport = "0080";
 	char* h = "Host: ";
@@ -146,7 +146,7 @@ char *hostname, char *port, char *path, char *headers) {
 	if(path == NULL){
 		return 0;
 	}
-	printf("path=%s\n",path);
+	// printf("path=%s\n",path);
 	
 	//// Headers
 	// printf("headers\n");
