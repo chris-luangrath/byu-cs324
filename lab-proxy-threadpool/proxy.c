@@ -145,7 +145,7 @@ char *hostname, char *port, char *path, char *headers) {
 		ret++;
 	}
 	ret -= i;
-	i -= 2;
+	i -= 1;
 	memcpy(path,ret,i);
 	printf("path=%s\n",path);
 	sleep(5);
