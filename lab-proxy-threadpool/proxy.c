@@ -23,6 +23,13 @@ int main()
 	// test_parser();
 
 	printf("%s\n", user_agent_hdr);
+	int sfd = 0;
+	sfd = open_sfd();
+	while(1){
+		accept();
+		handle_client();
+	}
+
 	return 0;
 }
 
