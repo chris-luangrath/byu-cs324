@@ -38,10 +38,10 @@ int all_headers_received(char *request) {
 	// memcpy(&string,&request[-4])
 	// if (strcmp(request[-4],"\r\n\r\n") == 0){
 	if (strcmp(&request[strlen(request)-4],"\r\n\r\n") == 0){
-		// printf("nice");
+		printf("nice");
 		return 1;
 	} else {
-		// printf("not nice");
+		printf("not nice");
 		return 0;
 	}
 	// return 0;
@@ -49,7 +49,7 @@ int all_headers_received(char *request) {
 
 int parse_request(char *request, char *method,
 char *hostname, char *port, char *path, char *headers) {
-	if(!all_headers_received(request)){
+	if(all_headers_received(request)){
 		return 0;
 	}
 	// int i = 0;
