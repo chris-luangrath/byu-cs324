@@ -154,34 +154,13 @@ char *hostname, char *port, char *path, char *headers) {
 	ret = strstr(request,"\r\n");
 	ret += 2;
 	// printf("headers=%s\n",ret);
-
-
 	// sleep(5);
 
+	if(method == NULL || hostname == NULL || port == NULL || path == NULL || headers == NULL){
+		return 0;
+	}
 
-	// printf("try\n");
-	// printf("ret=%s\n",ret);
-
-	// if(token == NULL){
-	// 	printf("null");
-	// 	fflush(stdout);
-	// }
-
-	// printf("try end\n");
-
-	// printf("%s\n",token);
-
-	// while(request[i] != "\r\n"){
-	// 	i++;
-	// }
-	// memcpy(&method,&request);	
-	// memcpy(&hostname,&request);
-	// memcpy(&port,&request);
-	// memcpy(&path,&request);
-	// memcpy(&headers,&request);
-
-
-	return 0;
+	return 1;
 }
 
 void test_parser() {
