@@ -135,6 +135,7 @@ char *hostname, char *port, char *path, char *headers) {
 	// printf("to path=%s\n",ret);
 	i = 0;
 	while(*ret != ' '){
+		printf("pat=%c\n",*ret);
 		i++;
 		ret++;
 	}
