@@ -67,7 +67,7 @@ char *hostname, char *port, char *path, char *headers) {
 	memset(headers,0,1024);
 
 	//// Method
-	printf("method\n");
+	// printf("method\n");
 	int i = 0;
 	int j = 0;
 	// while(*request != ' '){
@@ -82,11 +82,14 @@ char *hostname, char *port, char *path, char *headers) {
 	}
 	ret -= i;
 	memcpy(method,ret,i);
+	if(method == NULL){
+		return 0;
+	}
 	// printf("method=%s\n",method);
 
 
 	//// Host
-	printf("host\n");
+	// printf("host\n");
 	ret = strstr(request,h);
 	// printf("found host=%s\n",ret);
 	// i = 0;
@@ -130,6 +133,9 @@ char *hostname, char *port, char *path, char *headers) {
 
 	ret -= i;
 	memcpy(hostname,ret,i);
+	if(hostname == NULL){
+		return 0;
+	}
 	// printf("hostname=%s\n",hostname);
 
 
@@ -153,19 +159,25 @@ char *hostname, char *port, char *path, char *headers) {
 	// i -= 1;
 	// printf("path=%s\n",path);
 	memcpy(path,ret,i);
+	if(path == NULL){
+		return 0;
+	}
 	// printf("path=%s\n",path);
 	
 	//// Headers
 	ret = strstr(request,"\r\n");
 	ret += 2;
 	memcpy(headers,ret,strlen(ret));
+	if(headers == NULL){
+		return 0;
+	}
 
 	// printf("headers=%s\n",headers);
 	// sleep(5);
 
-	if(method == NULL || hostname == NULL || port == NULL || path == NULL || headers == NULL){
-		return 0;
-	}
+	// if(method == NULL || hostname == NULL || port == NULL || path == NULL || headers == NULL){
+	// 	return 0;
+	// }
 
 	return 1;
 }
