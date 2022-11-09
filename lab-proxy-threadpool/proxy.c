@@ -137,8 +137,10 @@ char *hostname, char *port, char *path, char *headers) {
 	//// Path
 	ret = strstr(request,hostname);
 	ret += strlen(hostname);
+	ret++;
 	if(newport){
-		ret += strlen(port) + 1;
+		ret += strlen(port);
+		// ret += strlen(port) + 1;
 	}
 	// printf("to path=%s\n",ret);
 	i = 0;
