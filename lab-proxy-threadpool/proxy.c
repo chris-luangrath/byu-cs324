@@ -95,7 +95,7 @@ char *hostname, char *port, char *path, char *headers) {
 		printf("skipping host=%c\n",*ret);
 		ret++;
 	}
-	sleep(1);
+	// sleep(1);
 	ret++;
 	printf("host skipped=%s\n",ret);
 
