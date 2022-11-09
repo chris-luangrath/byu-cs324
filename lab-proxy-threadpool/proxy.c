@@ -24,13 +24,20 @@ void print_bytes(unsigned char *, int);
 
 int main(int argc, char* argv[])
 {
+	struct sockaddr_storage remote_addr;
+	socklen_t remote_addr_len;
+	remote_addr_len = sizeof(struct sockaddr_storage);
 	// test_parser();
 
 	printf("%s\n", user_agent_hdr);
 	int sfd = 0;
 	sfd = open_sfd(argv[1]);
 	while(1){
-		accept(sfd,);
+		// accept(sfd,&remote_addr,&remote_addr_len);
+		if ((sfd = accept(sfd, &remote_addr, &remote_addr_len)) < 0) {
+			perror("Could not accept");	
+			exit(EXIT_FAILURE);
+		}
 		handle_client();
 	}
 
@@ -160,6 +167,7 @@ char *hostname, char *port, char *path, char *headers) {
 int open_sfd(char* hostname, char* port) {
 	struct addrinfo *result;
 	struct addrinfo hints;
+	struct sockaddr_in ipv4addr;
 	struct sockaddr *local_addr;
 	socklen_t local_addr_len;
 	int optval = 1;
@@ -191,7 +199,8 @@ int open_sfd(char* hostname, char* port) {
 				result->ai_protocol);
 
 	setsockopt(sfd, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
-
+	
+	int address_family = AF_INET;
 	if (address_family == AF_INET) {
 		ipv4addr.sin_family = address_family;
 		ipv4addr.sin_addr.s_addr = INADDR_ANY; // listen on any/all IPv4 addresses
