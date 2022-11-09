@@ -85,7 +85,7 @@ char *hostname, char *port, char *path, char *headers) {
 		printf("skipping host=%c\n",*ret);
 		ret++;
 	}
-	sleep(1);
+	// sleep(1);
 	ret++;
 	printf("host skipped=%c\n",*ret);
 
@@ -103,7 +103,8 @@ char *hostname, char *port, char *path, char *headers) {
 		ret -= j;
 		memcpy(port,ret,j);
 	} else {
-		memcpy(port,"0080",4);
+		// memcpy(port,"0080",4);
+		strcpy(port,"0080");
 		// *port = "0080";
 	}
 	printf("port=%s\n",port);
