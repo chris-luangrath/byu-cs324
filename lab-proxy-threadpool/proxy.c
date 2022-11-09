@@ -124,7 +124,7 @@ char *hostname, char *port, char *path, char *headers) {
 
 	//// Path
 	ret = strstr(request,hostname);
-	ret += sizeof(hostname);
+	ret += strlen(hostname); 
 	printf("to path=%s\n",ret);
 	sleep(5);
 
