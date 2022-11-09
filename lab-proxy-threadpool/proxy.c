@@ -60,8 +60,6 @@ char *hostname, char *port, char *path, char *headers) {
 	char* ret;
 	char* defaultport = "0080";
 	char* h = "Host: ";
-	char space = ' ';
-	char space2 = ' ';
 	int newport = 1;
 	
 	// memcpy(method,request,i);
@@ -82,25 +80,25 @@ char *hostname, char *port, char *path, char *headers) {
 	}
 	ret -= i;
 	memcpy(method,ret,i);
-	printf("method=%s\n",method);
+	// printf("method=%s\n",method);
 
 
 	//// Host
 	// char h[] = "Host: ";
 	// char test[] = "Host: awefjawpeoifapwehf";
 	
-	printf("try\n");
+	// printf("try\n");
 	ret = strstr(request,h);
-	printf("found host=%s\n",ret);
+	// printf("found host=%s\n",ret);
 	// i = 0;
 	// i++;
 	while(*ret != ' '){
-		printf("skipping host=%c\n",*ret);
+		// printf("skipping host=%c\n",*ret);
 		ret++;
 	}
 	// sleep(1);
 	ret++;
-	printf("host skipped=%s\n",ret);
+	// printf("host skipped=%s\n",ret);
 
 	i = 0;
 	while(*ret != '\r' && *ret != ':'){
@@ -126,11 +124,11 @@ char *hostname, char *port, char *path, char *headers) {
 		strcpy(port,defaultport);
 		// *port = "0080";
 	}
-	printf("port=%s\n",port);
+	// printf("port=%s\n",port);
 
 	ret -= i;
 	memcpy(hostname,ret,i);
-	printf("hostname=%s\n",hostname);
+	// printf("hostname=%s\n",hostname);
 
 
 	//// Path
@@ -142,23 +140,23 @@ char *hostname, char *port, char *path, char *headers) {
 	// printf("to path=%s\n",ret);
 	i = 0;
 	while(*ret != ' '){
-		printf("pat=%c\n",*ret);
+		// printf("pat=%c\n",*ret);
 		i++;
 		ret++;
 	}
 	ret -= i;
 	// i -= 1;
-	printf("path=%s\n",path);
+	// printf("path=%s\n",path);
 	memcpy(path,ret,i);
-	printf("path=%s\n",path);
+	// printf("path=%s\n",path);
 	
 	//// Headers
 	ret = strstr(request,"\r\n");
 	ret += 2;
-	printf("headers=%s\n",ret);
+	// printf("headers=%s\n",ret);
 
 
-	sleep(5);
+	// sleep(5);
 
 
 	// printf("try\n");
