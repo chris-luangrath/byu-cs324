@@ -97,7 +97,7 @@ char *hostname, char *port, char *path, char *headers) {
 	}
 	if(*ret == ':'){
 		j = 0;
-		while(*ret != ' '){
+		while(*ret != '\r'){
 			j++;
 			ret++;
 		}
