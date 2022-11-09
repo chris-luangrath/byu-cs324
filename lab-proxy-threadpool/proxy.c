@@ -66,12 +66,19 @@ char *hostname, char *port, char *path, char *headers) {
 	//// Method
 	int i = 0;
 	int j = 0;
-	while(*request != ' '){
+	// while(*request != ' '){
+	// 	i++;
+	// 	request++;
+	// }
+	// request -= i;
+	// memcpy(method,request,i);
+	ret = request;
+	while(*ret != ' '){
 		i++;
-		request++;
+		ret++;
 	}
-	request -= i;
-	memcpy(method,request,i);
+	ret -= i;
+	memcpy(method,ret,i);
 	printf("method=%s\n",method);
 
 
