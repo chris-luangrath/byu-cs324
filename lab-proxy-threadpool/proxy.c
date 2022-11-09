@@ -111,6 +111,7 @@ char *hostname, char *port, char *path, char *headers) {
 		// sleep(1);
 	}
 	if(*ret == ':'){
+		printf("we hit it!\n");
 		j = 0;
 		while(*ret != '\r'){
 			j++;
