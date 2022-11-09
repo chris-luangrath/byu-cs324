@@ -81,23 +81,23 @@ char *hostname, char *port, char *path, char *headers) {
 	
 	printf("try\n");
 	ret = strstr(request,h);
-	printf("found host=%s\n",ret);
+	// printf("found host=%s\n",ret);
 	// i = 0;
 	// i++;
 	while(*ret != ' '){
-		printf("skipping host=%c\n",*ret);
+		// printf("skipping host=%c\n",*ret);
 		ret++;
 	}
 	// sleep(1);
 	ret++;
-	printf("host skipped=%c\n",*ret);
+	printf("host skipped=%s\n",*ret);
 
 	i = 0;
 	while(*ret != '\r' && *ret != ':'){
-		printf("c=%c\n",*ret);
-		printf("d=%d\n",*ret);
-		printf("space=%d\n",space);
-		printf("space2=%d\n",space2);
+		// printf("c=%c\n",*ret);
+		// printf("d=%d\n",*ret);
+		// printf("space=%d\n",space);
+		// printf("space2=%d\n",space2);
 		ret++;
 		i++;
 		// sleep(1);
