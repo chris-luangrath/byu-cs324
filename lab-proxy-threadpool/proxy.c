@@ -33,10 +33,6 @@ int main()
 }
 
 int all_headers_received(char *request) {
-	// printf("%s",&request[strlen(request)-4]);
-	// unsigned char string[12];
-	// memcpy(&string,&request[-4])
-	// if (strcmp(request[-4],"\r\n\r\n") == 0){
 	if (strcmp(&request[strlen(request)-4],"\r\n\r\n") == 0){
 		printf("nice");
 		return 1;
