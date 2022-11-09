@@ -80,8 +80,8 @@ char *hostname, char *port, char *path, char *headers) {
 	printf("ret=%s\n",ret);
 	// i = 0;
 	// i++;
-	while(*ret != ' '){
-		printf("ret=%c",ret);
+	while(ret != ' '){
+		printf("ret=%c",*ret);
 		ret++;
 	}
 	request++;
