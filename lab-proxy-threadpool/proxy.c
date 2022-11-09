@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
 
 	printf("%s\n", user_agent_hdr);
 	int sfd = 0;
-	sfd = open_sfd("localhost", argv[1]);
+	sfd = open_sfd("loclhost", argv[1]);
 	while(1){
 		// accept(sfd,&remote_addr,&remote_addr_len);
 		if ((sfd = accept(sfd, &remote_addr, &remote_addr_len)) < 0) {
