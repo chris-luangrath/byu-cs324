@@ -177,15 +177,15 @@ void test_parser() {
 	memset(headers,0,1024);
 
 	char *reqs[] = {
-		// "GET http://www.example.com/index.html HTTP/1.0\r\n"
-		// "Host: www.example.com\r\n"
-		// "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0\r\n"
-		// "Accept-Language: en-US,en;q=0.5\r\n\r\n",
+		"GET http://www.example.com/index.html HTTP/1.0\r\n"
+		"Host: www.example.com\r\n"
+		"User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0\r\n"
+		"Accept-Language: en-US,en;q=0.5\r\n\r\n",
 
-		// "GET http://www.example.com:8080/index.html?foo=1&bar=2 HTTP/1.0\r\n"
-		// "Host: www.example.com:8080\r\n"
-		// "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0\r\n"
-		// "Accept-Language: en-US,en;q=0.5\r\n\r\n",
+		"GET http://www.example.com:8080/index.html?foo=1&bar=2 HTTP/1.0\r\n"
+		"Host: www.example.com:8080\r\n"
+		"User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0\r\n"
+		"Accept-Language: en-US,en;q=0.5\r\n\r\n",
 
 		"GET http://localhost:1234/home.html HTTP/1.0\r\n"
 		"Host: localhost:1234\r\n"
