@@ -93,6 +93,9 @@ char *hostname, char *port, char *path, char *headers) {
 		ret++;
 		i++;
 	}
+	ret -= i;
+	memcpy(hostname,ret,i);
+	printf("hostname=%s\n",hostname);
 	sleep(5);
 	printf("try\n");
 	printf("ret=%s\n",ret);
