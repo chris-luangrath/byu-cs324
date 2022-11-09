@@ -91,7 +91,7 @@ char *hostname, char *port, char *path, char *headers) {
 	printf("host skipped=%c\n",*ret);
 
 	i = 0;
-	while(*ret != ' ' || *ret != ':'){
+	while(*ret != ' ' && *ret != ':'){
 		printf("%c\n",*ret);
 		ret++;
 		i++;
