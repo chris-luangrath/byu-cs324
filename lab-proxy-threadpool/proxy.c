@@ -92,8 +92,8 @@ char *hostname, char *port, char *path, char *headers) {
 		ret--;
 	} else {
 		newport = 0;
-		// strcpy(port,"0080");
-		strcpy(port,defaultport);
+		strcpy(port,"0080");
+		// strcpy(port,defaultport);
 	}
 	// printf("port=%s\n",port);
 
