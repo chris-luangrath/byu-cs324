@@ -228,26 +228,30 @@ void handle_client(int sfd){
 
 
 	int i = 0;
-	while((nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
-							(struct sockaddr *) &remote_addr, &remote_addr_len)) != 0){
+	int headers_recieved = 0;
+	while(!headers_recieved){
+		nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
+							(struct sockaddr *) &remote_addr, &remote_addr_len)
 		if (nread == -1) {
 			perror("read");
 			exit(EXIT_FAILURE);
 		}
 		memcpy(&request,&rec_buf,nread);
 		i += nread;
-	}
-	if(all_headers_received(*request)){
-		if (parse_request(*request, method, hostname, port, path, headers)) {
-			printf("METHOD: %s\n", method);
-			printf("HOSTNAME: %s\n", hostname);
-			printf("PORT: %s\n", port);
-			printf("PATH: %s\n", path); // I ADDED THIS ONE. IT WASNT HERE BEFORE
-			printf("HEADERS: %s\n", headers);
-		} else {
-			printf("REQUEST INCOMPLETE\n");
-			exit(1);
+		if(all_headers_received(*request)){
+			headers_recieved = 1;
 		}
+	}
+
+	if (parse_request(*request, method, hostname, port, path, headers)) {
+		printf("METHOD: %s\n", method);
+		printf("HOSTNAME: %s\n", hostname);
+		printf("PORT: %s\n", port);
+		printf("PATH: %s\n", path); // I ADDED THIS ONE. IT WASNT HERE BEFORE
+		printf("HEADERS: %s\n", headers);
+	} else {
+		printf("REQUEST INCOMPLETE\n");
+		exit(1);
 	}
 	// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 	// 						(struct sockaddr *) &remote_addr, &remote_addr_len);
