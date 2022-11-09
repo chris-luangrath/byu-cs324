@@ -112,6 +112,7 @@ char *hostname, char *port, char *path, char *headers) {
 	}
 	if(*ret == ':'){
 		printf("we hit it!\n");
+		ret++;
 		j = 0;
 		while(*ret != '\r'){
 			j++;
@@ -119,6 +120,7 @@ char *hostname, char *port, char *path, char *headers) {
 		}
 		ret -= j;
 		memcpy(port,ret,j);
+		ret--;
 	} else {
 		newport = 0;
 		// memcpy(port,"0080",4);
