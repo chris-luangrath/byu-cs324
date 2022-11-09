@@ -77,14 +77,14 @@ char *hostname, char *port, char *path, char *headers) {
 	
 	printf("try\n");
 	ret = strstr(request,h);
-	printf("ret=%s\n",ret);
+	printf("found host=%s\n",ret);
 	// i = 0;
 	// i++;
 	while(ret != ' '){
-		printf("ret=%c",*ret);
+		printf("skipping host=%c",*ret);
 		ret++;
-		sleep(1);
 	}
+	sleep(1);
 	request++;
 	i = 0;
 	while(*request != ' ' || *request != ':'){
