@@ -168,6 +168,7 @@ char *hostname, char *port, char *path, char *headers) {
 	// printf("path=%s\n",path);
 	
 	//// Headers
+	printf("headers\n");
 	ret = strstr(request,"\r\n");
 	ret += 2;
 	memcpy(headers,ret,strlen(ret));
