@@ -1,12 +1,16 @@
 #include <stdio.h>
 #include <string.h>
-
+#include <sys/socket.h>
 
 /* Recommended max cache and object sizes */
 #define MAX_CACHE_SIZE 1049000
 #define MAX_OBJECT_SIZE 102400
 
+#define REC_SIZE 1024
+#define REQUEST_SIZE 512
+
 static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0";
+
 
 int all_headers_received(char *);
 int parse_request(char *, char *, char *, char *, char *, char *);
@@ -16,7 +20,7 @@ void print_bytes(unsigned char *, int);
 
 int main()
 {
-	test_parser();
+	// test_parser();
 
 	printf("%s\n", user_agent_hdr);
 	return 0;
@@ -38,7 +42,6 @@ char *hostname, char *port, char *path, char *headers) {
 		return 0;
 	}
 	char* ret;
-	char* defaultport = "0080";
 	char* h = "Host: ";
 	int newport = 1;
 
@@ -139,11 +142,121 @@ char *hostname, char *port, char *path, char *headers) {
 
 	// printf("headers=%s\n",headers);
 
-	// if(method == NULL || hostname == NULL || port == NULL || path == NULL || headers == NULL){
-	// 	return 0;
-	// }
-
 	return 1;
+}
+
+// int open_sfd() {
+int open_sfd(char* hostname, char* port) {
+	struct addrinfo *result;
+	struct addrinfo hints;
+	struct sockaddr *local_addr;
+	socklen_t local_addr_len;
+	int optval = 1;
+	int sfd = 0;
+
+
+	memset(&hints, 0, sizeof(struct addrinfo));
+	hints.ai_family = AF_INET;    /* Allow IPv4, IPv6, or both, depending on
+				    what was specified on the command line. */
+	hints.ai_socktype = SOCK_STREAM; /* Datagram socket */
+	hints.ai_flags = 0;
+	hints.ai_protocol = 0;  /* Any protocol */
+
+	int s = getaddrinfo(hostname, port, &hints, &result);
+	if (s != 0) {
+		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
+		exit(EXIT_FAILURE);
+	}
+	// printf("hey1\n");
+
+	if (result == NULL) {   /* No address succeeded */
+		fprintf(stderr, "Could not connect\n");
+		exit(EXIT_FAILURE);
+	}
+	// printf("hey1\n");
+
+	// pre-socket
+	sfd = socket(result->ai_family, result->ai_socktype,
+				result->ai_protocol);
+
+	setsockopt(sfd, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
+
+	if (address_family == AF_INET) {
+		ipv4addr.sin_family = address_family;
+		ipv4addr.sin_addr.s_addr = INADDR_ANY; // listen on any/all IPv4 addresses
+		ipv4addr.sin_port = htons(port);       // specify port explicitly, in network byte order
+
+		// Assign local_addr and local_addr_len to ipv4addr
+		local_addr = (struct sockaddr *)&ipv4addr;
+		local_addr_len = sizeof(ipv4addr);
+	} 
+	// else { // address_family == AF_INET6
+	// 	ipv6addr.sin6_family = address_family;
+	// 	ipv6addr.sin6_addr = in6addr_any;     // listen on any/all IPv6 addresses
+	// 	ipv6addr.sin6_port = htons(port);     // specify port explicitly, in network byte order
+
+	// 	// Assign local_addr and local_addr_len to ipv6addr
+	// 	local_addr = (struct sockaddr *)&ipv6addr;
+	// 	local_addr_len = sizeof(ipv6addr);
+	// }
+	
+	if (bind(sfd, local_addr, local_addr_len) < 0) {
+		perror("Could not bind");
+		exit(EXIT_FAILURE);
+	}
+
+	return sfd;
+}
+
+void handle_client(int sfd){
+	int nread = 0;
+	unsigned char rec_buf[REC_SIZE];
+	bzero(rec_buf,REC_SIZE);
+	socklen_t remote_addr_len;
+	struct sockaddr_storage remote_addr; // should I be using sockaddr_in?
+	remote_addr_len = sizeof(struct sockaddr_storage);
+
+	char request[REQUEST_SIZE];
+	bzero(request,REQUEST_SIZE);
+
+	char method[16], hostname[64], port[8], path[64], headers[1024];
+	memset(method,0,16);
+	memset(hostname,0,64);
+	memset(port,0,8);
+	memset(path,0,64);
+	memset(headers,0,1024);
+
+
+	int i = 0;
+	while((nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
+							(struct sockaddr *) &remote_addr, &remote_addr_len)) != 0){
+		if (nread == -1) {
+			perror("read");
+			exit(EXIT_FAILURE);
+		}
+		memcpy(&request,&rec_buf,nread);
+		i += nread;
+	}
+	if(all_headers_received(*request)){
+		if (parse_request(*request, method, hostname, port, path, headers)) {
+			printf("METHOD: %s\n", method);
+			printf("HOSTNAME: %s\n", hostname);
+			printf("PORT: %s\n", port);
+			printf("PATH: %s\n", path); // I ADDED THIS ONE. IT WASNT HERE BEFORE
+			printf("HEADERS: %s\n", headers);
+		} else {
+			printf("REQUEST INCOMPLETE\n");
+			exit(1);
+		}
+	}
+	// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
+	// 						(struct sockaddr *) &remote_addr, &remote_addr_len);
+	
+
+				
+
+
+
 }
 
 void test_parser() {
