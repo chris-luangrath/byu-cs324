@@ -205,7 +205,6 @@ void test_parser() {
 			printf("PORT: %s\n", port);
 			printf("PATH: %s\n", path); // I ADDED THIS ONE. IT WASNT HERE BEFORE
 			printf("HEADERS: %s\n", headers);
-			sleep(5);
 		} else {
 			printf("REQUEST INCOMPLETE\n");
 		}
