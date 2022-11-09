@@ -61,6 +61,7 @@ char *hostname, char *port, char *path, char *headers) {
 	char* h = "Host: ";
 	char space = ' ';
 	char space2 = ' ';
+	int newport = 1;
 	
 
 	//// Method
@@ -118,6 +119,7 @@ char *hostname, char *port, char *path, char *headers) {
 		ret -= j;
 		memcpy(port,ret,j);
 	} else {
+		newport = 0;
 		// memcpy(port,"0080",4);
 		strcpy(port,defaultport);
 		// *port = "0080";
@@ -132,8 +134,11 @@ char *hostname, char *port, char *path, char *headers) {
 	//// Path
 	ret = strstr(request,hostname);
 	ret += strlen(hostname);
+	if(newport){
+		ret += strlen(port) + 1;
+	}
 	// printf("to path=%s\n",ret);
-	i = 0;
+	i = -1;
 	while(*ret != ' '){
 		printf("pat=%c\n",*ret);
 		i++;
