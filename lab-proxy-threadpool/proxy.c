@@ -61,6 +61,7 @@ char *hostname, char *port, char *path, char *headers) {
 
 	// Method
 	int i = 0;
+	int j = 0;
 	while(*request != ' '){
 		i++;
 		request++;
@@ -93,6 +94,19 @@ char *hostname, char *port, char *path, char *headers) {
 		ret++;
 		i++;
 	}
+	if(*ret == ':'){
+		j = 0;
+		while(*ret != ' '){
+			j++;
+			ret++;
+		}
+		ret -= j;
+		memcpy(port,ret,j);
+	} else {
+		port = 80;
+	}
+	printf("port=%s\n",port);
+
 	ret -= i;
 	memcpy(hostname,ret,i);
 	printf("hostname=%s\n",hostname);
