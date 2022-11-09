@@ -49,6 +49,9 @@ int all_headers_received(char *request) {
 
 int parse_request(char *request, char *method,
 char *hostname, char *port, char *path, char *headers) {
+	if(!all_headers_received(request)){
+		return 0;
+	}
 	// int i = 0;
 	// int argindex = 0;
 	// char spacedelim[] = " ";
