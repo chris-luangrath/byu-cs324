@@ -34,13 +34,12 @@ int main()
 
 int all_headers_received(char *request) {
 	if (strcmp(&request[strlen(request)-4],"\r\n\r\n") == 0){
-		printf("nice");
+		printf("nice\n");
 		return 1;
 	} else {
-		printf("not nice");
+		printf("not nice\n");
 		return 0;
 	}
-	// return 0;
 }
 
 int parse_request(char *request, char *method,
@@ -48,14 +47,6 @@ char *hostname, char *port, char *path, char *headers) {
 	if(!all_headers_received(request)){
 		return 0;
 	}
-	// int i = 0;
-	// int argindex = 0;
-	// char spacedelim[] = " ";
-	// char rndelim[] = "\r\n";
-	// char* token;
-	// char* test = request;
-	// char test[MAX_OBJECT_SIZE];
-	// bzero(*path,sizeof(*path));
 	char* ret;
 	char* defaultport = "0080";
 	char* h = "Host: ";
@@ -69,11 +60,7 @@ char *hostname, char *port, char *path, char *headers) {
 	// printf("method\n");
 	int i = 0;
 	int j = 0;
-	// while(*request != ' '){
-	// 	i++;
-	// 	request++;
-	// }
-	// request -= i;
+	
 	ret = request;
 	while(*ret != ' '){
 		i++;
@@ -90,9 +77,7 @@ char *hostname, char *port, char *path, char *headers) {
 	//// Host
 	// printf("host\n");
 	ret = strstr(request,h);
-	// printf("found host=%s\n",ret);
-	// i = 0;
-	// i++;
+	
 	while(*ret != ' '){
 		// printf("skipping host=%c\n",*ret);
 		ret++;
@@ -187,15 +172,15 @@ void test_parser() {
 	char method[16], hostname[64], port[8], path[64], headers[1024];
 
 	char *reqs[] = {
-		"GET http://www.example.com/index.html HTTP/1.0\r\n"
-		"Host: www.example.com\r\n"
-		"User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0\r\n"
-		"Accept-Language: en-US,en;q=0.5\r\n\r\n",
+		// "GET http://www.example.com/index.html HTTP/1.0\r\n"
+		// "Host: www.example.com\r\n"
+		// "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0\r\n"
+		// "Accept-Language: en-US,en;q=0.5\r\n\r\n",
 
-		"GET http://www.example.com:8080/index.html?foo=1&bar=2 HTTP/1.0\r\n"
-		"Host: www.example.com:8080\r\n"
-		"User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0\r\n"
-		"Accept-Language: en-US,en;q=0.5\r\n\r\n",
+		// "GET http://www.example.com:8080/index.html?foo=1&bar=2 HTTP/1.0\r\n"
+		// "Host: www.example.com:8080\r\n"
+		// "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0\r\n"
+		// "Accept-Language: en-US,en;q=0.5\r\n\r\n",
 
 		"GET http://localhost:1234/home.html HTTP/1.0\r\n"
 		"Host: localhost:1234\r\n"
