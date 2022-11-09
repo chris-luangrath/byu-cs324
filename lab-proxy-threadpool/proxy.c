@@ -64,6 +64,7 @@ char *hostname, char *port, char *path, char *headers) {
 	
 	// memcpy(method,request,i);
 	memset(path,0,64); // SHOULD I DO THIS FOR THE OTHER STUFF??????
+	memset(headers,0,1024);
 
 	//// Method
 	int i = 0;
@@ -139,7 +140,7 @@ char *hostname, char *port, char *path, char *headers) {
 	ret += strlen(hostname);
 	// ret++;
 	if(newport){
-		ret += strlen(port);
+		ret += strlen(port) + 1;
 		// ret += strlen(port) + 1;
 	}
 	// printf("to path=%s\n",ret);
