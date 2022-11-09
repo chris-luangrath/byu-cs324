@@ -127,12 +127,12 @@ char *hostname, char *port, char *path, char *headers) {
 	ret += strlen(hostname);
 	// printf("to path=%s\n",ret);
 	i = 0;
-	while(*request != ' '){
+	while(*ret != ' '){
 		i++;
-		request++;
+		ret++;
 	}
-	request -= i;
-	memcpy(path,request,i);
+	ret -= i;
+	memcpy(path,ret,i);
 	printf("path=%s\n",path);
 	sleep(5);
 
