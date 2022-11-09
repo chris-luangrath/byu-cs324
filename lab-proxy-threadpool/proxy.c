@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/socket.h>
+#include <stdlib.h>
+#include <netdb.h>
+#include <sys/types.h>
+
 
 /* Recommended max cache and object sizes */
 #define MAX_CACHE_SIZE 1049000
@@ -18,15 +22,15 @@ void test_parser();
 void print_bytes(unsigned char *, int);
 
 
-int main()
+int main(int argc, char* argv[])
 {
 	// test_parser();
 
 	printf("%s\n", user_agent_hdr);
 	int sfd = 0;
-	sfd = open_sfd();
+	sfd = open_sfd(argv[1]);
 	while(1){
-		accept();
+		accept(sfd,);
 		handle_client();
 	}
 
