@@ -92,6 +92,7 @@ char *hostname, char *port, char *path, char *headers) {
 
 	i = 0;
 	while(*ret != ' ' && *ret != ':'){
+		printf("%c\n",*ret);
 		ret++;
 		i++;
 	}
