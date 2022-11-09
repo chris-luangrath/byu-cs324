@@ -153,8 +153,10 @@ char *hostname, char *port, char *path, char *headers) {
 	//// Headers
 	ret = strstr(request,"\r\n");
 	ret += 2;
-	// printf("headers=%s\n",ret);
-	// sleep(5);
+	memcpy(headers,ret,strlen(ret));
+
+	printf("headers=%s\n",headers);
+	sleep(5);
 
 	if(method == NULL || hostname == NULL || port == NULL || path == NULL || headers == NULL){
 		return 0;
