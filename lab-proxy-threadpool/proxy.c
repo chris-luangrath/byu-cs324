@@ -53,8 +53,8 @@ char *hostname, char *port, char *path, char *headers) {
 	int newport = 1;
 	
 	// memcpy(method,request,i);
-	memset(path,0,64); // SHOULD I DO THIS FOR THE OTHER STUFF??????
-	memset(headers,0,1024);
+	// memset(path,0,64);
+	// memset(headers,0,1024);
 
 	//// Method
 	// printf("method\n");
@@ -170,6 +170,11 @@ char *hostname, char *port, char *path, char *headers) {
 void test_parser() {
 	int i;
 	char method[16], hostname[64], port[8], path[64], headers[1024];
+	memset(method,0,16);
+	memset(hostname,0,64);
+	memset(port,0,8);
+	memset(path,0,64);
+	memset(headers,0,1024);
 
 	char *reqs[] = {
 		// "GET http://www.example.com/index.html HTTP/1.0\r\n"
