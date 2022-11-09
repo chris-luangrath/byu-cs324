@@ -90,7 +90,7 @@ char *hostname, char *port, char *path, char *headers) {
 	}
 	sleep(1);
 	ret++;
-	printf("host skipped=%s\n",*ret);
+	printf("host skipped=%s\n",ret);
 
 	i = 0;
 	while(*ret != '\r' && *ret != ':'){
