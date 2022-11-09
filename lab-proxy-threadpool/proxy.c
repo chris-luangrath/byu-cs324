@@ -59,6 +59,7 @@ char *hostname, char *port, char *path, char *headers) {
 	char* ret;
 	char* defaultport = "0080";
 	char* h = "Host: ";
+	char space = ' ';
 	
 
 	// Method
@@ -94,6 +95,7 @@ char *hostname, char *port, char *path, char *headers) {
 	while(*ret != ' ' && *ret != ':'){
 		printf("c=%c\n",*ret);
 		printf("d=%d\n",*ret);
+		printf("space=%d\n",space);
 		ret++;
 		i++;
 		sleep(1);
