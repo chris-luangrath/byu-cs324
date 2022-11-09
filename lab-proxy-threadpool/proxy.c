@@ -77,6 +77,7 @@ char *hostname, char *port, char *path, char *headers) {
 	
 	printf("try\n");
 	ret = strstr(request,h);
+	printf("ret=%s\n",ret);
 	// i = 0;
 	// i++;
 	while(*request != ' '){
