@@ -17,16 +17,6 @@ void print_bytes(unsigned char *, int);
 int main()
 {
 	test_parser();
-	// char test[MAX_OBJECT_SIZE] = "yet another test\r\n\r\n";
-	// char* p;
-	// p = &test;
-	// // *p = 
-	// // char * 
-	// if (all_headers_received(p) == 1){
-	// 	printf("yes\n");
-	// } else {
-	// 	printf("no\n");
-	// }
 
 	printf("%s\n", user_agent_hdr);
 	return 0;
@@ -51,10 +41,6 @@ char *hostname, char *port, char *path, char *headers) {
 	char* defaultport = "0080";
 	char* h = "Host: ";
 	int newport = 1;
-	
-	// memcpy(method,request,i);
-	// memset(path,0,64);
-	// memset(headers,0,1024);
 
 	//// Method
 	// printf("method\n");
@@ -90,14 +76,11 @@ char *hostname, char *port, char *path, char *headers) {
 	while(*ret != '\r' && *ret != ':'){
 		// printf("c=%c\n",*ret);
 		// printf("d=%d\n",*ret);
-		// printf("space=%d\n",space);
-		// printf("space2=%d\n",space2);
 		ret++;
 		i++;
 		// sleep(1);
 	}
 	if(*ret == ':'){
-		// printf("we hit it!\n");
 		ret++;
 		j = 0;
 		while(*ret != '\r'){
@@ -109,9 +92,8 @@ char *hostname, char *port, char *path, char *headers) {
 		ret--;
 	} else {
 		newport = 0;
-		// memcpy(port,"0080",4);
+		// strcpy(port,"0080");
 		strcpy(port,defaultport);
-		// *port = "0080";
 	}
 	// printf("port=%s\n",port);
 
@@ -130,7 +112,6 @@ char *hostname, char *port, char *path, char *headers) {
 	// ret++;
 	if(newport){
 		ret += strlen(port) + 1;
-		// ret += strlen(port) + 1;
 	}
 	// printf("to path=%s\n",ret);
 	i = 0;
@@ -140,7 +121,6 @@ char *hostname, char *port, char *path, char *headers) {
 		ret++;
 	}
 	ret -= i;
-	// i -= 1;
 	// printf("path=%s\n",path);
 	memcpy(path,ret,i);
 	if(path == NULL){
@@ -158,7 +138,6 @@ char *hostname, char *port, char *path, char *headers) {
 	}
 
 	// printf("headers=%s\n",headers);
-	// sleep(5);
 
 	// if(method == NULL || hostname == NULL || port == NULL || path == NULL || headers == NULL){
 	// 	return 0;
