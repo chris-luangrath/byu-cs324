@@ -80,7 +80,7 @@ char *hostname, char *port, char *path, char *headers) {
 	printf("found host=%s\n",ret);
 	// i = 0;
 	// i++;
-	while(ret != ' '){
+	while(*ret != ' '){
 		printf("skipping host=%c\n",*ret);
 		ret++;
 		sleep(1);
