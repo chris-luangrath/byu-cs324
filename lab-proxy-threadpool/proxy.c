@@ -157,7 +157,7 @@ char *hostname, char *port, char *path, char *headers) {
 	memcpy(headers,ret,strlen(ret));
 
 	// printf("headers=%s\n",headers);
-	sleep(5);
+	// sleep(5);
 
 	if(method == NULL || hostname == NULL || port == NULL || path == NULL || headers == NULL){
 		return 0;
@@ -198,6 +198,7 @@ void test_parser() {
 			printf("HOSTNAME: %s\n", hostname);
 			printf("PORT: %s\n", port);
 			printf("HEADERS: %s\n", headers);
+			sleep(5);
 		} else {
 			printf("REQUEST INCOMPLETE\n");
 		}
