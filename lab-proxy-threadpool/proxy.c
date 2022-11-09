@@ -81,7 +81,7 @@ char *hostname, char *port, char *path, char *headers) {
 	// i = 0;
 	// i++;
 	while(ret != ' '){
-		printf("skipping host=%c",*ret);
+		printf("skipping host=%c\n",*ret);
 		ret++;
 	}
 	sleep(1);
