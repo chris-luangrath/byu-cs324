@@ -138,13 +138,14 @@ char *hostname, char *port, char *path, char *headers) {
 		ret += strlen(port) + 1;
 	}
 	// printf("to path=%s\n",ret);
-	i = -1;
+	i = 0;
 	while(*ret != ' '){
 		printf("pat=%c\n",*ret);
 		i++;
 		ret++;
 	}
 	ret -= i;
+	i -= 2;
 	memcpy(path,ret,i);
 	printf("path=%s\n",path);
 	sleep(5);
