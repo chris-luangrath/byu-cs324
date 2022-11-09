@@ -81,7 +81,7 @@ char *hostname, char *port, char *path, char *headers) {
 	
 	printf("try\n");
 	ret = strstr(request,h);
-	// printf("found host=%s\n",ret);
+	printf("found host=%s\n",ret);
 	// i = 0;
 	// i++;
 	while(*ret != ' '){
