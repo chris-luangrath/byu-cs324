@@ -156,7 +156,7 @@ char *hostname, char *port, char *path, char *headers) {
 	ret += 2;
 	memcpy(headers,ret,strlen(ret));
 
-	printf("headers=%s\n",headers);
+	// printf("headers=%s\n",headers);
 	sleep(5);
 
 	if(method == NULL || hostname == NULL || port == NULL || path == NULL || headers == NULL){
