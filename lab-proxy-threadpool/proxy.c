@@ -56,7 +56,7 @@ char *hostname, char *port, char *path, char *headers) {
 	// char* token;
 	// char* test = request;
 	// char test[MAX_OBJECT_SIZE];
-	bzero(*path,sizeof(*path));
+	// bzero(*path,sizeof(*path));
 	char* ret;
 	char* defaultport = "0080";
 	char* h = "Host: ";
@@ -147,6 +147,7 @@ char *hostname, char *port, char *path, char *headers) {
 	}
 	ret -= i;
 	// i -= 1;
+	printf("path=%s\n",path);
 	memcpy(path,ret,i);
 	printf("path=%s\n",path);
 	sleep(5);
