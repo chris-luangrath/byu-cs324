@@ -57,6 +57,8 @@ char *hostname, char *port, char *path, char *headers) {
 	// char* test = request;
 	// char test[MAX_OBJECT_SIZE];
 	char* ret;
+	char* defaultport = "0080";
+	char* h = "Host: ";
 	
 
 	// Method
@@ -73,7 +75,6 @@ char *hostname, char *port, char *path, char *headers) {
 
 	// Host
 	// char h[] = "Host: ";
-	char* h = "Host: ";
 	// char test[] = "Host: awefjawpeoifapwehf";
 	
 	printf("try\n");
@@ -104,7 +105,7 @@ char *hostname, char *port, char *path, char *headers) {
 		memcpy(port,ret,j);
 	} else {
 		// memcpy(port,"0080",4);
-		strcpy(port,"0080");
+		strcpy(port,defaultport);
 		// *port = "0080";
 	}
 	printf("port=%s\n",port);
