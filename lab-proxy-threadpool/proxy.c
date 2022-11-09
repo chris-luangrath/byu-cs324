@@ -170,11 +170,6 @@ char *hostname, char *port, char *path, char *headers) {
 void test_parser() {
 	int i;
 	char method[16], hostname[64], port[8], path[64], headers[1024];
-	memset(method,0,16);
-	memset(hostname,0,64);
-	memset(port,0,8);
-	memset(path,0,64);
-	memset(headers,0,1024);
 
 	char *reqs[] = {
 		"GET http://www.example.com/index.html HTTP/1.0\r\n"
@@ -198,6 +193,11 @@ void test_parser() {
 	};
 	
 	for (i = 0; reqs[i] != NULL; i++) {
+		memset(method,0,16);
+		memset(hostname,0,64);
+		memset(port,0,8);
+		memset(path,0,64);
+		memset(headers,0,1024);
 		printf("Testing %s\n", reqs[i]);
 		if (parse_request(reqs[i], method, hostname, port, path, headers)) {
 			printf("METHOD: %s\n", method);
