@@ -103,7 +103,8 @@ char *hostname, char *port, char *path, char *headers) {
 		ret -= j;
 		memcpy(port,ret,j);
 	} else {
-		*port = "0080";
+		memcpy(port,"0080",4);
+		// *port = "0080";
 	}
 	printf("port=%s\n",port);
 
