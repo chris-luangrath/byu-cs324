@@ -63,7 +63,7 @@ char *hostname, char *port, char *path, char *headers) {
 	char space2 = ' ';
 	
 
-	// Method
+	//// Method
 	int i = 0;
 	int j = 0;
 	while(*request != ' '){
@@ -75,7 +75,7 @@ char *hostname, char *port, char *path, char *headers) {
 	printf("method=%s\n",method);
 
 
-	// Host
+	//// Host
 	// char h[] = "Host: ";
 	// char test[] = "Host: awefjawpeoifapwehf";
 	
@@ -120,16 +120,24 @@ char *hostname, char *port, char *path, char *headers) {
 	ret -= i;
 	memcpy(hostname,ret,i);
 	printf("hostname=%s\n",hostname);
+
+
+	//// Path
+	ret = strstr(request,hostname);
+	ret += sizeof(hostname);
+	printf("to path=%s\n",ret);
 	sleep(5);
-	printf("try\n");
-	printf("ret=%s\n",ret);
+
+
+	// printf("try\n");
+	// printf("ret=%s\n",ret);
 
 	// if(token == NULL){
 	// 	printf("null");
 	// 	fflush(stdout);
 	// }
 
-	printf("try\n");
+	// printf("try end\n");
 
 	// printf("%s\n",token);
 
