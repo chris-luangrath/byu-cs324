@@ -56,6 +56,7 @@ char *hostname, char *port, char *path, char *headers) {
 	// char* token;
 	// char* test = request;
 	// char test[MAX_OBJECT_SIZE];
+	bzero(*path,sizeof(*path));
 	char* ret;
 	char* defaultport = "0080";
 	char* h = "Host: ";
