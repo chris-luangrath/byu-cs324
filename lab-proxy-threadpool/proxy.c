@@ -67,6 +67,7 @@ char *hostname, char *port, char *path, char *headers) {
 	memset(headers,0,1024);
 
 	//// Method
+	printf("method\n");
 	int i = 0;
 	int j = 0;
 	// while(*request != ' '){
@@ -85,10 +86,7 @@ char *hostname, char *port, char *path, char *headers) {
 
 
 	//// Host
-	// char h[] = "Host: ";
-	// char test[] = "Host: awefjawpeoifapwehf";
-	
-	// printf("try\n");
+	printf("host\n");
 	ret = strstr(request,h);
 	// printf("found host=%s\n",ret);
 	// i = 0;
@@ -112,7 +110,7 @@ char *hostname, char *port, char *path, char *headers) {
 		// sleep(1);
 	}
 	if(*ret == ':'){
-		printf("we hit it!\n");
+		// printf("we hit it!\n");
 		ret++;
 		j = 0;
 		while(*ret != '\r'){
@@ -136,6 +134,7 @@ char *hostname, char *port, char *path, char *headers) {
 
 
 	//// Path
+	printf("path\n");
 	ret = strstr(request,hostname);
 	ret += strlen(hostname);
 	// ret++;
@@ -202,6 +201,7 @@ void test_parser() {
 			printf("METHOD: %s\n", method);
 			printf("HOSTNAME: %s\n", hostname);
 			printf("PORT: %s\n", port);
+			printf("PATH: %s\n", path); // I ADDED THIS ONE. IT WASNT HERE BEFORE
 			printf("HEADERS: %s\n", headers);
 			sleep(5);
 		} else {
