@@ -64,6 +64,8 @@ char *hostname, char *port, char *path, char *headers) {
 	char space2 = ' ';
 	int newport = 1;
 	
+	// memcpy(method,request,i);
+	memset(path,0,64);
 
 	//// Method
 	int i = 0;
@@ -73,7 +75,6 @@ char *hostname, char *port, char *path, char *headers) {
 	// 	request++;
 	// }
 	// request -= i;
-	// memcpy(method,request,i);
 	ret = request;
 	while(*ret != ' '){
 		i++;
