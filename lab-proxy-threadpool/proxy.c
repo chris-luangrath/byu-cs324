@@ -60,6 +60,7 @@ char *hostname, char *port, char *path, char *headers) {
 	char* defaultport = "0080";
 	char* h = "Host: ";
 	char space = ' ';
+	char space2 = ' ';
 	
 
 	// Method
@@ -96,6 +97,7 @@ char *hostname, char *port, char *path, char *headers) {
 		printf("c=%c\n",*ret);
 		printf("d=%d\n",*ret);
 		printf("space=%d\n",space);
+		printf("space2=%d\n",space2);
 		ret++;
 		i++;
 		sleep(1);
