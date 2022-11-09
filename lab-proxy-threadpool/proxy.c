@@ -86,11 +86,11 @@ char *hostname, char *port, char *path, char *headers) {
 	}
 	sleep(1);
 	ret++;
-	printf("skipping host=%c\n",*ret);
+	printf("host skipped=%c\n",*ret);
 
 	i = 0;
-	while(*request != ' ' || *request != ':'){
-		request++;
+	while(*ret != ' ' && *ret != ':'){
+		ret++;
 		i++;
 	}
 	printf("try\n");
