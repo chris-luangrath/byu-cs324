@@ -79,13 +79,13 @@ char *hostname, char *port, char *path, char *headers) {
 	ret = strstr(request,h);
 	// i = 0;
 	// i++;
-	while(*ret != ' '){
-		ret++;
+	while(*request != ' '){
+		request++;
 	}
-	ret++;
+	request++;
 	i = 0;
-	while(*ret != ' ' || *ret != ':'){
-		ret++;
+	while(*request != ' ' || *request != ':'){
+		request++;
 		i++;
 	}
 	printf("try\n");
