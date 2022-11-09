@@ -93,6 +93,7 @@ char *hostname, char *port, char *path, char *headers) {
 		ret++;
 		i++;
 	}
+	sleep(5);
 	printf("try\n");
 	printf("ret=%s\n",ret);
 
