@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
 
 	printf("%s\n", user_agent_hdr);
 	int sfd = 0;
-	sfd = open_sfd(argv[1]);
+	sfd = open_sfd("localhost", argv[1]);
 	while(1){
 		// accept(sfd,&remote_addr,&remote_addr_len);
 		if ((sfd = accept(sfd, &remote_addr, &remote_addr_len)) < 0) {
@@ -251,7 +251,7 @@ void handle_client(int sfd){
 	int headers_recieved = 0;
 	while(!headers_recieved){
 		nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
-							(struct sockaddr *) &remote_addr, &remote_addr_len)
+							(struct sockaddr *) &remote_addr, &remote_addr_len);
 		if (nread == -1) {
 			perror("read");
 			exit(EXIT_FAILURE);
