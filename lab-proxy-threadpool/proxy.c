@@ -124,8 +124,16 @@ char *hostname, char *port, char *path, char *headers) {
 
 	//// Path
 	ret = strstr(request,hostname);
-	ret += strlen(hostname); 
-	printf("to path=%s\n",ret);
+	ret += strlen(hostname);
+	// printf("to path=%s\n",ret);
+	i = 0;
+	while(*request != ' '){
+		i++;
+		request++;
+	}
+	request -= i;
+	memcpy(path,request,i);
+	printf("path=%s\n",path);
 	sleep(5);
 
 
