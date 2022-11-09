@@ -44,9 +44,9 @@ int all_headers_received(char *request) {
 
 int parse_request(char *request, char *method,
 char *hostname, char *port, char *path, char *headers) {
-	if(!all_headers_received(request)){
-		return 0;
-	}
+	// if(!all_headers_received(request)){
+	// 	return 0;
+	// }
 	char* ret;
 	char* defaultport = "0080";
 	char* h = "Host: ";
@@ -71,7 +71,7 @@ char *hostname, char *port, char *path, char *headers) {
 	if(method == NULL){
 		return 0;
 	}
-	printf("method=%s\n",method);
+	// printf("method=%s\n",method);
 
 
 	//// Host
@@ -113,7 +113,7 @@ char *hostname, char *port, char *path, char *headers) {
 		strcpy(port,defaultport);
 		// *port = "0080";
 	}
-	printf("port=%s\n",port);
+	// printf("port=%s\n",port);
 
 	ret -= i;
 	memcpy(hostname,ret,i);
@@ -124,7 +124,7 @@ char *hostname, char *port, char *path, char *headers) {
 
 
 	//// Path
-	printf("path\n");
+	// printf("path\n");
 	ret = strstr(request,hostname);
 	ret += strlen(hostname);
 	// ret++;
@@ -157,7 +157,7 @@ char *hostname, char *port, char *path, char *headers) {
 		return 0;
 	}
 
-	printf("headers=%s\n",headers);
+	// printf("headers=%s\n",headers);
 	// sleep(5);
 
 	// if(method == NULL || hostname == NULL || port == NULL || path == NULL || headers == NULL){
