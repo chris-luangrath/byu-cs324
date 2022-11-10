@@ -28,8 +28,8 @@ int main(int argc, char* argv[])
 {
 	struct sockaddr_in remote_addr;
 	// struct sockaddr_storage remote_addr;
-	socklen_t remote_addr_len;
-	remote_addr_len = sizeof(struct sockaddr_in);
+	// socklen_t remote_addr_len;
+	// remote_addr_len = sizeof(struct sockaddr_in);
 	// test_parser();
 
 	printf("%s\n", user_agent_hdr);
@@ -38,7 +38,8 @@ int main(int argc, char* argv[])
 	sfd = open_sfd("localhost", argv[1]);
 	while(1){
 		// accept(sfd,&remote_addr,&remote_addr_len);
-		if ((clientsfd = accept(sfd, (struct sockaddr *) &remote_addr, &remote_addr_len)) < 0) {
+		// if ((clientsfd = accept(sfd, (struct sockaddr *) &remote_addr, &remote_addr_len)) < 0) {
+		if ((clientsfd = accept(sfd, NULL, NULL)) < 0) {
 			perror("Could not accept");	
 			exit(EXIT_FAILURE);
 		}
