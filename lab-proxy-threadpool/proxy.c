@@ -273,6 +273,8 @@ void handle_client(int sfd){
 			headers_recieved = 1;
 			printf("done receiving\n");
 			
+		} else {
+			printf("%s\n",request);
 		}
 	}
 
