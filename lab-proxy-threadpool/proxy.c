@@ -262,7 +262,7 @@ void handle_client(int sfd){
 	int headers_recieved = 0;
 	while(!headers_recieved){
 		printf("receiving...\n");
-		memset(rec_buf,0,REC_SIZE);
+		// memset(rec_buf,0,REC_SIZE);
 		nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 							(struct sockaddr *) &remote_addr, &remote_addr_len);
 		printf("nread=%d\n",nread);
@@ -270,8 +270,9 @@ void handle_client(int sfd){
 			perror("read");
 			exit(EXIT_FAILURE);
 		}
-		memcpy(request[i],rec_buf,nread);
-		i += nread;
+		memcpy(request,rec_buf,nread);
+		request += nread;
+		// i += nread;
 		if(all_headers_received(request)){
 			headers_recieved = 1;
 			printf("done receiving\n");
