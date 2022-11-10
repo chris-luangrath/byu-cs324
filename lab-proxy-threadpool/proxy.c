@@ -366,7 +366,6 @@ void handle_client(int acceptsfd){
 	}
 
 	for (rp = result; rp != NULL; rp = rp->ai_next) {
-		// printf("this ran\n");
 		serversfd = socket(rp->ai_family, rp->ai_socktype,
 				rp->ai_protocol);
 		if (serversfd == -1)
@@ -389,8 +388,6 @@ void handle_client(int acceptsfd){
 
 	freeaddrinfo(result);
 	// printf("3--------------------------------------------\n");
-	// printf("strlen new=%d\n",strlen(newrequest));
-	// printf("strlen new=%ld\n",strlen(newrequest));
 	if (write(serversfd, newrequest, strlen(newrequest)) != strlen(newrequest)) { //clientsfd should be serversfd
 		fprintf(stderr, "partial/failed write\n");
 		exit(EXIT_FAILURE);
@@ -400,15 +397,12 @@ void handle_client(int acceptsfd){
 	// sleep(5);
 	// printf("4--------------------------------------------\n");
 
-	// will loop until nread == 0
-	// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
-	// 						(struct sockaddr *) &remote_addr, &remote_addr_len);
-	// printf("4.5--------------------------------------------\n");
 	char response[MAX_OBJECT_SIZE];
 	p = &response;
 
 	nread = 1;
 	while((nread = read(serversfd,rec_buf,REC_SIZE)) != 0){
+		printf("nread=%s\n");
 		// bzero(rec_buf,REC_SIZE);
 		// nread = read(serversfd,rec_buf,REC_SIZE);
 		if (nread == -1) {
