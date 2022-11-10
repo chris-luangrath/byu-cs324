@@ -360,6 +360,7 @@ void handle_client(int sfd){
 			continue;
 
 		if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
+			printf("success\n");
 			break;  /* Success */
 
 		close(sfd);
