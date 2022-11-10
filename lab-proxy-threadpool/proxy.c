@@ -363,7 +363,7 @@ void handle_client(int acceptsfd){
 	}
 
 	for (rp = result; rp != NULL; rp = rp->ai_next) {
-		printf("this ran\n");
+		// printf("this ran\n");
 		serversfd = socket(rp->ai_family, rp->ai_socktype,
 				rp->ai_protocol);
 		if (serversfd == -1)
@@ -400,7 +400,7 @@ void handle_client(int acceptsfd){
 	// will loop until nread == 0
 	// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 	// 						(struct sockaddr *) &remote_addr, &remote_addr_len);
-	printf("4.5--------------------------------------------\n");
+	// printf("4.5--------------------------------------------\n");
 	char resp_buf[MAX_OBJECT_SIZE];
 	p = &resp_buf;
 
