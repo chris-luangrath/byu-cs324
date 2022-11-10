@@ -371,7 +371,7 @@ void handle_client(int sfd){
 
 	freeaddrinfo(result);
 	printf("3--------------------------------------------\n");
-
+	printf("strlen new=%d",strlen(newrequest));
 	if (write(sfd, newrequest, strlen(newrequest)) != strlen(newrequest)) {
 		fprintf(stderr, "partial/failed write\n");
 		exit(EXIT_FAILURE);
