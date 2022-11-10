@@ -191,7 +191,8 @@ int open_sfd(char* hostname, char* port) {
 	hints.ai_addr = NULL;
 	hints.ai_next = NULL;
 
-	int s = getaddrinfo(hostname, port, &hints, &result);
+	int s = getaddrinfo(NULL, port, &hints, &result);
+	// int s = getaddrinfo(hostname, port, &hints, &result);
 	if (s != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
 		exit(EXIT_FAILURE);
@@ -232,8 +233,8 @@ int open_sfd(char* hostname, char* port) {
 	// 	local_addr_len = sizeof(ipv6addr);
 	// }
 	
-	if (bind(sfd, local_addr, local_addr_len) < 0) {
-	// if (bind(sfd, result->ai_addr, result->ai_addrlen) < 0) {
+	// if (bind(sfd, local_addr, local_addr_len) < 0) {
+	if (bind(sfd, result->ai_addr, result->ai_addrlen) < 0) {
 		perror("Could not bind");
 		exit(EXIT_FAILURE);
 	}
