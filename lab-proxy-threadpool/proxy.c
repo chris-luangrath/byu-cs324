@@ -119,7 +119,7 @@ char *hostname, char *port, char *path, char *headers) {
 		ret--;
 	} else {
 		newport = 0;
-		strcpy(port,"0080");
+		strcpy(port,"80");
 		// strcpy(port,defaultport);
 	}
 	// printf("port=%s\n",port);
@@ -236,7 +236,7 @@ int open_sfd(char* hostname, char* port) {
 	// result->ai_addr->sin_port = htons(sPort);
 	
 	// if (bind(sfd, local_addr, local_addr_len) < 0) {
-	if (bind(sfd, result->ai_addr, result->ai_addrlen) < 0) { // Is this setting the port?  ---------------------------------------------
+	if (bind(sfd, result->ai_addr, result->ai_addrlen) < 0) {	
 		perror("Could not bind");
 		exit(EXIT_FAILURE);
 	}
@@ -355,7 +355,7 @@ void handle_client(int acceptsfd){
 
 	printf("1--------------------------------------------\n");
 	int s;
-	int clientsfd;
+	int serversfd;
 	s = getaddrinfo(hostname,port,&hints,&result);
 	if (s != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
@@ -364,18 +364,18 @@ void handle_client(int acceptsfd){
 
 	for (rp = result; rp != NULL; rp = rp->ai_next) {
 		printf("this ran\n");
-		clientsfd = socket(rp->ai_family, rp->ai_socktype,
+		serversfd = socket(rp->ai_family, rp->ai_socktype,
 				rp->ai_protocol);
-		if (clientsfd == -1)
+		if (serversfd == -1)
 			continue;
 
-		if (connect(clientsfd, rp->ai_addr, rp->ai_addrlen) != -1){
+		if (connect(serversfd, rp->ai_addr, rp->ai_addrlen) != -1){
 			printf("successfully connected\n");
 			break;  /* Success */
 		}
 
 		printf("success?\n");
-		close(clientsfd);
+		close(serversfd);
 	}
 	printf("2--------------------------------------------\n");
 
@@ -388,10 +388,12 @@ void handle_client(int acceptsfd){
 	printf("3--------------------------------------------\n");
 	printf("strlen new=%d\n",strlen(newrequest));
 	printf("strlen new=%ld\n",strlen(newrequest));
-	if (write(clientsfd, newrequest, strlen(newrequest)) != strlen(newrequest)) {
+	if (write(serversfd, newrequest, strlen(newrequest)) != strlen(newrequest)) { //clientsfd should be serversfd
 		fprintf(stderr, "partial/failed write\n");
 		exit(EXIT_FAILURE);
 	}
+	
+
 	// sleep(5);
 	printf("4--------------------------------------------\n");
 
@@ -399,7 +401,7 @@ void handle_client(int acceptsfd){
 	// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 	// 						(struct sockaddr *) &remote_addr, &remote_addr_len);
 	bzero(rec_buf,REC_SIZE);
-	nread = read(clientsfd,rec_buf,REC_SIZE);
+	nread = read(serversfd,rec_buf,REC_SIZE);
 	printf("4.5--------------------------------------------\n");
 	if (nread == -1) {
 		perror("read");
@@ -409,7 +411,7 @@ void handle_client(int acceptsfd){
 
 	printf("5--------------------------------------------\n");
 
-	close(clientsfd);
+	close(serversfd);
 	close(acceptsfd);
 	
 	
