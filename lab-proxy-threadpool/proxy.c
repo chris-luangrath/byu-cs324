@@ -402,7 +402,7 @@ void handle_client(int acceptsfd){
 
 	int total = 0;
 	nread = 1;
-	printf("start readin\n");
+	printf("start readin:\n");
 	while((nread = read(serversfd,rec_buf,REC_SIZE)) != 0){
 		bzero(rec_buf,REC_SIZE);
 		printf("nread=%d\n",nread);
@@ -415,6 +415,7 @@ void handle_client(int acceptsfd){
 		// p += strlen(rec_buf);
 		p += nread;
 		total += nread;
+		printf("total=%d\n",total);
 	}
 	// if(verbose)
 	printf("resp:\n%s\n",response);
