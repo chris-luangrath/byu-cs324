@@ -334,7 +334,7 @@ void handle_client(int sfd){
 
 	
 	// printf("HEY IT'S HERE ----------------------\n");
-	printf("%s\n",newrequest);
+	printf("new request:\n%s\n",newrequest);
 
 	struct addrinfo hints;
 	// struct addrinfo *result;
@@ -364,6 +364,7 @@ void handle_client(int sfd){
 
 		close(sfd);
 	}
+	printf("--------------------------------------------\n");
 
 	if (rp == NULL) {   /* No address succeeded */
 		fprintf(stderr, "Could not connect\n");
