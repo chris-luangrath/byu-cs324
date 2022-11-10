@@ -401,8 +401,9 @@ void handle_client(int acceptsfd){
 	p = &response;
 
 	nread = 1;
+	prinf("start readin\n");
 	while((nread = read(serversfd,rec_buf,REC_SIZE)) != 0){
-		printf("nread=%s\n");
+		printf("nread=%s\n",nread);
 		// bzero(rec_buf,REC_SIZE);
 		// nread = read(serversfd,rec_buf,REC_SIZE);
 		if (nread == -1) {
