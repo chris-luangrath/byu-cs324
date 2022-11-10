@@ -334,8 +334,8 @@ void handle_client(int sfd){
 
 	
 	// if()
-	// printf("HEY IT'S HERE ----------------------\n");
-	// printf("%s\n",newrequest);
+	printf("HEY IT'S HERE ----------------------\n");
+	printf("%s\n",newrequest);
 
 
 
