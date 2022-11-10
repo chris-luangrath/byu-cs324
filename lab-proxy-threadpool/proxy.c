@@ -353,6 +353,7 @@ void handle_client(int sfd){
 	}
 
 	for (rp = result; rp != NULL; rp = rp->ai_next) {
+		printf("this ran\n");
 		sfd = socket(rp->ai_family, rp->ai_socktype,
 				rp->ai_protocol);
 		if (sfd == -1)
