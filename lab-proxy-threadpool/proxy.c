@@ -29,9 +29,6 @@ void print_bytes(unsigned char *, int);
 int main(int argc, char* argv[])
 {
 	struct sockaddr_in remote_addr;
-	// struct sockaddr_storage remote_addr;
-	// socklen_t remote_addr_len;
-	// remote_addr_len = sizeof(struct sockaddr_in);
 	// test_parser();
 
 	// printf("%s\n", user_agent_hdr);
@@ -53,7 +50,6 @@ int main(int argc, char* argv[])
 }
 
 int all_headers_received(char *request) {
-	// printf("%s!!!!\n",request);
 	if (strcmp(&request[strlen(request)-4],"\r\n\r\n") == 0){
 		// printf("nice\n");
 		return 1;
@@ -272,7 +268,6 @@ void handle_client(int sfd){
 			perror("read");
 			exit(EXIT_FAILURE);
 		}
-		// memcpy(request,rec_buf,nread);
 		memcpy(reqp,rec_buf,nread);
 		reqp += nread;
 		if(all_headers_received(request)){
@@ -297,7 +292,7 @@ void handle_client(int sfd){
 		exit(1);
 	}
 	
-	// close(sfd);
+	close(sfd); // does this go here?
 	
 	char* connection = "close";
 	char* proxyconnection = "close";
@@ -318,7 +313,6 @@ void handle_client(int sfd){
 	bzero(buf,BUF_SIZE);
 	sprintf(buf,"Host: %s:%s\r\n",hostname,port);
 	memcpy(reqp,&buf,strlen(buf));
-	// sprintf(buf,"Host: %s\r\n",hostname);
 	reqp += strlen(buf);
 
 	bzero(buf,BUF_SIZE);
