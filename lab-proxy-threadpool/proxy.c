@@ -400,6 +400,7 @@ void handle_client(int acceptsfd){
 	char response[MAX_OBJECT_SIZE];
 	p = &response;
 
+	int total = 0;
 	nread = 1;
 	printf("start readin\n");
 	while((nread = read(serversfd,rec_buf,REC_SIZE)) != 0){
@@ -413,6 +414,7 @@ void handle_client(int acceptsfd){
 		memcpy(p,&rec_buf,nread);
 		// p += strlen(rec_buf);
 		p += nread;
+		total += nread;
 	}
 	// if(verbose)
 	printf("resp:\n%s\n",response);
@@ -428,7 +430,7 @@ void handle_client(int acceptsfd){
 	// printf("5--------------------------------------------\n");
 	close(serversfd);
 
-	if (send(acceptsfd,response,strlen(response),0) < 0)
+	if (send(acceptsfd,response,total,0) < 0)
 				fprintf(stderr, "Error sending response\n");
 
 	close(acceptsfd);
