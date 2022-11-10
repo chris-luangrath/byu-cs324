@@ -305,6 +305,8 @@ void handle_client(int sfd){
 	char buf[64];
 	bzero(buf,64);
 	fprintf(buf,"%s: %s HTTP/1.0\r\n",method,path);
+	printf("buf=%s\n",method);
+	printf("buf=%s\n",path);
 	printf("buf=%s\n",buf);
 	
 	memcpy(reqp,&buf,strlen(buf));
