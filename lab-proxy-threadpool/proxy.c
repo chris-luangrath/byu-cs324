@@ -308,7 +308,8 @@ void handle_client(int sfd){
 	
 	memcpy(reqp,&buf,strlen(buf));
 	reqp += strlen(buf);
-				
+	
+	printf("HEY IT'S HERE ----------------------\n");
 	printf("%s\n",newrequest);
 
 
