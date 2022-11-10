@@ -232,9 +232,11 @@ int open_sfd(char* hostname, char* port) {
 	// 	local_addr = (struct sockaddr *)&ipv6addr;
 	// 	local_addr_len = sizeof(ipv6addr);
 	// }
+
+	result->ai_addr.sin_port = htons(sPort);
 	
-	if (bind(sfd, local_addr, local_addr_len) < 0) {
-	// if (bind(sfd, result->ai_addr, result->ai_addrlen) < 0) {
+	// if (bind(sfd, local_addr, local_addr_len) < 0) {
+	if (bind(sfd, result->ai_addr, result->ai_addrlen) < 0) { // Is this setting the port?
 		perror("Could not bind");
 		exit(EXIT_FAILURE);
 	}
