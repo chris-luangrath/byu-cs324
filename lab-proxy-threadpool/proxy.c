@@ -12,6 +12,7 @@
 
 #define REC_SIZE 1024
 #define REQUEST_SIZE 512
+#define BUF_SIZE 128
 
 static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0";
 
@@ -299,21 +300,42 @@ void handle_client(int sfd){
 	// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 	// 						(struct sockaddr *) &remote_addr, &remote_addr_len);
 	
+	char* connection = "close";
+	char* proxyconnection = "close";
+
 	char newrequest[REQUEST_SIZE];
 	reqp = &newrequest;
 	bzero(newrequest,REQUEST_SIZE);
-	char buf[64];
-	bzero(buf,64);
+	char buf[BUF_SIZE];
+	bzero(buf,BUF_SIZE);
 	sprintf(buf,"%s: %s HTTP/1.0\r\n",method,path);
-	printf("method=%s\n",method);
-	printf("path=%s\n",path);
-	printf("buf=%s\n",buf);
+	// printf("method=%s\n",method);
+	// printf("path=%s\n",path);
+	// printf("buf=%s\n",buf);
 	
 	memcpy(reqp,&buf,strlen(buf));
 	reqp += strlen(buf);
 	
-	printf("HEY IT'S HERE ----------------------\n");
-	printf("%s\n",newrequest);
+	bzero(buf,BUF_SIZE);
+	sprintf(buf,"Host: %s:%s\r\n",hostname,port);
+	memcpy(reqp,&buf,strlen(buf));
+	// sprintf(buf,"Host: %s\r\n",hostname);
+	reqp += strlen(buf);
+
+	bzero(buf,BUF_SIZE);
+	sprintf(buf,"%s\r\n",user_agent_hdr);
+	memcpy(reqp,&buf,strlen(buf));
+	reqp += strlen(buf);
+
+	bzero(buf,BUF_SIZE);
+	sprintf(buf,"Connection: %s\r\nProxy-Connection: %s\r\n\r\n",connection,proxyconnection);
+	memcpy(reqp,&buf,strlen(buf));
+	reqp += strlen(buf);
+
+	
+	// if()
+	// printf("HEY IT'S HERE ----------------------\n");
+	// printf("%s\n",newrequest);
 
 
 
