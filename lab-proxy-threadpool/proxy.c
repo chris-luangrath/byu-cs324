@@ -297,7 +297,7 @@ void handle_client(int sfd){
 		exit(1);
 	}
 	
-	close(sfd);
+	// close(sfd);
 	
 	char* connection = "close";
 	char* proxyconnection = "close";
