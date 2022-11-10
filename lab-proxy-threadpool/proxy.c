@@ -34,8 +34,8 @@ int main(int argc, char* argv[])
 	// printf("%s\n", user_agent_hdr);
 	int sfd = 0;
 	int clientsfd = 0;
-	sfd = open_sfd(NULL, argv[1]);
-	// sfd = open_sfd("localhost", argv[1]);
+	// sfd = open_sfd(NULL, argv[1]);
+	sfd = open_sfd("localhost", argv[1]);
 	// printf("sfd=%d\n",sfd);
 	while(1){
 		// accept(sfd,&remote_addr,&remote_addr_len);
