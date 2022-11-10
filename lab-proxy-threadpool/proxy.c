@@ -345,7 +345,7 @@ void handle_client(int acceptsfd){
 	memset(&hints, 0, sizeof(struct addrinfo));
 	hints.ai_family = AF_INET;    /* Allow IPv4, IPv6, or both, depending on
 				    what was specified on the command line. */
-	hints.ai_socktype = SOCK_DGRAM; /* socket stream*/
+	hints.ai_socktype = SOCK_DGRAM; /* socket stream*/ // ---------------------------------------- changing this to dgram makes it run further
 	// hints.ai_socktype = SOCK_STREAM; /* socket stream*/
 	hints.ai_flags = 0;
 	hints.ai_protocol = 0;  /* Any protocol */
@@ -370,7 +370,7 @@ void handle_client(int acceptsfd){
 			continue;
 
 		if (connect(clientsfd, rp->ai_addr, rp->ai_addrlen) != -1){
-			printf("success\n");
+			printf("successfully connected\n");
 			break;  /* Success */
 		}
 
@@ -386,8 +386,8 @@ void handle_client(int acceptsfd){
 
 	freeaddrinfo(result);
 	printf("3--------------------------------------------\n");
-	printf("strlen new=%d",strlen(newrequest));
-	printf("strlen new=%ld",strlen(newrequest));
+	printf("strlen new=%d\n",strlen(newrequest));
+	printf("strlen new=%ld\n",strlen(newrequest));
 	if (write(clientsfd, newrequest, strlen(newrequest)) != strlen(newrequest)) {
 		fprintf(stderr, "partial/failed write\n");
 		exit(EXIT_FAILURE);
