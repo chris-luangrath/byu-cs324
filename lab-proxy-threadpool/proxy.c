@@ -403,7 +403,7 @@ void handle_client(int acceptsfd){
 	nread = 1;
 	prinf("start readin\n");
 	while((nread = read(serversfd,rec_buf,REC_SIZE)) != 0){
-		printf("nread=%s\n",nread);
+		printf("nread=%d\n",nread);
 		// bzero(rec_buf,REC_SIZE);
 		// nread = read(serversfd,rec_buf,REC_SIZE);
 		if (nread == -1) {
