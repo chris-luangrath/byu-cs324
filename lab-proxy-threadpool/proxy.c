@@ -232,7 +232,9 @@ int open_sfd(char* hostname, char* port) {
 		perror("Could not bind");
 		exit(EXIT_FAILURE);
 	}
-	printf("sfd=%d\n",sfd);
+	listen(sfd,100);
+	// printf("sfd=%d\n",sfd);
+	// printf("sfd=%d\n",sfd);
 	return sfd;
 }
 
