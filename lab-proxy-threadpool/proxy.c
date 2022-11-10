@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 	// remote_addr_len = sizeof(struct sockaddr_in);
 	// test_parser();
 
-	printf("%s\n", user_agent_hdr);
+	// printf("%s\n", user_agent_hdr);
 	int sfd = 0;
 	int clientsfd = 0;
 	sfd = open_sfd("localhost", argv[1]);
@@ -262,11 +262,10 @@ void handle_client(int sfd){
 	int i = 0;
 	int headers_recieved = 0;
 	while(!headers_recieved){
-		printf("receiving...\n");
+		// printf("receiving...\n");
 		// memset(rec_buf,0,REC_SIZE);
 		nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 							(struct sockaddr *) &remote_addr, &remote_addr_len);
-		printf("nread=%d\n",nread);
 		if (nread == -1) {
 			perror("read");
 			exit(EXIT_FAILURE);
@@ -274,17 +273,15 @@ void handle_client(int sfd){
 		// memcpy(request,rec_buf,nread);
 		memcpy(reqp,rec_buf,nread);
 		reqp += nread;
-		// &request += nread;
-		// i += nread;
-		// i += nread;
 		if(all_headers_received(request)){
 			headers_recieved = 1;
-			printf("done receiving\n");
-			
+			// printf("done receiving\n");
 		} else {
-			printf("%s\n",request);
+			// printf("%s\n",request);
 		}
 	}
+
+	// printf("%s\n",request);
 
 	if (parse_request(request, method, hostname, port, path, headers)) {
 		printf("METHOD: %s\n", method);
@@ -292,17 +289,27 @@ void handle_client(int sfd){
 		printf("PORT: %s\n", port);
 		printf("PATH: %s\n", path); // I ADDED THIS ONE. IT WASNT HERE BEFORE
 		printf("HEADERS: %s\n", headers);
+		printf("%s\n", user_agent_hdr);
 	} else {
 		printf("REQUEST INCOMPLETE\n");
 		exit(1);
 	}
-
+	
 	close(sfd);
 	// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 	// 						(struct sockaddr *) &remote_addr, &remote_addr_len);
 	
-
+	char newrequest[REQUEST_SIZE];
+	reqp = &newrequest;
+	bzero(newrequest,REQUEST_SIZE);
+	char buf[64];
+	bzero(buf,64);
+	fprintf(buf,"%s: %s HTTP/1.0\r\n",method,path);
+	
+	memcpy(reqp,&buf,strlen(buf));
+	reqp += strlen(buf);
 				
+	printf("%s\n",newrequest);
 
 
 
@@ -346,6 +353,7 @@ void test_parser() {
 			printf("PORT: %s\n", port);
 			printf("PATH: %s\n", path); // I ADDED THIS ONE. IT WASNT HERE BEFORE
 			printf("HEADERS: %s\n", headers);
+
 		} else {
 			printf("REQUEST INCOMPLETE\n");
 		}
