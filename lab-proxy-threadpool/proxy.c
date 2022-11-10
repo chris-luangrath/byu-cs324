@@ -231,10 +231,12 @@ int open_sfd(char* hostname, char* port) {
 	// 	local_addr_len = sizeof(ipv6addr);
 	// }
 	
-	if (bind(sfd, local_addr, local_addr_len) < 0) {
+	// if (bind(sfd, local_addr, local_addr_len) < 0) {
+	if (bind(sfd, result->ai_addr, result->ai_addrlen) < 0) {
 		perror("Could not bind");
 		exit(EXIT_FAILURE);
 	}
+	freeaddrinfo(result);
 	listen(sfd,100);
 	// printf("sfd=%d\n",sfd);
 	// printf("sfd=%d\n",sfd);
