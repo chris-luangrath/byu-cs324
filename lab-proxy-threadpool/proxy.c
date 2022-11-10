@@ -346,7 +346,7 @@ void handle_client(int sfd){
 	hints.ai_flags = 0;
 	hints.ai_protocol = 0;  /* Any protocol */
 
-	printf("--------------------------------------------\n");
+	printf("1--------------------------------------------\n");
 	int s;
 	s = getaddrinfo(hostname,port,&hints,&request);
 	if (s != 0) {
@@ -365,7 +365,7 @@ void handle_client(int sfd){
 
 		close(sfd);
 	}
-	printf("--------------------------------------------\n");
+	printf("2--------------------------------------------\n");
 
 	if (rp == NULL) {   /* No address succeeded */
 		fprintf(stderr, "Could not connect\n");
