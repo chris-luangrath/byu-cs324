@@ -270,8 +270,11 @@ void handle_client(int sfd){
 			perror("read");
 			exit(EXIT_FAILURE);
 		}
+		// memcpy(request,rec_buf,nread);
 		memcpy(request,rec_buf,nread);
-		&request += nread;
+		*request += nread;
+		// &request += nread;
+		// i += nread;
 		// i += nread;
 		if(all_headers_received(request)){
 			headers_recieved = 1;
