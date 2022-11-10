@@ -263,6 +263,7 @@ void handle_client(int sfd){
 		printf("receiving...\n");
 		nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 							(struct sockaddr *) &remote_addr, &remote_addr_len);
+		printf("nread=%d\n",nread);
 		if (nread == -1) {
 			perror("read");
 			exit(EXIT_FAILURE);
