@@ -373,11 +373,13 @@ void handle_client(int sfd){
 	}
 
 	freeaddrinfo(result);
+	printf("3--------------------------------------------\n");
 
 	if (write(sfd, newrequest, strlen(newrequest)) != strlen(newrequest)) {
 		fprintf(stderr, "partial/failed write\n");
 		exit(EXIT_FAILURE);
 	}
+	printf("4--------------------------------------------\n");
 
 	nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 							(struct sockaddr *) &remote_addr, &remote_addr_len);
@@ -387,6 +389,7 @@ void handle_client(int sfd){
 	}
 	printf("result=%s\n",rec_buf);
 
+	printf("5--------------------------------------------\n");
 }
 
 void test_parser() {
