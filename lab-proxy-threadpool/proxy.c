@@ -380,8 +380,9 @@ void handle_client(int sfd){
 	printf("4--------------------------------------------\n");
 
 	// will loop until nread == 0
-	nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
-							(struct sockaddr *) &remote_addr, &remote_addr_len);
+	// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
+	// 						(struct sockaddr *) &remote_addr, &remote_addr_len);
+	nread = read(sfd,rec_buf,REC_SIZE);
 	if (nread == -1) {
 		perror("read");
 		exit(EXIT_FAILURE);
