@@ -25,7 +25,7 @@ int open_sfd(char*, char*);
 void handle_client(int);
 void print_bytes(unsigned char *, int);
 
-int verbose = 0
+int verbose = 0;
 
 int main(int argc, char* argv[])
 {
