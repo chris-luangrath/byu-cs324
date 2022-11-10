@@ -34,8 +34,8 @@ int main(int argc, char* argv[])
 	// printf("%s\n", user_agent_hdr);
 	int sfd = 0;
 	int clientsfd = 0;
-	// sfd = open_sfd(NULL, argv[1]);
-	sfd = open_sfd("localhost", argv[1]);
+	sfd = open_sfd(NULL, argv[1]);
+	// sfd = open_sfd("localhost", argv[1]);
 	// printf("sfd=%d\n",sfd);
 	while(1){
 		// accept(sfd,&remote_addr,&remote_addr_len);
@@ -184,7 +184,8 @@ int open_sfd(char* hostname, char* port) {
 	hints.ai_family = AF_INET;    /* Allow IPv4, IPv6, or both, depending on
 				    what was specified on the command line. */
 	hints.ai_socktype = SOCK_STREAM; /* Datagram socket */
-	hints.ai_flags = AI_PASSIVE;
+	// hints.ai_flags = AI_PASSIVE;
+	hints.ai_flags = 0;
 	hints.ai_protocol = 0;  /* Any protocol */
 	hints.ai_canonname = NULL;
 	hints.ai_addr = NULL;
