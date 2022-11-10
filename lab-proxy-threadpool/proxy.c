@@ -11,9 +11,9 @@
 #define MAX_CACHE_SIZE 1049000
 #define MAX_OBJECT_SIZE 102400
 
-#define REC_SIZE 1024
-#define REQUEST_SIZE 1024
-#define BUF_SIZE 1024
+#define REC_SIZE 102400
+#define REQUEST_SIZE 102400
+#define BUF_SIZE 102400
 
 static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0";
 
