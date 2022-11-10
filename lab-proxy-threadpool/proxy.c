@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <netdb.h>
 #include <sys/types.h>
+#include <unistd.h>
 
 
 /* Recommended max cache and object sizes */
