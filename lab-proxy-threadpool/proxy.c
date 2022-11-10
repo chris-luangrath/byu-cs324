@@ -29,7 +29,7 @@ int verbose = 0;
 
 int main(int argc, char* argv[])
 {
-	struct sockaddr_in remote_addr;
+	// struct sockaddr_in remote_addr;
 	// test_parser();
 
 	// printf("%s\n", user_agent_hdr);
@@ -175,8 +175,8 @@ int open_sfd(char* hostname, char* port) {
 	struct addrinfo hints;
 	struct addrinfo *result;
 	struct sockaddr_in ipv4addr;
-	struct sockaddr *local_addr;
-	socklen_t local_addr_len;
+	// struct sockaddr *local_addr;
+	// socklen_t local_addr_len;
 	int optval = 1;
 	int sfd = 0;
 
