@@ -297,8 +297,6 @@ void handle_client(int sfd){
 	}
 	
 	close(sfd);
-	// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
-	// 						(struct sockaddr *) &remote_addr, &remote_addr_len);
 	
 	char* connection = "close";
 	char* proxyconnection = "close";
@@ -381,6 +379,7 @@ void handle_client(int sfd){
 	}
 	printf("4--------------------------------------------\n");
 
+	// will loop until nread == 0
 	nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 							(struct sockaddr *) &remote_addr, &remote_addr_len);
 	if (nread == -1) {
@@ -390,6 +389,7 @@ void handle_client(int sfd){
 	printf("result=%s\n",rec_buf);
 
 	printf("5--------------------------------------------\n");
+	close(sfd);
 }
 
 void test_parser() {
