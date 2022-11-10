@@ -376,7 +376,7 @@ void handle_client(int sfd){
 		fprintf(stderr, "partial/failed write\n");
 		exit(EXIT_FAILURE);
 	}
-	sleep(5);
+	// sleep(5);
 	printf("4--------------------------------------------\n");
 
 	// will loop until nread == 0
