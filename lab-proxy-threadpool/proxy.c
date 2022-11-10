@@ -346,6 +346,7 @@ void handle_client(int sfd){
 	hints.ai_flags = 0;
 	hints.ai_protocol = 0;  /* Any protocol */
 
+	printf("--------------------------------------------\n");
 	int s;
 	s = getaddrinfo(hostname,port,&hints,&request);
 	if (s != 0) {
