@@ -396,7 +396,7 @@ void handle_client(int sfd){
 	printf("result=%s\n",rec_buf);
 
 	printf("5--------------------------------------------\n");
-	close(sfd);
+	// close(sfd);
 }
 
 void test_parser() {
