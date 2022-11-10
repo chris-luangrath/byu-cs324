@@ -272,7 +272,7 @@ void handle_client(int sfd){
 			exit(EXIT_FAILURE);
 		}
 		// memcpy(request,rec_buf,nread);
-		memcpy(*reqp,rec_buf,nread);
+		memcpy(reqp,rec_buf,nread);
 		reqp += nread;
 		// &request += nread;
 		// i += nread;
