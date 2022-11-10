@@ -19,6 +19,8 @@ static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (Macintosh; Intel M
 int all_headers_received(char *);
 int parse_request(char *, char *, char *, char *, char *, char *);
 void test_parser();
+int open_sfd(char*, char*);
+void handle_client(int);
 void print_bytes(unsigned char *, int);
 
 
@@ -32,14 +34,15 @@ int main(int argc, char* argv[])
 
 	printf("%s\n", user_agent_hdr);
 	int sfd = 0;
+	int clientsfd = 0;
 	sfd = open_sfd("localhost", argv[1]);
 	while(1){
 		// accept(sfd,&remote_addr,&remote_addr_len);
-		if ((sfd = accept(sfd, (struct sockaddr *) &remote_addr, &remote_addr_len)) < 0) {
+		if ((clientsfd = accept(sfd, (struct sockaddr *) &remote_addr, &remote_addr_len)) < 0) {
 			perror("Could not accept");	
 			exit(EXIT_FAILURE);
 		}
-		handle_client();
+		handle_client(clientsfd);
 	}
 
 	return 0;
@@ -259,14 +262,14 @@ void handle_client(int sfd){
 			perror("read");
 			exit(EXIT_FAILURE);
 		}
-		memcpy(&request,&rec_buf,nread);
+		memcpy(request,rec_buf,nread);
 		i += nread;
-		if(all_headers_received(*request)){
+		if(all_headers_received(request)){
 			headers_recieved = 1;
 		}
 	}
 
-	if (parse_request(*request, method, hostname, port, path, headers)) {
+	if (parse_request(request, method, hostname, port, path, headers)) {
 		printf("METHOD: %s\n", method);
 		printf("HOSTNAME: %s\n", hostname);
 		printf("PORT: %s\n", port);
