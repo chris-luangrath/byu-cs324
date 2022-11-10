@@ -416,6 +416,7 @@ void handle_client(int acceptsfd){
 		p += nread;
 		total += nread;
 		printf("total=%d\n",total);
+		printf("strlen=%d\n",strlen(rec_buf));
 	}
 	// if(verbose)
 	printf("resp:\n%s\n",response);
