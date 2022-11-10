@@ -348,7 +348,7 @@ void handle_client(int sfd){
 
 	printf("1--------------------------------------------\n");
 	int s;
-	s = getaddrinfo(hostname,port,&hints,&request);
+	s = getaddrinfo(hostname,port,&hints,&result);
 	if (s != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
 		exit(EXIT_FAILURE);
