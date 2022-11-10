@@ -200,17 +200,19 @@ int open_sfd(char* hostname, char* port) {
 				result->ai_protocol);
 
 	setsockopt(sfd, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
+
+	unsigned short sPort = atoi(port);
 	
 	int address_family = AF_INET;
-	if (address_family == AF_INET) {
-		ipv4addr.sin_family = address_family;
-		ipv4addr.sin_addr.s_addr = INADDR_ANY; // listen on any/all IPv4 addresses
-		ipv4addr.sin_port = htons(port);       // specify port explicitly, in network byte order
+	// if (address_family == AF_INET) {
+	ipv4addr.sin_family = address_family;
+	ipv4addr.sin_addr.s_addr = INADDR_ANY; // listen on any/all IPv4 addresses
+	ipv4addr.sin_port = htons(sPort);       // specify port explicitly, in network byte order
 
-		// Assign local_addr and local_addr_len to ipv4addr
-		local_addr = (struct sockaddr *)&ipv4addr;
-		local_addr_len = sizeof(ipv4addr);
-	} 
+	// Assign local_addr and local_addr_len to ipv4addr
+	local_addr = (struct sockaddr *)&ipv4addr;
+	local_addr_len = sizeof(ipv4addr);
+	// } 
 	// else { // address_family == AF_INET6
 	// 	ipv6addr.sin6_family = address_family;
 	// 	ipv6addr.sin6_addr = in6addr_any;     // listen on any/all IPv6 addresses
