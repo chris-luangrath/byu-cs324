@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
 	int sfd = 0;
 	int clientsfd = 0;
 	sfd = open_sfd("localhost", argv[1]);
-	printf("sfd=%d\n",sfd);
+	// printf("sfd=%d\n",sfd);
 	while(1){
 		// accept(sfd,&remote_addr,&remote_addr_len);
 		// if ((clientsfd = accept(sfd, (struct sockaddr *) &remote_addr, &remote_addr_len)) < 0) {
@@ -260,6 +260,7 @@ void handle_client(int sfd){
 	int i = 0;
 	int headers_recieved = 0;
 	while(!headers_recieved){
+		printf("receiving...\n");
 		nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 							(struct sockaddr *) &remote_addr, &remote_addr_len);
 		if (nread == -1) {
@@ -270,6 +271,8 @@ void handle_client(int sfd){
 		i += nread;
 		if(all_headers_received(request)){
 			headers_recieved = 1;
+			printf("done receiving\n");
+			
 		}
 	}
 
