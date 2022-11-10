@@ -260,7 +260,7 @@ void handle_client(int sfd){
 	memset(headers,0,1024);
 
 
-	int i = 0;
+	// int i = 0;
 	int headers_recieved = 0;
 	while(!headers_recieved){
 		// printf("receiving...\n");
@@ -340,7 +340,7 @@ void handle_client(int sfd){
 	// struct addrinfo *result;
 	struct addrinfo *result, *rp;
 	memset(&hints, 0, sizeof(struct addrinfo));
-	hints.ai_family = af;    /* Allow IPv4, IPv6, or both, depending on
+	hints.ai_family = AF_INET;    /* Allow IPv4, IPv6, or both, depending on
 				    what was specified on the command line. */
 	hints.ai_socktype = SOCK_DGRAM; /* Datagram socket */
 	hints.ai_flags = 0;
