@@ -428,10 +428,10 @@ void handle_client(int acceptsfd){
 	// printf("5--------------------------------------------\n");
 	close(serversfd);
 
-	if (send(acceptsfd,response,0) < 0)
+	if (send(acceptsfd,response,strlen(response),0) < 0)
 				fprintf(stderr, "Error sending response\n");
 
-	close(acceptsfd,response,strlen(response));
+	close(acceptsfd);
 	
 	
 }
