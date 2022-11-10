@@ -401,8 +401,8 @@ void handle_client(int acceptsfd){
 	// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 	// 						(struct sockaddr *) &remote_addr, &remote_addr_len);
 	// printf("4.5--------------------------------------------\n");
-	char resp_buf[MAX_OBJECT_SIZE];
-	p = &resp_buf;
+	char response[MAX_OBJECT_SIZE];
+	p = &response;
 
 	nread = 1;
 	while((nread = read(serversfd,rec_buf,REC_SIZE)) != 0){
@@ -416,7 +416,7 @@ void handle_client(int acceptsfd){
 		// p += strlen(rec_buf);
 		p += nread;
 	}
-	printf("resp:\n%s\n",resp_buf);
+	printf("resp:\n%s\n",response);
 	// bzero(rec_buf,REC_SIZE);
 	// // nread = read(serversfd,rec_buf,REC_SIZE);
 	// if (nread == -1) {
@@ -426,9 +426,12 @@ void handle_client(int acceptsfd){
 	// printf("result=%s\n",rec_buf);
 
 	// printf("5--------------------------------------------\n");
-
 	close(serversfd);
-	close(acceptsfd);
+
+	if (send(acceptsfd,response,0) < 0)
+				fprintf(stderr, "Error sending response\n");
+
+	close(acceptsfd,response,strlen(response));
 	
 	
 }
