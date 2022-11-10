@@ -243,7 +243,7 @@ int open_sfd(char* hostname, char* port) {
 	return sfd;
 }
 
-void handle_client(int sfd){
+void handle_client(int acceptsfd){
 	int nread = 0;
 	unsigned char rec_buf[REC_SIZE];
 	bzero(rec_buf,REC_SIZE);
@@ -268,7 +268,7 @@ void handle_client(int sfd){
 	while(!headers_recieved){
 		// printf("receiving...\n");
 		// memset(rec_buf,0,REC_SIZE);
-		nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
+		nread = recvfrom(acceptsfd, rec_buf, REC_SIZE, 0,
 							(struct sockaddr *) &remote_addr, &remote_addr_len);
 		if (nread == -1) {
 			perror("read");
@@ -298,7 +298,7 @@ void handle_client(int sfd){
 		exit(1);
 	}
 	
-	close(sfd); // does this go here?
+	
 	
 	char* connection = "close";
 	char* proxyconnection = "close";
@@ -350,6 +350,7 @@ void handle_client(int sfd){
 
 	printf("1--------------------------------------------\n");
 	int s;
+	int sfd;
 	s = getaddrinfo(hostname,port,&hints,&result);
 	if (s != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
@@ -402,7 +403,11 @@ void handle_client(int sfd){
 	printf("result=%s\n",rec_buf);
 
 	printf("5--------------------------------------------\n");
+
 	close(sfd);
+	close(acceptsfd);
+	
+	
 }
 
 void test_parser() {
