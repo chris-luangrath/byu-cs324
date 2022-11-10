@@ -34,8 +34,8 @@ int main(int argc, char* argv[])
 	// printf("%s\n", user_agent_hdr);
 	int sfd = 0;
 	int clientsfd = 0;
-	sfd = open_sfd(NULL, argv[1]);
-	// sfd = open_sfd("localhost", argv[1]);
+	// sfd = open_sfd(NULL, argv[1]);
+	sfd = open_sfd("localhost", argv[1]);
 	// printf("sfd=%d\n",sfd);
 	while(1){
 		// accept(sfd,&remote_addr,&remote_addr_len);
@@ -354,7 +354,7 @@ void handle_client(int acceptsfd){
 
 	printf("1--------------------------------------------\n");
 	int s;
-	int sfd;
+	int clientsfd;
 	s = getaddrinfo(hostname,port,&hints,&result);
 	if (s != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
@@ -363,18 +363,18 @@ void handle_client(int acceptsfd){
 
 	for (rp = result; rp != NULL; rp = rp->ai_next) {
 		printf("this ran\n");
-		sfd = socket(rp->ai_family, rp->ai_socktype,
+		clientsfd = socket(rp->ai_family, rp->ai_socktype,
 				rp->ai_protocol);
-		if (sfd == -1)
+		if (clientsfd == -1)
 			continue;
 
-		if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1){
+		if (connect(clientsfd, rp->ai_addr, rp->ai_addrlen) != -1){
 			printf("success\n");
 			break;  /* Success */
 		}
 
 		printf("success?\n");
-		close(sfd);
+		close(clientsfd);
 	}
 	printf("2--------------------------------------------\n");
 
@@ -387,7 +387,7 @@ void handle_client(int acceptsfd){
 	printf("3--------------------------------------------\n");
 	printf("strlen new=%d",strlen(newrequest));
 	printf("strlen new=%ld",strlen(newrequest));
-	if (write(sfd, newrequest, strlen(newrequest)) != strlen(newrequest)) {
+	if (write(clientsfd, newrequest, strlen(newrequest)) != strlen(newrequest)) {
 		fprintf(stderr, "partial/failed write\n");
 		exit(EXIT_FAILURE);
 	}
@@ -398,7 +398,7 @@ void handle_client(int acceptsfd){
 	// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 	// 						(struct sockaddr *) &remote_addr, &remote_addr_len);
 	bzero(rec_buf,REC_SIZE);
-	nread = read(sfd,rec_buf,REC_SIZE);
+	nread = read(clientsfd,rec_buf,REC_SIZE);
 	printf("4.5--------------------------------------------\n");
 	if (nread == -1) {
 		perror("read");
@@ -408,7 +408,7 @@ void handle_client(int acceptsfd){
 
 	printf("5--------------------------------------------\n");
 
-	close(sfd);
+	close(clientsfd);
 	close(acceptsfd);
 	
 	
