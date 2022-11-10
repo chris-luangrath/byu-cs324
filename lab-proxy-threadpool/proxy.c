@@ -173,8 +173,8 @@ char *hostname, char *port, char *path, char *headers) {
 
 // int open_sfd() {
 int open_sfd(char* hostname, char* port) {
-	struct addrinfo *result;
 	struct addrinfo hints;
+	struct addrinfo *result;
 	struct sockaddr_in ipv4addr;
 	struct sockaddr *local_addr;
 	socklen_t local_addr_len;
@@ -290,7 +290,7 @@ void handle_client(int sfd){
 		printf("PORT: %s\n", port);
 		printf("PATH: %s\n", path); // I ADDED THIS ONE. IT WASNT HERE BEFORE
 		printf("HEADERS: %s\n", headers);
-		printf("%s\n", user_agent_hdr);
+		// printf("%s\n", user_agent_hdr);
 	} else {
 		printf("REQUEST INCOMPLETE\n");
 		exit(1);
@@ -333,11 +333,57 @@ void handle_client(int sfd){
 	reqp += strlen(buf);
 
 	
-	// if()
-	printf("HEY IT'S HERE ----------------------\n");
+	// printf("HEY IT'S HERE ----------------------\n");
 	printf("%s\n",newrequest);
 
+	struct addrinfo hints;
+	// struct addrinfo *result;
+	struct addrinfo *result, *rp;
+	memset(&hints, 0, sizeof(struct addrinfo));
+	hints.ai_family = af;    /* Allow IPv4, IPv6, or both, depending on
+				    what was specified on the command line. */
+	hints.ai_socktype = SOCK_DGRAM; /* Datagram socket */
+	hints.ai_flags = 0;
+	hints.ai_protocol = 0;  /* Any protocol */
 
+	int s;
+	s = getaddrinfo(hostname,port,&hints,&request);
+	if (s != 0) {
+		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
+		exit(EXIT_FAILURE);
+	}
+
+	for (rp = result; rp != NULL; rp = rp->ai_next) {
+		sfd = socket(rp->ai_family, rp->ai_socktype,
+				rp->ai_protocol);
+		if (sfd == -1)
+			continue;
+
+		if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
+			break;  /* Success */
+
+		close(sfd);
+	}
+
+	if (rp == NULL) {   /* No address succeeded */
+		fprintf(stderr, "Could not connect\n");
+		exit(EXIT_FAILURE);
+	}
+
+	freeaddrinfo(result);
+
+	if (write(sfd, newrequest, strlen(newrequest)) != strlen(newrequest)) {
+		fprintf(stderr, "partial/failed write\n");
+		exit(EXIT_FAILURE);
+	}
+
+	nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
+							(struct sockaddr *) &remote_addr, &remote_addr_len);
+	if (nread == -1) {
+		perror("read");
+		exit(EXIT_FAILURE);
+	}
+	printf("result=%s\n",rec_buf);
 
 }
 
