@@ -184,7 +184,7 @@ int open_sfd(char* hostname, char* port) {
 	hints.ai_family = AF_INET;    /* Allow IPv4, IPv6, or both, depending on
 				    what was specified on the command line. */
 	hints.ai_socktype = SOCK_STREAM; /* Datagram socket */
-	hints.ai_flags = 0;
+	hints.ai_flags = AI_PASSIVE;
 	hints.ai_protocol = 0;  /* Any protocol */
 
 	int s = getaddrinfo(hostname, port, &hints, &result);
