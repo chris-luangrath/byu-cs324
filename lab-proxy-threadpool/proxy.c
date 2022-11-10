@@ -338,7 +338,7 @@ void handle_client(int acceptsfd){
 
 	
 	// printf("HEY IT'S HERE ----------------------\n");
-	if(verbose):
+	if(verbose)
 		printf("new request:\n%s\n",newrequest);
 
 	struct addrinfo hints;
@@ -418,7 +418,7 @@ void handle_client(int acceptsfd){
 		// p += strlen(rec_buf);
 		p += nread;
 	}
-	if(verbose):
+	if(verbose)
 		printf("resp:\n%s\n",response);
 	// bzero(rec_buf,REC_SIZE);
 	// // nread = read(serversfd,rec_buf,REC_SIZE);
