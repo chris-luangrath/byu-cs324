@@ -51,6 +51,7 @@ int main(int argc, char* argv[])
 }
 
 int all_headers_received(char *request) {
+	printf("%s!!!!\n",request);
 	if (strcmp(&request[strlen(request)-4],"\r\n\r\n") == 0){
 		// printf("nice\n");
 		return 1;
@@ -289,6 +290,8 @@ void handle_client(int sfd){
 		printf("REQUEST INCOMPLETE\n");
 		exit(1);
 	}
+
+	close(sfd);
 	// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 	// 						(struct sockaddr *) &remote_addr, &remote_addr_len);
 	
