@@ -423,9 +423,9 @@ void handle_client(int acceptsfd){
 	// 	perror("read");
 	// 	exit(EXIT_FAILURE);
 	// }
-	printf("result=%s\n",rec_buf);
+	// printf("result=%s\n",rec_buf);
 
-	printf("5--------------------------------------------\n");
+	// printf("5--------------------------------------------\n");
 
 	close(serversfd);
 	close(acceptsfd);
