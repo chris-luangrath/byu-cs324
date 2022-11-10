@@ -256,7 +256,7 @@ void handle_client(int acceptsfd){
 	remote_addr_len = sizeof(struct sockaddr_storage);
 
 	char request[REQUEST_SIZE];
-	char* reqp = &request;
+	char* p = &request;
 	bzero(request,REQUEST_SIZE);
 
 	char method[16], hostname[64], port[8], path[64], headers[1024];
@@ -278,8 +278,8 @@ void handle_client(int acceptsfd){
 			perror("read");
 			exit(EXIT_FAILURE);
 		}
-		memcpy(reqp,rec_buf,nread);
-		reqp += nread;
+		memcpy(p,rec_buf,nread);
+		p += nread;
 		if(all_headers_received(request)){
 			headers_recieved = 1;
 			// printf("done receiving\n");
@@ -308,7 +308,7 @@ void handle_client(int acceptsfd){
 	char* proxyconnection = "close";
 
 	char newrequest[REQUEST_SIZE];
-	reqp = &newrequest;
+	p = &newrequest;
 	bzero(newrequest,REQUEST_SIZE);
 	char buf[BUF_SIZE];
 	bzero(buf,BUF_SIZE);
@@ -317,23 +317,23 @@ void handle_client(int acceptsfd){
 	// printf("path=%s\n",path);
 	// printf("buf=%s\n",buf);
 	
-	memcpy(reqp,&buf,strlen(buf));
-	reqp += strlen(buf);
+	memcpy(p,&buf,strlen(buf));
+	p += strlen(buf);
 	
 	bzero(buf,BUF_SIZE);
 	sprintf(buf,"Host: %s:%s\r\n",hostname,port);
-	memcpy(reqp,&buf,strlen(buf));
-	reqp += strlen(buf);
+	memcpy(p,&buf,strlen(buf));
+	p += strlen(buf);
 
 	bzero(buf,BUF_SIZE);
 	sprintf(buf,"%s\r\n",user_agent_hdr);
-	memcpy(reqp,&buf,strlen(buf));
-	reqp += strlen(buf);
+	memcpy(p,&buf,strlen(buf));
+	p += strlen(buf);
 
 	bzero(buf,BUF_SIZE);
 	sprintf(buf,"Connection: %s\r\nProxy-Connection: %s\r\n\r\n",connection,proxyconnection);
-	memcpy(reqp,&buf,strlen(buf));
-	reqp += strlen(buf);
+	memcpy(p,&buf,strlen(buf));
+	p += strlen(buf);
 
 	
 	// printf("HEY IT'S HERE ----------------------\n");
@@ -353,7 +353,7 @@ void handle_client(int acceptsfd){
 	hints.ai_addr = NULL;
 	hints.ai_next = NULL;
 
-	printf("1--------------------------------------------\n");
+	// printf("1--------------------------------------------\n");
 	int s;
 	int serversfd;
 	s = getaddrinfo(hostname,port,&hints,&result);
@@ -377,7 +377,7 @@ void handle_client(int acceptsfd){
 		printf("success?\n");
 		close(serversfd);
 	}
-	printf("2--------------------------------------------\n");
+	// printf("2--------------------------------------------\n");
 
 	if (rp == NULL) {   /* No address succeeded */
 		fprintf(stderr, "Could not connect\n");
@@ -385,7 +385,7 @@ void handle_client(int acceptsfd){
 	}
 
 	freeaddrinfo(result);
-	printf("3--------------------------------------------\n");
+	// printf("3--------------------------------------------\n");
 	printf("strlen new=%d\n",strlen(newrequest));
 	printf("strlen new=%ld\n",strlen(newrequest));
 	if (write(serversfd, newrequest, strlen(newrequest)) != strlen(newrequest)) { //clientsfd should be serversfd
@@ -395,21 +395,35 @@ void handle_client(int acceptsfd){
 	
 
 	// sleep(5);
-	printf("4--------------------------------------------\n");
+	// printf("4--------------------------------------------\n");
 
 	// will loop until nread == 0
 	// nread = recvfrom(sfd, rec_buf, REC_SIZE, 0,
 	// 						(struct sockaddr *) &remote_addr, &remote_addr_len);
-	bzero(rec_buf,REC_SIZE);
-	nread = read(serversfd,rec_buf,REC_SIZE);
-	printf("4.5--------------------------------------------\n");
-	if (nread == -1) {
-		perror("read");
-		exit(EXIT_FAILURE);
+	// printf("4.5--------------------------------------------\n");
+	char resp_buf[MAX_OBJECT_SIZE];
+	p = &resp_buf;
+
+	while((nread = read(serversfd,rec_buf,REC_SIZE)) != 0){
+		bzero(rec_buf,REC_SIZE);
+		// nread = read(serversfd,rec_buf,REC_SIZE);
+		if (nread == -1) {
+			perror("read");
+			exit(EXIT_FAILURE);
+		}
+		memcpy(p,&rec_buf,strlen(rec_buf));
+		p += strlen(rec_buf);
 	}
+	printf("resp:\n%s\n",resp_buf);
+	// bzero(rec_buf,REC_SIZE);
+	// // nread = read(serversfd,rec_buf,REC_SIZE);
+	// if (nread == -1) {
+	// 	perror("read");
+	// 	exit(EXIT_FAILURE);
+	// }
 	printf("result=%s\n",rec_buf);
 
-	printf("5--------------------------------------------\n");
+	// printf("5--------------------------------------------\n");
 
 	close(serversfd);
 	close(acceptsfd);
