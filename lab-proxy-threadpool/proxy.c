@@ -306,7 +306,7 @@ void handle_client(int sfd){
 	bzero(newrequest,REQUEST_SIZE);
 	char buf[BUF_SIZE];
 	bzero(buf,BUF_SIZE);
-	sprintf(buf,"%s: %s HTTP/1.0\r\n",method,path);
+	sprintf(buf,"%s %s HTTP/1.0\r\n",method,path);
 	// printf("method=%s\n",method);
 	// printf("path=%s\n",path);
 	// printf("buf=%s\n",buf);
