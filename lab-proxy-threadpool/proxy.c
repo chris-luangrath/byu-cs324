@@ -221,8 +221,8 @@ int open_sfd(char* hostname, char* port) {
 	ipv4addr.sin_port = htons(sPort);       // specify port explicitly, in network byte order
 
 	// Assign local_addr and local_addr_len to ipv4addr
-	local_addr = (struct sockaddr *)&ipv4addr;
-	local_addr_len = sizeof(ipv4addr);
+	// local_addr = (struct sockaddr *)&ipv4addr;
+	// local_addr_len = sizeof(ipv4addr);
 	// } 
 	// else { // address_family == AF_INET6
 	// 	ipv6addr.sin6_family = address_family;
