@@ -25,6 +25,7 @@ int open_sfd(char*, char*);
 void handle_client(int);
 void print_bytes(unsigned char *, int);
 
+int verbose = 0
 
 int main(int argc, char* argv[])
 {
@@ -337,7 +338,8 @@ void handle_client(int acceptsfd){
 
 	
 	// printf("HEY IT'S HERE ----------------------\n");
-	printf("new request:\n%s\n",newrequest);
+	if(verbose):
+		printf("new request:\n%s\n",newrequest);
 
 	struct addrinfo hints;
 	// struct addrinfo *result;
@@ -416,7 +418,8 @@ void handle_client(int acceptsfd){
 		// p += strlen(rec_buf);
 		p += nread;
 	}
-	printf("resp:\n%s\n",response);
+	if(verbose):
+		printf("resp:\n%s\n",response);
 	// bzero(rec_buf,REC_SIZE);
 	// // nread = read(serversfd,rec_buf,REC_SIZE);
 	// if (nread == -1) {
