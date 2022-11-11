@@ -250,12 +250,7 @@ void handle_client(int acceptsfd){
 	remote_addr_len = sizeof(struct sockaddr_storage);
 
 	char* request = malloc(MAX_OBJECT_SIZE);
-	// char request[MAX_OBJECT_SIZE];
-	// char request[MAX_OBJECT_SIZE], (*p)[MAX_OBJECT_SIZE] = &request;
-	char *p = malloc(MAX_OBJECT_SIZE);
-	p = request;
-	// char *p = &request;
-	// char (*p)[MAX_OBJECT_SIZE] = &request;
+	char *p = request;
 	bzero(request,MAX_OBJECT_SIZE);
 
 	char method[16], hostname[64], port[8], path[64], headers[1024];
@@ -396,23 +391,19 @@ void handle_client(int acceptsfd){
 	// printf("4--------------------------------------------\n");
 
 	char* response = malloc(MAX_OBJECT_SIZE);
-	// char response[MAX_OBJECT_SIZE];
 	
 	p = response;
-	// p = &response;
 
 	int total = 0;
 	nread = 1;
 	printf("start readin:\n");
 	while((nread = read(serversfd,rec_buf,MAX_OBJECT_SIZE)) != 0){
 		printf("nread=%d\n",nread);
-		// nread = read(serversfd,rec_buf,MAX_OBJECT_SIZE);
 		if (nread == -1) {
 			perror("read");
 			exit(EXIT_FAILURE);
 		}
 		memcpy(p,&rec_buf,nread);
-		// p += strlen(rec_buf);
 		p += nread;
 		total += nread;
 		printf("total=%d\n",total);
