@@ -14,9 +14,6 @@
 #define MAX_CACHE_SIZE 1049000
 #define MAX_OBJECT_SIZE 102400
 
-#define REC_SIZE 102400
-#define REQUEST_SIZE 102400
-#define BUF_SIZE 102400
 #define NTHREADS  8
 #define SBUFSIZE  5
 
@@ -246,20 +243,20 @@ int open_sfd(char* hostname, char* port) {
 
 void handle_client(int acceptsfd){
 	int nread = 0;
-	unsigned char rec_buf[REC_SIZE];
-	bzero(rec_buf,REC_SIZE);
+	unsigned char rec_buf[MAX_OBJECT_SIZE];
+	bzero(rec_buf,MAX_OBJECT_SIZE);
 	socklen_t remote_addr_len;
 	struct sockaddr_storage remote_addr; // should I be using sockaddr_in?
 	remote_addr_len = sizeof(struct sockaddr_storage);
 
-	char* request = malloc(REQUEST_SIZE);
-	// char request[REQUEST_SIZE];
-	// char request[REQUEST_SIZE], (*p)[REQUEST_SIZE] = &request;
-	char *p = malloc(REQUEST_SIZE);
+	char* request = malloc(MAX_OBJECT_SIZE);
+	// char request[MAX_OBJECT_SIZE];
+	// char request[MAX_OBJECT_SIZE], (*p)[MAX_OBJECT_SIZE] = &request;
+	char *p = malloc(MAX_OBJECT_SIZE);
 	p = request;
 	// char *p = &request;
-	// char (*p)[REQUEST_SIZE] = &request;
-	bzero(request,REQUEST_SIZE);
+	// char (*p)[MAX_OBJECT_SIZE] = &request;
+	bzero(request,MAX_OBJECT_SIZE);
 
 	char method[16], hostname[64], port[8], path[64], headers[1024];
 	memset(method,0,16);
@@ -273,8 +270,8 @@ void handle_client(int acceptsfd){
 	int headers_recieved = 0;
 	while(!headers_recieved){
 		// printf("receiving...\n");
-		// memset(rec_buf,0,REC_SIZE);
-		nread = recvfrom(acceptsfd, rec_buf, REC_SIZE, 0,
+		// memset(rec_buf,0,MAX_OBJECT_SIZE);
+		nread = recvfrom(acceptsfd, rec_buf, MAX_OBJECT_SIZE, 0,
 							(struct sockaddr *) &remote_addr, &remote_addr_len);
 		if (nread == -1) {
 			perror("read");
@@ -309,12 +306,12 @@ void handle_client(int acceptsfd){
 	char* connection = "close";
 	char* proxyconnection = "close";
 
-	// char newrequest[REQUEST_SIZE];
-	char* newrequest = malloc(REQUEST_SIZE);
+	// char newrequest[MAX_OBJECT_SIZE];
+	char* newrequest = malloc(MAX_OBJECT_SIZE);
 	p = newrequest;
-	bzero(newrequest,REQUEST_SIZE);
-	char buf[BUF_SIZE];
-	bzero(buf,BUF_SIZE);
+	bzero(newrequest,MAX_OBJECT_SIZE);
+	char buf[MAX_OBJECT_SIZE];
+	bzero(buf,MAX_OBJECT_SIZE);
 	sprintf(buf,"%s %s HTTP/1.0\r\n",method,path);
 	// printf("method=%s\n",method);
 	// printf("path=%s\n",path);
@@ -323,17 +320,17 @@ void handle_client(int acceptsfd){
 	memcpy(p,&buf,strlen(buf));
 	p += strlen(buf);
 	
-	bzero(buf,BUF_SIZE);
+	bzero(buf,MAX_OBJECT_SIZE);
 	sprintf(buf,"Host: %s:%s\r\n",hostname,port);
 	memcpy(p,&buf,strlen(buf));
 	p += strlen(buf);
 
-	bzero(buf,BUF_SIZE);
+	bzero(buf,MAX_OBJECT_SIZE);
 	sprintf(buf,"%s\r\n",user_agent_hdr);
 	memcpy(p,&buf,strlen(buf));
 	p += strlen(buf);
 
-	bzero(buf,BUF_SIZE);
+	bzero(buf,MAX_OBJECT_SIZE);
 	sprintf(buf,"Connection: %s\r\nProxy-Connection: %s\r\n\r\n",connection,proxyconnection);
 	memcpy(p,&buf,strlen(buf));
 	p += strlen(buf);
@@ -407,9 +404,9 @@ void handle_client(int acceptsfd){
 	int total = 0;
 	nread = 1;
 	printf("start readin:\n");
-	while((nread = read(serversfd,rec_buf,REC_SIZE)) != 0){
+	while((nread = read(serversfd,rec_buf,MAX_OBJECT_SIZE)) != 0){
 		printf("nread=%d\n",nread);
-		// nread = read(serversfd,rec_buf,REC_SIZE);
+		// nread = read(serversfd,rec_buf,MAX_OBJECT_SIZE);
 		if (nread == -1) {
 			perror("read");
 			exit(EXIT_FAILURE);
