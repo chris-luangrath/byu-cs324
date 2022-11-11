@@ -72,9 +72,12 @@ int main(int argc, char* argv[])
 void *handle_clients(void *vargp) 
 {  
 	pthread_detach(pthread_self()); 
-	int* clientsfd = (int*) vargp;
-	handle_client(clientsfd);
-
+	// int* clientsfd = (int*) vargp;
+	while(1){
+		int clientsfd = sbuf_remove(&sbuf);
+		handle_client(clientsfd);
+		// close(clientsfd);
+	}
 	// while (1) { 
 	// 	int connfd = sbuf_remove(&sbuf); /* Remove connfd from buffer */ //line:conc:pre:removeconnfd
 	// 	echo_cnt(connfd);                /* Service client */
@@ -206,9 +209,6 @@ char *hostname, char *port, char *path, char *headers) {
 int open_sfd(char* hostname, char* port) {
 	struct addrinfo hints;
 	struct addrinfo *result;
-	// struct sockaddr_in ipv4addr;
-	// struct sockaddr *local_addr;
-	// socklen_t local_addr_len;
 	int optval = 1;
 	int sfd = 0;
 
@@ -224,19 +224,16 @@ int open_sfd(char* hostname, char* port) {
 	hints.ai_addr = NULL;
 	hints.ai_next = NULL;
 
-	// int s = getaddrinfo(NULL, port, &hints, &result);
 	int s = getaddrinfo(hostname, port, &hints, &result);
 	if (s != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
 		exit(EXIT_FAILURE);
 	}
-	// printf("hey1\n");
 
 	if (result == NULL) {   /* No address succeeded */
 		fprintf(stderr, "Could not connect\n");
 		exit(EXIT_FAILURE);
 	}
-	// printf("hey1\n");
 
 	// pre-socket
 	sfd = socket(result->ai_family, result->ai_socktype,
@@ -246,29 +243,6 @@ int open_sfd(char* hostname, char* port) {
 
 	unsigned short sPort = atoi(port);
 	
-	// int address_family = AF_INET;
-	// if (address_family == AF_INET) {
-	// ipv4addr.sin_family = address_family;
-	// ipv4addr.sin_addr.s_addr = INADDR_ANY; // listen on any/all IPv4 addresses
-	// ipv4addr.sin_port = htons(sPort);       // specify port explicitly, in network byte order
-
-	// Assign local_addr and local_addr_len to ipv4addr
-	// local_addr = (struct sockaddr *)&ipv4addr;
-	// local_addr_len = sizeof(ipv4addr);
-	// } 
-	// else { // address_family == AF_INET6
-	// 	ipv6addr.sin6_family = address_family;
-	// 	ipv6addr.sin6_addr = in6addr_any;     // listen on any/all IPv6 addresses
-	// 	ipv6addr.sin6_port = htons(port);     // specify port explicitly, in network byte order
-
-	// 	// Assign local_addr and local_addr_len to ipv6addr
-	// 	local_addr = (struct sockaddr *)&ipv6addr;
-	// 	local_addr_len = sizeof(ipv6addr);
-	// }
-
-	// result->ai_addr->sin_port = htons(sPort);
-	
-	// if (bind(sfd, local_addr, local_addr_len) < 0) {
 	if (bind(sfd, result->ai_addr, result->ai_addrlen) < 0) {	
 		perror("Could not bind");
 		exit(EXIT_FAILURE);
@@ -380,7 +354,6 @@ void handle_client(int acceptsfd){
 	memset(&hints, 0, sizeof(struct addrinfo));
 	hints.ai_family = AF_INET;    /* Allow IPv4, IPv6, or both, depending on
 				    what was specified on the command line. */
-	// hints.ai_socktype = SOCK_DGRAM; /* socket stream*/ // ---------------------------------------- changing this to dgram makes it run further
 	hints.ai_socktype = SOCK_STREAM; /* socket stream*/
 	hints.ai_flags = 0;
 	hints.ai_protocol = 0;  /* Any protocol */
@@ -452,13 +425,6 @@ void handle_client(int acceptsfd){
 	// if(verbose)
 	printf("resp:\n%s\n",response);
 	// printf("%s\n",response);
-	// bzero(rec_buf,REC_SIZE);
-	// // nread = read(serversfd,rec_buf,REC_SIZE);
-	// if (nread == -1) {
-	// 	perror("read");
-	// 	exit(EXIT_FAILURE);
-	// }
-	// printf("result=%s\n",rec_buf);
 
 	// printf("5--------------------------------------------\n");
 	close(serversfd);
@@ -466,7 +432,7 @@ void handle_client(int acceptsfd){
 	if (send(acceptsfd,response,total,0) < 0)
 				fprintf(stderr, "Error sending response\n");
 
-	close(acceptsfd);
+	close(acceptsfd); // should I do this here or in handle-thread
 	
 	
 }
