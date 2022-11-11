@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
 	pthread_t tid;
 	sbuf_init(&sbuf, SBUFSIZE);
 
-	for (i = 0; i < NTHREADS; i++)  /* Create worker threads */ //line:conc:pre:begincreate
+	for (int i = 0; i < NTHREADS; i++)  /* Create worker threads */ //line:conc:pre:begincreate
 		pthread_create(&tid, NULL, handle_clients, NULL);               //line:conc:pre:endcreate
 
 	while(1){
