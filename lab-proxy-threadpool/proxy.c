@@ -241,7 +241,7 @@ int open_sfd(char* hostname, char* port) {
 
 	setsockopt(sfd, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
 
-	unsigned short sPort = atoi(port);
+	// unsigned short sPort = atoi(port);
 	
 	if (bind(sfd, result->ai_addr, result->ai_addrlen) < 0) {	
 		perror("Could not bind");
@@ -419,8 +419,8 @@ void handle_client(int acceptsfd){
 		// p += strlen(rec_buf);
 		p += nread;
 		total += nread;
-		printf("total=%ld\n",total);
-		printf("strlen=%d\n",strlen(response));
+		printf("total=%d\n",total);
+		printf("strlen=%ld\n",strlen(response));
 	}
 	// if(verbose)
 	printf("resp:\n%s\n",response);
