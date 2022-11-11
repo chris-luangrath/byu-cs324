@@ -1,3 +1,5 @@
+#include "sbuf.h"
+
 #include <netdb.h>
 #include <pthread.h>
 #include <stdio.h>
