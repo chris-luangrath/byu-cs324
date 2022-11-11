@@ -252,7 +252,7 @@ void handle_client(int acceptsfd){
 	struct sockaddr_storage remote_addr; // should I be using sockaddr_in?
 	remote_addr_len = sizeof(struct sockaddr_storage);
 
-	char request[REQUEST_SIZE], (*p)[REQUEST_SIZE] = request;
+	char request[REQUEST_SIZE], (*p)[REQUEST_SIZE] = &request;
 	// char* p = &request;
 	bzero(request,REQUEST_SIZE);
 
