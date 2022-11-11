@@ -254,7 +254,8 @@ void handle_client(int acceptsfd){
 
 	char request[REQUEST_SIZE];
 	// char request[REQUEST_SIZE], (*p)[REQUEST_SIZE] = &request;
-	char (*p)[REQUEST_SIZE] = &request;
+	char *p = &request;
+	// char (*p)[REQUEST_SIZE] = &request;
 	bzero(request,REQUEST_SIZE);
 
 	char method[16], hostname[64], port[8], path[64], headers[1024];
