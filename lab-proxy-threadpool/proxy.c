@@ -1,4 +1,5 @@
 #include <netdb.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -24,6 +25,7 @@ void test_parser();
 int open_sfd(char*, char*);
 void handle_client(int);
 void print_bytes(unsigned char *, int);
+void *handle_clients(void *vargp);
 
 int verbose = 0;
 
@@ -38,17 +40,35 @@ int main(int argc, char* argv[])
 	sfd = open_sfd(NULL, argv[1]);
 	// sfd = open_sfd("localhost", argv[1]);
 	// printf("sfd=%d\n",sfd);
+	pthread_t tid;
 	while(1){
 		// accept(sfd,&remote_addr,&remote_addr_len);
 		// if ((clientsfd = accept(sfd, (struct sockaddr *) &remote_addr, &remote_addr_len)) < 0) {
 		if ((clientsfd = accept(sfd, NULL, NULL)) < 0) {
 			perror("Could not accept");	
 			exit(EXIT_FAILURE);
+		} else {
+			// pthread_create();
+			// pthread_create(&tid, NULL, handle_clients, NULL); 
+			pthread_create(&tid, NULL, handle_clients, (void*) clientsfd); 
 		}
-		handle_client(clientsfd);
+		// handle_client(clientsfd);
 	}
 
 	return 0;
+}
+
+void *handle_clients(void *vargp) 
+{  
+	pthread_detach(pthread_self()); 
+	int* clientsfd = (int*) vargp;
+	handle_client(clientsfd);
+
+	// while (1) { 
+	// 	int connfd = sbuf_remove(&sbuf); /* Remove connfd from buffer */ //line:conc:pre:removeconnfd
+	// 	echo_cnt(connfd);                /* Service client */
+	// 	close(connfd);
+	// }
 }
 
 int all_headers_received(char *request) {
@@ -404,7 +424,6 @@ void handle_client(int acceptsfd){
 	nread = 1;
 	printf("start readin:\n");
 	while((nread = read(serversfd,rec_buf,REC_SIZE)) != 0){
-		// bzero(rec_buf,REC_SIZE);
 		printf("nread=%d\n",nread);
 		// nread = read(serversfd,rec_buf,REC_SIZE);
 		if (nread == -1) {
