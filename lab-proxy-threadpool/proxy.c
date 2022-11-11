@@ -36,14 +36,12 @@ sbuf_t sbuf;
 
 int main(int argc, char* argv[])
 {
-	// struct sockaddr_in remote_addr;
 	// test_parser();
 
 	// printf("%s\n", user_agent_hdr);
 	int sfd = 0;
 	int clientsfd = 0;
 	sfd = open_sfd(NULL, argv[1]);
-	// sfd = open_sfd("localhost", argv[1]);
 	// printf("sfd=%d\n",sfd);
 	pthread_t tid;
 	sbuf_init(&sbuf, SBUFSIZE);
@@ -53,7 +51,6 @@ int main(int argc, char* argv[])
 
 	while(1){
 		// accept(sfd,&remote_addr,&remote_addr_len);
-		// if ((clientsfd = accept(sfd, (struct sockaddr *) &remote_addr, &remote_addr_len)) < 0) {
 		if ((clientsfd = accept(sfd, NULL, NULL)) < 0) {
 			perror("Could not accept");	
 			exit(EXIT_FAILURE);
@@ -78,11 +75,6 @@ void *handle_clients(void *vargp)
 		handle_client(clientsfd);
 		// close(clientsfd);
 	}
-	// while (1) { 
-	// 	int connfd = sbuf_remove(&sbuf); /* Remove connfd from buffer */ //line:conc:pre:removeconnfd
-	// 	echo_cnt(connfd);                /* Service client */
-	// 	close(connfd);
-	// }
 
 }
 
@@ -240,8 +232,6 @@ int open_sfd(char* hostname, char* port) {
 				result->ai_protocol);
 
 	setsockopt(sfd, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
-
-	// unsigned short sPort = atoi(port);
 	
 	if (bind(sfd, result->ai_addr, result->ai_addrlen) < 0) {	
 		perror("Could not bind");
