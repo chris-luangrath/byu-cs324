@@ -256,7 +256,7 @@ void handle_client(int acceptsfd){
 	// char request[REQUEST_SIZE];
 	// char request[REQUEST_SIZE], (*p)[REQUEST_SIZE] = &request;
 	char *p = malloc(REQUEST_SIZE);
-	p = &request;
+	p = request;
 	// char *p = &request;
 	// char (*p)[REQUEST_SIZE] = &request;
 	bzero(request,REQUEST_SIZE);
