@@ -15,6 +15,8 @@
 #define REC_SIZE 102400
 #define REQUEST_SIZE 102400
 #define BUF_SIZE 102400
+#define NTHREADS  8
+#define SBUFSIZE  5
 
 static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0";
 
@@ -28,6 +30,7 @@ void print_bytes(unsigned char *, int);
 void *handle_clients(void *vargp);
 
 int verbose = 0;
+sbuf_t sbuf;
 
 int main(int argc, char* argv[])
 {
@@ -41,6 +44,11 @@ int main(int argc, char* argv[])
 	// sfd = open_sfd("localhost", argv[1]);
 	// printf("sfd=%d\n",sfd);
 	pthread_t tid;
+	sbuf_init(&sbuf, SBUFSIZE);
+
+	for (i = 0; i < NTHREADS; i++)  /* Create worker threads */ //line:conc:pre:begincreate
+		pthread_create(&tid, NULL, handle_clients, NULL);               //line:conc:pre:endcreate
+
 	while(1){
 		// accept(sfd,&remote_addr,&remote_addr_len);
 		// if ((clientsfd = accept(sfd, (struct sockaddr *) &remote_addr, &remote_addr_len)) < 0) {
@@ -48,9 +56,10 @@ int main(int argc, char* argv[])
 			perror("Could not accept");	
 			exit(EXIT_FAILURE);
 		} else {
+			sbuf_insert(&sbuf, clientsfd); /* Insert clientsfd in buffer */
 			// pthread_create();
 			// pthread_create(&tid, NULL, handle_clients, NULL); 
-			pthread_create(&tid, NULL, handle_clients, (void*) clientsfd); 
+			// pthread_create(&tid, NULL, handle_clients, (void*) clientsfd); 
 		}
 		// handle_client(clientsfd);
 	}
@@ -69,6 +78,7 @@ void *handle_clients(void *vargp)
 	// 	echo_cnt(connfd);                /* Service client */
 	// 	close(connfd);
 	// }
+
 }
 
 int all_headers_received(char *request) {
@@ -194,7 +204,7 @@ char *hostname, char *port, char *path, char *headers) {
 int open_sfd(char* hostname, char* port) {
 	struct addrinfo hints;
 	struct addrinfo *result;
-	struct sockaddr_in ipv4addr;
+	// struct sockaddr_in ipv4addr;
 	// struct sockaddr *local_addr;
 	// socklen_t local_addr_len;
 	int optval = 1;
@@ -234,11 +244,11 @@ int open_sfd(char* hostname, char* port) {
 
 	unsigned short sPort = atoi(port);
 	
-	int address_family = AF_INET;
+	// int address_family = AF_INET;
 	// if (address_family == AF_INET) {
-	ipv4addr.sin_family = address_family;
-	ipv4addr.sin_addr.s_addr = INADDR_ANY; // listen on any/all IPv4 addresses
-	ipv4addr.sin_port = htons(sPort);       // specify port explicitly, in network byte order
+	// ipv4addr.sin_family = address_family;
+	// ipv4addr.sin_addr.s_addr = INADDR_ANY; // listen on any/all IPv4 addresses
+	// ipv4addr.sin_port = htons(sPort);       // specify port explicitly, in network byte order
 
 	// Assign local_addr and local_addr_len to ipv4addr
 	// local_addr = (struct sockaddr *)&ipv4addr;
@@ -434,7 +444,7 @@ void handle_client(int acceptsfd){
 		// p += strlen(rec_buf);
 		p += nread;
 		total += nread;
-		printf("total=%d\n",total);
+		printf("total=%ld\n",total);
 		printf("strlen=%d\n",strlen(response));
 	}
 	// if(verbose)
