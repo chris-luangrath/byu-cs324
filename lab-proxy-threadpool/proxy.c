@@ -15,8 +15,7 @@
 #define MAX_OBJECT_SIZE 102400
 
 #define REC_SIZE 102400
-#define REQUEST_SIZE 1024
-// #define REQUEST_SIZE 102400
+#define REQUEST_SIZE 102400
 #define BUF_SIZE 102400
 #define NTHREADS  8
 #define SBUFSIZE  5
@@ -255,7 +254,9 @@ void handle_client(int acceptsfd){
 
 	char request[REQUEST_SIZE];
 	// char request[REQUEST_SIZE], (*p)[REQUEST_SIZE] = &request;
-	char *p = &request;
+	char *p = malloc(REQUEST_SIZE);
+	p = &request;
+	// char *p = &request;
 	// char (*p)[REQUEST_SIZE] = &request;
 	bzero(request,REQUEST_SIZE);
 
