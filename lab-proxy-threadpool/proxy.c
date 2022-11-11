@@ -253,7 +253,7 @@ void handle_client(int acceptsfd){
 	remote_addr_len = sizeof(struct sockaddr_storage);
 
 	char request[REQUEST_SIZE];
-	char* p = &request;
+	char* p[REQUEST_SIZE] = &request;
 	bzero(request,REQUEST_SIZE);
 
 	char method[16], hostname[64], port[8], path[64], headers[1024];
