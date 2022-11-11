@@ -309,8 +309,9 @@ void handle_client(int acceptsfd){
 	char* connection = "close";
 	char* proxyconnection = "close";
 
-	char newrequest[REQUEST_SIZE];
-	p = &newrequest;
+	// char newrequest[REQUEST_SIZE];
+	char* newrequest = malloc(REQUEST_SIZE);
+	p = newrequest;
 	bzero(newrequest,REQUEST_SIZE);
 	char buf[BUF_SIZE];
 	bzero(buf,BUF_SIZE);
@@ -397,8 +398,11 @@ void handle_client(int acceptsfd){
 	// sleep(5);
 	// printf("4--------------------------------------------\n");
 
-	char response[MAX_OBJECT_SIZE];
-	p = &response;
+	char* response = malloc(MAX_OBJECT_SIZE);
+	// char response[MAX_OBJECT_SIZE];
+	
+	p = response;
+	// p = &response;
 
 	int total = 0;
 	nread = 1;
