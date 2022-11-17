@@ -155,7 +155,7 @@ int main(int argc, char* argv[])
   }
   double end = omp_get_wtime();
 
-  printf("Loop Time= %d",end-start);
+  printf("Loop Time= %f",end-start);
 
   fclose(fp);
   free(saved);
