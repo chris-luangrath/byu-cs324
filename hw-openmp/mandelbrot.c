@@ -128,6 +128,8 @@ int main(int argc, char* argv[])
     }
   }
 
+  double start = omp_get_wtime();
+
   #pragma omp parallel for
   for (j = 0; j < yres; j++) {
     for(i = 0; i < xres; i++) {
@@ -151,6 +153,10 @@ int main(int argc, char* argv[])
       };
     }
   }
+  double end = omp_get_wtime();
+
+  printf("Loop Time= %d",end-start);
+
   fclose(fp);
   free(saved);
   return 0;
