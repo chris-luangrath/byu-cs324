@@ -110,6 +110,9 @@ int main(int argc, char* argv[])
   int k; /* Iteration counter */
   int *saved = malloc(sizeof(int)*yres*xres);
 
+  double start = omp_get_wtime();
+
+  #pragma omp parallel for private(i,k) firstprivate(j)
   for (j = 0; j < yres; j++) {
     y = ymax - j * dy;
     for(i = 0; i < xres; i++) {
@@ -129,9 +132,9 @@ int main(int argc, char* argv[])
     }
   }
 
-  double start = omp_get_wtime();
+  double end = omp_get_wtime();
 
-  #pragma omp parallel for
+
   for (j = 0; j < yres; j++) {
     for(i = 0; i < xres; i++) {
       /* compute  pixel color and write it to file */
@@ -154,7 +157,6 @@ int main(int argc, char* argv[])
       };
     }
   }
-  double end = omp_get_wtime();
 
   printf("Loop Time= %f\n",end-start);
 
