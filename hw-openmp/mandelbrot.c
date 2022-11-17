@@ -112,7 +112,7 @@ int main(int argc, char* argv[])
 
   double start = omp_get_wtime();
 
-  #pragma omp parallel for private(i,k) firstprivate(saved)
+  #pragma omp parallel for private(i,k,x,y,u,v) firstprivate(saved)
   for (j = 0; j < yres; j++) {
     y = ymax - j * dy;
     for(i = 0; i < xres; i++) {
