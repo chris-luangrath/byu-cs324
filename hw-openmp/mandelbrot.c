@@ -30,6 +30,35 @@
   See http://www.imagemagick.org/Usage/color_mods/ for what ImageMagick
   can do. It can do a lot.
 */
+/*
+Compute Times:
+1 - 
+2 - 
+4 - 
+8 - 
+16 - 
+32 - 
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+7.
+
+8.
+
+9.
+
+*/
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -99,6 +128,7 @@ int main(int argc, char* argv[])
     }
   }
 
+  #pragma omp parallel for
   for (j = 0; j < yres; j++) {
     for(i = 0; i < xres; i++) {
       /* compute  pixel color and write it to file */
