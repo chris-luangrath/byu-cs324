@@ -31,31 +31,65 @@
   can do. It can do a lot.
 */
 /*
-Compute Times:
-1 - 
-2 - 
-4 - 
-8 - 
-16 - 
-32 - 
+Compute Times: (loop time, total elapsed time)
+01 - 29.19, 34.73
+02 - 15.32, 21.35
+04 - 8.23,   14.84
+08 - 4.74,  10.78
+16 - 3.23,  9.28
+32 - 2.62,  8.70
 
-1.
+1. 
+There are 20 cores on my machine
 
 2.
+The time halves as the threads doubles
 
 3.
+Sp = T1/Tp
+t1 = 29.19
+tp = 8.23
+Sp = 3.55
 
 4.
+At 16 cores, the time elapsed stopped halving
 
 5.
+With only 20 cores being available, after increasing the number
+of threads, each core can only run one thread at a time, so it
+stops being efficient.
 
 6.
+Sp = T1/Tp
+p = 4
+T1 = 34.73
+Tp = 14.84
+Sp = 2.34
 
 7.
+Ep = Sp/p = T(p*Tp)
+Sp = 2.34
+p = 4
+Ep = 0.59
 
 8.
+There is a part of the program that is not parrelizable,
+and that lowers the efficiency.
 
 9.
+speedup of parallel region = 3.55 (a)
+elapsed time for 4 threads = 14.84 (Ta)
+elapsed time for 1 thread = 34.73 (T)
+
+14.84 = p * 34.73 / 3.55 + (1 - p) * 34.73
+14.84 = p * 9.78 + 34.73 - 34.73 * p
+-19.89 = p * (9.78 - 34.73)
+-19.89 = p * -24.95
+p = 0.797
+
+10.
+Tα = pT/(inf) + (1-0.797)34.73
+Tα = 7.05019
 
 */
 
