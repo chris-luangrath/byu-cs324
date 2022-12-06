@@ -73,8 +73,8 @@ int main(int argc, char* argv[])
 		// If the result was a timeout (i.e., return value from epoll_wait() is 0), 
 		if(n == 0){
 			// check if a global flag has been set by a signal handler and, if so, break out of the loop; otherwise, continue.
-			fprintf(stderr, "timeout in epoll_wait\n");
-			exit(1);
+			// fprintf(stderr, "timeout in epoll_wait\n");
+			// exit(1);
 		} else if(n < 0){
 		// If the result was an error (i.e., return value from epoll_wait() is less than 0), 
 			// then handle the error appropriately (see the man page for epoll_wait() for more).
@@ -130,10 +130,6 @@ int main(int argc, char* argv[])
 
 		}
 		
-			
-
-		
-
 	}
 
 	return 0;
