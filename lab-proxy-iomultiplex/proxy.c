@@ -313,7 +313,7 @@ void handle_new_clients(int sfd){
 		// int clientsfd, connfd;
 		int efd;
 		struct epoll_event event;
-		struct epoll_event *events;
+		// struct epoll_event *events;
 		struct sockaddr_storage clientaddr;
 		socklen_t clientlen;
 		clientlen = sizeof(struct sockaddr_storage); 
@@ -368,7 +368,7 @@ void handle_new_clients(int sfd){
 		printf("new file descriptor: %d\n",efd);
 
 		/* Buffer where events are returned */
-		events = calloc(MAXEVENTS, sizeof(struct epoll_event));
+		// events = calloc(MAXEVENTS, sizeof(struct epoll_event));
 
 		// You will need to pass your epoll file descriptor as an argument, 
 		// so you can register the new file descriptor with the epoll instance.
