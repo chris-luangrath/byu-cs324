@@ -1,8 +1,10 @@
 #include<errno.h>
 #include<fcntl.h>
-#include <stdio.h>
-#include <sys/socket.h>
-#include <sys/types.h>
+#include<stdlib.h>
+#include<stdio.h>
+#include<sys/epoll.h>
+#include<sys/socket.h>
+#include<sys/types.h>
 
 /* Recommended max cache and object sizes */
 #define MAXEVENTS 64
@@ -28,15 +30,24 @@ int main(int argc, char* argv[])
 	struct epoll_event event;
 	struct epoll_event *events;
 
+	struct client_info *listener;
+	
+
+	int sfd;
+	int efd;
+
 	if ((efd = epoll_create1(0)) < 0) {
 		fprintf(stderr, "error creating epoll fd\n");
 		exit(1);
 	}
 
 	// Call open_sfd() to get your listening socket.
-	int sfd;
-	int efd;
+	
 	sfd = open_sfd(NULL,argv[1]);
+
+	listener = malloc(sizeof(struct client_info));
+	listener->fd = sfd;
+
 	// Register your listen socket with the epoll instance that you created, for reading and for edge-triggered monitoring (i.e., EPOLLIN | EPOLLET).
 	event.data.ptr = listener;
 	event.events = EPOLLIN | EPOLLET;
