@@ -1,10 +1,11 @@
-#include<errno.h>
-#include<fcntl.h>
-#include<stdlib.h>
-#include<stdio.h>
-#include<sys/epoll.h>
-#include<sys/socket.h>
-#include<sys/types.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/epoll.h>
+#include <sys/socket.h>
+#include <sys/types.h>
 
 /* Recommended max cache and object sizes */
 #define MAXEVENTS 64
@@ -95,7 +96,8 @@ int main(int argc, char* argv[])
 		// We will implement the handling of existing clients later. 
 
 		struct client_info *active_client;
-		for (i = 0; i < n; i++) {
+		// int i;
+		for (int i = 0; i < n; i++) {
 			// grab the data structure from the event, and cast it
 			// (appropriately) to a struct client_info *.
 			active_client = (struct client_info *)(events[i].data.ptr);
