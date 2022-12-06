@@ -23,6 +23,10 @@ void test_parser();
 void print_bytes(unsigned char *, int);
 int open_sfd(char*, char*);
 
+struct client_info {
+	int fd;
+	char desc[1024];
+};
 
 // int main()
 int main(int argc, char* argv[])
