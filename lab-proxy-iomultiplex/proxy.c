@@ -1,4 +1,4 @@
-#include <arpa/inet.h>
+// #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <netdb.h>
@@ -22,6 +22,7 @@ int parse_request(char *, char *, char *, char *, char *, char *);
 void test_parser();
 void print_bytes(unsigned char *, int);
 int open_sfd(char*, char*);
+void handle_new_clients(int sfd);
 
 struct client_info {
 	int fd;
@@ -303,7 +304,8 @@ int open_sfd(char* hostname, char* port) {
 	return sfd;
 }
 
-int handle_new_clients(int sfd){
+// int handle_new_clients(int sfd){
+void handle_new_clients(int sfd){
 	// 	Loop to accept() any and all client connections. 
 	// For each new file descriptor (i.e., corresponding to a new client) returned, 
 	while(1){
