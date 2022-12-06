@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
 	// Register your listen socket with the epoll instance that you created, for reading and for edge-triggered monitoring (i.e., EPOLLIN | EPOLLET).
 	event.data.ptr = listener;
 	event.events = EPOLLIN | EPOLLET;
-	if (epoll_ctl(efd, EPOLL_CTL_ADD, connfd, &event) < 0) {
+	if (epoll_ctl(efd, EPOLL_CTL_ADD, sfd, &event) < 0) { // sfd??
 		fprintf(stderr, "error adding event\n");
 		exit(1);
 	}
@@ -340,6 +340,10 @@ int handle_new_clients(int sfd){
 			fprintf(stderr, "error creating epoll fd\n");
 			exit(1);
 		}
+
+		struct client_info *listener;
+		listener = malloc(sizeof(struct client_info));
+		listener->fd = sfd;
 
 		// register the listening file descriptor for incoming events using
 		// edge-triggered monitoring
