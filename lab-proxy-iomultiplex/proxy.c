@@ -15,7 +15,7 @@
 #define MAX_CACHE_SIZE 1049000
 #define MAX_OBJECT_SIZE 102400
 
-static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0";
+// static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0";
 
 int all_headers_received(char *);
 int parse_request(char *, char *, char *, char *, char *, char *);
@@ -309,10 +309,11 @@ void handle_new_clients(int sfd){
 	// 	Loop to accept() any and all client connections. 
 	// For each new file descriptor (i.e., corresponding to a new client) returned, 
 	while(1){
-		int clientsfd, connfd;
+		int connfd;
+		// int clientsfd, connfd;
 		int efd;
 		struct epoll_event event;
-		struct epoll_event *events;
+		// struct epoll_event *events;
 		struct sockaddr_storage clientaddr;
 		socklen_t clientlen;
 		clientlen = sizeof(struct sockaddr_storage); 
