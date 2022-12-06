@@ -313,7 +313,7 @@ void handle_new_clients(int sfd){
 		// int clientsfd, connfd;
 		int efd;
 		struct epoll_event event;
-		// struct epoll_event *events;
+		struct epoll_event *events;
 		struct sockaddr_storage clientaddr;
 		socklen_t clientlen;
 		clientlen = sizeof(struct sockaddr_storage); 
