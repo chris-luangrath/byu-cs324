@@ -374,25 +374,27 @@ void handle_new_clients(int sfd) {
 			exit(1);
 		}
 
-		printf("look here--------------------------------------------------\n");
+		// printf("look here--------------------------------------------------\n");
 
-		// register the listening file descriptor for incoming events using
-		// edge-triggered monitoring
+		// // register the listening file descriptor for incoming events using
+		// // edge-triggered monitoring
 
-		// struct client_info *listener;
-		listener = malloc(sizeof(struct client_info));
-		listener->fd = connfd;
-		// listener->fd = sfd;
-		event.data.ptr = listener;
-		event.events = EPOLLIN | EPOLLET;
-		sprintf(listener->desc, "Listen file descriptor (accepts new clients)");
+		// // struct client_info *listener;
+		// listener = malloc(sizeof(struct client_info));
+		// listener->fd = connfd;
+		// // listener->fd = sfd;
+		// event.data.ptr = listener;
+		// event.events = EPOLLIN | EPOLLET;
+		// sprintf(listener->desc, "Listen file descriptor (accepts new clients)");
 
 
-		if (epoll_ctl(efd, EPOLL_CTL_ADD, connfd, &event) < 0) {
-			perror("error adding event2\n");
-			exit(1);
-		}
-		printf("look here2--------------------------------------------------\n");
+		// if (epoll_ctl(efd, EPOLL_CTL_ADD, connfd, &event) < 0) {
+		// 	perror("error adding event2\n");
+		// 	exit(1);
+		// }
+		// printf("look here2--------------------------------------------------\n");
+
+
 
 		// Have your proxy print the newly created file descriptor associated with any new clients.
 		// You can remove this later, but it will be good for you to see now that they are being created.
