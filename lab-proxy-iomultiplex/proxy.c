@@ -376,6 +376,7 @@ void handle_new_clients(int sfd) {
 		// listener->fd = sfd;
 		event.data.ptr = listener;
 		event.events = EPOLLIN | EPOLLET;
+		sprintf(listener->desc, "Listen file descriptor (accepts new clients)");
 		printf("look here--------------------------------------------------\n");
 
 		// register the listening file descriptor for incoming events using
