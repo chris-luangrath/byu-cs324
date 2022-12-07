@@ -20,7 +20,7 @@
 #define READ_RESPONSE 2
 #define SEND_RESPONSE 3
 
-// static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0";
+static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0";
 
 int all_headers_received(char *);
 int parse_request(char *, char *, char *, char *, char *, char *);
@@ -36,6 +36,8 @@ struct client_info
 };
 
 int efd;
+struct epoll_event event;
+struct client_info *listener;
 
 // int main()
 int main(int argc, char *argv[]) {
@@ -45,10 +47,7 @@ int main(int argc, char *argv[]) {
 	// Create an epoll instance with epoll_create1().
 	
 	struct epoll_event *events;
-	struct epoll_event event;
-	event.data.ptr = listener;
-	event.events = EPOLLIN | EPOLLET;
-	struct client_info *listener;
+	
 	struct client_info *new_client;
 	struct client_info *active_client;
 
@@ -65,6 +64,8 @@ int main(int argc, char *argv[]) {
 
 	listener = malloc(sizeof(struct client_info));
 	listener->fd = sfd;
+	event.data.ptr = listener;
+	event.events = EPOLLIN | EPOLLET;
 
 	// Register your listen socket with the epoll instance that you created, for reading and for edge-triggered monitoring (i.e., EPOLLIN | EPOLLET).
 	// event.data.ptr = listener;
@@ -317,9 +318,9 @@ int open_sfd(char *hostname, char *port) {
 void handle_new_clients(int sfd) {
 	// 	Loop to accept() any and all client connections.
 	// For each new file descriptor (i.e., corresponding to a new client) returned,
-	struct epoll_event event;
-	event.data.ptr = listener;
-	event.events = EPOLLIN | EPOLLET;
+	// struct epoll_event event;
+	// event.data.ptr = listener;
+	// event.events = EPOLLIN | EPOLLET;
 	int connfd;
 	struct sockaddr_storage clientaddr;
 	socklen_t clientlen;
@@ -363,7 +364,7 @@ void handle_new_clients(int sfd) {
 			exit(1);
 		}
 
-		struct client_info *listener;
+		// struct client_info *listener;
 		listener = malloc(sizeof(struct client_info));
 		listener->fd = sfd;
 
@@ -411,9 +412,9 @@ void handle_client(int client) {
 	socklen_t remote_addr_len;
 	struct sockaddr_storage remote_addr;
 	remote_addr_len = sizeof(struct sockaddr_storage);
-	struct epoll_event event;
-	event.data.ptr = listener;
-	event.events = EPOLLIN | EPOLLET;
+	// struct epoll_event event;
+	// event.data.ptr = listener;
+	// event.events = EPOLLIN | EPOLLET;
 
 	char *request = malloc(MAX_OBJECT_SIZE);
 	char *p = request;
@@ -547,7 +548,7 @@ void handle_client(int client) {
 				
 
 				// change state to SEND_REQUEST. ----------------------------------------------------------
-				state = SEND_RESPONSE
+				state = SEND_RESPONSE;
 			} else if (nread < 0) { 
 				// read() (or recv()) returns a value less than 0. ----------------------------------------------------------
 				// If errno is EAGAIN or EWOULDBLOCK, it just means that there is no more data ready to be read; 
