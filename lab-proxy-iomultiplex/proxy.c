@@ -112,7 +112,6 @@ int main(int argc, char *argv[]) {
 				exit(1);
 			}
 		}
-	printf("look here--------------------------------------------------\n");
 		// If there was no error,
 
 		// you should loop through all the events and handle each appropriately.
@@ -122,6 +121,8 @@ int main(int argc, char *argv[]) {
 		struct client_info *active_client;
 		// int i;
 		for (int i = 0; i < n; i++) {
+			printf("look here--------------------------------------------------\n");
+	
 			// grab the data structure from the event, and cast it
 			// (appropriately) to a struct client_info *.
 			active_client = (struct client_info *)(events[i].data.ptr);
