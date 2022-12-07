@@ -372,7 +372,8 @@ void handle_new_clients(int sfd) {
 
 		// struct client_info *listener;
 		listener = malloc(sizeof(struct client_info));
-		listener->fd = sfd;
+		listener->fd = connfd;
+		// listener->fd = sfd;
 		event.data.ptr = listener;
 		event.events = EPOLLIN | EPOLLET;
 		printf("look here--------------------------------------------------\n");
