@@ -564,6 +564,8 @@ void handle_client(int client) {
 					fprintf(stderr, "error adding event\n");
 					exit(1);
 				}
+
+		
 				
 
 				// change state to SEND_REQUEST. ----------------------------------------------------------
