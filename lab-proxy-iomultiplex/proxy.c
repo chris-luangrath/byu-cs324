@@ -79,7 +79,9 @@ int main(int argc, char *argv[]) {
 	while (1) {
 		// Calls epoll_wait() loop with a timeout of 1 second.
 		size_t n;
+		events = calloc(MAXEVENTS, sizeof(struct epoll_event));
 		n = epoll_wait(efd, events, MAXEVENTS, 1);
+		
 
 		// If the result was a timeout (i.e., return value from epoll_wait() is 0),
 		if (n == 0) {
