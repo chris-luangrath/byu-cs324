@@ -367,11 +367,12 @@ void handle_new_clients(int sfd) {
 		// struct client_info *listener;
 		listener = malloc(sizeof(struct client_info));
 		listener->fd = sfd;
+		event.data.ptr = listener;
+		event.events = EPOLLIN | EPOLLET;
+
 
 		// register the listening file descriptor for incoming events using
 		// edge-triggered monitoring
-		// event.data.ptr = listener;
-		// event.events = EPOLLIN | EPOLLET;
 		if (epoll_ctl(efd, EPOLL_CTL_ADD, connfd, &event) < 0) {
 			fprintf(stderr, "error adding event\n");
 			exit(1);
