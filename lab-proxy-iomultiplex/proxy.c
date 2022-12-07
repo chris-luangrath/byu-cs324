@@ -123,7 +123,7 @@ int main(int argc, char *argv[]) {
 		struct client_info *active_client;
 		// int i;
 		for (int i = 0; i < n; i++) {
-			printf("look here--------------------------------------------------\n");
+			// printf("look here--------------------------------------------------\n");
 	
 			// grab the data structure from the event, and cast it
 			// (appropriately) to a struct client_info *.
@@ -141,7 +141,7 @@ int main(int argc, char *argv[]) {
 			}
 
 			// If the event corresponds to the listening file descriptor, then call handle_new_clients().
-			printf("look here--------------------------------------------------\n");
+			// printf("look here--------------------------------------------------\n");
 			if (sfd == active_client->fd) {
 				handle_new_clients(sfd);
 			}
@@ -330,7 +330,7 @@ void handle_new_clients(int sfd) {
 	struct sockaddr_storage clientaddr;
 	socklen_t clientlen;
 	clientlen = sizeof(struct sockaddr_storage);
-	printf("look here--------------------------------------------------\n");
+	// printf("look here--------------------------------------------------\n");
 	while (1) {
 		// int clientsfd, connfd;
 		
@@ -380,9 +380,10 @@ void handle_new_clients(int sfd) {
 		// register the listening file descriptor for incoming events using
 		// edge-triggered monitoring
 		if (epoll_ctl(efd, EPOLL_CTL_ADD, connfd, &event) < 0) {
-			fprintf(stderr, "error adding event\n");
+			fprintf(stderr, "error adding event2\n");
 			exit(1);
 		}
+		printf("look here2--------------------------------------------------\n");
 
 		// Have your proxy print the newly created file descriptor associated with any new clients.
 		// You can remove this later, but it will be good for you to see now that they are being created.
