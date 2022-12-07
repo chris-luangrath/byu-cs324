@@ -41,7 +41,6 @@ struct client_info *listener;
 
 // int main()
 int main(int argc, char *argv[]) {
-	printf("look here--------------------------------------------------\n");
 	// test_parser();
 	// printf("%s\n", user_agent_hdr);
 
@@ -76,6 +75,7 @@ int main(int argc, char *argv[]) {
 		fprintf(stderr, "error adding event\n");
 		exit(1);
 	}
+	printf("look here--------------------------------------------------\n");
 	// Create a while(1) loop that does the following:
 	while (1) {
 		// Calls epoll_wait() loop with a timeout of 1 second.
