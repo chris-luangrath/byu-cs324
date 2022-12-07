@@ -325,6 +325,7 @@ void handle_new_clients(int sfd) {
 	struct sockaddr_storage clientaddr;
 	socklen_t clientlen;
 	clientlen = sizeof(struct sockaddr_storage);
+	printf("look here--------------------------------------------------\n");
 	while (1) {
 		// int clientsfd, connfd;
 		
@@ -369,7 +370,7 @@ void handle_new_clients(int sfd) {
 		listener->fd = sfd;
 		event.data.ptr = listener;
 		event.events = EPOLLIN | EPOLLET;
-
+		printf("look here--------------------------------------------------\n");
 
 		// register the listening file descriptor for incoming events using
 		// edge-triggered monitoring
