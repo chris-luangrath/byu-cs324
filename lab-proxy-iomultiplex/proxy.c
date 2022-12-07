@@ -38,7 +38,6 @@ struct client_info
 int efd;
 struct epoll_event event;
 struct epoll_event *events;
-struct client_info *listener;
 
 // int main()
 int main(int argc, char *argv[]) {
@@ -62,8 +61,10 @@ int main(int argc, char *argv[]) {
 
 	sfd = open_sfd(NULL, argv[1]);
 
+	struct client_info *listener;
 	listener = malloc(sizeof(struct client_info));
 	listener->fd = sfd;
+	sprintf(listener->desc, "Listening socket");
 	event.data.ptr = listener;
 	event.events = EPOLLIN | EPOLLET;
 
@@ -323,7 +324,6 @@ int open_sfd(char *hostname, char *port) {
 void handle_new_clients(int sfd) {
 	// 	Loop to accept() any and all client connections.
 	// For each new file descriptor (i.e., corresponding to a new client) returned,
-	// struct epoll_event event;
 	// event.data.ptr = listener;
 	// event.events = EPOLLIN | EPOLLET;
 	int connfd;
@@ -362,13 +362,22 @@ void handle_new_clients(int sfd) {
 
 		// and register each returned client socket with the epoll instance that you created for reading,
 		// using edge-triggered monitoring (i.e., EPOLLIN | EPOLLET).
-
-		// event.data.ptr = listener;
-		// event.events = EPOLLIN | EPOLLET;
+		struct client_info *listener;
+		struct epoll_event event;
+		listener = malloc(sizeof(struct client_info));
+		listener->fd = connfd;
+		event.data.ptr = listener;
+		event.events = EPOLLIN | EPOLLET;
+		sprintf(listener->desc, "returned client socket");
 		if (epoll_ctl(efd, EPOLL_CTL_ADD, connfd, &event) < 0) {
 			fprintf(stderr, "error adding event\n");
 			exit(1);
 		}
+
+		printf("look here--------------------------------------------------\n");
+
+		// register the listening file descriptor for incoming events using
+		// edge-triggered monitoring
 
 		// struct client_info *listener;
 		listener = malloc(sizeof(struct client_info));
@@ -377,12 +386,10 @@ void handle_new_clients(int sfd) {
 		event.data.ptr = listener;
 		event.events = EPOLLIN | EPOLLET;
 		sprintf(listener->desc, "Listen file descriptor (accepts new clients)");
-		printf("look here--------------------------------------------------\n");
 
-		// register the listening file descriptor for incoming events using
-		// edge-triggered monitoring
+
 		if (epoll_ctl(efd, EPOLL_CTL_ADD, connfd, &event) < 0) {
-			fprintf(stderr, "error adding event2\n");
+			perror("error adding event2\n");
 			exit(1);
 		}
 		printf("look here2--------------------------------------------------\n");
