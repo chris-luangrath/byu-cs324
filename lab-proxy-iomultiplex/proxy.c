@@ -407,7 +407,7 @@ void handle_client(int client) {
 	char *request = malloc(MAX_OBJECT_SIZE);
 	char *p = request;
 
-	if (state = READ_REQUEST) {
+	if (state == READ_REQUEST) {
 		// This is the start state for every new client request.
 		// You should initialize every new client request to be in this state.
 
@@ -552,30 +552,45 @@ void handle_client(int client) {
 				// read ----------------------------------------------------------
 				nread = recvfrom(client, rec_buf, MAX_OBJECT_SIZE, 0,
 								 (struct sockaddr *)&remote_addr, &remote_addr_len);
-				if (nread == -1)
-				{
+				if (nread == -1) {
 					perror("read");
 					exit(EXIT_FAILURE);
 				}
 				memcpy(p, rec_buf, nread);
 				p += nread;
-				if (all_headers_received(request))
-				{
+				if (all_headers_received(request)) {
 					headers_recieved = 1;
 					// printf("done receiving\n");
 				}
-				else
-				{
+				else {
 					// printf("%s\n",request);
 				}
 			}
 		}
 	}
-	else if (state = SEND_REQUEST) {
-	}
-	else if (state = SEND_REQUEST) {
-	}
-	else if (state = SEND_REQUEST) {
+	else if (state == SEND_REQUEST) {
+		// loop to write the request to the server socket until one of the following happens:
+			// you have written the entire HTTP request to the server socket. If this is the case:
+				// register the socket with the epoll instance for reading.
+				// change state to READ_RESPONSE.
+			// write() (or send()) returns a value less than 0.
+				// If and errno is EAGAIN or EWOULDBLOCK, it just means that there is no buffer space available for writing to the socket; you will continue writing to the socket when you are notified by epoll that there is more buffer space available for writing.
+				// If errno is anything else, this is an error. You can print out the error, cancel your client request, and deregister your socket at this point.
+	} else if (state == READ_RESPONSE) {
+		// loop to read from the server socket until one of the following happens:
+			// you have read the entire HTTP response from the server. Since this is HTTP/1.0, this is when the call to read() (or recv()) returns 0, indicating that the server has closed the connection. If this is the case:
+				// register the client socket with the epoll instance for writing.
+				// change state to SEND_RESPONSE.
+			// read() (or recv()) returns a value less than 0.
+				// If errno is EAGAIN or EWOULDBLOCK, it just means that there is no more data ready to be read; you will continue reading from the socket when you are notified by epoll that there is more data to be read.
+				// If errno is anything else, this is an error. You can print out the error, cancel your client request, and deregister your socket at this point.
+	} else if (state == SEND_RESPONSE) {
+		// loop to write to the client socket until one of the following happens:
+			// you have written the entire HTTP response to the client socket. If this is the case:
+				// close your client socket. You are done!
+			// write() (or send()) returns a value less than 0.
+				// If and errno is EAGAIN or EWOULDBLOCK, it just means that there is no buffer space available for writing to the socket; you will continue writing to the socket when you are notified by epoll that there is more buffer space available for writing.
+				// If errno is anything else, this is an error. You can print out the error, cancel your client request, and deregister your socket at this point.
 	}
 }
 
