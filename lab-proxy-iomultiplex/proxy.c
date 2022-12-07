@@ -37,6 +37,7 @@ struct client_info
 
 int efd;
 struct epoll_event event;
+struct epoll_event *events;
 struct client_info *listener;
 
 // int main()
@@ -46,7 +47,6 @@ int main(int argc, char *argv[]) {
 
 	// Create an epoll instance with epoll_create1().
 	
-	struct epoll_event *events;
 	
 	struct client_info *new_client;
 	struct client_info *active_client;
