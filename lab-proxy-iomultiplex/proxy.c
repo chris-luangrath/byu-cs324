@@ -35,21 +35,24 @@ struct client_info
 	char desc[1024];
 };
 
+int efd;
+
 // int main()
 int main(int argc, char *argv[]) {
 	// test_parser();
 	// printf("%s\n", user_agent_hdr);
 
 	// Create an epoll instance with epoll_create1().
-	struct epoll_event event;
+	
 	struct epoll_event *events;
-
+	struct epoll_event event;
+	event.data.ptr = listener;
+	event.events = EPOLLIN | EPOLLET;
 	struct client_info *listener;
 	struct client_info *new_client;
 	struct client_info *active_client;
 
 	int sfd;
-	int efd;
 
 	if ((efd = epoll_create1(0)) < 0) {
 		fprintf(stderr, "error creating epoll fd\n");
@@ -64,8 +67,9 @@ int main(int argc, char *argv[]) {
 	listener->fd = sfd;
 
 	// Register your listen socket with the epoll instance that you created, for reading and for edge-triggered monitoring (i.e., EPOLLIN | EPOLLET).
-	event.data.ptr = listener;
-	event.events = EPOLLIN | EPOLLET;
+	// event.data.ptr = listener;
+	// event.events = EPOLLIN | EPOLLET;
+	
 	if (epoll_ctl(efd, EPOLL_CTL_ADD, sfd, &event) < 0) { // sfd??
 		fprintf(stderr, "error adding event\n");
 		exit(1);
@@ -313,15 +317,17 @@ int open_sfd(char *hostname, char *port) {
 void handle_new_clients(int sfd) {
 	// 	Loop to accept() any and all client connections.
 	// For each new file descriptor (i.e., corresponding to a new client) returned,
+	struct epoll_event event;
+	event.data.ptr = listener;
+	event.events = EPOLLIN | EPOLLET;
+	int connfd;
+	struct sockaddr_storage clientaddr;
+	socklen_t clientlen;
+	clientlen = sizeof(struct sockaddr_storage);
 	while (1) {
-		int connfd;
 		// int clientsfd, connfd;
-		int efd;
-		struct epoll_event event;
+		
 		// struct epoll_event *events;
-		struct sockaddr_storage clientaddr;
-		socklen_t clientlen;
-		clientlen = sizeof(struct sockaddr_storage);
 
 		connfd = accept(sfd, (struct sockaddr *)&clientaddr, &clientlen);
 		// connfd = accept(active_client->fd, (struct sockaddr *)&clientaddr, &clientlen);
@@ -350,8 +356,10 @@ void handle_new_clients(int sfd) {
 		// and register each returned client socket with the epoll instance that you created for reading,
 		// using edge-triggered monitoring (i.e., EPOLLIN | EPOLLET).
 
-		if ((efd = epoll_create1(0)) < 0) {
-			fprintf(stderr, "error creating epoll fd\n");
+		// event.data.ptr = listener;
+		// event.events = EPOLLIN | EPOLLET;
+		if (epoll_ctl(efd, EPOLL_CTL_ADD, connfd, &event) < 0) {
+			fprintf(stderr, "error adding event\n");
 			exit(1);
 		}
 
@@ -361,8 +369,8 @@ void handle_new_clients(int sfd) {
 
 		// register the listening file descriptor for incoming events using
 		// edge-triggered monitoring
-		event.data.ptr = listener;
-		event.events = EPOLLIN | EPOLLET;
+		// event.data.ptr = listener;
+		// event.events = EPOLLIN | EPOLLET;
 		if (epoll_ctl(efd, EPOLL_CTL_ADD, connfd, &event) < 0) {
 			fprintf(stderr, "error adding event\n");
 			exit(1);
@@ -403,6 +411,9 @@ void handle_client(int client) {
 	socklen_t remote_addr_len;
 	struct sockaddr_storage remote_addr;
 	remote_addr_len = sizeof(struct sockaddr_storage);
+	struct epoll_event event;
+	event.data.ptr = listener;
+	event.events = EPOLLIN | EPOLLET;
 
 	char *request = malloc(MAX_OBJECT_SIZE);
 	char *p = request;
@@ -529,13 +540,15 @@ void handle_client(int client) {
 
 
 				// register the socket with the epoll instance for writing. ----------------------------------------------------------
+				if (epoll_ctl(efd, EPOLL_CTL_ADD, serversfd, &event) < 0) {
+					fprintf(stderr, "error adding event\n");
+					exit(1);
+				}
 				
-
 
 				// change state to SEND_REQUEST. ----------------------------------------------------------
 				state = SEND_RESPONSE
-			}
-			else if (nread < 0) { 
+			} else if (nread < 0) { 
 				// read() (or recv()) returns a value less than 0. ----------------------------------------------------------
 				// If errno is EAGAIN or EWOULDBLOCK, it just means that there is no more data ready to be read; 
 				if (errno == EWOULDBLOCK ||
@@ -560,7 +573,7 @@ void handle_client(int client) {
 				p += nread;
 				if (all_headers_received(request)) {
 					headers_recieved = 1;
-					// printf("done receiving\n");
+					printf("done receiving\n");
 				}
 				else {
 					// printf("%s\n",request);
