@@ -75,7 +75,6 @@ int main(int argc, char *argv[]) {
 		fprintf(stderr, "error adding event\n");
 		exit(1);
 	}
-	printf("look here--------------------------------------------------\n");
 	// Create a while(1) loop that does the following:
 	while (1) {
 		// Calls epoll_wait() loop with a timeout of 1 second.
@@ -113,6 +112,7 @@ int main(int argc, char *argv[]) {
 				exit(1);
 			}
 		}
+	printf("look here--------------------------------------------------\n");
 		// If there was no error,
 
 		// you should loop through all the events and handle each appropriately.
