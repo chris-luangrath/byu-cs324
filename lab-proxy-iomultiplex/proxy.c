@@ -659,7 +659,6 @@ void handle_client(struct request_info* request) {
 
 				// change state to SEND_REQUEST. ----------------------------------------------------------
 				printf("Read Request finished\n");
-				// break;
 				return;
 			} else if (nread < 0) { 
 				// read() (or recv()) returns a value less than 0. ----------------------------------------------------------
@@ -711,6 +710,7 @@ void handle_client(struct request_info* request) {
 			// you have written the entire HTTP request to the server socket. If this is the case:
 			if(written == request->bytes_read_cli){
 				// register the socket with the epoll instance for reading.
+				// change state to READ_RESPONSE.
 				request->state = READ_RESPONSE;
 				// request->soc_ser = serversfd;
 
@@ -724,7 +724,11 @@ void handle_client(struct request_info* request) {
 					perror("error adding event\n");
 					exit(1);
 				}
-				// change state to READ_RESPONSE.
+
+				printf("Send Request finished\n");
+				return;
+
+				
 			} else if(written < 0){
 			// write() (or send()) returns a value less than 0.
 				if (errno == EWOULDBLOCK ||
