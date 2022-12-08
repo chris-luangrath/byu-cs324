@@ -679,6 +679,7 @@ void handle_client(struct request_info* request) {
 				// }
 			}
 		}
+		printf("loop broken\n");
 	}
 	else if (request->state == SEND_REQUEST) {
 		printf("Send Request\n");
