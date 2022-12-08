@@ -821,8 +821,8 @@ void handle_client(struct request_info* request) {
 			// nread = recvfrom(request->soc_ser, p, MAX_OBJECT_SIZE, 0,
 			// 					(struct sockaddr *)&remote_addr, &remote_addr_len);
 			nread = recv(request->soc_ser, p, MAX_OBJECT_SIZE, 0);
-			request->bytes_read_ser += nread;
-			p += nread;
+			// request->bytes_read_ser += nread;
+			// p += nread;
 			if(verbose){
 				// printf("current response:\n%s\n", request->rec_buf);
 				printf("read %d bytes\n", nread);
@@ -866,10 +866,10 @@ void handle_client(struct request_info* request) {
 				}
 			} else {
 				// printf("reading...\n");
-				// request->bytes_read_ser += nread;
-				// p += nread;
+				request->bytes_read_ser += nread;
+				p += nread;
 				// if(verbose)
-				// 	printf("current response:\n%s\n", request->rec_buf);
+					// printf("current response:\n%s\n", request->rec_buf);
 			} 
 
 		}
