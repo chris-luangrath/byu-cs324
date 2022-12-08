@@ -35,6 +35,27 @@ struct client_info
 	char desc[1024];
 };
 
+struct request_info{
+// 	the socket corresponding to the requesting client
+	int soc_cli;
+// the socket corresponding to the connection to the Web server
+	int soc_ser;
+// the current state of the request (see Client Request States).
+	int state;
+// the buffer(s) to read into and write from
+	unsigned char rec_buf[MAX_OBJECT_SIZE];
+// the total number of bytes read from the client
+	int bytes_read_cli;
+// the total number of bytes to write to the server
+	int bytes_to_write_ser;
+// the total number of bytes written to the server
+	int bytes_written_ser;
+// the total number of bytes read from the server
+	int bytes_read_ser;
+// the total number of bytes written to the client
+	int bytes_written_cli;
+}
+
 int efd;
 struct epoll_event event;
 struct epoll_event *events;
@@ -403,6 +424,7 @@ void handle_new_clients(int sfd) {
 		/* Buffer where events are returned */
 		// events = calloc(MAXEVENTS, sizeof(struct epoll_event));
 
+
 		// You will need to pass your epoll file descriptor as an argument,
 		// so you can register the new file descriptor with the epoll instance.
 
@@ -413,21 +435,37 @@ void handle_new_clients(int sfd) {
 		// 	// configure it to use non-blocking I/O (see the man page for fcntl() for how to do this)
 		// 	fcntl(clientsfd, O_NONBLOCK);
 		// }
-		// 	// handle_client(clientsfd);
+		struct request_info *request;
+		request = malloc(sizeof(struct request_info));
+		request->bytes_read_cli = 0;
+		request->bytes_read_ser = 0;
+		request->bytes_to_write_ser = 0;
+		request->bytes_written_cli = 0;
+		request->bytes_written_ser = 0;
+		request->state = READ_REQUEST;
+		bzero(request->rec_buf, MAX_OBJECT_SIZE);
+
+		// DO I HAVE THESE CORRECT
+		request->soc_cli = connfd;
+		request->soc_ser = sfd;
+
+		handle_client(request);
 	}
 }
 
-void handle_client(int client) {
+void handle_client(struct request_info* request) {
+	printf("entered handle_client--------------------------------------------------\n");
 	// that takes a pointer to a client request,
 	// determines what state it is in,
 	// and performs the actions associated with that state
 	// (i.e., picks up where it left off. See Client Request States for more information.
 	// For now, just implement the READ_REQUEST state.
 
-	int state = READ_REQUEST;
+	
 	int nread = 0;
-	unsigned char rec_buf[MAX_OBJECT_SIZE];
-	bzero(rec_buf, MAX_OBJECT_SIZE);
+	
+	// unsigned char rec_buf[MAX_OBJECT_SIZE];
+	
 	socklen_t remote_addr_len;
 	struct sockaddr_storage remote_addr;
 	remote_addr_len = sizeof(struct sockaddr_storage);
@@ -435,17 +473,18 @@ void handle_client(int client) {
 	// event.data.ptr = listener;
 	// event.events = EPOLLIN | EPOLLET;
 
-	char *request = malloc(MAX_OBJECT_SIZE);
-	char *p = request;
-
-	if (state == READ_REQUEST) {
+	if (request->state == READ_REQUEST) {
 		// This is the start state for every new client request.
 		// You should initialize every new client request to be in this state.
 
 		// In this state, read from the client socket in a loop until one of the following happens:
 		int headers_recieved = 0;
 		while (1) {
-			if (headers_recieved) { 
+			// if (all_headers_received(recieved_request)) {
+			// 		headers_recieved = 1;
+			// 		printf("done receiving\n");
+			// 	}
+			if (all_headers_received(request->rec_buf)) { 
 				// you have read the entire HTTP request from the client. If this is the case: ----------------------------------------------------------
 				char method[16], hostname[64], port[8], path[64], headers[1024];
 				memset(method, 0, 16);
@@ -454,7 +493,7 @@ void handle_client(int client) {
 				memset(path, 0, 64);
 				memset(headers, 0, 1024);
 
-				if (parse_request(request, method, hostname, port, path, headers)) {
+				if (parse_request(request->rec_buf, method, hostname, port, path, headers)) {
 					printf("METHOD: %s\n", method);
 					printf("HOSTNAME: %s\n", hostname);
 					printf("PORT: %s\n", port);
@@ -473,7 +512,7 @@ void handle_client(int client) {
 
 				// char newrequest[MAX_OBJECT_SIZE];
 				char *newrequest = malloc(MAX_OBJECT_SIZE);
-				p = newrequest;
+				char *p = newrequest;
 				bzero(newrequest, MAX_OBJECT_SIZE);
 				char buf[MAX_OBJECT_SIZE];
 				bzero(buf, MAX_OBJECT_SIZE);
@@ -569,7 +608,7 @@ void handle_client(int client) {
 				
 
 				// change state to SEND_REQUEST. ----------------------------------------------------------
-				state = SEND_RESPONSE;
+				request->state = SEND_RESPONSE;
 			} else if (nread < 0) { 
 				// read() (or recv()) returns a value less than 0. ----------------------------------------------------------
 				// If errno is EAGAIN or EWOULDBLOCK, it just means that there is no more data ready to be read; 
@@ -577,6 +616,7 @@ void handle_client(int client) {
 					errno == EAGAIN) {
 					// no more clients ready to accept
 					// you will continue reading from the socket when you are notified by epoll that there is more data to be read.
+					return;
 					continue; // instead of break?
 				} else {
 					// If errno is anything else, this is an error. It actually be best to have your proxy exit at this point.
@@ -585,25 +625,30 @@ void handle_client(int client) {
 				}
 			} else {
 				// read ----------------------------------------------------------
-				nread = recvfrom(client, rec_buf, MAX_OBJECT_SIZE, 0,
+				
+				char* p = request->rec_buf;
+				p += request->bytes_read_cli;
+
+				nread = recvfrom(request->soc_cli, p, MAX_OBJECT_SIZE, 0,
 								 (struct sockaddr *)&remote_addr, &remote_addr_len);
 				if (nread == -1) {
 					perror("read");
 					exit(EXIT_FAILURE);
 				}
-				memcpy(p, rec_buf, nread);
+				// memcpy(p, request->rec_buf, nread);
+				request->bytes_read_cli += nread;
 				p += nread;
-				if (all_headers_received(request)) {
-					headers_recieved = 1;
-					printf("done receiving\n");
-				}
+				// if (all_headers_received(recieved_request)) {
+				// 	headers_recieved = 1;
+				// 	printf("done receiving\n");
+				// }
 				else {
 					// printf("%s\n",request);
 				}
 			}
 		}
 	}
-	else if (state == SEND_REQUEST) {
+	else if (request->state == SEND_REQUEST) {
 		// loop to write the request to the server socket until one of the following happens:
 			// you have written the entire HTTP request to the server socket. If this is the case:
 				// register the socket with the epoll instance for reading.
@@ -611,7 +656,7 @@ void handle_client(int client) {
 			// write() (or send()) returns a value less than 0.
 				// If and errno is EAGAIN or EWOULDBLOCK, it just means that there is no buffer space available for writing to the socket; you will continue writing to the socket when you are notified by epoll that there is more buffer space available for writing.
 				// If errno is anything else, this is an error. You can print out the error, cancel your client request, and deregister your socket at this point.
-	} else if (state == READ_RESPONSE) {
+	} else if (request->state == READ_RESPONSE) {
 		// loop to read from the server socket until one of the following happens:
 			// you have read the entire HTTP response from the server. Since this is HTTP/1.0, this is when the call to read() (or recv()) returns 0, indicating that the server has closed the connection. If this is the case:
 				// register the client socket with the epoll instance for writing.
@@ -619,7 +664,7 @@ void handle_client(int client) {
 			// read() (or recv()) returns a value less than 0.
 				// If errno is EAGAIN or EWOULDBLOCK, it just means that there is no more data ready to be read; you will continue reading from the socket when you are notified by epoll that there is more data to be read.
 				// If errno is anything else, this is an error. You can print out the error, cancel your client request, and deregister your socket at this point.
-	} else if (state == SEND_RESPONSE) {
+	} else if (request->state == SEND_RESPONSE) {
 		// loop to write to the client socket until one of the following happens:
 			// you have written the entire HTTP response to the client socket. If this is the case:
 				// close your client socket. You are done!
