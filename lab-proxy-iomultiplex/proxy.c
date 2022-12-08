@@ -881,6 +881,10 @@ void handle_client(struct request_info* request) {
 			if(request->bytes_written_cli == request->bytes_read_ser){
 			// you have written the entire HTTP response to the client socket. If this is the case:
 				// close your client socket. You are done!
+				if (epoll_ctl(efd, EPOLL_CTL_DEL, sfd, &event) < 0) { // sfd??
+					fprintf(stderr, "error removing event\n");
+					exit(1);
+				}
 				close(request->soc_cli);
 				if(verbose)
 					printf("Send Response finished\n");
