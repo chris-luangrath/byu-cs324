@@ -638,6 +638,7 @@ void handle_client(struct request_info* request) {
 
 				// change state to SEND_REQUEST. ----------------------------------------------------------
 				request->state = SEND_RESPONSE;
+				break;
 			} else if (nread < 0) { 
 				// read() (or recv()) returns a value less than 0. ----------------------------------------------------------
 				// If errno is EAGAIN or EWOULDBLOCK, it just means that there is no more data ready to be read; 
