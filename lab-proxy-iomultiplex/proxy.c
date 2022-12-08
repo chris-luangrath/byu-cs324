@@ -494,7 +494,7 @@ void handle_new_clients(int sfd) {
 		// DO I HAVE THESE CORRECT
 		request->soc_cli = connfd;
 		// request->soc_ser = sfd;
-		return;
+		// return; // why is this here ----------------------------------------------
 		// handle_client(request);
 	}
 }
