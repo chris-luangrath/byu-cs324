@@ -519,7 +519,7 @@ void handle_client(struct request_info* request) {
 	// struct epoll_event event;
 	// event.data.ptr = listener;
 	// event.events = EPOLLIN | EPOLLET;
-	printf("request state: %d\n",request->state);
+	printf("--request state: %d\n",request->state);
 
 	if (request->state == READ_REQUEST) {
 		if(verbose)
@@ -555,16 +555,18 @@ void handle_client(struct request_info* request) {
 				memset(headers, 0, 1024);
 
 				if (parse_request(request->rec_buf, method, hostname, port, path, headers)) {
-					printf("METHOD: %s\n", method);
-					printf("HOSTNAME: %s\n", hostname);
-					printf("PORT: %s\n", port);
-					printf("PATH: %s\n", path); // I ADDED THIS ONE. IT WASNT HERE BEFORE
-					printf("HEADERS: %s\n", headers);
-					printf("%s\n", user_agent_hdr);
+					// printf("METHOD: %s\n", method);
+					// printf("HOSTNAME: %s\n", hostname);
+					// printf("PORT: %s\n", port);
+					// printf("PATH: %s\n", path); // I ADDED THIS ONE. IT WASNT HERE BEFORE
+					// printf("HEADERS: %s\n", headers);
+					// printf("%s\n", user_agent_hdr);
 				} else {
 					printf("REQUEST INCOMPLETE\n");
 					exit(1);
 				}
+
+				memcpy(request->desc, path, strlen(path));
 
 
 				// parse the client request and create the request that you will send to the server. ----------------------------------------------------------
