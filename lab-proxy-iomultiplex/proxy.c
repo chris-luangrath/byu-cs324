@@ -656,6 +656,9 @@ void handle_client(struct request_info* request) {
 				request->bytes_to_write_ser = request->bytes_read_cli;
 				// request->bytes_to_write_ser = strlen(request->rec_buf);
 
+				if(verbose)
+					printf("bytes read: %d\n", request->bytes_read_cli);
+
 				struct epoll_event event;
 				event.data.ptr = request;
 				event.events = EPOLLOUT | EPOLLET;
