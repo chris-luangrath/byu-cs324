@@ -22,13 +22,16 @@
 
 static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0";
 
+
+
 int all_headers_received(char *);
 int parse_request(char *, char *, char *, char *, char *, char *);
 void test_parser();
 void print_bytes(unsigned char *, int);
 int open_sfd(char *, char *);
 void handle_new_clients(int sfd);
-void handle_client(struct request_info* request);
+void handle_client(request_info*);
+
 
 struct client_info
 {
@@ -36,7 +39,7 @@ struct client_info
 	char desc[1024];
 };
 
-struct request_info{
+typedef struct request_info{
 // 	the socket corresponding to the requesting client
 	int soc_cli;
 // the socket corresponding to the connection to the Web server
@@ -485,7 +488,7 @@ void handle_client(struct request_info* request) {
 			// 		headers_recieved = 1;
 			// 		printf("done receiving\n");
 			// 	}
-			if (all_headers_received(*(request->rec_buf))) { 
+			if (all_headers_received((request->rec_buf))) { 
 				// you have read the entire HTTP request from the client. If this is the case: ----------------------------------------------------------
 				char method[16], hostname[64], port[8], path[64], headers[1024];
 				memset(method, 0, 16);
