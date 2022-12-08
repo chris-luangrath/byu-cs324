@@ -902,10 +902,14 @@ void handle_client(struct request_info* request) {
 				// 	fprintf(stderr, "error removing event\n");
 				// 	exit(1);
 				// }
+				if(verbose)
+					printf("--closing client socket\n");
 				close(request->soc_cli);
+				if(verbose)
+					printf("--closed client socket\n");
 				if(verbose){
 					printf("sent %d total bytes\n", request->bytes_written_cli);
-					printf("Send Response finished\n");
+					printf("Send Response finished\n\n");
 				}
 				return;
 
