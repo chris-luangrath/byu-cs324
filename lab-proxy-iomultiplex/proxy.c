@@ -578,7 +578,8 @@ void handle_client(struct request_info* request) {
 				char *proxyconnection = "close";
 
 				// char newrequest[MAX_OBJECT_SIZE];
-				char *newrequest = malloc(MAX_OBJECT_SIZE);
+				// char *newrequest = malloc(MAX_OBJECT_SIZE);
+				char *newrequest = calloc(1,MAX_OBJECT_SIZE);
 				char *p = newrequest;
 				bzero(newrequest, MAX_OBJECT_SIZE);
 				char buf[MAX_OBJECT_SIZE];
