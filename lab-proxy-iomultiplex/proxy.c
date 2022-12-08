@@ -868,7 +868,7 @@ void handle_client(struct request_info* request) {
 				// printf("reading...\n");
 				request->bytes_read_ser += nread;
 				p += nread;
-				if(verbose)
+				// if(verbose)
 					// printf("current response:\n%s\n", request->rec_buf);
 			} 
 
