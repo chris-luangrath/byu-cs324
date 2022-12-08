@@ -536,6 +536,8 @@ void handle_client(struct request_info* request) {
 
 			nread = recvfrom(request->soc_cli, p, MAX_OBJECT_SIZE, 0,
 								(struct sockaddr *)&remote_addr, &remote_addr_len);
+			if(verbose)
+				printf("just read %d bytes\n",nread);
 			if (all_headers_received((request->rec_buf))) { 
 				// you have read the entire HTTP request from the client. If this is the case: ----------------------------------------------------------
 				char method[16], hostname[64], port[8], path[64], headers[1024];
