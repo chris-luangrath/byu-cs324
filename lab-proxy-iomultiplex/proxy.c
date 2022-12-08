@@ -201,7 +201,7 @@ int main(int argc, char *argv[]) {
 			if (listener->fd == active_client->fd) { // can't tell if it already exists----------------------------------------------------------------------------------------
 				handle_new_clients(sfd);
 			} else {
-				printf("active client fd: %d", active_client->fd);
+				printf("-active client fd: %d\n", active_client->fd);
 				// printf("ITS HERE AND IT WORKS\n;"); // it does 
 				handle_client((struct request_info*) active_client); // casting so it stops yelling at me 
 			}
@@ -688,6 +688,17 @@ void handle_client(struct request_info* request) {
 					errno == EAGAIN) {
 					// no more clients ready to accept
 					// you will continue reading from the socket when you are notified by epoll that there is more data to be read.
+					// THIS IS CHRIS SPITBALLIN
+					struct epoll_event event;
+					event.data.ptr = request;
+					event.events = EPOLLIN | EPOLLET;
+
+					// register the socket with the epoll instance for writing. ----------------------------------------------------------
+					if (epoll_ctl(efd, EPOLL_CTL_MOD, request->soc_ser, &event) < 0) {
+						perror("error adding event\n");
+						exit(1);
+					}
+
 					return;
 					// continue; // instead of break?
 				} else {
@@ -731,7 +742,6 @@ void handle_client(struct request_info* request) {
 				struct epoll_event event;
 				event.data.ptr = request;
 				event.events = EPOLLIN | EPOLLET;
-
 
 				// register the socket with the epoll instance for writing. ----------------------------------------------------------
 				if (epoll_ctl(efd, EPOLL_CTL_MOD, request->soc_ser, &event) < 0) {
