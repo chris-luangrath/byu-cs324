@@ -672,7 +672,8 @@ void handle_client(struct request_info* request) {
 
 				if(verbose){
 					printf("size of new request: %d\n", strlen(newrequest));
-					printf("rec buf: %d\n", request->rec_buf);
+					printf("rec buf: %s\n", request->rec_buf);
+					printf("bytes to write: %s\n", request->bytes_to_write_ser);
 
 				}
 
