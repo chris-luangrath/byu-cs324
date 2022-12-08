@@ -639,7 +639,8 @@ void handle_client(struct request_info* request) {
 				// change state to SEND_REQUEST. ----------------------------------------------------------
 				request->state = SEND_REQUEST;
 				printf("Read Request finished\n");
-				return;
+				break;
+				// return;
 			} else if (nread < 0) { 
 				// read() (or recv()) returns a value less than 0. ----------------------------------------------------------
 				// If errno is EAGAIN or EWOULDBLOCK, it just means that there is no more data ready to be read; 
@@ -648,7 +649,7 @@ void handle_client(struct request_info* request) {
 					// no more clients ready to accept
 					// you will continue reading from the socket when you are notified by epoll that there is more data to be read.
 					return;
-					continue; // instead of break?
+					// continue; // instead of break?
 				} else {
 					// If errno is anything else, this is an error. It actually be best to have your proxy exit at this point.
 					perror("read request fail");
