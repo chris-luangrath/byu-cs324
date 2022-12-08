@@ -127,6 +127,7 @@ int main(int argc, char *argv[]) {
 	}
 	// Create a while(1) loop that does the following:
 	while (1) {
+		printf("main_while_loop\n");
 		// Calls epoll_wait() loop with a timeout of 1 second.
 		size_t n;
 		events = calloc(MAXEVENTS, sizeof(struct epoll_event));
@@ -136,6 +137,7 @@ int main(int argc, char *argv[]) {
 		// If the result was a timeout (i.e., return value from epoll_wait() is 0),
 		if (n == 0) {
 			// check if a global flag has been set by a signal handler and, if so, break out of the loop; otherwise, continue.
+			printf("timeout\n");
 			// fprintf(stderr, "timeout in epoll_wait\n");
 			// exit(1);
 		}
@@ -371,6 +373,7 @@ int open_sfd(char *hostname, char *port) {
 
 // int handle_new_clients(int sfd){
 void handle_new_clients(int sfd) {
+	printf("handle_new_clients\n");
 	// 	Loop to accept() any and all client connections.
 	// For each new file descriptor (i.e., corresponding to a new client) returned,
 	// event.data.ptr = listener;
@@ -381,6 +384,7 @@ void handle_new_clients(int sfd) {
 	clientlen = sizeof(struct sockaddr_storage);
 	// printf("look here--------------------------------------------------\n");
 	while (1) {
+		printf("inside while\n");
 		// int clientsfd, connfd;
 		
 		// struct epoll_event *events;
@@ -411,13 +415,13 @@ void handle_new_clients(int sfd) {
 
 		// and register each returned client socket with the epoll instance that you created for reading,
 		// using edge-triggered monitoring (i.e., EPOLLIN | EPOLLET).
-		struct client_info *listener;
+		struct client_info *client;
 		struct epoll_event event;
-		listener = malloc(sizeof(struct client_info));
-		listener->fd = connfd;
-		event.data.ptr = listener;
+		client = malloc(sizeof(struct client_info));
+		client->fd = connfd;
+		event.data.ptr = client;
 		event.events = EPOLLIN | EPOLLET;
-		sprintf(listener->desc, "returned client socket");
+		sprintf(client->desc, "returned client socket");
 		if (epoll_ctl(efd, EPOLL_CTL_ADD, connfd, &event) < 0) {
 			fprintf(stderr, "error adding event\n");
 			exit(1);
