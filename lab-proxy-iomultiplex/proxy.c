@@ -793,7 +793,7 @@ void handle_client(struct request_info* request) {
 				// register the client socket with the epoll instance for writing.
 				// change state to SEND_RESPONSE.
 				printf("Read Response finished\n");
-				return
+				return;
 			} else if (nread < 0){
 				if (errno == EWOULDBLOCK ||
 					errno == EAGAIN) {
