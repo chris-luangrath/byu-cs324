@@ -29,7 +29,29 @@ struct client_info
 	char desc[1024];
 };
 
-typedef struct {
+// typedef struct {
+// // 	the socket corresponding to the requesting client
+// 	int soc_cli;
+// // the socket corresponding to the connection to the Web server
+// 	int soc_ser;
+// // the current state of the request (see Client Request States).
+// 	int state;
+// // the buffer(s) to read into and write from
+// 	char rec_buf[MAX_OBJECT_SIZE];
+// 	// unsigned char rec_buf[MAX_OBJECT_SIZE]; //
+// // the total number of bytes read from the client
+// 	int bytes_read_cli;
+// // the total number of bytes to write to the server
+// 	int bytes_to_write_ser;
+// // the total number of bytes written to the server
+// 	int bytes_written_ser;
+// // the total number of bytes read from the server
+// 	int bytes_read_ser;
+// // the total number of bytes written to the client
+// 	int bytes_written_cli;
+// } request_info;
+
+struct request_info {
 // 	the socket corresponding to the requesting client
 	int soc_cli;
 // the socket corresponding to the connection to the Web server
@@ -49,7 +71,7 @@ typedef struct {
 	int bytes_read_ser;
 // the total number of bytes written to the client
 	int bytes_written_cli;
-} request_info;
+};
 
 int all_headers_received(char *);
 int parse_request(char *, char *, char *, char *, char *, char *);
