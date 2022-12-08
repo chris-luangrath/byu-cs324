@@ -637,7 +637,8 @@ void handle_client(struct request_info* request) {
 				
 
 				// change state to SEND_REQUEST. ----------------------------------------------------------
-				request->state = SEND_RESPONSE;
+				request->state = SEND_REQUEST;
+				printf("Read Request finished\n");
 				return;
 			} else if (nread < 0) { 
 				// read() (or recv()) returns a value less than 0. ----------------------------------------------------------
