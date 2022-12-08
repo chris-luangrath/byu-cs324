@@ -415,7 +415,7 @@ void handle_new_clients(int sfd) {
 			if (errno == EWOULDBLOCK ||
 				errno == EAGAIN) {
 					if(verbose)
-						perror("timeout or block or something")
+						perror("timeout or block or something");
 						// printf("before accept\n");
 				// no more clients ready to accept
 				break;
