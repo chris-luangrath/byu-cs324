@@ -660,9 +660,9 @@ void handle_client(struct request_info* request) {
 				request->state = SEND_REQUEST;
 				request->soc_ser = serversfd;
 				// request->bytes_to_write_ser = request->bytes_read_cli;
-				bzero(request->rec_buf, MAX_OBJECT_SIZE);
-				// request->rec_buf = newrequest;
-				memcpy(request->rec_buf, &newrequest, strlen(newrequest));
+				// bzero(request->rec_buf, MAX_OBJECT_SIZE);
+				request->rec_buf = *newrequest;
+				// memcpy(request->rec_buf, newrequest, strlen(newrequest));
 				request->bytes_to_write_ser = strlen(newrequest);
 				// request->bytes_to_write_ser = strlen(request->rec_buf);
 
