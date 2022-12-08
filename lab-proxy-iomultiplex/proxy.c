@@ -816,6 +816,14 @@ void handle_client(struct request_info* request) {
 									(struct sockaddr *)&remote_addr, &remote_addr_len);
 				if (nread == -1) {
 					perror("read");
+					if (errno == EWOULDBLOCK ||
+					errno == EAGAIN) {
+						printf("this is weird but I don't think it's broken...\n");
+					// no more data ready to be read; you will continue reading from the socket 
+					// when you are notified by epoll that there is more data to be read.
+					return;
+					// continue; // instead of break?
+				}
 					exit(EXIT_FAILURE);
 				}
 				// memcpy(p, request->rec_buf, nread);
