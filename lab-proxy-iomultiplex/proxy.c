@@ -877,8 +877,10 @@ void handle_client(struct request_info* request) {
 
 		}
 	} else if (request->state == SEND_RESPONSE) {
-		if(verbose)
+		if(verbose){
 			printf("SEND_RESPONSE\n");
+			fflush(stdout);
+		}
 		int written = 0;
 		while(1){
 			char* p = request->rec_buf;
