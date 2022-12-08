@@ -442,6 +442,7 @@ void handle_new_clients(int sfd) {
 		// 	fcntl(clientsfd, O_NONBLOCK);
 		// }
 		struct request_info *request;
+		// struct request_info *request;
 		request = malloc(sizeof(struct request_info));
 		request->bytes_read_cli = 0;
 		request->bytes_read_ser = 0;
@@ -455,7 +456,7 @@ void handle_new_clients(int sfd) {
 		request->soc_cli = connfd;
 		request->soc_ser = sfd;
 
-		handle_client(request);
+		handle_client(*request);
 	}
 }
 
