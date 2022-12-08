@@ -660,7 +660,7 @@ void handle_client(struct request_info* request) {
 
 				// register the socket with the epoll instance for writing. ----------------------------------------------------------
 				if (epoll_ctl(efd, EPOLL_CTL_ADD, serversfd, &event) < 0) {
-					if(verboses)
+					if(verbose)
 						printf("weird\n");
 					if (epoll_ctl(efd, EPOLL_CTL_MOD, request->soc_ser, &event) < 0) {
 						return;
