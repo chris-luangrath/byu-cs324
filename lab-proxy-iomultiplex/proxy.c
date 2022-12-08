@@ -692,15 +692,15 @@ void handle_client(struct request_info* request) {
 					// no more clients ready to accept
 					// you will continue reading from the socket when you are notified by epoll that there is more data to be read.
 					// THIS IS CHRIS SPITBALLIN
-					struct epoll_event event;
-					event.data.ptr = request;
-					event.events = EPOLLIN | EPOLLET;
+					// struct epoll_event event;
+					// event.data.ptr = request;
+					// event.events = EPOLLIN | EPOLLET;
 
-					// register the socket with the epoll instance for writing. ----------------------------------------------------------
-					if (epoll_ctl(efd, EPOLL_CTL_ADD, request->soc_ser, &event) < 0) {
-						perror("error adding event\n");
-						exit(1);
-					}
+					// // register the socket with the epoll instance for writing. ----------------------------------------------------------
+					// if (epoll_ctl(efd, EPOLL_CTL_ADD, request->soc_ser, &event) < 0) {
+					// 	perror("error adding event\n");
+					// 	exit(1);
+					// }
 
 					return;
 					// continue; // instead of break?
