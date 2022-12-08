@@ -194,7 +194,7 @@ int main(int argc, char *argv[]) {
 			// (appropriately) to a struct client_info *.
 			// active_client = (struct client_info *)(events[i].data.ptr);
 			active_client = (struct request_info *)(events[i].data.ptr);
-			printf("New event for %s\n", active_client->desc);
+			printf("\nNew event for %s\n", active_client->desc);
 			// uh...... we don't even use client_info for our request_info, what's the point of this then?
 
 			if ((events[i].events & EPOLLERR) ||
@@ -420,7 +420,7 @@ void handle_new_clients(int sfd) {
 			printf("before accept\n");
 		connfd = accept(sfd, (struct sockaddr *)&clientaddr, &clientlen);
 		if(verbose)
-			printf("after accept\n");
+			printf("after accept, accepted %d\n",connfd);
 		// connfd = accept(active_client->fd, (struct sockaddr *)&clientaddr, &clientlen);
 
 		if (connfd < 0) {
@@ -468,8 +468,7 @@ void handle_new_clients(int sfd) {
 
 		// Have your proxy print the newly created file descriptor associated with any new clients.
 		// You can remove this later, but it will be good for you to see now that they are being created.4
-		if(verbose)
-			printf("new file descriptor: %d\n", efd);
+		
 
 		/* Buffer where events are returned */
 		// events = calloc(MAXEVENTS, sizeof(struct epoll_event));
