@@ -25,11 +25,11 @@ static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (Macintosh; Intel M
 int verbose = 1;
 // if(verbose)
 
-struct client_info
-{
-	int fd;
-	char desc[1024];
-};
+// struct client_info
+// {
+// 	int fd;
+// 	char desc[1024];
+// };
 
 // typedef struct {
 // // 	the socket corresponding to the requesting client
@@ -54,6 +54,8 @@ struct client_info
 // } request_info;
 
 struct request_info {
+	int fd;
+	char desc[1024];
 // 	the socket corresponding to the requesting client
 	int soc_cli;
 // the socket corresponding to the connection to the Web server
@@ -112,8 +114,10 @@ int main(int argc, char *argv[]) {
 
 	sfd = open_sfd(NULL, argv[1]);
 
-	struct client_info *listener;
-	listener = malloc(sizeof(struct client_info));
+	struct request_info *listener;
+	// struct client_info *listener;
+	listener = malloc(sizeof(struct request_info));
+	// listener = malloc(sizeof(struct client_info));
 	listener->fd = sfd;
 	sprintf(listener->desc, "Listening socket");
 	event.data.ptr = listener;
@@ -174,7 +178,8 @@ int main(int argc, char *argv[]) {
 		// For now, just start with handling new clients.
 		// We will implement the handling of existing clients later.
 
-		struct client_info *active_client;
+		struct request_info *active_client;
+		// struct client_info *active_client;
 		// int i;
 		for (int i = 0; i < n; i++) {
 			// printf("look here--------------------------------------------------\n");
