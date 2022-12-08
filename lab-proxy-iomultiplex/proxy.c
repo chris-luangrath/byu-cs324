@@ -56,6 +56,9 @@ int verbose = 1;
 struct request_info {
 	int fd;
 	char desc[1024];
+
+	int soc_lis; // is this correct
+
 // 	the socket corresponding to the requesting client
 	int soc_cli;
 // the socket corresponding to the connection to the Web server
@@ -118,7 +121,8 @@ int main(int argc, char *argv[]) {
 	// struct client_info *listener;
 	listener = malloc(sizeof(struct request_info));
 	// listener = malloc(sizeof(struct client_info));
-	listener->fd = sfd;
+	// listener->fd = sfd;
+	listener->soc_lis = sfd;
 	sprintf(listener->desc, "Listening socket");
 	event.data.ptr = listener;
 	event.events = EPOLLIN | EPOLLET;
@@ -195,7 +199,8 @@ int main(int argc, char *argv[]) {
 				(events[i].events & EPOLLRDHUP)) {
 				/* An error has occured on this fd */
 				fprintf(stderr, "epoll error on %s\n", active_client->desc);
-				close(active_client->fd);
+				// close(active_client->fd);
+				close(active_client->soc_ser);
 				free(active_client);
 				continue;
 			}
@@ -203,7 +208,8 @@ int main(int argc, char *argv[]) {
 			// If the event corresponds to the listening file descriptor, then call handle_new_clients().
 			// printf("look here--------------------------------------------------\n");
 			// if (sfd == active_client->fd) {
-			if (listener->fd == active_client->fd) { // can't tell if it already exists----------------------------------------------------------------------------------------
+			// if (listener->fd == active_client->fd) { // can't tell if it already exists----------------------------------------------------------------------------------------
+			if (listener->soc_lis == active_client->soc_lis && active_client->soc_cli) { // can't tell if it already exists----------------------------------------------------------------------------------------
 				handle_new_clients(sfd);
 			} else {
 				printf("-active client fd: %d\n", active_client->fd);
@@ -395,8 +401,7 @@ void handle_new_clients(int sfd) {
 		printf("handle_new_clients\n");
 	// 	Loop to accept() any and all client connections.
 	// For each new file descriptor (i.e., corresponding to a new client) returned,
-	// event.data.ptr = listener;
-	// event.events = EPOLLIN | EPOLLET;
+	
 	int connfd;
 	struct sockaddr_storage clientaddr;
 	socklen_t clientlen;
@@ -453,25 +458,6 @@ void handle_new_clients(int sfd) {
 			exit(1);
 		}
 
-		// printf("look here--------------------------------------------------\n");
-
-		// // register the listening file descriptor for incoming events using
-		// // edge-triggered monitoring
-
-		// // struct client_info *listener;
-		// listener = malloc(sizeof(struct client_info));
-		// listener->fd = connfd;
-		// // listener->fd = sfd;
-		// event.data.ptr = listener;
-		// event.events = EPOLLIN | EPOLLET;
-		// sprintf(listener->desc, "Listen file descriptor (accepts new clients)");
-
-
-		// if (epoll_ctl(efd, EPOLL_CTL_ADD, connfd, &event) < 0) {
-		// 	perror("error adding event2\n");
-		// 	exit(1);
-		// }
-		// printf("look here2--------------------------------------------------\n");
 
 
 
@@ -487,13 +473,6 @@ void handle_new_clients(int sfd) {
 		// You will need to pass your epoll file descriptor as an argument,
 		// so you can register the new file descriptor with the epoll instance.
 
-		// if ((clientsfd = accept(sfd, NULL, NULL)) < 0) {
-		// 	perror("Could not accept");
-		// 	exit(EXIT_FAILURE);
-		// } else {
-		// 	// configure it to use non-blocking I/O (see the man page for fcntl() for how to do this)
-		// 	fcntl(clientsfd, O_NONBLOCK);
-		// }
 		// struct request_info request;
 		struct request_info *request;
 		// request = malloc(sizeof(struct request_info));
