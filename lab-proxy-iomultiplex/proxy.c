@@ -670,6 +670,9 @@ void handle_client(struct request_info* request) {
 
 				// register the socket with the epoll instance for writing. ----------------------------------------------------------
 				if (epoll_ctl(efd, EPOLL_CTL_ADD, serversfd, &event) < 0) {
+					if (epoll_ctl(efd, EPOLL_CTL_MOD, request->soc_ser, &event) < 0) {
+						return;
+					}
 					fprintf(stderr, "error adding event\n");
 					exit(1);
 				}
@@ -694,7 +697,7 @@ void handle_client(struct request_info* request) {
 					event.events = EPOLLIN | EPOLLET;
 
 					// register the socket with the epoll instance for writing. ----------------------------------------------------------
-					if (epoll_ctl(efd, EPOLL_CTL_MOD, request->soc_ser, &event) < 0) {
+					if (epoll_ctl(efd, EPOLL_CTL_ADD, request->soc_ser, &event) < 0) {
 						perror("error adding event\n");
 						exit(1);
 					}
