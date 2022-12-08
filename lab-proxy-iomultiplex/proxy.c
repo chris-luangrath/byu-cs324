@@ -175,7 +175,6 @@ int main(int argc, char *argv[]) {
 		struct client_info *active_client;
 		// int i;
 		for (int i = 0; i < n; i++) {
-			printf("n: %d\n",n);
 			// printf("look here--------------------------------------------------\n");
 	
 			// grab the data structure from the event, and cast it
@@ -200,7 +199,7 @@ int main(int argc, char *argv[]) {
 				handle_new_clients(sfd);
 			} else {
 				// printf("ITS HERE AND IT WORKS\n;"); // it does 
-				handle_client(active_client);
+				handle_client((struct request_info*) active_client); // casting so it stops yelling at me 
 			}
 
 			// After the epoll_wait() while(1) loop, you should clean up any resources (e.g., freeing malloc()'d memory), and exit.
@@ -743,10 +742,10 @@ void handle_client(struct request_info* request) {
 			} else {
 				char* p = request->rec_buf;
 				p += request->bytes_written_cli;
-				request->bytes_to_write_ser;
+				// request->bytes_to_write_ser;
 				// would I use request->bytes_read_cli or request->bytes_to_write_ser?
 
-				written = write(request->soc_ser, request->rec_buf, strlen(request->rec_buf);
+				written = write(request->soc_ser, request->rec_buf, strlen(request->rec_buf));
 				request->bytes_written_cli += written;
 				p += written;
 				// if () != strlen(request->rec_buf)) { //clientsfd should be serversfd
