@@ -201,6 +201,7 @@ int main(int argc, char *argv[]) {
 			if (listener->fd == active_client->fd) { // can't tell if it already exists----------------------------------------------------------------------------------------
 				handle_new_clients(sfd);
 			} else {
+				printf("active client fd: %d", active_client->fd);
 				// printf("ITS HERE AND IT WORKS\n;"); // it does 
 				handle_client((struct request_info*) active_client); // casting so it stops yelling at me 
 			}
