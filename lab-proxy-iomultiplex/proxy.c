@@ -763,10 +763,7 @@ void handle_client(struct request_info* request) {
 			p += written;
 			if(verbose)
 				printf("wrote %d bytes\n",written);
-			// if () != strlen(request->rec_buf)) { //clientsfd should be serversfd
-				// 	fprintf(stderr, "partial/failed write\n");
-				// 	exit(EXIT_FAILURE);
-				// } // I don't need this because we're fine with partial writes, right?
+			
 			// you have written the entire HTTP request to the server socket. If this is the case:
 			// if(request->bytes_written_ser == request->bytes_read_cli){
 			if(request->bytes_to_write_ser == 0){
@@ -774,7 +771,6 @@ void handle_client(struct request_info* request) {
 				// change state to READ_RESPONSE.
 				bzero(request->rec_buf,MAX_OBJECT_SIZE);
 				request->state = READ_RESPONSE;
-				// request->soc_ser = serversfd;
 
 				struct epoll_event event;
 				event.data.ptr = request;
@@ -843,6 +839,8 @@ void handle_client(struct request_info* request) {
 				struct epoll_event event;
 				event.data.ptr = request;
 				event.events = EPOLLOUT | EPOLLET;
+
+				close(request->soc_ser);
 
 
 				// register the socket with the epoll instance for writing. ----------------------------------------------------------
