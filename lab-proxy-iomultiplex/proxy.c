@@ -853,7 +853,8 @@ void handle_client(struct request_info* request) {
 			char* p = request->rec_buf;
 			p += request->bytes_written_cli;
 
-			written = write(request->soc_cli, request->rec_buf, strlen(request->rec_buf));
+			written = write(request->soc_cli, request->rec_buf, request->bytes_read_ser);
+			// written = write(request->soc_cli, request->rec_buf, strlen(request->rec_buf));
 			// if () != strlen(request->rec_buf)) { //clientsfd should be serversfd
 				// 	fprintf(stderr, "partial/failed write\n");
 				// 	exit(EXIT_FAILURE);
