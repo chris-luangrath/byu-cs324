@@ -21,3 +21,5 @@ curl -o tmp5p -x http://localhost:46176/ http://www-notls.imaal.byu.edu/images/i
  curl -o tmp3 http://localhost:46177/godzilla.jpg
 
  curl -o tmp3p -x http://localhost:46176/ http://localhost:46177/godzilla.jpg
+
+ ./slow-client.py -o tmp5p -x http://localhost:46176/ "http://localhost:46177/cgi-bin/slow?sleep=1&size=4096"

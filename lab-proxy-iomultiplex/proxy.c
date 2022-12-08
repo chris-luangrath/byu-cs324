@@ -823,7 +823,7 @@ void handle_client(struct request_info* request) {
 			request->bytes_read_ser += nread;
 				p += nread;
 				if(verbose){
-					printf("current response:\n%s\n", request->rec_buf);
+					// printf("current response:\n%s\n", request->rec_buf);
 					printf("read %d bytes\n", nread);
 				}
 			if(nread == 0){
@@ -845,8 +845,11 @@ void handle_client(struct request_info* request) {
 				}
 				// register the client socket with the epoll instance for writing.
 				// change state to SEND_RESPONSE.
-				if(verbose)
+				if(verbose){
+					printf("read %d total bytes\n", request->bytes_read_ser);
 					printf("--Read Response finished--\n");
+
+				}
 				return;
 			} else if (nread < 0){
 				if (errno == EWOULDBLOCK ||
@@ -891,6 +894,7 @@ void handle_client(struct request_info* request) {
 				// }
 				close(request->soc_cli);
 				if(verbose)
+					printf("read %d total bytes\n", request->bytes_written_cli);
 					printf("Send Response finished\n");
 				return;
 
