@@ -119,7 +119,8 @@ int main(int argc, char *argv[]) {
 
 	struct request_info *listener;
 	// struct client_info *listener;
-	listener = malloc(sizeof(struct request_info));
+	// listener = malloc(sizeof(struct request_info));
+	listener = calloc(1,sizeof(struct request_info));
 	// listener = malloc(sizeof(struct client_info));
 	// listener->fd = sfd;
 	// listener->soc_lis = sfd;
@@ -452,7 +453,8 @@ void handle_new_clients(int sfd) {
 		struct request_info *client;
 		struct epoll_event event;
 		// client = malloc(sizeof(struct client_info));
-		client = malloc(sizeof(struct request_info));
+		// client = malloc(sizeof(struct request_info));
+		client = calloc(1,sizeof(struct request_info));
 		client->soc_cli = connfd;
 		event.data.ptr = client;
 		event.events = EPOLLIN | EPOLLET;
@@ -480,7 +482,8 @@ void handle_new_clients(int sfd) {
 		// struct request_info request;
 		struct request_info *request;
 		// request = malloc(sizeof(struct request_info));
-		request = malloc(sizeof(struct request_info));
+		// request = malloc(sizeof(struct request_info));
+		request = calloc(1,sizeof(struct request_info));;
 		request->bytes_read_cli = 0;
 		request->bytes_read_ser = 0;
 		request->bytes_to_write_ser = 0;
