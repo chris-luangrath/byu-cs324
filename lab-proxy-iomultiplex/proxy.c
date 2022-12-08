@@ -22,6 +22,8 @@
 
 static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0";
 
+int verbose = 0;
+// if(verbose)
 
 struct client_info
 {
@@ -383,7 +385,8 @@ int open_sfd(char *hostname, char *port) {
 
 // int handle_new_clients(int sfd){
 void handle_new_clients(int sfd) {
-	printf("handle_new_clients\n");
+	if(verbose)
+		printf("handle_new_clients\n");
 	// 	Loop to accept() any and all client connections.
 	// For each new file descriptor (i.e., corresponding to a new client) returned,
 	// event.data.ptr = listener;
@@ -394,13 +397,16 @@ void handle_new_clients(int sfd) {
 	clientlen = sizeof(struct sockaddr_storage);
 	// printf("look here--------------------------------------------------\n");
 	while (1) {
-		printf("inside while\n");
+		if(verbose)
+			printf("inside while\n");
 		// int clientsfd, connfd;
 		
 		// struct epoll_event *events;
-		printf("before accept\n");
+		if(verbose)
+			printf("before accept\n");
 		connfd = accept(sfd, (struct sockaddr *)&clientaddr, &clientlen);
-		printf("after accept\n");
+		if(verbose)
+			printf("after accept\n");
 		// connfd = accept(active_client->fd, (struct sockaddr *)&clientaddr, &clientlen);
 
 		if (connfd < 0) {
@@ -461,8 +467,9 @@ void handle_new_clients(int sfd) {
 
 
 		// Have your proxy print the newly created file descriptor associated with any new clients.
-		// You can remove this later, but it will be good for you to see now that they are being created.
-		printf("new file descriptor: %d\n", efd);
+		// You can remove this later, but it will be good for you to see now that they are being created.4
+		if(verbose)
+			printf("new file descriptor: %d\n", efd);
 
 		/* Buffer where events are returned */
 		// events = calloc(MAXEVENTS, sizeof(struct epoll_event));
@@ -499,7 +506,8 @@ void handle_new_clients(int sfd) {
 }
 
 void handle_client(struct request_info* request) {
-	printf("entered handle_client--------------------------------------------------\n");
+	if(verbose)
+		printf("entered handle_client--------------------------------------------------\n");
 	// that takes a pointer to a client request,
 	// determines what state it is in,
 	// and performs the actions associated with that state
@@ -543,11 +551,11 @@ void handle_client(struct request_info* request) {
 				memset(headers, 0, 1024);
 
 				if (parse_request(request->rec_buf, method, hostname, port, path, headers)) {
-					printf("METHOD: %s\n", method);
-					printf("HOSTNAME: %s\n", hostname);
-					printf("PORT: %s\n", port);
-					printf("PATH: %s\n", path); // I ADDED THIS ONE. IT WASNT HERE BEFORE
-					printf("HEADERS: %s\n", headers);
+					// printf("METHOD: %s\n", method);
+					// printf("HOSTNAME: %s\n", hostname);
+					// printf("PORT: %s\n", port);
+					// printf("PATH: %s\n", path); // I ADDED THIS ONE. IT WASNT HERE BEFORE
+					// printf("HEADERS: %s\n", headers);
 					// printf("%s\n", user_agent_hdr);
 				} else {
 					printf("REQUEST INCOMPLETE\n");
@@ -591,7 +599,8 @@ void handle_client(struct request_info* request) {
 				// printf("HEY IT'S HERE ----------------------\n");
 				// if(verbose)
 				// printf("%s\n",newrequest);
-				printf("new request:\n%s\n", newrequest);
+				if(verbose)
+					printf("new request:\n%s\n", newrequest);
 
 
 				// create a new socket and connect to the HTTP server. ----------------------------------------------------------
@@ -627,8 +636,8 @@ void handle_client(struct request_info* request) {
 						// printf("successfully connected\n");
 						break;  /* Success */
 					}
-
-					printf("success?\n");
+					if(verbose)
+						printf("success?\n");
 					close(serversfd);
 				}
 				// printf("2--------------------------------------------\n");
@@ -664,7 +673,8 @@ void handle_client(struct request_info* request) {
 				
 
 				// change state to SEND_REQUEST. ----------------------------------------------------------
-				printf("Read Request finished\n");
+				if(verbose)
+					printf("Read Request finished\n");
 				return;
 			} else if (nread < 0) { 
 				// read() (or recv()) returns a value less than 0.
@@ -690,7 +700,8 @@ void handle_client(struct request_info* request) {
 
 
 	else if (request->state == SEND_REQUEST) {
-		printf("Send Request\n");
+		if(verbose)
+			printf("Send Request\n");
 		// loop to write the request to the server socket until one of the following happens:
 		int written = 0;
 		while(1){
@@ -722,8 +733,8 @@ void handle_client(struct request_info* request) {
 					perror("error adding event\n");
 					exit(1);
 				}
-
-				printf("Send Request finished\n");
+				if(verbose)
+					printf("Send Request finished\n");
 				return;
 
 				
@@ -750,7 +761,8 @@ void handle_client(struct request_info* request) {
 
 		}
 	} else if (request->state == READ_RESPONSE) {
-		printf("READ_RESPONSE\n");
+		if(verbose)
+			printf("READ_RESPONSE\n");
 		int nread = 1;
 		while(1){
 		// loop to read from the server socket until one of the following happens:
@@ -778,7 +790,8 @@ void handle_client(struct request_info* request) {
 				}
 				// register the client socket with the epoll instance for writing.
 				// change state to SEND_RESPONSE.
-				printf("Read Response finished\n");
+				if(verbose)
+					printf("Read Response finished\n");
 				return;
 			} else if (nread < 0){
 				if (errno == EWOULDBLOCK ||
@@ -796,12 +809,14 @@ void handle_client(struct request_info* request) {
 				// printf("reading...\n");
 				request->bytes_read_ser += nread;
 				p += nread;
-				printf("current response:\n%s\n", request->rec_buf);
+				if(verbose)
+					printf("current response:\n%s\n", request->rec_buf);
 			} 
 
 		}
 	} else if (request->state == SEND_RESPONSE) {
-		printf("SEND_RESPONSE\n");
+		if(verbose)
+			printf("SEND_RESPONSE\n");
 		int written = 0;
 		while(1){
 			char* p = request->rec_buf;
@@ -817,8 +832,8 @@ void handle_client(struct request_info* request) {
 			// you have written the entire HTTP response to the client socket. If this is the case:
 				// close your client socket. You are done!
 				close(request->soc_cli);
-
-				printf("Send Response finished\n");
+				if(verbose)
+					printf("Send Response finished\n");
 				return;
 
 				
