@@ -1,5 +1,23 @@
 
 curl -x http://localhost:46176/ "http://www-notls.imaal.byu.edu/cgi-bin/slowsend.cgi?obj=lyrics"
-
+./slow-client.py -x http://localhost:46176/ -b 1 "http://www-notls.imaal.byu.edu/cgi-bin/slowsend.cgi?obj=lyrics"
 
 ./proxy 46176
+
+
+curl -o tmp1 http://localhost:46177/home.html
+curl -o tmp1p -x http://localhost:46176/ http://localhost:46177/home.html
+
+curl -o tmp1p -x http://localhost:46176/ http://www-notls.imaal.byu.edu/index.html
+./slow-client.py -o tmp2p -x http://localhost:46176/ -b 1 http://www-notls.imaal.byu.edu/index.html
+curl -o tmp3p -x http://localhost:46176/ "http://www-notls.imaal.byu.edu/cgi-bin/slowsend.cgi?obj=lyrics"
+./slow-client.py -o tmp4p -x http://localhost:46176/ -b 1 "http://www-notls.imaal.byu.edu/cgi-bin/slowsend.cgi?obj=lyrics"
+curl -o tmp5p -x http://localhost:46176/ http://www-notls.imaal.byu.edu/images/imaal-80x80.png
+
+
+./noproxy_r14jevbd/tiny-4 and ./proxy_yywb17j3/tiny-4 differ
+
+
+ curl -o tmp3 http://localhost:46177/godzilla.jpg
+
+ curl -o tmp3p -x http://localhost:46176/ http://localhost:46177/godzilla.jpg

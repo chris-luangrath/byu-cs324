@@ -667,10 +667,8 @@ void handle_client(struct request_info* request) {
 				request->bytes_to_write_ser = strlen(newrequest);
 				// request->bytes_to_write_ser = strlen(request->rec_buf);
 
-				if(verbose)
-					printf("bytes read: %d\n", request->bytes_read_cli);
-
 				if(verbose){
+					printf("bytes read: %d\n", request->bytes_read_cli);
 					printf("size of new request: %ld\n", strlen(newrequest));
 					printf("rec buf: %s\n", request->rec_buf);
 					printf("bytes to write: %d\n", request->bytes_to_write_ser);
@@ -822,6 +820,12 @@ void handle_client(struct request_info* request) {
 
 			nread = recvfrom(request->soc_ser, p, MAX_OBJECT_SIZE, 0,
 								(struct sockaddr *)&remote_addr, &remote_addr_len);
+			request->bytes_read_ser += nread;
+				p += nread;
+				if(verbose){
+					printf("current response:\n%s\n", request->rec_buf);
+					printf("read %d bytes\n", nread);
+				}
 			if(nread == 0){
 			// you have read the entire HTTP response from the server. Since this is HTTP/1.0, this 
 			// is when the call to read() (or recv()) returns 0, indicating that the server has closed 
@@ -858,10 +862,10 @@ void handle_client(struct request_info* request) {
 				}
 			} else {
 				// printf("reading...\n");
-				request->bytes_read_ser += nread;
-				p += nread;
-				if(verbose)
-					printf("current response:\n%s\n", request->rec_buf);
+				// request->bytes_read_ser += nread;
+				// p += nread;
+				// if(verbose)
+				// 	printf("current response:\n%s\n", request->rec_buf);
 			} 
 
 		}
@@ -904,7 +908,8 @@ void handle_client(struct request_info* request) {
 					// cancel your client request, and deregister your socket at this point.
 					perror("send response fail");
 					// close(request->soc_ser);
-					exit(EXIT_FAILURE);
+					// exit(EXIT_FAILURE);
+					break;
 				}
 				
 			} else {
