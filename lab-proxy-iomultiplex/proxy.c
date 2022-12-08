@@ -661,7 +661,8 @@ void handle_client(struct request_info* request) {
 				request->soc_ser = serversfd;
 				// request->bytes_to_write_ser = request->bytes_read_cli;
 				// bzero(request->rec_buf, MAX_OBJECT_SIZE);
-				request->rec_buf = *newrequest;
+				// request->rec_buf = *newrequest;
+				sprintf(request->rec_buf,"%s",newrequest)
 				// memcpy(request->rec_buf, newrequest, strlen(newrequest));
 				request->bytes_to_write_ser = strlen(newrequest);
 				// request->bytes_to_write_ser = strlen(request->rec_buf);
