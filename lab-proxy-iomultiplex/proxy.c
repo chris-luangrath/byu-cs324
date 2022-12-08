@@ -441,9 +441,9 @@ void handle_new_clients(int sfd) {
 		// 	// configure it to use non-blocking I/O (see the man page for fcntl() for how to do this)
 		// 	fcntl(clientsfd, O_NONBLOCK);
 		// }
-		struct request_info *request;
+		struct request_info request;
 		// struct request_info *request;
-		request = malloc(sizeof(struct request_info));
+		// request = malloc(sizeof(struct request_info));
 		request->bytes_read_cli = 0;
 		request->bytes_read_ser = 0;
 		request->bytes_to_write_ser = 0;
