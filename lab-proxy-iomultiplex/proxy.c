@@ -191,7 +191,8 @@ int main(int argc, char *argv[]) {
 	
 			// grab the data structure from the event, and cast it
 			// (appropriately) to a struct client_info *.
-			active_client = (struct client_info *)(events[i].data.ptr);
+			// active_client = (struct client_info *)(events[i].data.ptr);
+			active_client = (struct request_info *)(events[i].data.ptr);
 			printf("New event for %s\n", active_client->desc);
 			// uh...... we don't even use client_info for our request_info, what's the point of this then?
 
@@ -450,7 +451,8 @@ void handle_new_clients(int sfd) {
 		// struct client_info *client;
 		struct request_info *client;
 		struct epoll_event event;
-		client = malloc(sizeof(struct client_info));
+		// client = malloc(sizeof(struct client_info));
+		client = malloc(sizeof(struct request_info));
 		client->soc_cli = connfd;
 		event.data.ptr = client;
 		event.events = EPOLLIN | EPOLLET;
