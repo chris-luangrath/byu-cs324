@@ -524,6 +524,7 @@ void handle_client(struct request_info* request) {
 	// struct epoll_event event;
 	// event.data.ptr = listener;
 	// event.events = EPOLLIN | EPOLLET;
+	printf("request state: %d",request->state);
 
 	if (request->state == READ_REQUEST) {
 		// This is the start state for every new client request.
