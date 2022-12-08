@@ -823,7 +823,7 @@ void handle_client(struct request_info* request) {
 
 			// nread = recvfrom(request->soc_ser, p, MAX_OBJECT_SIZE, 0,
 			// 					(struct sockaddr *)&remote_addr, &remote_addr_len);
-			nread = recv(request->soc_ser, p, MAX_OBJECT_SIZE, 0);
+			nread = recv(request->soc_ser, p, MAX_OBJECT_SIZE, 0); // subtract max_object_size by already read
 			// request->bytes_read_ser += nread;
 			// p += nread;
 			if(verbose){
@@ -888,7 +888,7 @@ void handle_client(struct request_info* request) {
 			char* p = request->rec_buf;
 			p += request->bytes_written_cli;
 
-			written = write(request->soc_cli, p, request->bytes_read_ser);
+			written = write(request->soc_cli, p, request->bytes_read_ser); // handle short writes
 			request->bytes_written_cli += written;
 			p += written;
 			// written = write(request->soc_cli, request->rec_buf, strlen(request->rec_buf));
@@ -910,6 +910,7 @@ void handle_client(struct request_info* request) {
 				
 			} else if(written < 0){
 			// write() (or send()) returns a value less than 0.
+				printf("written < 0");
 				if (errno == EWOULDBLOCK ||
 					errno == EAGAIN) {
 					// there is no buffer space available for writing to the socket; 
