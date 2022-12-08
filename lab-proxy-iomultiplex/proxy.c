@@ -181,6 +181,7 @@ int main(int argc, char *argv[]) {
 			// (appropriately) to a struct client_info *.
 			active_client = (struct client_info *)(events[i].data.ptr);
 			printf("New event for %s\n", active_client->desc);
+			// uh...... we don't even use client_info for our request_info, what's the point of this then?
 
 			if ((events[i].events & EPOLLERR) ||
 				(events[i].events & EPOLLHUP) ||
@@ -773,7 +774,12 @@ void handle_client(struct request_info* request) {
 		int nread = 1;
 		while(1){
 		// loop to read from the server socket until one of the following happens:
-			if(nread == 0){ // is this truly finished?
+			char* p = request->rec_buf;
+			p += request->bytes_read_ser;
+
+			nread = recvfrom(request->soc_ser, p, MAX_OBJECT_SIZE, 0,
+								(struct sockaddr *)&remote_addr, &remote_addr_len);
+			if(nread == 0){
 			// you have read the entire HTTP response from the server. Since this is HTTP/1.0, this 
 			// is when the call to read() (or recv()) returns 0, indicating that the server has closed 
 			// the connection. If this is the case:
@@ -809,23 +815,23 @@ void handle_client(struct request_info* request) {
 			} else {
 				printf("reading...\n");
 				// read from server
-				char* p = request->rec_buf;
-				p += request->bytes_read_ser;
+				// char* p = request->rec_buf;
+				// p += request->bytes_read_ser;
 
-				nread = recvfrom(request->soc_ser, p, MAX_OBJECT_SIZE, 0,
-									(struct sockaddr *)&remote_addr, &remote_addr_len);
-				if (nread == -1) {
-					perror("read");
-					if (errno == EWOULDBLOCK ||
-					errno == EAGAIN) {
-						printf("this is weird but I don't think it's broken...\n");
-					// no more data ready to be read; you will continue reading from the socket 
-					// when you are notified by epoll that there is more data to be read.
-					return;
-					// continue; // instead of break?
-				}
-					exit(EXIT_FAILURE);
-				}
+				// nread = recvfrom(request->soc_ser, p, MAX_OBJECT_SIZE, 0,
+				// 					(struct sockaddr *)&remote_addr, &remote_addr_len);
+				// if (nread == -1) {
+				// 	perror("read");
+				// 	if (errno == EWOULDBLOCK ||
+				// 	errno == EAGAIN) {
+				// 		printf("this is weird but I don't think it's broken...\n");
+				// 		// no more data ready to be read; you will continue reading from the socket 
+				// 		// when you are notified by epoll that there is more data to be read.
+				// 		return;
+				// 		// continue; // instead of break?
+				// 	}
+				// 	// exit(EXIT_FAILURE);
+				// }
 				// memcpy(p, request->rec_buf, nread);
 				request->bytes_read_ser += nread;
 				p += nread;
