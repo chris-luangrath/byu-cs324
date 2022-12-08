@@ -364,6 +364,11 @@ int open_sfd(char *hostname, char *port) {
 
 	setsockopt(sfd, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
 
+	if (fcntl(sfd, F_SETFL, fcntl(sfd, F_GETFL, 0) | O_NONBLOCK) < 0) {
+			fprintf(stderr, "error setting socket option\n");
+			exit(1);
+		}
+
 	if (bind(sfd, result->ai_addr, result->ai_addrlen) < 0) {
 		perror("Could not bind");
 		exit(EXIT_FAILURE);
