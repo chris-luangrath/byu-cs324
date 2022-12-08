@@ -714,6 +714,8 @@ void handle_client(struct request_info* request) {
 		while(1){
 			char* p = request->rec_buf;
 			p += request->bytes_written_ser;
+			if(verbose)
+				printf("writing %s\n",p);
 			// request->bytes_to_write_ser;
 			// would I use request->bytes_read_cli or request->bytes_to_write_ser?
 
