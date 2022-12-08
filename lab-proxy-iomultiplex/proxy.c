@@ -821,6 +821,7 @@ void handle_client(struct request_info* request) {
 				// memcpy(p, request->rec_buf, nread);
 				request->bytes_read_ser += nread;
 				p += nread;
+				printf("current response:\n%s\n", request->rec_buf);
 			} 
 
 		}
