@@ -1,0 +1,5 @@
+
+curl -x http://localhost:46176/ "http://www-notls.imaal.byu.edu/cgi-bin/slowsend.cgi?obj=lyrics"
+
+
+./proxy 46176
