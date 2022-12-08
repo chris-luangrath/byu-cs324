@@ -502,7 +502,7 @@ void handle_new_clients(int sfd) {
 
 void handle_client(struct request_info* request) {
 	if(verbose){
-		printf("entered handle_client--------------------------------------------------\n");
+		printf("\nentered handle_client--------------------------------------------------\n");
 		printf("file descriptor: %d\n", request->soc_cli);
 		printf("path: %s\n", request->desc);
 		fflush(stdout);
