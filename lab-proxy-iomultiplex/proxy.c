@@ -127,7 +127,7 @@ int main(int argc, char *argv[]) {
 	}
 	// Create a while(1) loop that does the following:
 	while (1) {
-		printf("main_while_loop\n");
+		// printf("main_while_loop\n");
 		// Calls epoll_wait() loop with a timeout of 1 second.
 		size_t n;
 		events = calloc(MAXEVENTS, sizeof(struct epoll_event));
@@ -137,7 +137,7 @@ int main(int argc, char *argv[]) {
 		// If the result was a timeout (i.e., return value from epoll_wait() is 0),
 		if (n == 0) {
 			// check if a global flag has been set by a signal handler and, if so, break out of the loop; otherwise, continue.
-			printf("timeout\n");
+			// printf("timeout\n");
 			// fprintf(stderr, "timeout in epoll_wait\n");
 			// exit(1);
 		}
