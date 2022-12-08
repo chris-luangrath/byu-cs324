@@ -194,7 +194,8 @@ int main(int argc, char *argv[]) {
 
 			// If the event corresponds to the listening file descriptor, then call handle_new_clients().
 			// printf("look here--------------------------------------------------\n");
-			if (sfd == active_client->fd) {
+			// if (sfd == active_client->fd) {
+			if (listener->fd == active_client->fd) {
 				handle_new_clients(sfd);
 			} else {
 				printf("ITS HERE AND IT WORKS\n;");
