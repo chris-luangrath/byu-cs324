@@ -505,6 +505,7 @@ void handle_client(struct request_info* request) {
 		printf("\nentered handle_client--------------------------------------------------\n");
 		printf("file descriptor: %d\n", request->soc_cli);
 		printf("path: %s\n", request->desc);
+		printf("\n");
 		fflush(stdout);
 	}
 	// that takes a pointer to a client request,
