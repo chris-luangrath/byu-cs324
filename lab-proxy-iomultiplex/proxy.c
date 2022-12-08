@@ -175,6 +175,7 @@ int main(int argc, char *argv[]) {
 		struct client_info *active_client;
 		// int i;
 		for (int i = 0; i < n; i++) {
+			printf("n: %d\n",n);
 			// printf("look here--------------------------------------------------\n");
 	
 			// grab the data structure from the event, and cast it
@@ -195,10 +196,10 @@ int main(int argc, char *argv[]) {
 			// If the event corresponds to the listening file descriptor, then call handle_new_clients().
 			// printf("look here--------------------------------------------------\n");
 			// if (sfd == active_client->fd) {
-			if (listener->fd == active_client->fd) {
+			if (listener->fd == active_client->fd) { // can't tell if it already exists----------------------------------------------------------------------------------------
 				handle_new_clients(sfd);
 			} else {
-				printf("ITS HERE AND IT WORKS\n;");
+				printf("ITS HERE AND IT WORKS\n;"); // it does not
 			}
 
 			// After the epoll_wait() while(1) loop, you should clean up any resources (e.g., freeing malloc()'d memory), and exit.
