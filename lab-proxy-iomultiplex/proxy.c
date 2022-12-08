@@ -807,6 +807,7 @@ void handle_client(struct request_info* request) {
 					exit(EXIT_FAILURE);
 				}
 			} else {
+				printf("reading...\n");
 				// read from server
 				char* p = request->rec_buf;
 				p += request->bytes_read_ser;
