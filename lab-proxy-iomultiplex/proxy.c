@@ -738,6 +738,8 @@ void handle_client(struct request_info* request) {
 			if(verbose)
 				printf("writing %s\n",p);
 			if(verbose)
+				printf("bytes to write %d\n",request->bytes_to_write_ser);
+			if(verbose)
 				printf("writing %d total bytes \n",request->bytes_read_cli);
 			// request->bytes_to_write_ser;
 			// would I use request->bytes_read_cli or request->bytes_to_write_ser?
