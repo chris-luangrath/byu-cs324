@@ -466,7 +466,7 @@ void handle_new_clients(int sfd) {
 		// struct request_info request;
 		struct request_info *request;
 		// request = malloc(sizeof(struct request_info));
-		request = malloc(sizeof(request_info));
+		request = malloc(sizeof(struct request_info));
 		request->bytes_read_cli = 0;
 		request->bytes_read_ser = 0;
 		request->bytes_to_write_ser = 0;
