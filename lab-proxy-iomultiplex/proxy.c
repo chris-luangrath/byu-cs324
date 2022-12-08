@@ -196,6 +196,8 @@ int main(int argc, char *argv[]) {
 			// printf("look here--------------------------------------------------\n");
 			if (sfd == active_client->fd) {
 				handle_new_clients(sfd);
+			} else {
+				printf("ITS HERE AND IT WORKS\n;");
 			}
 
 			// After the epoll_wait() while(1) loop, you should clean up any resources (e.g., freeing malloc()'d memory), and exit.
@@ -388,8 +390,9 @@ void handle_new_clients(int sfd) {
 		// int clientsfd, connfd;
 		
 		// struct epoll_event *events;
-
+		printf("before accept\n");
 		connfd = accept(sfd, (struct sockaddr *)&clientaddr, &clientlen);
+		printf("after accept\n");
 		// connfd = accept(active_client->fd, (struct sockaddr *)&clientaddr, &clientlen);
 
 		if (connfd < 0) {
