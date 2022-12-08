@@ -458,7 +458,6 @@ void handle_new_clients(int sfd) {
 		client->soc_cli = connfd;
 		event.data.ptr = client;
 		event.events = EPOLLIN | EPOLLET;
-		sprintf(client->desc, "returned client socket");
 		if (epoll_ctl(efd, EPOLL_CTL_ADD, connfd, &event) < 0) {
 			fprintf(stderr, "error adding event\n");
 			exit(1);
