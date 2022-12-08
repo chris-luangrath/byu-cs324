@@ -199,7 +199,8 @@ int main(int argc, char *argv[]) {
 			if (listener->fd == active_client->fd) { // can't tell if it already exists----------------------------------------------------------------------------------------
 				handle_new_clients(sfd);
 			} else {
-				printf("ITS HERE AND IT WORKS\n;"); // it does not
+				// printf("ITS HERE AND IT WORKS\n;"); // it does 
+				handle_client(active_client);
 			}
 
 			// After the epoll_wait() while(1) loop, you should clean up any resources (e.g., freeing malloc()'d memory), and exit.
