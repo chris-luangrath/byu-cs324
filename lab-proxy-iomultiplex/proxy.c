@@ -439,17 +439,17 @@ void handle_new_clients(int sfd) {
 
 		// and register each returned client socket with the epoll instance that you created for reading,
 		// using edge-triggered monitoring (i.e., EPOLLIN | EPOLLET).
-		struct client_info *client;
-		struct epoll_event event;
-		client = malloc(sizeof(struct client_info));
-		client->fd = connfd;
-		event.data.ptr = client;
-		event.events = EPOLLIN | EPOLLET;
-		sprintf(client->desc, "returned client socket");
-		if (epoll_ctl(efd, EPOLL_CTL_ADD, connfd, &event) < 0) {
-			fprintf(stderr, "error adding event\n");
-			exit(1);
-		}
+		// struct client_info *client; // CHRIS COMMENTED THIS OUT
+		// struct epoll_event event;
+		// client = malloc(sizeof(struct client_info));
+		// client->fd = connfd;
+		// event.data.ptr = client;
+		// event.events = EPOLLIN | EPOLLET;
+		// sprintf(client->desc, "returned client socket");
+		// if (epoll_ctl(efd, EPOLL_CTL_ADD, connfd, &event) < 0) {
+		// 	fprintf(stderr, "error adding event\n");
+		// 	exit(1);
+		// }
 
 		// printf("look here--------------------------------------------------\n");
 
