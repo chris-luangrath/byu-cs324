@@ -670,6 +670,12 @@ void handle_client(struct request_info* request) {
 				if(verbose)
 					printf("bytes read: %d\n", request->bytes_read_cli);
 
+				if(verbose){
+					printf("size of new request: %d\n", strlen(newrequest));
+					printf("rec buf: %d\n", request->rec_buf);
+
+				}
+
 				struct epoll_event event;
 				event.data.ptr = request;
 				event.events = EPOLLOUT | EPOLLET;
