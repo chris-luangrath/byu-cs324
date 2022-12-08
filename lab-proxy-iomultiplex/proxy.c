@@ -679,6 +679,7 @@ void handle_client(struct request_info* request) {
 		}
 	}
 	else if (request->state == SEND_REQUEST) {
+		printf("Send Request\n");
 		// loop to write the request to the server socket until one of the following happens:
 			// you have written the entire HTTP request to the server socket. If this is the case:
 				// register the socket with the epoll instance for reading.
@@ -687,6 +688,7 @@ void handle_client(struct request_info* request) {
 				// If and errno is EAGAIN or EWOULDBLOCK, it just means that there is no buffer space available for writing to the socket; you will continue writing to the socket when you are notified by epoll that there is more buffer space available for writing.
 				// If errno is anything else, this is an error. You can print out the error, cancel your client request, and deregister your socket at this point.
 	} else if (request->state == READ_RESPONSE) {
+		printf("READ_RESPONSE\n");
 		// loop to read from the server socket until one of the following happens:
 			// you have read the entire HTTP response from the server. Since this is HTTP/1.0, this is when the call to read() (or recv()) returns 0, indicating that the server has closed the connection. If this is the case:
 				// register the client socket with the epoll instance for writing.
@@ -695,6 +697,7 @@ void handle_client(struct request_info* request) {
 				// If errno is EAGAIN or EWOULDBLOCK, it just means that there is no more data ready to be read; you will continue reading from the socket when you are notified by epoll that there is more data to be read.
 				// If errno is anything else, this is an error. You can print out the error, cancel your client request, and deregister your socket at this point.
 	} else if (request->state == SEND_RESPONSE) {
+		printf("SEND_RESPONSE\n");
 		// loop to write to the client socket until one of the following happens:
 			// you have written the entire HTTP response to the client socket. If this is the case:
 				// close your client socket. You are done!
