@@ -491,7 +491,7 @@ void handle_new_clients(int sfd) {
 
 		// DO I HAVE THESE CORRECT
 		request->soc_cli = connfd;
-		request->soc_ser = sfd;
+		// request->soc_ser = sfd;
 
 		handle_client(request);
 	}
@@ -544,12 +544,12 @@ void handle_client(struct request_info* request) {
 				memset(headers, 0, 1024);
 
 				if (parse_request(request->rec_buf, method, hostname, port, path, headers)) {
-					// printf("METHOD: %s\n", method);
-					// printf("HOSTNAME: %s\n", hostname);
-					// printf("PORT: %s\n", port);
-					// printf("PATH: %s\n", path); // I ADDED THIS ONE. IT WASNT HERE BEFORE
-					// printf("HEADERS: %s\n", headers);
-					// printf("%s\n", user_agent_hdr);
+					printf("METHOD: %s\n", method);
+					printf("HOSTNAME: %s\n", hostname);
+					printf("PORT: %s\n", port);
+					printf("PATH: %s\n", path); // I ADDED THIS ONE. IT WASNT HERE BEFORE
+					printf("HEADERS: %s\n", headers);
+					printf("%s\n", user_agent_hdr);
 				} else {
 					printf("REQUEST INCOMPLETE\n");
 					exit(1);
@@ -651,6 +651,7 @@ void handle_client(struct request_info* request) {
 				request->state = SEND_REQUEST;
 				request->soc_ser = serversfd;
 				request->bytes_to_write_ser = request->bytes_read_cli;
+				// request->bytes_to_write_ser = strlen(request->rec_buf);
 
 				struct epoll_event event;
 				event.data.ptr = request;
@@ -659,6 +660,8 @@ void handle_client(struct request_info* request) {
 
 				// register the socket with the epoll instance for writing. ----------------------------------------------------------
 				if (epoll_ctl(efd, EPOLL_CTL_ADD, serversfd, &event) < 0) {
+					if(verboses)
+						printf("weird\n");
 					if (epoll_ctl(efd, EPOLL_CTL_MOD, request->soc_ser, &event) < 0) {
 						return;
 					}
