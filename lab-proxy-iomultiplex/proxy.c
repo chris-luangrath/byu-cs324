@@ -609,8 +609,8 @@ void handle_client(struct request_info* request) {
 				// printf("HEY IT'S HERE ----------------------\n");
 				// if(verbose)
 				// printf("%s\n",newrequest);
-				if(verbose)
-					printf("new request:\n%s\n", newrequest);
+				// if(verbose)
+				// 	printf("new request:\n%s\n", newrequest);
 
 
 				// create a new socket and connect to the HTTP server. ----------------------------------------------------------
@@ -690,12 +690,9 @@ void handle_client(struct request_info* request) {
 
 
 				// register the socket with the epoll instance for writing. ----------------------------------------------------------
+				printf("-- adding fd %d --@@@@@@@@@@@@@@@@@@@@@@@@@\n",serversfd);
 				if (epoll_ctl(efd, EPOLL_CTL_ADD, serversfd, &event) < 0) {
-					if(verbose)
-						printf("-----------------weird\n");
-					if (epoll_ctl(efd, EPOLL_CTL_MOD, request->soc_ser, &event) < 0) {
-						return;
-					}
+					
 					fprintf(stderr, "error adding event\n");
 					exit(1);
 				}
