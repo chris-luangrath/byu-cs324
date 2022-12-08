@@ -740,15 +740,15 @@ void handle_client(struct request_info* request) {
 		int written = 0;
 		while(1){
 			char* p = request->rec_buf;
-			if(verbose)
-				printf("p: %s\n",p);
+			// if(verbose)
+			// 	printf("p: %s\n",p);
 			p += request->bytes_written_ser;
 			if(verbose)
-				printf("writing %s\n",p);
+				printf("writing: %s\n------------------\n",p);
 			if(verbose)
 				printf("bytes to write %d\n",request->bytes_to_write_ser);
-			if(verbose)
-				printf("writing %d total bytes \n",request->bytes_read_cli);
+			// if(verbose)
+			// 	printf("writing %d total bytes \n",request->bytes_read_cli);
 			// request->bytes_to_write_ser;
 			// would I use request->bytes_read_cli or request->bytes_to_write_ser?
 			sleep(1);
@@ -764,7 +764,8 @@ void handle_client(struct request_info* request) {
 				// 	exit(EXIT_FAILURE);
 				// } // I don't need this because we're fine with partial writes, right?
 			// you have written the entire HTTP request to the server socket. If this is the case:
-			if(request->bytes_written_ser == request->bytes_read_cli){
+			// if(request->bytes_written_ser == request->bytes_read_cli){
+			if(request->bytes_to_write_ser == 0){
 				// register the socket with the epoll instance for reading.
 				// change state to READ_RESPONSE.
 				bzero(request->rec_buf,MAX_OBJECT_SIZE);
