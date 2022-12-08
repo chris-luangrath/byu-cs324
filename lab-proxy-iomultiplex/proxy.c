@@ -79,7 +79,7 @@ void test_parser();
 void print_bytes(unsigned char *, int);
 int open_sfd(char *, char *);
 void handle_new_clients(int sfd);
-void handle_client(request_info*);
+void handle_client(struct request_info*);
 
 
 
@@ -483,7 +483,7 @@ void handle_new_clients(int sfd) {
 	}
 }
 
-void handle_client(request_info* request) {
+void handle_client(struct request_info* request) {
 	printf("entered handle_client--------------------------------------------------\n");
 	// that takes a pointer to a client request,
 	// determines what state it is in,
