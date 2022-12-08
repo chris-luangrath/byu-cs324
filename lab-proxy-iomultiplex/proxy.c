@@ -406,7 +406,8 @@ void handle_new_clients(int sfd) {
 	// For each new file descriptor (i.e., corresponding to a new client) returned,
 	
 	int connfd;
-	struct sockaddr_storage clientaddr;
+	// struct sockaddr_storage clientaddr;
+	struct sockaddr_in clientaddr;
 	socklen_t clientlen;
 	clientlen = sizeof(struct sockaddr_storage);
 	// printf("look here--------------------------------------------------\n");
@@ -902,7 +903,7 @@ void handle_client(struct request_info* request) {
 				// 	exit(1);
 				// }
 				if(verbose)
-					printf("--closing client socket\n");
+					printf("--closing client socket %d\n",request->soc_cli);
 				close(request->soc_cli);
 				if(verbose)
 					printf("--closed client socket\n");
@@ -910,6 +911,7 @@ void handle_client(struct request_info* request) {
 					printf("sent %d total bytes\n", request->bytes_written_cli);
 					printf("Send Response finished\n\n");
 				}
+				fflush(stdout);
 				return;
 
 				
@@ -932,8 +934,10 @@ void handle_client(struct request_info* request) {
 				}
 				
 			} else {
-				// request->bytes_written_cli += written;
-				// p += written;
+				if(verbose){
+					printf("stuck\n");
+					fflush(stdout);
+				}
 			}
 		}
 		
