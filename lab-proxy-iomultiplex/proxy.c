@@ -29,7 +29,7 @@ struct client_info
 	char desc[1024];
 };
 
-typedef struct request_info{
+typedef struct {
 // 	the socket corresponding to the requesting client
 	int soc_cli;
 // the socket corresponding to the connection to the Web server
@@ -49,7 +49,7 @@ typedef struct request_info{
 	int bytes_read_ser;
 // the total number of bytes written to the client
 	int bytes_written_cli;
-};
+} request_info;
 
 int all_headers_received(char *);
 int parse_request(char *, char *, char *, char *, char *, char *);
