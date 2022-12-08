@@ -909,9 +909,10 @@ void handle_client(struct request_info* request) {
 					printf("--closed client socket\n");
 				if(verbose){
 					printf("sent %d total bytes\n", request->bytes_written_cli);
+					printf("written:\n%s\n\n", request->rec_buf);
 					printf("Send Response finished\n\n");
+					fflush(stdout);
 				}
-				fflush(stdout);
 				return;
 
 				
