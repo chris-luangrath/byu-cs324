@@ -893,9 +893,10 @@ void handle_client(struct request_info* request) {
 				// 	exit(1);
 				// }
 				close(request->soc_cli);
-				if(verbose)
+				if(verbose){
 					printf("read %d total bytes\n", request->bytes_written_cli);
 					printf("Send Response finished\n");
+				}
 				return;
 
 				
