@@ -889,8 +889,10 @@ void handle_client(struct request_info* request) {
 			p += request->bytes_written_cli;
 
 			written = write(request->soc_cli, p, request->bytes_read_ser); // handle short writes
-			request->bytes_written_cli += written;
-			p += written;
+			if(written > 0){
+				request->bytes_written_cli += written;
+				p += written;
+			}
 			// written = write(request->soc_cli, request->rec_buf, strlen(request->rec_buf));
 			// you have written the entire HTTP request to the server socket. If this is the case:
 			if(request->bytes_written_cli == request->bytes_read_ser){
