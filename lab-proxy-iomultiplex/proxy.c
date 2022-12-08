@@ -818,14 +818,15 @@ void handle_client(struct request_info* request) {
 			char* p = request->rec_buf;
 			p += request->bytes_read_ser;
 
-			nread = recvfrom(request->soc_ser, p, MAX_OBJECT_SIZE, 0,
-								(struct sockaddr *)&remote_addr, &remote_addr_len);
+			// nread = recvfrom(request->soc_ser, p, MAX_OBJECT_SIZE, 0,
+			// 					(struct sockaddr *)&remote_addr, &remote_addr_len);
+			nread = recv(request->soc_ser, p, MAX_OBJECT_SIZE, 0);
 			request->bytes_read_ser += nread;
-				p += nread;
-				if(verbose){
-					// printf("current response:\n%s\n", request->rec_buf);
-					printf("read %d bytes\n", nread);
-				}
+			p += nread;
+			if(verbose){
+				// printf("current response:\n%s\n", request->rec_buf);
+				printf("read %d bytes\n", nread);
+			}
 			if(nread == 0){
 			// you have read the entire HTTP response from the server. Since this is HTTP/1.0, this 
 			// is when the call to read() (or recv()) returns 0, indicating that the server has closed 
@@ -894,7 +895,7 @@ void handle_client(struct request_info* request) {
 				// }
 				close(request->soc_cli);
 				if(verbose){
-					printf("read %d total bytes\n", request->bytes_written_cli);
+					printf("sent %d total bytes\n", request->bytes_written_cli);
 					printf("Send Response finished\n");
 				}
 				return;
