@@ -701,6 +701,8 @@ void handle_client(struct request_info* request) {
 		}
 		printf("loop broken\n");
 	}
+
+
 	else if (request->state == SEND_REQUEST) {
 		printf("Send Request\n");
 		// loop to write the request to the server socket until one of the following happens:
@@ -718,8 +720,8 @@ void handle_client(struct request_info* request) {
 
 
 				// register the socket with the epoll instance for writing. ----------------------------------------------------------
-				if (epoll_ctl(efd, EPOLL_CTL_ADD, request->soc_ser, &event) < 0) {
-					fprintf(stderr, "error adding event\n");
+				if (epoll_ctl(efd, EPOLL_CTL_MOD, request->soc_ser, &event) < 0) {
+					perror("error adding event\n");
 					exit(1);
 				}
 				// change state to READ_RESPONSE.
