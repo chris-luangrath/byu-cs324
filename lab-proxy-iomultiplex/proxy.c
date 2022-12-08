@@ -28,6 +28,7 @@ void test_parser();
 void print_bytes(unsigned char *, int);
 int open_sfd(char *, char *);
 void handle_new_clients(int sfd);
+void handle_client(struct request_info* request);
 
 struct client_info
 {
@@ -43,7 +44,8 @@ struct request_info{
 // the current state of the request (see Client Request States).
 	int state;
 // the buffer(s) to read into and write from
-	unsigned char rec_buf[MAX_OBJECT_SIZE];
+	char rec_buf[MAX_OBJECT_SIZE];
+	// unsigned char rec_buf[MAX_OBJECT_SIZE]; //
 // the total number of bytes read from the client
 	int bytes_read_cli;
 // the total number of bytes to write to the server
@@ -54,7 +56,7 @@ struct request_info{
 	int bytes_read_ser;
 // the total number of bytes written to the client
 	int bytes_written_cli;
-}
+};
 
 int efd;
 struct epoll_event event;
@@ -68,8 +70,8 @@ int main(int argc, char *argv[]) {
 	// Create an epoll instance with epoll_create1().
 	
 	
-	struct client_info *new_client;
-	struct client_info *active_client;
+	// struct client_info *new_client;
+	// struct client_info *active_client;
 
 	int sfd;
 
@@ -478,13 +480,12 @@ void handle_client(struct request_info* request) {
 		// You should initialize every new client request to be in this state.
 
 		// In this state, read from the client socket in a loop until one of the following happens:
-		int headers_recieved = 0;
 		while (1) {
 			// if (all_headers_received(recieved_request)) {
 			// 		headers_recieved = 1;
 			// 		printf("done receiving\n");
 			// 	}
-			if (all_headers_received(request->rec_buf)) { 
+			if (all_headers_received(*(request->rec_buf))) { 
 				// you have read the entire HTTP request from the client. If this is the case: ----------------------------------------------------------
 				char method[16], hostname[64], port[8], path[64], headers[1024];
 				memset(method, 0, 16);
@@ -642,9 +643,9 @@ void handle_client(struct request_info* request) {
 				// 	headers_recieved = 1;
 				// 	printf("done receiving\n");
 				// }
-				else {
-					// printf("%s\n",request);
-				}
+				// else {
+				// 	// printf("%s\n",request);
+				// }
 			}
 		}
 	}
