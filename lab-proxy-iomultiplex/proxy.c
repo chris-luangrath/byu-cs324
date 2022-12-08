@@ -708,7 +708,7 @@ void handle_client(struct request_info* request) {
 		int written = 0;
 		while(1){
 			// you have written the entire HTTP request to the server socket. If this is the case:
-			if(written == request->bytes_read_cli){
+			if(request->bytes_written_cli == request->bytes_read_cli){
 				// register the socket with the epoll instance for reading.
 				// change state to READ_RESPONSE.
 				request->state = READ_RESPONSE;
@@ -769,13 +769,34 @@ void handle_client(struct request_info* request) {
 		}
 	} else if (request->state == READ_RESPONSE) {
 		printf("READ_RESPONSE\n");
-		// loop to read from the server socket until one of the following happens:
-			// you have read the entire HTTP response from the server. Since this is HTTP/1.0, this is when the call to read() (or recv()) returns 0, indicating that the server has closed the connection. If this is the case:
-				// register the client socket with the epoll instance for writing.
-				// change state to SEND_RESPONSE.
-			// read() (or recv()) returns a value less than 0.
-				// If errno is EAGAIN or EWOULDBLOCK, it just means that there is no more data ready to be read; you will continue reading from the socket when you are notified by epoll that there is more data to be read.
-				// If errno is anything else, this is an error. You can print out the error, cancel your client request, and deregister your socket at this point.
+		// while(1){
+		// // loop to read from the server socket until one of the following happens:
+		// 	if(finished){
+		// 		// you have read the entire HTTP response from the server. Since this is HTTP/1.0, this is when the call to read() (or recv()) returns 0, indicating that the server has closed the connection. If this is the case:
+		// 			// register the client socket with the epoll instance for writing.
+		// 			// change state to SEND_RESPONSE.
+
+		// 	} else if (error){
+		// 		// read() (or recv()) returns a value less than 0.
+		// 			// If errno is EAGAIN or EWOULDBLOCK, it just means that there is no more data ready to be read; you will continue reading from the socket when you are notified by epoll that there is more data to be read.
+		// 			// If errno is anything else, this is an error. You can print out the error, cancel your client request, and deregister your socket at this point.
+		// 	} else {
+		// 		// read from server
+		// 		char* p = request->rec_buf;
+		// 		p += request->bytes_read_ser;
+
+		// 		nread = recvfrom(request->soc_ser, p, MAX_OBJECT_SIZE, 0,
+		// 							(struct sockaddr *)&remote_addr, &remote_addr_len);
+		// 		if (nread == -1) {
+		// 			perror("read");
+		// 			exit(EXIT_FAILURE);
+		// 		}
+		// 		// memcpy(p, request->rec_buf, nread);
+		// 		request->bytes_read_ser += nread;
+		// 		p += nread;
+		// 	} 
+
+		// }
 	} else if (request->state == SEND_RESPONSE) {
 		printf("SEND_RESPONSE\n");
 		// loop to write to the client socket until one of the following happens:
