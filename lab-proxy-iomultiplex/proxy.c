@@ -479,7 +479,7 @@ void handle_new_clients(int sfd) {
 		request->soc_cli = connfd;
 		request->soc_ser = sfd;
 
-		handle_client(*request);
+		handle_client(request);
 	}
 }
 
