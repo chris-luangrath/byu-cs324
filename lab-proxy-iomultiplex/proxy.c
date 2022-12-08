@@ -853,12 +853,10 @@ void handle_client(struct request_info* request) {
 			char* p = request->rec_buf;
 			p += request->bytes_written_cli;
 
-			written = write(request->soc_cli, request->rec_buf, request->bytes_read_ser);
+			written = write(request->soc_cli, p, request->bytes_read_ser);
+			request->bytes_written_cli += written;
+			p += written;
 			// written = write(request->soc_cli, request->rec_buf, strlen(request->rec_buf));
-			// if () != strlen(request->rec_buf)) { //clientsfd should be serversfd
-				// 	fprintf(stderr, "partial/failed write\n");
-				// 	exit(EXIT_FAILURE);
-				// } // I don't need this because we're fine with partial writes, right?
 			// you have written the entire HTTP request to the server socket. If this is the case:
 			if(request->bytes_written_cli == request->bytes_read_ser){
 			// you have written the entire HTTP response to the client socket. If this is the case:
@@ -886,8 +884,8 @@ void handle_client(struct request_info* request) {
 				}
 				
 			} else {
-				request->bytes_written_cli += written;
-				p += written;
+				// request->bytes_written_cli += written;
+				// p += written;
 			}
 		}
 		
