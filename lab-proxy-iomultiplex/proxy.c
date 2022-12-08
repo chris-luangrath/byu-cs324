@@ -519,6 +519,8 @@ void handle_client(struct request_info* request) {
 	printf("request state: %d\n",request->state);
 
 	if (request->state == READ_REQUEST) {
+		if(verbose)
+			printf("--read request--\n");
 		// This is the start state for every new client request.
 		// You should initialize every new client request to be in this state.
 		int nread = 0;
@@ -648,6 +650,7 @@ void handle_client(struct request_info* request) {
 					exit(1);
 				}
 
+				// change state to SEND_REQUEST.
 				request->state = SEND_REQUEST;
 				request->soc_ser = serversfd;
 				request->bytes_to_write_ser = request->bytes_read_cli;
@@ -661,7 +664,7 @@ void handle_client(struct request_info* request) {
 				// register the socket with the epoll instance for writing. ----------------------------------------------------------
 				if (epoll_ctl(efd, EPOLL_CTL_ADD, serversfd, &event) < 0) {
 					if(verbose)
-						printf("weird\n");
+						printf("-----------------weird\n");
 					if (epoll_ctl(efd, EPOLL_CTL_MOD, request->soc_ser, &event) < 0) {
 						return;
 					}
@@ -672,9 +675,8 @@ void handle_client(struct request_info* request) {
 		
 				
 
-				// change state to SEND_REQUEST. ----------------------------------------------------------
 				if(verbose)
-					printf("Read Request finished\n");
+					printf("--Read Request finished--\n");
 				return;
 			} else if (nread < 0) { 
 				// read() (or recv()) returns a value less than 0.
@@ -712,7 +714,7 @@ void handle_client(struct request_info* request) {
 
 	else if (request->state == SEND_REQUEST) {
 		if(verbose)
-			printf("Send Request\n");
+			printf("--Send Request--\n");
 		// loop to write the request to the server socket until one of the following happens:
 		int written = 0;
 		while(1){
@@ -749,7 +751,7 @@ void handle_client(struct request_info* request) {
 					exit(1);
 				}
 				if(verbose)
-					printf("Send Request finished\n");
+					printf("--Send Request finished--\n");
 				return;
 
 				
@@ -780,7 +782,7 @@ void handle_client(struct request_info* request) {
 		}
 	} else if (request->state == READ_RESPONSE) {
 		if(verbose)
-			printf("READ_RESPONSE\n");
+			printf("--READ_RESPONSE--\n");
 		int nread = 1;
 		while(1){
 		// loop to read from the server socket until one of the following happens:
@@ -809,7 +811,7 @@ void handle_client(struct request_info* request) {
 				// register the client socket with the epoll instance for writing.
 				// change state to SEND_RESPONSE.
 				if(verbose)
-					printf("Read Response finished\n");
+					printf("--Read Response finished--\n");
 				return;
 			} else if (nread < 0){
 				if (errno == EWOULDBLOCK ||
