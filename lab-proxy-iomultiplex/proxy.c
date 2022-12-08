@@ -842,6 +842,7 @@ void handle_client(struct request_info* request) {
 				request->bytes_written_cli += written;
 				p += written;
 			}
+		}
 		
 	}
 }
