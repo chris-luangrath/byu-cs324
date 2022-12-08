@@ -650,6 +650,7 @@ void handle_client(struct request_info* request) {
 
 				request->state = SEND_REQUEST;
 				request->soc_ser = serversfd;
+				request->bytes_to_write_ser = request->bytes_read_cli;
 
 				struct epoll_event event;
 				event.data.ptr = request;
@@ -719,7 +720,8 @@ void handle_client(struct request_info* request) {
 			// request->bytes_to_write_ser;
 			// would I use request->bytes_read_cli or request->bytes_to_write_ser?
 
-			written = write(request->soc_ser, p, strlen(request->rec_buf));
+			// written = write(request->soc_ser, p, strlen(request->rec_buf));
+			written = write(request->soc_ser, p, request->bytes_to_write_ser);
 			// if () != strlen(request->rec_buf)) { //clientsfd should be serversfd
 				// 	fprintf(stderr, "partial/failed write\n");
 				// 	exit(EXIT_FAILURE);
@@ -764,6 +766,7 @@ void handle_client(struct request_info* request) {
 				
 			} else {
 				request->bytes_written_ser += written;
+				request->bytes_to_write_ser -= written;
 				p += written;
 				if(verbose)
 					printf("wrote %d bytes\n",written);
