@@ -57,7 +57,7 @@ struct request_info {
 	int fd;
 	char desc[1024];
 
-	int soc_lis; // is this correct
+	// int soc_lis; // is this correct
 
 // 	the socket corresponding to the requesting client
 	int soc_cli;
@@ -122,7 +122,8 @@ int main(int argc, char *argv[]) {
 	listener = malloc(sizeof(struct request_info));
 	// listener = malloc(sizeof(struct client_info));
 	// listener->fd = sfd;
-	listener->soc_lis = sfd;
+	// listener->soc_lis = sfd;
+	listener->soc_cli = sfd;
 	sprintf(listener->desc, "Listening socket");
 	event.data.ptr = listener;
 	event.events = EPOLLIN | EPOLLET;
@@ -200,7 +201,7 @@ int main(int argc, char *argv[]) {
 				/* An error has occured on this fd */
 				fprintf(stderr, "epoll error on %s\n", active_client->desc);
 				// close(active_client->fd);
-				close(active_client->soc_ser);
+				close(active_client->soc_cli);
 				free(active_client);
 				continue;
 			}
@@ -209,10 +210,10 @@ int main(int argc, char *argv[]) {
 			// printf("look here--------------------------------------------------\n");
 			// if (sfd == active_client->fd) {
 			// if (listener->fd == active_client->fd) { // can't tell if it already exists----------------------------------------------------------------------------------------
-			if (listener->soc_lis == active_client->soc_lis && active_client->soc_cli) { // can't tell if it already exists----------------------------------------------------------------------------------------
-				handle_new_clients(sfd);
+			if (listener->soc_cli == active_client->soc_cli) { // can't tell if it already exists----------------------------------------------------------------------------------------
+				handle_new_clients(active_client->soc_cli);
 			} else {
-				printf("-active client fd: %d\n", active_client->fd);
+				printf("-active client fd: %d\n", active_client->soc_cli);
 				// printf("ITS HERE AND IT WORKS\n;"); // it does 
 				handle_client((struct request_info*) active_client); // casting so it stops yelling at me 
 			}
@@ -446,10 +447,11 @@ void handle_new_clients(int sfd) {
 
 		// and register each returned client socket with the epoll instance that you created for reading,
 		// using edge-triggered monitoring (i.e., EPOLLIN | EPOLLET).
-		struct client_info *client;
+		// struct client_info *client;
+		struct request_info *client;
 		struct epoll_event event;
 		client = malloc(sizeof(struct client_info));
-		client->fd = connfd;
+		client->soc_cli = connfd;
 		event.data.ptr = client;
 		event.events = EPOLLIN | EPOLLET;
 		sprintf(client->desc, "returned client socket");
