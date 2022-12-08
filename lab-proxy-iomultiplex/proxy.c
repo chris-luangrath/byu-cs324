@@ -202,7 +202,7 @@ int main(int argc, char *argv[]) {
 				handle_new_clients(sfd);
 			} else {
 				printf("-active client fd: %d\n", active_client->fd);
-				if(((struct request_info *) active_client)->state == 0){
+				if(((struct request_info *) active_client)->state > 4){
 					handle_new_clients(sfd);
 				}
 				// printf("ITS HERE AND IT WORKS\n;"); // it does 
