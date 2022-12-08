@@ -414,6 +414,9 @@ void handle_new_clients(int sfd) {
 			// If errno is set to EAGAIN or EWOULDBLOCK, then that is an indicator that there are no more clients currently pending;
 			if (errno == EWOULDBLOCK ||
 				errno == EAGAIN) {
+					if(verbose)
+						perror("timeout or block or something")
+						// printf("before accept\n");
 				// no more clients ready to accept
 				break;
 			} else {
@@ -524,7 +527,7 @@ void handle_client(struct request_info* request) {
 	// struct epoll_event event;
 	// event.data.ptr = listener;
 	// event.events = EPOLLIN | EPOLLET;
-	printf("request state: %d",request->state);
+	printf("request state: %d\n",request->state);
 
 	if (request->state == READ_REQUEST) {
 		// This is the start state for every new client request.
