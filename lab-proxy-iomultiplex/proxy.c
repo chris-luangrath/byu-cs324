@@ -501,8 +501,12 @@ void handle_new_clients(int sfd) {
 }
 
 void handle_client(struct request_info* request) {
-	if(verbose)
+	if(verbose){
 		printf("entered handle_client--------------------------------------------------\n");
+		printf("file descriptor: %d\n", request->soc_cli);
+		printf("path: %s\n", request->desc);
+		fflush(stdout);
+	}
 	// that takes a pointer to a client request,
 	// determines what state it is in,
 	// and performs the actions associated with that state
