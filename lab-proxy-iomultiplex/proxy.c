@@ -23,16 +23,6 @@
 static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0";
 
 
-
-int all_headers_received(char *);
-int parse_request(char *, char *, char *, char *, char *, char *);
-void test_parser();
-void print_bytes(unsigned char *, int);
-int open_sfd(char *, char *);
-void handle_new_clients(int sfd);
-void handle_client(request_info*);
-
-
 struct client_info
 {
 	int fd;
@@ -60,6 +50,17 @@ typedef struct request_info{
 // the total number of bytes written to the client
 	int bytes_written_cli;
 };
+
+int all_headers_received(char *);
+int parse_request(char *, char *, char *, char *, char *, char *);
+void test_parser();
+void print_bytes(unsigned char *, int);
+int open_sfd(char *, char *);
+void handle_new_clients(int sfd);
+void handle_client(request_info*);
+
+
+
 
 int efd;
 struct epoll_event event;
