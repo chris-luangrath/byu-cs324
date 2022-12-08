@@ -22,7 +22,7 @@
 
 static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0";
 
-int verbose = 0;
+int verbose = 1;
 // if(verbose)
 
 // struct client_info
