@@ -626,6 +626,13 @@ void handle_client(struct request_info* request) {
 					exit(1);
 				}
 
+				request->state = SEND_REQUEST;
+				request->soc_ser = serversfd;
+
+				struct epoll_event event;
+				event.data.ptr = request;
+				event.events = EPOLLOUT | EPOLLET;
+
 
 				// register the socket with the epoll instance for writing. ----------------------------------------------------------
 				if (epoll_ctl(efd, EPOLL_CTL_ADD, serversfd, &event) < 0) {
@@ -637,10 +644,9 @@ void handle_client(struct request_info* request) {
 				
 
 				// change state to SEND_REQUEST. ----------------------------------------------------------
-				request->state = SEND_REQUEST;
 				printf("Read Request finished\n");
-				break;
-				// return;
+				// break;
+				return;
 			} else if (nread < 0) { 
 				// read() (or recv()) returns a value less than 0. ----------------------------------------------------------
 				// If errno is EAGAIN or EWOULDBLOCK, it just means that there is no more data ready to be read; 
