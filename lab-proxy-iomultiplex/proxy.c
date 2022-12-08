@@ -528,6 +528,11 @@ void handle_client(struct request_info* request) {
 			// 		headers_recieved = 1;
 			// 		printf("done receiving\n");
 			// 	}
+			char* p = request->rec_buf;
+			p += request->bytes_read_cli;
+
+			nread = recvfrom(request->soc_cli, p, MAX_OBJECT_SIZE, 0,
+								(struct sockaddr *)&remote_addr, &remote_addr_len);
 			if (all_headers_received((request->rec_buf))) { 
 				// you have read the entire HTTP request from the client. If this is the case: ----------------------------------------------------------
 				char method[16], hostname[64], port[8], path[64], headers[1024];
@@ -662,7 +667,7 @@ void handle_client(struct request_info* request) {
 				printf("Read Request finished\n");
 				return;
 			} else if (nread < 0) { 
-				// read() (or recv()) returns a value less than 0. ----------------------------------------------------------
+				// read() (or recv()) returns a value less than 0.
 				// If errno is EAGAIN or EWOULDBLOCK, it just means that there is no more data ready to be read; 
 				if (errno == EWOULDBLOCK ||
 					errno == EAGAIN) {
@@ -677,29 +682,10 @@ void handle_client(struct request_info* request) {
 				}
 			} else {
 				// read ----------------------------------------------------------
-				
-				char* p = request->rec_buf;
-				p += request->bytes_read_cli;
-
-				nread = recvfrom(request->soc_cli, p, MAX_OBJECT_SIZE, 0,
-								 (struct sockaddr *)&remote_addr, &remote_addr_len);
-				if (nread == -1) {
-					perror("read");
-					exit(EXIT_FAILURE);
-				}
-				// memcpy(p, request->rec_buf, nread);
 				request->bytes_read_cli += nread;
 				p += nread;
-				// if (all_headers_received(recieved_request)) {
-				// 	headers_recieved = 1;
-				// 	printf("done receiving\n");
-				// }
-				// else {
-				// 	// printf("%s\n",request);
-				// }
 			}
 		}
-		printf("loop broken\n");
 	}
 
 
@@ -708,8 +694,18 @@ void handle_client(struct request_info* request) {
 		// loop to write the request to the server socket until one of the following happens:
 		int written = 0;
 		while(1){
+			char* p = request->rec_buf;
+			p += request->bytes_written_ser;
+			// request->bytes_to_write_ser;
+			// would I use request->bytes_read_cli or request->bytes_to_write_ser?
+
+			written = write(request->soc_ser, request->rec_buf, strlen(request->rec_buf));
+			// if () != strlen(request->rec_buf)) { //clientsfd should be serversfd
+				// 	fprintf(stderr, "partial/failed write\n");
+				// 	exit(EXIT_FAILURE);
+				// } // I don't need this because we're fine with partial writes, right?
 			// you have written the entire HTTP request to the server socket. If this is the case:
-			if(request->bytes_written_cli == request->bytes_read_cli){
+			if(request->bytes_written_ser == request->bytes_read_cli){
 				// register the socket with the epoll instance for reading.
 				// change state to READ_RESPONSE.
 				bzero(request->rec_buf,MAX_OBJECT_SIZE);
@@ -748,24 +744,8 @@ void handle_client(struct request_info* request) {
 				}
 				
 			} else {
-				char* p = request->rec_buf;
-				p += request->bytes_written_cli;
-				// request->bytes_to_write_ser;
-				// would I use request->bytes_read_cli or request->bytes_to_write_ser?
-
-				written = write(request->soc_ser, request->rec_buf, strlen(request->rec_buf));
-				request->bytes_written_cli += written;
+				request->bytes_written_ser += written;
 				p += written;
-				// if () != strlen(request->rec_buf)) { //clientsfd should be serversfd
-				// 	fprintf(stderr, "partial/failed write\n");
-				// 	exit(EXIT_FAILURE);
-				// }
-
-
-				// if (write(request->soc_ser, request->rec_buf, strlen(request->rec_buf)) != strlen(request->rec_buf)) { //clientsfd should be serversfd
-				// 	fprintf(stderr, "partial/failed write\n");
-				// 	exit(EXIT_FAILURE);
-				// }
 			}
 
 		}
@@ -813,26 +793,7 @@ void handle_client(struct request_info* request) {
 					exit(EXIT_FAILURE);
 				}
 			} else {
-				printf("reading...\n");
-				// read from server
-				// char* p = request->rec_buf;
-				// p += request->bytes_read_ser;
-
-				// nread = recvfrom(request->soc_ser, p, MAX_OBJECT_SIZE, 0,
-				// 					(struct sockaddr *)&remote_addr, &remote_addr_len);
-				// if (nread == -1) {
-				// 	perror("read");
-				// 	if (errno == EWOULDBLOCK ||
-				// 	errno == EAGAIN) {
-				// 		printf("this is weird but I don't think it's broken...\n");
-				// 		// no more data ready to be read; you will continue reading from the socket 
-				// 		// when you are notified by epoll that there is more data to be read.
-				// 		return;
-				// 		// continue; // instead of break?
-				// 	}
-				// 	// exit(EXIT_FAILURE);
-				// }
-				// memcpy(p, request->rec_buf, nread);
+				// printf("reading...\n");
 				request->bytes_read_ser += nread;
 				p += nread;
 				printf("current response:\n%s\n", request->rec_buf);
@@ -841,12 +802,47 @@ void handle_client(struct request_info* request) {
 		}
 	} else if (request->state == SEND_RESPONSE) {
 		printf("SEND_RESPONSE\n");
-		// loop to write to the client socket until one of the following happens:
+		int written = 0;
+		while(1){
+			char* p = request->rec_buf;
+			p += request->bytes_written_cli;
+
+			written = write(request->soc_ser, request->rec_buf, strlen(request->rec_buf));
+			// if () != strlen(request->rec_buf)) { //clientsfd should be serversfd
+				// 	fprintf(stderr, "partial/failed write\n");
+				// 	exit(EXIT_FAILURE);
+				// } // I don't need this because we're fine with partial writes, right?
+			// you have written the entire HTTP request to the server socket. If this is the case:
+			if(request->bytes_written_cli == request->bytes_read_ser){
 			// you have written the entire HTTP response to the client socket. If this is the case:
 				// close your client socket. You are done!
+				close(request->soc_cli);
+
+				printf("Send Response finished\n");
+				return;
+
+				
+			} else if(written < 0){
 			// write() (or send()) returns a value less than 0.
-				// If and errno is EAGAIN or EWOULDBLOCK, it just means that there is no buffer space available for writing to the socket; you will continue writing to the socket when you are notified by epoll that there is more buffer space available for writing.
-				// If errno is anything else, this is an error. You can print out the error, cancel your client request, and deregister your socket at this point.
+				if (errno == EWOULDBLOCK ||
+					errno == EAGAIN) {
+					// there is no buffer space available for writing to the socket; 
+					// you will continue writing to the socket when you are notified by epoll that there is more buffer space available for writing.
+					return;
+					// continue; // instead of break?
+				} else {
+					// If errno is anything else, this is an error. You can print out the error, 
+					// cancel your client request, and deregister your socket at this point.
+					perror("send response fail");
+					// close(request->soc_ser);
+					exit(EXIT_FAILURE);
+				}
+				
+			} else {
+				request->bytes_written_cli += written;
+				p += written;
+			}
+		
 	}
 }
 
