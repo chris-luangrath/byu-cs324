@@ -381,9 +381,14 @@ int open_sfd(char *hostname, char *port) {
 	setsockopt(sfd, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
 
 	if (fcntl(sfd, F_SETFL, fcntl(sfd, F_GETFL, 0) | O_NONBLOCK) < 0) {
-			fprintf(stderr, "error setting socket option\n");
-			exit(1);
+		fprintf(stderr, "error setting socket option\n");
+		exit(1);
+	} else{
+		if (verbose){
+			printf("listener sfd %d is non-blocking\n",sfd);
 		}
+	}
+	
 
 	if (bind(sfd, result->ai_addr, result->ai_addrlen) < 0) {
 		perror("Could not bind");
@@ -444,6 +449,10 @@ void handle_new_clients(int sfd) {
 		if (fcntl(connfd, F_SETFL, fcntl(connfd, F_GETFL, 0) | O_NONBLOCK) < 0) {
 			fprintf(stderr, "error setting socket option\n");
 			exit(1);
+		} else {
+			if (verbose){
+				printf("client sfd %d is non-blocking\n",connfd);
+			}
 		}
 
 		// and register each returned client socket with the epoll instance that you created for reading,
@@ -659,6 +668,10 @@ void handle_client(struct request_info* request) {
 				if (fcntl(serversfd, F_SETFL, fcntl(serversfd, F_GETFL, 0) | O_NONBLOCK) < 0) {
 					fprintf(stderr, "error setting socket option\n");
 					exit(1);
+				} else {
+					if(verbose){
+						printf("serversfd %d is non-blocking\n",serversfd);
+					}
 				}
 
 				// change state to SEND_REQUEST.
