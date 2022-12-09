@@ -806,7 +806,7 @@ void handle_client(struct request_info* request) {
 
 			// nread = recvfrom(request->soc_ser, p, MAX_OBJECT_SIZE, 0,
 			// 					(struct sockaddr *)&remote_addr, &remote_addr_len);
-			nread = recv(request->soc_ser, p, MAX_OBJECT_SIZE, 0); // subtract max_object_size by already read
+			nread = recv(request->soc_ser, p, MAX_OBJECT_SIZE - request->bytes_read_ser, 0); // subtract max_object_size by already read
 			// request->bytes_read_ser += nread;
 			// p += nread;
 			if(verbose){
