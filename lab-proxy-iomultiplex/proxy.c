@@ -119,9 +119,7 @@ int main(int argc, char *argv[]) {
 
 	struct request_info *listener;
 	// struct client_info *listener;
-	// listener = malloc(sizeof(struct request_info));
 	listener = calloc(1,sizeof(struct request_info));
-	// listener = malloc(sizeof(struct client_info));
 	// listener->fd = sfd;
 	// listener->soc_lis = sfd;
 	listener->soc_cli = sfd;
@@ -453,8 +451,6 @@ void handle_new_clients(int sfd) {
 		// struct client_info *client;
 		struct request_info *client;
 		struct epoll_event event;
-		// client = malloc(sizeof(struct client_info));
-		// client = malloc(sizeof(struct request_info));
 		client = calloc(1,sizeof(struct request_info));
 		client->soc_cli = connfd;
 		event.data.ptr = client;
@@ -480,8 +476,6 @@ void handle_new_clients(int sfd) {
 
 		// struct request_info request;
 		struct request_info *request;
-		// request = malloc(sizeof(struct request_info));
-		// request = malloc(sizeof(struct request_info));
 		request = calloc(1,sizeof(struct request_info));;
 		request->bytes_read_cli = 0;
 		request->bytes_read_ser = 0;
@@ -541,12 +535,14 @@ void handle_client(struct request_info* request) {
 			char* p = request->rec_buf;
 			p += request->bytes_read_cli;
 
-			nread = recvfrom(request->soc_cli, p, MAX_OBJECT_SIZE, 0,
-								(struct sockaddr *)&remote_addr, &remote_addr_len);
+			// nread = recvfrom(request->soc_cli, p, MAX_OBJECT_SIZE, 0,
+			// 					(struct sockaddr *)&remote_addr, &remote_addr_len);
+			nread = recv(request->soc_cli, p, MAX_OBJECT_SIZE, 0);
 			if(nread > 0){
 				request->bytes_read_cli += nread;
 				p += nread;
-			}
+			} 
+			
 			if(verbose)
 				printf("just read %d bytes\n",nread);
 			if (all_headers_received((request->rec_buf))) { 
@@ -578,7 +574,6 @@ void handle_client(struct request_info* request) {
 				char *proxyconnection = "close";
 
 				// char newrequest[MAX_OBJECT_SIZE];
-				// char *newrequest = malloc(MAX_OBJECT_SIZE);
 				char *newrequest = calloc(1,MAX_OBJECT_SIZE);
 				char *p = newrequest;
 				bzero(newrequest, MAX_OBJECT_SIZE);
@@ -709,18 +704,6 @@ void handle_client(struct request_info* request) {
 				// If errno is EAGAIN or EWOULDBLOCK, it just means that there is no more data ready to be read; 
 				if (errno == EWOULDBLOCK ||
 					errno == EAGAIN) {
-					// no more clients ready to accept
-					// you will continue reading from the socket when you are notified by epoll that there is more data to be read.
-					// THIS IS CHRIS SPITBALLIN
-					// struct epoll_event event;
-					// event.data.ptr = request;
-					// event.events = EPOLLIN | EPOLLET;
-
-					// // register the socket with the epoll instance for writing. ----------------------------------------------------------
-					// if (epoll_ctl(efd, EPOLL_CTL_ADD, request->soc_ser, &event) < 0) {
-					// 	perror("error adding event\n");
-					// 	exit(1);
-					// }
 
 					return;
 					// continue; // instead of break?
