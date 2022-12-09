@@ -752,7 +752,7 @@ void handle_client(struct request_info* request) {
 			// 	printf("writing %d total bytes \n",request->bytes_read_cli);
 			// request->bytes_to_write_ser;
 			// would I use request->bytes_read_cli or request->bytes_to_write_ser?
-			sleep(1);
+			// sleep(1);
 			// written = write(request->soc_ser, p, strlen(request->rec_buf));
 			written = write(request->soc_ser, p, request->bytes_to_write_ser);
 			request->bytes_written_ser += written;
